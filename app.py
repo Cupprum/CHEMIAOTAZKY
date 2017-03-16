@@ -45,7 +45,7 @@ def kont():
 def get():
     if request.cookies.get('nameID') == None:
         randommeno = str(uuid.uuid4())
-        mojeotazky = list(range(1, 5 + 1))
+        mojeotazky = []
         ypsilon = 0
         body = 0
         koncovka = 'ok'
@@ -73,7 +73,10 @@ def post():
         pole = json.loads(kokie)
         meno = str(pole[:1])
         randommeno = meno[2:-2]
-        mojeotazky = random.choice(list(pole[1:2]))
+        polevsetkychotazok = set(list(range(1, 5 + 1)))
+        listsplnenychotazok = random.choice(list(pole[1:2]))
+        polesplnenychotazok = set(listsplnenychotazok)
+        mojeotazky = list(polevsetkychotazok - polesplnenychotazok)
         body = random.choice(list(pole[3:4]))
         konc= str(pole[4:5])
         koncovka = konc[2:-2]
@@ -102,7 +105,10 @@ def post():
         pole = json.loads(kokie)
         meno = str(pole[:1])
         randommeno = meno[2:-2]
-        mojeotazky = random.choice(list(pole[1:2]))
+        polevsetkychotazok = set(list(range(1, 5 + 1)))
+        listsplnenychotazok = random.choice(list(pole[1:2]))
+        polesplnenychotazok = set(listsplnenychotazok)
+        mojeotazky = list(polevsetkychotazok - polesplnenychotazok)
         y = str(pole[2:3])
         ypsilon = y[1:2]
         body = random.choice(list(pole[3:4]))
@@ -122,8 +128,8 @@ def post():
 
                 if list(moja) == lst:
                     moja[:] = []
-                    mojeotazky.remove(int(ypsilon))
-                    body = 5 - len(mojeotazky)
+                    mojeotazky.append(int(ypsilon))
+                    body = len(mojeotazky)
                     if body == 1:
                         koncovka = 'ku'
                     elif body == 2 or body == 3 or body == 4:
@@ -143,7 +149,7 @@ def post():
     if request.form['btn'] == 'Resetuje otazky':
         randommeno = str(uuid.uuid4())
         print('RANDOMMENO',randommeno)
-        mojeotazky = list(range(1, 5 + 1))
+        mojeotazky = []
         ypsilon = 0
         body = 0
         koncovka = 'ok'
