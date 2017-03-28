@@ -37,6 +37,10 @@
             {float: right;
              width: 90px;}
              
+        .align-right2
+            {float: right;
+             width: 10em;}
+             
         .column
             {float: left;
              display: inline-block;
@@ -44,6 +48,7 @@
              vertical-align: top;
              background-color: #CACACA;
              padding: 5px;}
+            
         
         table 
             {border: none;
@@ -83,9 +88,6 @@
         <td>
            <input type="submit" name="btn" value="Resetuje otazky" />
         </td>
-        <td>
-           <input type="text" name="vloztemeno" />
-           <input type="submit" name="btn" value="Pridat meno" />
       </tr>
       <tr>
 	      <h1 class="question-text center">{{ control }} <br />{{ odp }}</h1>
@@ -102,8 +104,49 @@
 	      <div class="column"><h1> F <br /><input type="checkbox" name="F" value="F"/></div>
 	      <div class="column"><h1> G <br /><input type="checkbox" name="G" value="G"/></div>
 	      <div class="column" style="padding-right: 20%"><h1> H <br /><input type="checkbox" name="H" value="H"/></div>
-      </tr>   
-  </table>
+      </tr> 
+    </table>
+ 
+ 
+ <br /><br /><br />
+ 
+    <table>
+         <tr>
+             <td>
+                <input class="align-right2" type="text" name="vloztemeno" />
+             </td>
+             <td>
+                <input type="submit" name="btn" value="Pridat meno" />
+              </td>
+         </tr>
+    </table>
+  
+   <br /><br /><br />
+  
+     <table>
+         <tr>
+             <td>
+                 <h1 class="question-text align-right2" style="padding-left: 0px; padding-right: 0px">{{ tabulka1meno }}</h1>
+             </td>
+             <td>
+                 <h1 class="question-text" style="padding-left: 0px; padding-right: 0px">{{ tabulka1body }}</h1><br />
+             </td>
+         </tr>
+         <tr>
+             <td>
+                 <h1 class="question-text align-right2" style="padding-left: 0px; padding-right: 0px">{{ tabulka2meno }}</h1>
+             </td>
+             <td>
+                 <h1 class="question-text" style="padding-left: 0px; padding-right: 0px">{{ tabulka2body }}</h1>
+             </td>
+         </tr>
+     </table>
+     
+     
+     
+     
+     
+     
     </form>
     {% with messages = get_flashed_messages() %}
 	{% if messages %}
