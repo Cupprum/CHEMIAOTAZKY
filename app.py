@@ -13,7 +13,7 @@ app = Flask(__name__)
 #engine = create_engine("postgresql://postgres:zuzka@localhost:5432/chemia")
 
 #urlparse.uses_netloc.append("postgres")
-url = urlparse(os.environ["HEROKU_POSTGRESQL_BLUE_URL"])
+url = urlparse(os.environ["DATABASE_URL"])
 
 conn = psycopg2.connect(
     database=url.path[1:],
