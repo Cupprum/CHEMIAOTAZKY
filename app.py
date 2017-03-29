@@ -25,6 +25,8 @@ conn = psycopg2.connect(
 engine = conn.cursor()
 engine.execute("CREATE TABLE IF NOT EXISTS FIIT (uuia4 text, meno text, body text, stav text);")
 print("vyrobi databazu")
+engine.close()
+conn.close()
 tree = ET.parse('chemia.xml')
 root = tree.getroot()
 moja = []
