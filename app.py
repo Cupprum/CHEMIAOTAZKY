@@ -19,8 +19,7 @@ conn = psycopg2.connect(
     database=url.path[1:],
     user=url.username,
     password=url.password,
-    host=url.hostname,
-    port=url.port)
+    host=url.hostname)
 #conn = psycopg2.connect(dbname="chemia", user="postgres", password="zuzka", host="localhost", port="5432")
 engine = conn.cursor()
 engine.execute("CREATE TABLE IF NOT EXISTS FIIT (uuia4 text, meno text, body text, stav text);")
