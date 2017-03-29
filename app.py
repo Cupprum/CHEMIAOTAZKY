@@ -25,6 +25,10 @@ conn.autocommit = True
 #conn = psycopg2.connect(dbname="chemia", user="postgres", password="zuzka", host="localhost", port="5432")
 engine = conn.cursor()
 engine.execute("CREATE TABLE IF NOT EXISTS FIIT (uuia4 text, meno text, body text, stav text);")
+
+
+jozo = """INSERT INTO fiit (uuia4, meno, body, stav) VALUES (%s, NULL, %s, '0');"""
+engine.execute(jozo,('hatlanina',2))
 tree = ET.parse('chemia.xml')
 root = tree.getroot()
 moja = []
