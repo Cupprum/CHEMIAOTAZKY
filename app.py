@@ -218,7 +218,7 @@ def post():
                     print('toto vypise pole', pole)
                     
                     jozo = """UPDATE FIIT SET body= %s WHERE uuia4= %s """
-                    engine.execute(jozo,(body,randommeno))
+                    engine.execute(jozo,(body,randommeno,))
                     
                     tabulkovydic = {'tabulka1meno' : None,'tabulka1body' : None,'tabulka2meno' : None,'tabulka2body' : None}
                     engine.execute("SELECT meno, body FROM FIIT WHERE stav = '1' ORDER BY body DESC LIMIT 2")
@@ -308,7 +308,7 @@ def post():
         jozo = """UPDATE FIIT SET meno= %s WHERE uuia4= %s """
         engine.execute(jozo,(zadanemeno, randommeno))
         fero = """UPDATE FIIT SET stav= '1' WHERE uuia4= %s """
-        engine.execute(fero,(randommeno))
+        engine.execute(fero,(randommeno,))
 
         tabulkovydic = {'tabulka1meno' : None,'tabulka1body' : None,'tabulka2meno' : None,'tabulka2body' : None}
         engine.execute("SELECT meno, body FROM FIIT WHERE stav = '1' ORDER BY body DESC LIMIT 2")
