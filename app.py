@@ -14,13 +14,14 @@ app = Flask(__name__)
 
 #urlparse.uses_netloc.append("postgres")
 url = urlparse(os.environ["DATABASE_URL"])
-
-conn = psycopg2.connect(
-    database=url.path[1:],
-    user=url.username,
-    password=url.password,
-    host=url.hostname)
-print (url.path[1:],url.username,url.password,url.hostname)
+db = "dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname)
+conn = psycopg2.connect(db)
+#conn = psycopg2.connect(
+#    database=url.path[1:],
+#    user=url.username,
+#    password=url.password,
+#    host=url.hostname)
+#print (url.path[1:],url.username,url.password,url.hostname)
 #conn = psycopg2.connect(dbname="chemia", user="postgres", password="zuzka", host="localhost", port="5432")
 engine = conn.cursor()
 engine.execute("CREATE TABLE IF NOT EXISTS FIIT (uuia4 text, meno text, body text, stav text);")
