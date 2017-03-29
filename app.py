@@ -11,11 +11,11 @@ from urllib.parse import urlparse
 
 app = Flask(__name__)
 #engine = create_engine("postgresql://postgres:zuzka@localhost:5432/chemia")
-
 #urlparse.uses_netloc.append("postgres")
 url = urlparse(os.environ["DATABASE_URL"])
 db = "dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname)
 conn = psycopg2.connect(db)
+conn.autocommit = True
 #conn = psycopg2.connect(
 #    database=url.path[1:],
 #    user=url.username,
