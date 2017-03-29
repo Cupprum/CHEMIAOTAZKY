@@ -5,9 +5,24 @@ import random
 import xml.etree.ElementTree as ET
 import json
 import uuid
+import psycopg2
+import os
+from urllib.parse import urlparse
 
 app = Flask(__name__)
-engine = create_engine("postgresql://postgres:zuzka@localhost:5432/chemia")
+#engine = create_engine("postgresql://postgres:zuzka@localhost:5432/chemia")
+
+#urlparse.uses_netloc.append("postgres")
+url = urlparse(os.environ["HEROKU_POSTGRESQL_BLUE_URL"])
+
+conn = psycopg2.connect(
+    database=url.path[1:],
+    user=url.username,
+    password=url.password,
+    host=url.hostname,
+    port=url.port)
+#conn = psycopg2.connect(dbname="chemia", user="postgres", password="zuzka", host="localhost", port="5432")
+engine = conn.cursor()
 engine.execute("CREATE TABLE IF NOT EXISTS FIIT (uuia4 text, meno text, body text, stav text)")
 tree = ET.parse('chemia.xml')
 root = tree.getroot()
@@ -57,8 +72,9 @@ def get():
         engine.execute(jozo,(randommeno,body))
 
         tabulkovydic = {'tabulka1meno' : None,'tabulka1body' : None,'tabulka2meno' : None,'tabulka2body' : None}
-        result_set = engine.execute("SELECT meno, body FROM FIIT WHERE stav = '1' ORDER BY body DESC LIMIT 2")
+        engine.execute("SELECT meno, body FROM FIIT WHERE stav = '1' ORDER BY body DESC LIMIT 2")
         omg = 1
+        result_set=engine.fetchall()
         for r in result_set:
             x = random.choice(r[:1])
             y = random.choice(r[1:])
@@ -81,8 +97,9 @@ def get():
         koncovka = konc[2:-2]
 
         tabulkovydic = {'tabulka1meno' : None,'tabulka1body' : None,'tabulka2meno' : None,'tabulka2body' : None}
-        result_set = engine.execute("SELECT meno, body FROM FIIT WHERE stav = '1' ORDER BY body DESC LIMIT 2")
+        engine.execute("SELECT meno, body FROM FIIT WHERE stav = '1' ORDER BY body DESC LIMIT 2")
         omg = 1
+        result_set=engine.fetchall()
         for r in result_set:
             x = random.choice(r[:1])
             y = random.choice(r[1:])
@@ -114,8 +131,9 @@ def post():
         
         if len(finalneotazky) == 0:
             tabulkovydic = {'tabulka1meno' : None,'tabulka1body' : None,'tabulka2meno' : None,'tabulka2body' : None}
-            result_set = engine.execute("SELECT meno, body FROM FIIT WHERE stav = '1' ORDER BY body DESC LIMIT 2")
+            engine.execute("SELECT meno, body FROM FIIT WHERE stav = '1' ORDER BY body DESC LIMIT 2")
             omg = 1
+            result_set=engine.fetchall()
             for r in result_set:
                 x = random.choice(r[:1])
                 y = random.choice(r[1:])
@@ -142,6 +160,7 @@ def post():
                     tabulkovydic = {'tabulka1meno' : None,'tabulka1body' : None,'tabulka2meno' : None,'tabulka2body' : None}
                     result_set = engine.execute("SELECT meno, body FROM FIIT WHERE stav = '1' ORDER BY body DESC LIMIT 2")
                     omg = 1
+                    result_set=engine.fetchall()
                     for r in result_set:
                         x = random.choice(r[:1])
                         y = random.choice(r[1:])
@@ -202,8 +221,9 @@ def post():
                     engine.execute(jozo,(body,randommeno))
                     
                     tabulkovydic = {'tabulka1meno' : None,'tabulka1body' : None,'tabulka2meno' : None,'tabulka2body' : None}
-                    result_set = engine.execute("SELECT meno, body FROM FIIT WHERE stav = '1' ORDER BY body DESC LIMIT 2")
+                    engine.execute("SELECT meno, body FROM FIIT WHERE stav = '1' ORDER BY body DESC LIMIT 2")
                     omg = 1
+                    result_set=engine.fetchall()
                     for r in result_set:
                         x = random.choice(r[:1])
                         y = random.choice(r[1:])
@@ -221,14 +241,14 @@ def post():
                     moja[:] = []
 
                     tabulkovydic = {'tabulka1meno' : None,'tabulka1body' : None,'tabulka2meno' : None,'tabulka2body' : None}
-                    result_set = engine.execute("SELECT meno, body FROM FIIT WHERE stav = '1' ORDER BY body DESC LIMIT 2")
+                    engine.execute("SELECT meno, body FROM FIIT WHERE stav = '1' ORDER BY body DESC LIMIT 2")
                     omg = 1
+                    result_set=engine.fetchall()
                     for r in result_set:
                         x = random.choice(r[:1])
                         y = random.choice(r[1:])
                         tabulkovydic['tabulka'+str(omg)+'meno'] = x
                         tabulkovydic['tabulka'+str(omg)+'body'] = y
-                        print(x,y)
                         omg += 1
                     
                     return flask.render_template('layout.html', control='Bohužiaľ nesprávne.', otazka=ot, odp=od, bdy = body, sklonovanie = koncovka,
@@ -242,7 +262,7 @@ def post():
         starerandommeno = staremeno[2:-2]
 
         staryjozo = """DELETE FROM FIIT WHERE uuia4 = %s"""
-        engine.execute(staryjozo,(starerandommeno))
+        engine.execute(staryjozo,(starerandommeno,))
 
         randommeno = str(uuid.uuid4())
         mojeotazky = []
@@ -257,14 +277,14 @@ def post():
         engine.execute(jozo,(randommeno,body))
                     
         tabulkovydic = {'tabulka1meno' : None,'tabulka1body' : None,'tabulka2meno' : None,'tabulka2body' : None}
-        result_set = engine.execute("SELECT meno, body FROM FIIT WHERE stav = '1' ORDER BY body DESC LIMIT 2")
+        engine.execute("SELECT meno, body FROM FIIT WHERE stav = '1' ORDER BY body DESC LIMIT 2")
         omg = 1
+        result_set=engine.fetchall()
         for r in result_set:
             x = random.choice(r[:1])
             y = random.choice(r[1:])
             tabulkovydic['tabulka'+str(omg)+'meno'] = x
             tabulkovydic['tabulka'+str(omg)+'body'] = y
-            print(x,y)
             omg += 1
                             
         respond = make_response(render_template('layout.html', uvod=True, bdy = body, sklonovanie = koncovka,
@@ -291,14 +311,14 @@ def post():
         engine.execute(fero,(randommeno))
 
         tabulkovydic = {'tabulka1meno' : None,'tabulka1body' : None,'tabulka2meno' : None,'tabulka2body' : None}
-        result_set = engine.execute("SELECT meno, body FROM FIIT WHERE stav = '1' ORDER BY body DESC LIMIT 2")
+        engine.execute("SELECT meno, body FROM FIIT WHERE stav = '1' ORDER BY body DESC LIMIT 2")
         omg = 1
+        result_set=engine.fetchall()
         for r in result_set:
             x = random.choice(r[:1])
             y = random.choice(r[1:])
             tabulkovydic['tabulka'+str(omg)+'meno'] = x
             tabulkovydic['tabulka'+str(omg)+'body'] = y
-            
             omg += 1
           
         respond = make_response(render_template('layout.html', uvod=True, bdy = body, sklonovanie = koncovka,
