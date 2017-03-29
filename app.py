@@ -23,7 +23,8 @@ conn = psycopg2.connect(
     port=url.port)
 #conn = psycopg2.connect(dbname="chemia", user="postgres", password="zuzka", host="localhost", port="5432")
 engine = conn.cursor()
-engine.execute("CREATE TABLE IF NOT EXISTS FIIT (uuia4 text, meno text, body text, stav text)")
+engine.execute("CREATE TABLE IF NOT EXISTS FIIT (uuia4 text, meno text, body text, stav text);")
+print("vyrobi databazu")
 tree = ET.parse('chemia.xml')
 root = tree.getroot()
 moja = []
@@ -68,11 +69,11 @@ def get():
         pole = (randommeno, mojeotazky, ypsilon, body, koncovka)
         print('toto vypise kookie noveho uzivatela', pole)
 
-        jozo = """INSERT INTO fiit (uuia4, meno, body, stav) VALUES (%s, NULL, %s, '0')"""
+        jozo = """INSERT INTO fiit (uuia4, meno, body, stav) VALUES (%s, NULL, %s, '0');"""
         engine.execute(jozo,(randommeno,body))
 
         tabulkovydic = {'tabulka1meno' : None,'tabulka1body' : None,'tabulka2meno' : None,'tabulka2body' : None}
-        engine.execute("SELECT meno, body FROM FIIT WHERE stav = '1' ORDER BY body DESC LIMIT 2")
+        engine.execute("SELECT meno, body FROM FIIT WHERE stav = '1' ORDER BY body DESC LIMIT 2;")
         omg = 1
         result_set=engine.fetchall()
         for r in result_set:
@@ -97,7 +98,7 @@ def get():
         koncovka = konc[2:-2]
 
         tabulkovydic = {'tabulka1meno' : None,'tabulka1body' : None,'tabulka2meno' : None,'tabulka2body' : None}
-        engine.execute("SELECT meno, body FROM FIIT WHERE stav = '1' ORDER BY body DESC LIMIT 2")
+        engine.execute("SELECT meno, body FROM FIIT WHERE stav = '1' ORDER BY body DESC LIMIT 2;")
         omg = 1
         result_set=engine.fetchall()
         for r in result_set:
@@ -131,7 +132,7 @@ def post():
         
         if len(finalneotazky) == 0:
             tabulkovydic = {'tabulka1meno' : None,'tabulka1body' : None,'tabulka2meno' : None,'tabulka2body' : None}
-            engine.execute("SELECT meno, body FROM FIIT WHERE stav = '1' ORDER BY body DESC LIMIT 2")
+            engine.execute("SELECT meno, body FROM FIIT WHERE stav = '1' ORDER BY body DESC LIMIT 2;")
             omg = 1
             result_set=engine.fetchall()
             for r in result_set:
@@ -158,7 +159,7 @@ def post():
                     pole = (randommeno, mojeotazky, ypsilon, body, koncovka)
 
                     tabulkovydic = {'tabulka1meno' : None,'tabulka1body' : None,'tabulka2meno' : None,'tabulka2body' : None}
-                    result_set = engine.execute("SELECT meno, body FROM FIIT WHERE stav = '1' ORDER BY body DESC LIMIT 2")
+                    result_set = engine.execute("SELECT meno, body FROM FIIT WHERE stav = '1' ORDER BY body DESC LIMIT 2;")
                     omg = 1
                     result_set=engine.fetchall()
                     for r in result_set:
@@ -217,11 +218,11 @@ def post():
                     pole = (randommeno, mojeotazky, ypsilon, body, koncovka)
                     print('toto vypise pole', pole)
                     
-                    jozo = """UPDATE FIIT SET body= %s WHERE uuia4= %s """
+                    jozo = """UPDATE FIIT SET body= %s WHERE uuia4= %s ;"""
                     engine.execute(jozo,(body,randommeno,))
                     
                     tabulkovydic = {'tabulka1meno' : None,'tabulka1body' : None,'tabulka2meno' : None,'tabulka2body' : None}
-                    engine.execute("SELECT meno, body FROM FIIT WHERE stav = '1' ORDER BY body DESC LIMIT 2")
+                    engine.execute("SELECT meno, body FROM FIIT WHERE stav = '1' ORDER BY body DESC LIMIT 2;")
                     omg = 1
                     result_set=engine.fetchall()
                     for r in result_set:
@@ -241,7 +242,7 @@ def post():
                     moja[:] = []
 
                     tabulkovydic = {'tabulka1meno' : None,'tabulka1body' : None,'tabulka2meno' : None,'tabulka2body' : None}
-                    engine.execute("SELECT meno, body FROM FIIT WHERE stav = '1' ORDER BY body DESC LIMIT 2")
+                    engine.execute("SELECT meno, body FROM FIIT WHERE stav = '1' ORDER BY body DESC LIMIT 2;")
                     omg = 1
                     result_set=engine.fetchall()
                     for r in result_set:
@@ -261,7 +262,7 @@ def post():
         staremeno = str(starepole[:1])
         starerandommeno = staremeno[2:-2]
 
-        staryjozo = """DELETE FROM FIIT WHERE uuia4 = %s"""
+        staryjozo = """DELETE FROM FIIT WHERE uuia4 = %s ;"""
         engine.execute(staryjozo,(starerandommeno,))
 
         randommeno = str(uuid.uuid4())
@@ -273,11 +274,11 @@ def post():
         pole = (randommeno, mojeotazky, ypsilon, body, koncovka)
         print('toto vypise kookie noveho uzivatela', pole)
 
-        jozo = """INSERT INTO FIIT (uuia4, meno, body, stav) VALUES (%s, NULL, %s, '0')"""
+        jozo = """INSERT INTO FIIT (uuia4, meno, body, stav) VALUES (%s, NULL, %s, '0');"""
         engine.execute(jozo,(randommeno,body))
                     
         tabulkovydic = {'tabulka1meno' : None,'tabulka1body' : None,'tabulka2meno' : None,'tabulka2body' : None}
-        engine.execute("SELECT meno, body FROM FIIT WHERE stav = '1' ORDER BY body DESC LIMIT 2")
+        engine.execute("SELECT meno, body FROM FIIT WHERE stav = '1' ORDER BY body DESC LIMIT 2;")
         omg = 1
         result_set=engine.fetchall()
         for r in result_set:
@@ -305,13 +306,13 @@ def post():
         zadanemeno = request.form['vloztemeno']
         print("randommeno =", randommeno, "|| zadanemeno = ", zadanemeno, "|| body =", body)
 
-        jozo = """UPDATE FIIT SET meno= %s WHERE uuia4= %s """
+        jozo = """UPDATE FIIT SET meno= %s WHERE uuia4= %s ;"""
         engine.execute(jozo,(zadanemeno, randommeno))
-        fero = """UPDATE FIIT SET stav= '1' WHERE uuia4= %s """
+        fero = """UPDATE FIIT SET stav= '1' WHERE uuia4= %s ;"""
         engine.execute(fero,(randommeno,))
 
         tabulkovydic = {'tabulka1meno' : None,'tabulka1body' : None,'tabulka2meno' : None,'tabulka2body' : None}
-        engine.execute("SELECT meno, body FROM FIIT WHERE stav = '1' ORDER BY body DESC LIMIT 2")
+        engine.execute("SELECT meno, body FROM FIIT WHERE stav = '1' ORDER BY body DESC LIMIT 2;")
         omg = 1
         result_set=engine.fetchall()
         for r in result_set:
