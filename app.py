@@ -63,17 +63,18 @@ def get():
 
         jozo = """INSERT INTO fiit (uuia4, meno, body, stav) VALUES (%s, NULL, %s, '0')"""
         engine.execute(jozo,(randommeno,body))
-
-        tabulkovydic = {'tabulka1meno' : None,'tabulka1body' : None,'tabulka2meno' : None,'tabulka2body' : None}
-        result_set = engine.execute("SELECT meno, body FROM FIIT WHERE stav = '1' ORDER BY body DESC LIMIT 2")
-        omg = 1
-        for r in result_set:
-            x = random.choice(r[:1])
-            y = random.choice(r[1:])
-            tabulkovydic['tabulka'+str(omg)+'meno'] = x
-            tabulkovydic['tabulka'+str(omg)+'body'] = y
-            omg += 1        
-
+        try:
+            tabulkovydic = {'tabulka1meno' : None,'tabulka1body' : None,'tabulka2meno' : None,'tabulka2body' : None}
+            result_set = engine.execute("SELECT meno, body FROM FIIT WHERE stav = '1' ORDER BY body DESC LIMIT 2")
+            omg = 1
+            for r in result_set:
+                x = random.choice(r[:1])
+                y = random.choice(r[1:])
+                tabulkovydic['tabulka'+str(omg)+'meno'] = x
+                tabulkovydic['tabulka'+str(omg)+'body'] = y
+                omg += 1        
+        except TypeError:
+            pass
         respond = make_response(render_template('layout.html', uvod=True, bdy = body, sklonovanie = koncovka,
                                                 tabulka1meno = tabulkovydic['tabulka1meno'], tabulka1body = tabulkovydic['tabulka1body'],
                                                 tabulka2meno = tabulkovydic['tabulka2meno'], tabulka2body = tabulkovydic['tabulka2body']))
