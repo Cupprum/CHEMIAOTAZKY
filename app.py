@@ -15,11 +15,8 @@ db = "dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url
 conn = psycopg2.connect(db)
 conn.autocommit = True
 engine = conn.cursor()
-engine.execute("CREATE TABLE IF NOT EXISTS FIIT (uuia4 text, meno text, body text, stav text);")
+engine.execute("CREATE TABLE IF NOT EXISTS fiit (uuia4 text, meno text, body text, stav text);")
 
-
-jozo = """INSERT INTO fiit (uuia4, meno, body, stav) VALUES (%s, NULL, %s, '0');"""
-engine.execute(jozo,('hatlanina',2))
 tree = ET.parse('chemia.xml')
 root = tree.getroot()
 moja = []
