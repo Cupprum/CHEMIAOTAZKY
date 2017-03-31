@@ -152,6 +152,14 @@ def post():
                 if str(ypsilon) == number:
                     ot = otazky.find('ot').text
                     od = otazky.find('od').text
+                    ma = otazky.find('ma').text
+                    mb = otazky.find('mb').text
+                    mc = otazky.find('mc').text
+                    md = otazky.find('md').text
+                    me = otazky.find('me').text
+                    mf = otazky.find('mf').text
+                    mg = otazky.find('mg').text
+                    mh = otazky.find('mh').text
                     pole = (randommeno, mojeotazky, ypsilon, body, koncovka)
 
                     tabulkovydic = {'tabulka1meno': None, 'tabulka1body': None, 'tabulka2meno': None, 'tabulka2body': None}
@@ -165,7 +173,7 @@ def post():
                         tabulkovydic['tabulka' + str(omg) + 'body'] = y
                         omg += 1
 
-                    respond = make_response(render_template('layout.html', otazka=ot, control=('Spravna odpoved je', od), bdy=body, sklonovanie=koncovka,
+                    respond = make_response(render_template('layout.html', otazka=ot, ma=ma, mb=mb, mc=mc, md=md, me=me, mf=mf, mg=mg, mh=mh, control=('Spravna odpoved je', od), bdy=body, sklonovanie=koncovka,
                                                             tabulka1meno=tabulkovydic['tabulka1meno'], tabulka1body=tabulkovydic['tabulka1body'],
                                                             tabulka2meno=tabulkovydic['tabulka2meno'], tabulka2body=tabulkovydic['tabulka2body']))
                     respond.set_cookie('nameID', json.dumps(pole))
