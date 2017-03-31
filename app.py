@@ -117,7 +117,7 @@ def post():
         pole = json.loads(kokie)
         meno = str(pole[:1])
         randommeno = meno[2:-2]
-        polevsetkychotazok = set(list(range(1, 5 + 1)))
+        polevsetkychotazok = set(list(range(1, 50 + 1)))
         mojeotazky = random.choice(list(pole[1:2]))
         polesplnenychotazok = set(mojeotazky)
         finalneotazky = list(polevsetkychotazok - polesplnenychotazok)
@@ -186,13 +186,13 @@ def post():
         meno = str(pole[:1])
         randommeno = meno[2:-2]
 
-        polevsetkychotazok = set(list(range(1, 5 + 1)))
+        polevsetkychotazok = set(list(range(1, 50 + 1)))
         mojeotazky = random.choice(list(pole[1:2]))
         polesplnenychotazok = set(mojeotazky)
         finalneotazky = list(polevsetkychotazok - polesplnenychotazok)
 
         y = str(pole[2:3])
-        ypsilon = y[1:2]
+        ypsilon = y[1:-1]
         body = random.choice(list(pole[3:4]))
         konc = str(pole[4:5])
         koncovka = konc[2:-2]
