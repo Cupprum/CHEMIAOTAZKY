@@ -81,15 +81,7 @@ def get():
 
         respond = make_response(render_template('layout.html', uvod=True, bdy=body, sklonovanie=koncovka,
                                 tabulka1meno=tabulkovydic['tabulka1meno'], tabulka1body=tabulkovydic['tabulka1body'],
-                                tabulka2meno=tabulkovydic['tabulka2meno'], tabulka2body=tabulkovydic['tabulka2body'],
-                                tabulka3meno=tabulkovydic['tabulka3meno'], tabulka3body=tabulkovydic['tabulka3body'],
-                                tabulka4meno=tabulkovydic['tabulka4meno'], tabulka4body=tabulkovydic['tabulka4body'],
-                                tabulka5meno=tabulkovydic['tabulka5meno'], tabulka5body=tabulkovydic['tabulka5body'],
-                                tabulka6meno=tabulkovydic['tabulka6meno'], tabulka6body=tabulkovydic['tabulka6body'],
-                                tabulka7meno=tabulkovydic['tabulka7meno'], tabulka7body=tabulkovydic['tabulka7body'],
-                                tabulka8meno=tabulkovydic['tabulka8meno'], tabulka8body=tabulkovydic['tabulka8body'],
-                                tabulka9meno=tabulkovydic['tabulka9meno'], tabulka9body=tabulkovydic['tabulka9body'],
-                                tabulka10meno=tabulkovydic['tabulka10meno'], tabulka10body=tabulkovydic['tabulka10body']))
+                                tabulka2meno=tabulkovydic['tabulka2meno'], tabulka2body=tabulkovydic['tabulka2body']))
         respond.set_cookie('nameID', json.dumps(pole))
         return respond
 
@@ -113,16 +105,8 @@ def get():
             omg += 1
 
         respond = make_response(render_template('layout.html', uvod=True, bdy=body, sklonovaie=koncovka,
-                                tabulka1meno=tabulkovydic['tabulka1meno'], tabulka1body=tabulkovydic['tabulka1body'],
-                                tabulka2meno=tabulkovydic['tabulka2meno'], tabulka2body=tabulkovydic['tabulka2body'],
-                                tabulka3meno=tabulkovydic['tabulka3meno'], tabulka3body=tabulkovydic['tabulka3body'],
-                                tabulka4meno=tabulkovydic['tabulka4meno'], tabulka4body=tabulkovydic['tabulka4body'],
-                                tabulka5meno=tabulkovydic['tabulka5meno'], tabulka5body=tabulkovydic['tabulka5body'],
-                                tabulka6meno=tabulkovydic['tabulka6meno'], tabulka6body=tabulkovydic['tabulka6body'],
-                                tabulka7meno=tabulkovydic['tabulka7meno'], tabulka7body=tabulkovydic['tabulka7body'],
-                                tabulka8meno=tabulkovydic['tabulka8meno'], tabulka8body=tabulkovydic['tabulka8body'],
-                                tabulka9meno=tabulkovydic['tabulka9meno'], tabulka9body=tabulkovydic['tabulka9body'],
-                                tabulka10meno=tabulkovydic['tabulka10meno'], tabulka10body=tabulkovydic['tabulka10body']))
+                                                tabulka1meno=tabulkovydic['tabulka1meno'], tabulka1body=tabulkovydic['tabulka1body'],
+                                                tabulka2meno=tabulkovydic['tabulka2meno'], tabulka2body=tabulkovydic['tabulka2body']))
         return respond
 
 
@@ -155,16 +139,8 @@ def post():
                 omg += 1
 
             respond = make_response(render_template('layout.html', control='Nemame otazky', bdy=body, sklonovanie=koncovka,
-                                    tabulka1meno=tabulkovydic['tabulka1meno'], tabulka1body=tabulkovydic['tabulka1body'],
-                                    tabulka2meno=tabulkovydic['tabulka2meno'], tabulka2body=tabulkovydic['tabulka2body'],
-                                    tabulka3meno=tabulkovydic['tabulka3meno'], tabulka3body=tabulkovydic['tabulka3body'],
-                                    tabulka4meno=tabulkovydic['tabulka4meno'], tabulka4body=tabulkovydic['tabulka4body'],
-                                    tabulka5meno=tabulkovydic['tabulka5meno'], tabulka5body=tabulkovydic['tabulka5body'],
-                                    tabulka6meno=tabulkovydic['tabulka6meno'], tabulka6body=tabulkovydic['tabulka6body'],
-                                    tabulka7meno=tabulkovydic['tabulka7meno'], tabulka7body=tabulkovydic['tabulka7body'],
-                                    tabulka8meno=tabulkovydic['tabulka8meno'], tabulka8body=tabulkovydic['tabulka8body'],
-                                    tabulka9meno=tabulkovydic['tabulka9meno'], tabulka9body=tabulkovydic['tabulka9body'],
-                                    tabulka10meno=tabulkovydic['tabulka10meno'], tabulka10body=tabulkovydic['tabulka10body']))
+                                                    tabulka1meno=tabulkovydic['tabulka1meno'], tabulka1body=tabulkovydic['tabulka1body'],
+                                                    tabulka2meno=tabulkovydic['tabulka2meno'], tabulka2body=tabulkovydic['tabulka2body']))
             return respond
 
         else:
@@ -198,16 +174,8 @@ def post():
                         omg += 1
 
                     respond = make_response(render_template('layout.html', otazka=ot, ma=ma, mb=mb, mc=mc, md=md, me=me, mf=mf, mg=mg, mh=mh, control=('Spravna odpoved je', od), bdy=body, sklonovanie=koncovka,
-                                            tabulka1meno=tabulkovydic['tabulka1meno'], tabulka1body=tabulkovydic['tabulka1body'],
-                                            tabulka2meno=tabulkovydic['tabulka2meno'], tabulka2body=tabulkovydic['tabulka2body'],
-                                            tabulka3meno=tabulkovydic['tabulka3meno'], tabulka3body=tabulkovydic['tabulka3body'],
-                                            tabulka4meno=tabulkovydic['tabulka4meno'], tabulka4body=tabulkovydic['tabulka4body'],
-                                            tabulka5meno=tabulkovydic['tabulka5meno'], tabulka5body=tabulkovydic['tabulka5body'],
-                                            tabulka6meno=tabulkovydic['tabulka6meno'], tabulka6body=tabulkovydic['tabulka6body'],
-                                            tabulka7meno=tabulkovydic['tabulka7meno'], tabulka7body=tabulkovydic['tabulka7body'],
-                                            tabulka8meno=tabulkovydic['tabulka8meno'], tabulka8body=tabulkovydic['tabulka8body'],
-                                            tabulka9meno=tabulkovydic['tabulka9meno'], tabulka9body=tabulkovydic['tabulka9body'],
-                                            tabulka10meno=tabulkovydic['tabulka10meno'], tabulka10body=tabulkovydic['tabulka10body']))
+                                                            tabulka1meno=tabulkovydic['tabulka1meno'], tabulka1body=tabulkovydic['tabulka1body'],
+                                                            tabulka2meno=tabulkovydic['tabulka2meno'], tabulka2body=tabulkovydic['tabulka2body']))
                     respond.set_cookie('nameID', json.dumps(pole))
                     return respond
 
@@ -268,16 +236,8 @@ def post():
                         omg += 1
 
                     respond = make_response(render_template('layout.html', control='Vyborne, spravna odpoved!', bdy=body, sklonovanie=koncovka,
-                                            tabulka1meno=tabulkovydic['tabulka1meno'], tabulka1body=tabulkovydic['tabulka1body'],
-                                            tabulka2meno=tabulkovydic['tabulka2meno'], tabulka2body=tabulkovydic['tabulka2body'],
-                                            tabulka3meno=tabulkovydic['tabulka3meno'], tabulka3body=tabulkovydic['tabulka3body'],
-                                            tabulka4meno=tabulkovydic['tabulka4meno'], tabulka4body=tabulkovydic['tabulka4body'],
-                                            tabulka5meno=tabulkovydic['tabulka5meno'], tabulka5body=tabulkovydic['tabulka5body'],
-                                            tabulka6meno=tabulkovydic['tabulka6meno'], tabulka6body=tabulkovydic['tabulka6body'],
-                                            tabulka7meno=tabulkovydic['tabulka7meno'], tabulka7body=tabulkovydic['tabulka7body'],
-                                            tabulka8meno=tabulkovydic['tabulka8meno'], tabulka8body=tabulkovydic['tabulka8body'],
-                                            tabulka9meno=tabulkovydic['tabulka9meno'], tabulka9body=tabulkovydic['tabulka9body'],
-                                            tabulka10meno=tabulkovydic['tabulka10meno'], tabulka10body=tabulkovydic['tabulka10body']))
+                                                            tabulka1meno=tabulkovydic['tabulka1meno'], tabulka1body=tabulkovydic['tabulka1body'],
+                                                            tabulka2meno=tabulkovydic['tabulka2meno'], tabulka2body=tabulkovydic['tabulka2body']))
                     respond.set_cookie('nameID', json.dumps(pole))
                     return respond
 
@@ -296,16 +256,8 @@ def post():
                         omg += 1
 
                     return flask.render_template('layout.html', control='Bohužiaľ nesprávne.', otazka=ot, odp=od, bdy=body, sklonovanie=koncovka,
-                                tabulka1meno=tabulkovydic['tabulka1meno'], tabulka1body=tabulkovydic['tabulka1body'],
-                                tabulka2meno=tabulkovydic['tabulka2meno'], tabulka2body=tabulkovydic['tabulka2body'],
-                                tabulka3meno=tabulkovydic['tabulka3meno'], tabulka3body=tabulkovydic['tabulka3body'],
-                                tabulka4meno=tabulkovydic['tabulka4meno'], tabulka4body=tabulkovydic['tabulka4body'],
-                                tabulka5meno=tabulkovydic['tabulka5meno'], tabulka5body=tabulkovydic['tabulka5body'],
-                                tabulka6meno=tabulkovydic['tabulka6meno'], tabulka6body=tabulkovydic['tabulka6body'],
-                                tabulka7meno=tabulkovydic['tabulka7meno'], tabulka7body=tabulkovydic['tabulka7body'],
-                                tabulka8meno=tabulkovydic['tabulka8meno'], tabulka8body=tabulkovydic['tabulka8body'],
-                                tabulka9meno=tabulkovydic['tabulka9meno'], tabulka9body=tabulkovydic['tabulka9body'],
-                                tabulka10meno=tabulkovydic['tabulka10meno'], tabulka10body=tabulkovydic['tabulka10body'])
+                                                tabulka1meno=tabulkovydic['tabulka1meno'], tabulka1body=tabulkovydic['tabulka1body'],
+                                                tabulka2meno=tabulkovydic['tabulka2meno'], tabulka2body=tabulkovydic['tabulka2body'])
 
     if request.form['btn'] == 'Resetuje otazky':
         starekokie = request.cookies.get('nameID')
@@ -340,16 +292,8 @@ def post():
             omg += 1
 
         respond = make_response(render_template('layout.html', uvod=True, bdy=body, sklonovanie=koncovka,
-                                tabulka1meno=tabulkovydic['tabulka1meno'], tabulka1body=tabulkovydic['tabulka1body'],
-                                tabulka2meno=tabulkovydic['tabulka2meno'], tabulka2body=tabulkovydic['tabulka2body'],
-                                tabulka3meno=tabulkovydic['tabulka3meno'], tabulka3body=tabulkovydic['tabulka3body'],
-                                tabulka4meno=tabulkovydic['tabulka4meno'], tabulka4body=tabulkovydic['tabulka4body'],
-                                tabulka5meno=tabulkovydic['tabulka5meno'], tabulka5body=tabulkovydic['tabulka5body'],
-                                tabulka6meno=tabulkovydic['tabulka6meno'], tabulka6body=tabulkovydic['tabulka6body'],
-                                tabulka7meno=tabulkovydic['tabulka7meno'], tabulka7body=tabulkovydic['tabulka7body'],
-                                tabulka8meno=tabulkovydic['tabulka8meno'], tabulka8body=tabulkovydic['tabulka8body'],
-                                tabulka9meno=tabulkovydic['tabulka9meno'], tabulka9body=tabulkovydic['tabulka9body'],
-                                tabulka10meno=tabulkovydic['tabulka10meno'], tabulka10body=tabulkovydic['tabulka10body']))
+                                                tabulka1meno=tabulkovydic['tabulka1meno'], tabulka1body=tabulkovydic['tabulka1body'],
+                                                tabulka2meno=tabulkovydic['tabulka2meno'], tabulka2body=tabulkovydic['tabulka2body']))
         respond.set_cookie('nameID', json.dumps(pole))
         return respond
 
@@ -382,16 +326,8 @@ def post():
             omg += 1
 
         respond = make_response(render_template('layout.html', uvod=True, bdy=body, sklonovanie=koncovka,
-                                tabulka1meno=tabulkovydic['tabulka1meno'], tabulka1body=tabulkovydic['tabulka1body'],
-                                tabulka2meno=tabulkovydic['tabulka2meno'], tabulka2body=tabulkovydic['tabulka2body'],
-                                tabulka3meno=tabulkovydic['tabulka3meno'], tabulka3body=tabulkovydic['tabulka3body'],
-                                tabulka4meno=tabulkovydic['tabulka4meno'], tabulka4body=tabulkovydic['tabulka4body'],
-                                tabulka5meno=tabulkovydic['tabulka5meno'], tabulka5body=tabulkovydic['tabulka5body'],
-                                tabulka6meno=tabulkovydic['tabulka6meno'], tabulka6body=tabulkovydic['tabulka6body'],
-                                tabulka7meno=tabulkovydic['tabulka7meno'], tabulka7body=tabulkovydic['tabulka7body'],
-                                tabulka8meno=tabulkovydic['tabulka8meno'], tabulka8body=tabulkovydic['tabulka8body'],
-                                tabulka9meno=tabulkovydic['tabulka9meno'], tabulka9body=tabulkovydic['tabulka9body'],
-                                tabulka10meno=tabulkovydic['tabulka10meno'], tabulka10body=tabulkovydic['tabulka10body']))
+                                                tabulka1meno=tabulkovydic['tabulka1meno'], tabulka1body=tabulkovydic['tabulka1body'],
+                                                tabulka2meno=tabulkovydic['tabulka2meno'], tabulka2body=tabulkovydic['tabulka2body']))
         return respond
 
 
