@@ -235,6 +235,14 @@ def post():
             if str(ypsilon) == number:
                 ot = otazky.find('ot').text
                 od = otazky.find('od').text
+                ma = otazky.find('ma').text
+                mb = otazky.find('mb').text
+                mc = otazky.find('mc').text
+                md = otazky.find('md').text
+                me = otazky.find('me').text
+                mf = otazky.find('mf').text
+                mg = otazky.find('mg').text
+                mh = otazky.find('mh').text
 
                 kont()
                 lst = str(od).split(',')
@@ -295,7 +303,8 @@ def post():
                         tabulkovydic['tabulka' + str(omg) + 'body'] = y
                         omg += 1
 
-                    return flask.render_template('layout.html', control='Bohužiaľ nesprávne.', otazka=ot, odp=od, bdy=body, sklonovanie=koncovka,
+                    return flask.render_template('layout.html', control='Bohužiaľ nesprávne.', otazka=ot, odp=od,
+                                ma=ma, mb=mb, mc=mc, md=md, me=me, mf=mf, mg=mg, mh=mh, bdy=body, sklonovanie=koncovka,
                                 tabulka1meno=tabulkovydic['tabulka1meno'], tabulka1body=tabulkovydic['tabulka1body'],
                                 tabulka2meno=tabulkovydic['tabulka2meno'], tabulka2body=tabulkovydic['tabulka2body'],
                                 tabulka3meno=tabulkovydic['tabulka3meno'], tabulka3body=tabulkovydic['tabulka3body'],
