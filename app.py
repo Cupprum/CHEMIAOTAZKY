@@ -69,7 +69,7 @@ def get():
         engine.execute(jozo, (randommeno, body))
 
         tabulkovydic = {'tabulka1meno': None, 'tabulka1body': None, 'tabulka2meno': None, 'tabulka2body': None}
-        engine.execute("SELECT meno, body FROM FIIT WHERE stav = '1' ORDER BY body DESC LIMIT 10;")
+        engine.execute("SELECT meno, body FROM FIIT WHERE stav = '1' ORDER BY body DESC LIMIT 5;")
         omg = 1
         result_set = engine.fetchall()
         for r in result_set:
@@ -84,12 +84,7 @@ def get():
                                 tabulka2meno=tabulkovydic['tabulka2meno'], tabulka2body=tabulkovydic['tabulka2body'],
                                 tabulka3meno=tabulkovydic['tabulka3meno'], tabulka3body=tabulkovydic['tabulka3body'],
                                 tabulka4meno=tabulkovydic['tabulka4meno'], tabulka4body=tabulkovydic['tabulka4body'],
-                                tabulka5meno=tabulkovydic['tabulka5meno'], tabulka5body=tabulkovydic['tabulka5body'],
-                                tabulka6meno=tabulkovydic['tabulka6meno'], tabulka6body=tabulkovydic['tabulka6body'],
-                                tabulka7meno=tabulkovydic['tabulka7meno'], tabulka7body=tabulkovydic['tabulka7body'],
-                                tabulka8meno=tabulkovydic['tabulka8meno'], tabulka8body=tabulkovydic['tabulka8body'],
-                                tabulka9meno=tabulkovydic['tabulka9meno'], tabulka9body=tabulkovydic['tabulka9body'],
-                                tabulka10meno=tabulkovydic['tabulka10meno'], tabulka10body=tabulkovydic['tabulka10body']))
+                                tabulka5meno=tabulkovydic['tabulka5meno'], tabulka5body=tabulkovydic['tabulka5body']))
         respond.set_cookie('nameID', json.dumps(pole))
         return respond
 
@@ -102,7 +97,7 @@ def get():
         koncovka = konc[2:-2]
 
         tabulkovydic = {'tabulka1meno': None, 'tabulka1body': None, 'tabulka2meno': None, 'tabulka2body': None}
-        engine.execute("SELECT meno, body FROM FIIT WHERE stav = '1' ORDER BY body DESC LIMIT 10;")
+        engine.execute("SELECT meno, body FROM FIIT WHERE stav = '1' ORDER BY body DESC LIMIT 5;")
         omg = 1
         result_set = engine.fetchall()
         for r in result_set:
@@ -117,12 +112,7 @@ def get():
                                 tabulka2meno=tabulkovydic['tabulka2meno'], tabulka2body=tabulkovydic['tabulka2body'],
                                 tabulka3meno=tabulkovydic['tabulka3meno'], tabulka3body=tabulkovydic['tabulka3body'],
                                 tabulka4meno=tabulkovydic['tabulka4meno'], tabulka4body=tabulkovydic['tabulka4body'],
-                                tabulka5meno=tabulkovydic['tabulka5meno'], tabulka5body=tabulkovydic['tabulka5body'],
-                                tabulka6meno=tabulkovydic['tabulka6meno'], tabulka6body=tabulkovydic['tabulka6body'],
-                                tabulka7meno=tabulkovydic['tabulka7meno'], tabulka7body=tabulkovydic['tabulka7body'],
-                                tabulka8meno=tabulkovydic['tabulka8meno'], tabulka8body=tabulkovydic['tabulka8body'],
-                                tabulka9meno=tabulkovydic['tabulka9meno'], tabulka9body=tabulkovydic['tabulka9body'],
-                                tabulka10meno=tabulkovydic['tabulka10meno'], tabulka10body=tabulkovydic['tabulka10body']))
+                                tabulka5meno=tabulkovydic['tabulka5meno'], tabulka5body=tabulkovydic['tabulka5body']))
         return respond
 
 
@@ -144,7 +134,7 @@ def post():
 
         if len(finalneotazky) == 0:
             tabulkovydic = {'tabulka1meno': None, 'tabulka1body': None, 'tabulka2meno': None, 'tabulka2body': None}
-            engine.execute("SELECT meno, body FROM FIIT WHERE stav = '1' ORDER BY body DESC LIMIT 10;")
+            engine.execute("SELECT meno, body FROM FIIT WHERE stav = '1' ORDER BY body DESC LIMIT 5;")
             omg = 1
             result_set = engine.fetchall()
             for r in result_set:
@@ -159,12 +149,7 @@ def post():
                                     tabulka2meno=tabulkovydic['tabulka2meno'], tabulka2body=tabulkovydic['tabulka2body'],
                                     tabulka3meno=tabulkovydic['tabulka3meno'], tabulka3body=tabulkovydic['tabulka3body'],
                                     tabulka4meno=tabulkovydic['tabulka4meno'], tabulka4body=tabulkovydic['tabulka4body'],
-                                    tabulka5meno=tabulkovydic['tabulka5meno'], tabulka5body=tabulkovydic['tabulka5body'],
-                                    tabulka6meno=tabulkovydic['tabulka6meno'], tabulka6body=tabulkovydic['tabulka6body'],
-                                    tabulka7meno=tabulkovydic['tabulka7meno'], tabulka7body=tabulkovydic['tabulka7body'],
-                                    tabulka8meno=tabulkovydic['tabulka8meno'], tabulka8body=tabulkovydic['tabulka8body'],
-                                    tabulka9meno=tabulkovydic['tabulka9meno'], tabulka9body=tabulkovydic['tabulka9body'],
-                                    tabulka10meno=tabulkovydic['tabulka10meno'], tabulka10body=tabulkovydic['tabulka10body']))
+                                    tabulka5meno=tabulkovydic['tabulka5meno'], tabulka5body=tabulkovydic['tabulka5body']))
             return respond
 
         else:
@@ -187,7 +172,7 @@ def post():
                     pole = (randommeno, mojeotazky, ypsilon, body, koncovka)
 
                     tabulkovydic = {'tabulka1meno': None, 'tabulka1body': None, 'tabulka2meno': None, 'tabulka2body': None}
-                    result_set = engine.execute("SELECT meno, body FROM FIIT WHERE stav = '1' ORDER BY body DESC LIMIT 10;")
+                    result_set = engine.execute("SELECT meno, body FROM FIIT WHERE stav = '1' ORDER BY body DESC LIMIT 5;")
                     omg = 1
                     result_set = engine.fetchall()
                     for r in result_set:
@@ -202,12 +187,7 @@ def post():
                                             tabulka2meno=tabulkovydic['tabulka2meno'], tabulka2body=tabulkovydic['tabulka2body'],
                                             tabulka3meno=tabulkovydic['tabulka3meno'], tabulka3body=tabulkovydic['tabulka3body'],
                                             tabulka4meno=tabulkovydic['tabulka4meno'], tabulka4body=tabulkovydic['tabulka4body'],
-                                            tabulka5meno=tabulkovydic['tabulka5meno'], tabulka5body=tabulkovydic['tabulka5body'],
-                                            tabulka6meno=tabulkovydic['tabulka6meno'], tabulka6body=tabulkovydic['tabulka6body'],
-                                            tabulka7meno=tabulkovydic['tabulka7meno'], tabulka7body=tabulkovydic['tabulka7body'],
-                                            tabulka8meno=tabulkovydic['tabulka8meno'], tabulka8body=tabulkovydic['tabulka8body'],
-                                            tabulka9meno=tabulkovydic['tabulka9meno'], tabulka9body=tabulkovydic['tabulka9body'],
-                                            tabulka10meno=tabulkovydic['tabulka10meno'], tabulka10body=tabulkovydic['tabulka10body']))
+                                            tabulka5meno=tabulkovydic['tabulka5meno'], tabulka5body=tabulkovydic['tabulka5body']))
                     respond.set_cookie('nameID', json.dumps(pole))
                     return respond
 
@@ -265,7 +245,7 @@ def post():
                     jozo = """UPDATE FIIT SET body= %s WHERE uuia4= %s ;"""
                     engine.execute(jozo, (body, randommeno,))
                     tabulkovydic = {'tabulka1meno': None, 'tabulka1body': None, 'tabulka2meno': None, 'tabulka2body': None}
-                    engine.execute("SELECT meno, body FROM FIIT WHERE stav = '1' ORDER BY body DESC LIMIT 10;")
+                    engine.execute("SELECT meno, body FROM FIIT WHERE stav = '1' ORDER BY body DESC LIMIT 5;")
                     omg = 1
                     result_set = engine.fetchall()
                     for r in result_set:
@@ -280,12 +260,7 @@ def post():
                                             tabulka2meno=tabulkovydic['tabulka2meno'], tabulka2body=tabulkovydic['tabulka2body'],
                                             tabulka3meno=tabulkovydic['tabulka3meno'], tabulka3body=tabulkovydic['tabulka3body'],
                                             tabulka4meno=tabulkovydic['tabulka4meno'], tabulka4body=tabulkovydic['tabulka4body'],
-                                            tabulka5meno=tabulkovydic['tabulka5meno'], tabulka5body=tabulkovydic['tabulka5body'],
-                                            tabulka6meno=tabulkovydic['tabulka6meno'], tabulka6body=tabulkovydic['tabulka6body'],
-                                            tabulka7meno=tabulkovydic['tabulka7meno'], tabulka7body=tabulkovydic['tabulka7body'],
-                                            tabulka8meno=tabulkovydic['tabulka8meno'], tabulka8body=tabulkovydic['tabulka8body'],
-                                            tabulka9meno=tabulkovydic['tabulka9meno'], tabulka9body=tabulkovydic['tabulka9body'],
-                                            tabulka10meno=tabulkovydic['tabulka10meno'], tabulka10body=tabulkovydic['tabulka10body']))
+                                            tabulka5meno=tabulkovydic['tabulka5meno'], tabulka5body=tabulkovydic['tabulka5body']))
                     respond.set_cookie('nameID', json.dumps(pole))
                     return respond
 
@@ -293,7 +268,7 @@ def post():
                     moja[:] = []
 
                     tabulkovydic = {'tabulka1meno': None, 'tabulka1body': None, 'tabulka2meno': None, 'tabulka2body': None}
-                    engine.execute("SELECT meno, body FROM FIIT WHERE stav = '1' ORDER BY body DESC LIMIT 10;")
+                    engine.execute("SELECT meno, body FROM FIIT WHERE stav = '1' ORDER BY body DESC LIMIT 5;")
                     omg = 1
                     result_set = engine.fetchall()
                     for r in result_set:
@@ -309,13 +284,8 @@ def post():
                                 tabulka2meno=tabulkovydic['tabulka2meno'], tabulka2body=tabulkovydic['tabulka2body'],
                                 tabulka3meno=tabulkovydic['tabulka3meno'], tabulka3body=tabulkovydic['tabulka3body'],
                                 tabulka4meno=tabulkovydic['tabulka4meno'], tabulka4body=tabulkovydic['tabulka4body'],
-                                tabulka5meno=tabulkovydic['tabulka5meno'], tabulka5body=tabulkovydic['tabulka5body'],
-                                tabulka6meno=tabulkovydic['tabulka6meno'], tabulka6body=tabulkovydic['tabulka6body'],
-                                tabulka7meno=tabulkovydic['tabulka7meno'], tabulka7body=tabulkovydic['tabulka7body'],
-                                tabulka8meno=tabulkovydic['tabulka8meno'], tabulka8body=tabulkovydic['tabulka8body'],
-                                tabulka9meno=tabulkovydic['tabulka9meno'], tabulka9body=tabulkovydic['tabulka9body'],
-                                tabulka10meno=tabulkovydic['tabulka10meno'], tabulka10body=tabulkovydic['tabulka10body'])
-
+                                tabulka5meno=tabulkovydic['tabulka5meno'], tabulka5body=tabulkovydic['tabulka5body']))
+                
     if request.form['btn'] == 'Resetuje otazky':
         starekokie = request.cookies.get('nameID')
         starepole = json.loads(starekokie)
@@ -338,7 +308,7 @@ def post():
         engine.execute(jozo, (randommeno, body))
 
         tabulkovydic = {'tabulka1meno': None, 'tabulka1body': None, 'tabulka2meno': None, 'tabulka2body': None}
-        engine.execute("SELECT meno, body FROM FIIT WHERE stav = '1' ORDER BY body DESC LIMIT 10;")
+        engine.execute("SELECT meno, body FROM FIIT WHERE stav = '1' ORDER BY body DESC LIMIT 5;")
         omg = 1
         result_set = engine.fetchall()
         for r in result_set:
@@ -353,12 +323,7 @@ def post():
                                 tabulka2meno=tabulkovydic['tabulka2meno'], tabulka2body=tabulkovydic['tabulka2body'],
                                 tabulka3meno=tabulkovydic['tabulka3meno'], tabulka3body=tabulkovydic['tabulka3body'],
                                 tabulka4meno=tabulkovydic['tabulka4meno'], tabulka4body=tabulkovydic['tabulka4body'],
-                                tabulka5meno=tabulkovydic['tabulka5meno'], tabulka5body=tabulkovydic['tabulka5body'],
-                                tabulka6meno=tabulkovydic['tabulka6meno'], tabulka6body=tabulkovydic['tabulka6body'],
-                                tabulka7meno=tabulkovydic['tabulka7meno'], tabulka7body=tabulkovydic['tabulka7body'],
-                                tabulka8meno=tabulkovydic['tabulka8meno'], tabulka8body=tabulkovydic['tabulka8body'],
-                                tabulka9meno=tabulkovydic['tabulka9meno'], tabulka9body=tabulkovydic['tabulka9body'],
-                                tabulka10meno=tabulkovydic['tabulka10meno'], tabulka10body=tabulkovydic['tabulka10body']))
+                                tabulka5meno=tabulkovydic['tabulka5meno'], tabulka5body=tabulkovydic['tabulka5body']))
         respond.set_cookie('nameID', json.dumps(pole))
         return respond
 
@@ -380,7 +345,7 @@ def post():
         engine.execute(fero, (randommeno,))
 
         tabulkovydic = {'tabulka1meno': None, 'tabulka1body': None, 'tabulka2meno': None, 'tabulka2body': None}
-        engine.execute("SELECT meno, body FROM FIIT WHERE stav = '1' ORDER BY body DESC LIMIT 10;")
+        engine.execute("SELECT meno, body FROM FIIT WHERE stav = '1' ORDER BY body DESC LIMIT 5;")
         omg = 1
         result_set = engine.fetchall()
         for r in result_set:
@@ -395,12 +360,7 @@ def post():
                                 tabulka2meno=tabulkovydic['tabulka2meno'], tabulka2body=tabulkovydic['tabulka2body'],
                                 tabulka3meno=tabulkovydic['tabulka3meno'], tabulka3body=tabulkovydic['tabulka3body'],
                                 tabulka4meno=tabulkovydic['tabulka4meno'], tabulka4body=tabulkovydic['tabulka4body'],
-                                tabulka5meno=tabulkovydic['tabulka5meno'], tabulka5body=tabulkovydic['tabulka5body'],
-                                tabulka6meno=tabulkovydic['tabulka6meno'], tabulka6body=tabulkovydic['tabulka6body'],
-                                tabulka7meno=tabulkovydic['tabulka7meno'], tabulka7body=tabulkovydic['tabulka7body'],
-                                tabulka8meno=tabulkovydic['tabulka8meno'], tabulka8body=tabulkovydic['tabulka8body'],
-                                tabulka9meno=tabulkovydic['tabulka9meno'], tabulka9body=tabulkovydic['tabulka9body'],
-                                tabulka10meno=tabulkovydic['tabulka10meno'], tabulka10body=tabulkovydic['tabulka10body']))
+                                tabulka5meno=tabulkovydic['tabulka5meno'], tabulka5body=tabulkovydic['tabulka5body']))
         return respond
 
 
