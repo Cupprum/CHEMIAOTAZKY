@@ -340,14 +340,14 @@ def post():
         zadanemeno = request.form['vloztemeno']
         print("randommeno =", randommeno, "|| zadanemeno = ", zadanemeno, "|| body =", body)
 
-        if zadanemeno = "" or zadanemeno = " ":
+        if zadanemeno == "" or zadanemeno == " ":
             respond = make_response(render_template('layout.html', otazka="Vlož iné meno.", uvod=True, bdy=body, sklonovanie=koncovka,
                                 tabulka1meno=tabulkovydic['tabulka1meno'], tabulka1body=tabulkovydic['tabulka1body'],
                                 tabulka2meno=tabulkovydic['tabulka2meno'], tabulka2body=tabulkovydic['tabulka2body'],
                                 tabulka3meno=tabulkovydic['tabulka3meno'], tabulka3body=tabulkovydic['tabulka3body'],
                                 tabulka4meno=tabulkovydic['tabulka4meno'], tabulka4body=tabulkovydic['tabulka4body'],
                                 tabulka5meno=tabulkovydic['tabulka5meno'], tabulka5body=tabulkovydic['tabulka5body']))
-        return respond
+            return respond
 
         else:
             jozo = """UPDATE FIIT SET meno= %s WHERE uuia4= %s ;"""
