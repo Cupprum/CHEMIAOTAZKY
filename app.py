@@ -54,9 +54,10 @@ def kont():
         moja.append('h')
 
 
-@app.before_request
+@app.before_first_request
 def permanentnasession():
     session.permanent = True
+    print("vypise ak to funguje")
 
 
 @app.route('/', methods=['GET'])
