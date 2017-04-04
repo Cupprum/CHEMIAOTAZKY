@@ -107,7 +107,7 @@ def get():
             tabulkovydic['tabulka' + str(omg) + 'body'] = y
             omg += 1
 
-        respond = make_response(render_template('layout.html', uvod=True, bdy=body, sklonovaie=koncovka,
+        respond = make_response(render_template('layout.html', uvod=True, bdy=body, sklonovanie=koncovka,
                                 tabulka1meno=tabulkovydic['tabulka1meno'], tabulka1body=tabulkovydic['tabulka1body'],
                                 tabulka2meno=tabulkovydic['tabulka2meno'], tabulka2body=tabulkovydic['tabulka2body'],
                                 tabulka3meno=tabulkovydic['tabulka3meno'], tabulka3body=tabulkovydic['tabulka3body'],
