@@ -340,29 +340,39 @@ def post():
         zadanemeno = request.form['vloztemeno']
         print("randommeno =", randommeno, "|| zadanemeno = ", zadanemeno, "|| body =", body)
 
-        jozo = """UPDATE FIIT SET meno= %s WHERE uuia4= %s ;"""
-        engine.execute(jozo, (zadanemeno, randommeno))
-        fero = """UPDATE FIIT SET stav= '1' WHERE uuia4= %s ;"""
-        engine.execute(fero, (randommeno,))
-
-        tabulkovydic = {'tabulka1meno': None, 'tabulka1body': None, 'tabulka2meno': None, 'tabulka2body': None}
-        engine.execute("SELECT meno, body FROM FIIT WHERE stav = '1' ORDER BY body DESC LIMIT 5;")
-        omg = 1
-        result_set = engine.fetchall()
-        for r in result_set:
-            x = random.choice(r[:1])
-            y = random.choice(r[1:])
-            tabulkovydic['tabulka' + str(omg) + 'meno'] = x
-            tabulkovydic['tabulka' + str(omg) + 'body'] = y
-            omg += 1
-
-        respond = make_response(render_template('layout.html', uvod=True, bdy=body, sklonovanie=koncovka,
+        if zadanemeno = "" or zadanemeno = " ":
+            respond = make_response(render_template('layout.html', otazka="Vlož iné meno.", uvod=True, bdy=body, sklonovanie=koncovka,
                                 tabulka1meno=tabulkovydic['tabulka1meno'], tabulka1body=tabulkovydic['tabulka1body'],
                                 tabulka2meno=tabulkovydic['tabulka2meno'], tabulka2body=tabulkovydic['tabulka2body'],
                                 tabulka3meno=tabulkovydic['tabulka3meno'], tabulka3body=tabulkovydic['tabulka3body'],
                                 tabulka4meno=tabulkovydic['tabulka4meno'], tabulka4body=tabulkovydic['tabulka4body'],
                                 tabulka5meno=tabulkovydic['tabulka5meno'], tabulka5body=tabulkovydic['tabulka5body']))
         return respond
+
+        else:
+            jozo = """UPDATE FIIT SET meno= %s WHERE uuia4= %s ;"""
+            engine.execute(jozo, (zadanemeno, randommeno))
+            fero = """UPDATE FIIT SET stav= '1' WHERE uuia4= %s ;"""
+            engine.execute(fero, (randommeno,))
+
+            tabulkovydic = {'tabulka1meno': None, 'tabulka1body': None, 'tabulka2meno': None, 'tabulka2body': None}
+            engine.execute("SELECT meno, body FROM FIIT WHERE stav = '1' ORDER BY body DESC LIMIT 5;")
+            omg = 1
+            result_set = engine.fetchall()
+            for r in result_set:
+                x = random.choice(r[:1])
+                y = random.choice(r[1:])
+                tabulkovydic['tabulka' + str(omg) + 'meno'] = x
+                tabulkovydic['tabulka' + str(omg) + 'body'] = y
+                omg += 1
+
+            respond = make_response(render_template('layout.html', uvod=True, otazka="Tvoje meno bolo uložené.", bdy=body, sklonovanie=koncovka,
+                                    tabulka1meno=tabulkovydic['tabulka1meno'], tabulka1body=tabulkovydic['tabulka1body'],
+                                    tabulka2meno=tabulkovydic['tabulka2meno'], tabulka2body=tabulkovydic['tabulka2body'],
+                                    tabulka3meno=tabulkovydic['tabulka3meno'], tabulka3body=tabulkovydic['tabulka3body'],
+                                    tabulka4meno=tabulkovydic['tabulka4meno'], tabulka4body=tabulkovydic['tabulka4body'],
+                                    tabulka5meno=tabulkovydic['tabulka5meno'], tabulka5body=tabulkovydic['tabulka5body']))
+            return respond
 
 
 if __name__ == '__main__':
