@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, make_response
+from flask import Flask, request, render_template, make_response, session
 import flask.views
 import random
 import xml.etree.ElementTree as ET
@@ -52,6 +52,11 @@ def kont():
     H = request.form.get('H')
     if H:
         moja.append('h')
+
+
+@app.before_request
+def permanentnasession():
+    session.permanent = True
 
 
 @app.route('/', methods=['GET'])
@@ -119,7 +124,7 @@ def get():
 
 @app.route('/', methods=['POST'])
 def post():
-    if request.form['btn'] == 'Nova otazka':
+    if request.form['btn'] == 'Nová otazka':
         kokie = request.cookies.get('nameID')
         pole = json.loads(kokie)
         meno = str(pole[:1])
@@ -374,6 +379,8 @@ def post():
                                     tabulka5meno=tabulkovydic['tabulka5meno'], tabulka5body=tabulkovydic['tabulka5body']))
             return respond
 
+
+app.secret_key = os.environ["SESSION_KEY"]
 
 if __name__ == '__main__':
     app.run(debug=True, use_reloader=True)
