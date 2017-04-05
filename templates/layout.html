@@ -5,14 +5,6 @@
 <script type="text/javascript" 
         src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 <script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-    "HTML-CSS" : {
-        availableFonts : ["STIX"],
-        preferredFont : "STIX",
-        webFont : "STIX General",
-        imageFont : null
-    }
-});
 </script>
 <style>
        .question-text 
@@ -86,7 +78,7 @@ MathJax.Hub.Config({
         <img class="image" src="https://chemistry-studio.com/wp-content/uploads/logo_chemistry_1024_RGB.png" style="width: 50%"/>
         <span class="instructions"><center>
         {% if uvod %}
-        Zvoľ spravne odpovede. Skontroluj svoje odpovede kliknutim na tlacitko kontrola.
+        Zvoľ správne odpovede. Skontroluj svoje odpovede kliknutím na tlačítko kontrola.
         {% endif %}
         </center></span>
   
@@ -121,20 +113,20 @@ MathJax.Hub.Config({
       
       <tr>
 	      <td class="align-right">
-           <input type="submit" name="btn" value="Nová otazka" />
+           <input type="submit" name="btn" value="Nová otázka" />
         </td>
         <td>
 	         <center><input type="submit" name="btn" value="Kontrola" /></center>
         </td>
         <td>
-           <input type="submit" name="btn" value="Resetuje otazky" />
+           <input type="submit" name="btn" value="Resetuje otázky" />
         </td>
       </tr>
       <tr>
 	      <h1 class="question-text center">{{ control }} <br />{{ odp }}</h1>
       </tr>
       <tr>
-         <h1 class="question-text center">{{ bdy }} otaz{{ sklonovanie }} mas spravne</h1>
+         <h1 class="question-text center">{{ bdy }} otáz{{ sklonovanie }} máš správne</h1>
       </tr>
       <tr> 
         <div class="column" style="padding-left: 40%"><h1> A <br /><input type="checkbox" name="A" value="A"/></div>  
@@ -157,7 +149,7 @@ MathJax.Hub.Config({
                 <input class="align-right2" type="text" name="vloztemeno" />
              </td>
              <td>
-                <input type="submit" name="btn" value="Pridat meno" />
+                <input type="submit" name="btn" value="Pridať meno" />
               </td>
          </tr>
     </table>
@@ -205,47 +197,6 @@ MathJax.Hub.Config({
                  <h1 class="question-text" style="padding-left: 0px; padding-right: 0px">{{ tabulka5body }}</h1><br />
              </td>
          </tr>
-         <tr>
-             <td>
-                 <h1 class="question-text align-right2" style="padding-left: 0px; padding-right: 0px">{{ tabulka6meno }}</h1>
-             </td>
-             <td>
-                 <h1 class="question-text" style="padding-left: 0px; padding-right: 0px">{{ tabulka6body }}</h1><br />
-             </td>
-         </tr>
-         <tr>
-             <td>
-                 <h1 class="question-text align-right2" style="padding-left: 0px; padding-right: 0px">{{ tabulka7meno }}</h1>
-             </td>
-             <td>
-                 <h1 class="question-text" style="padding-left: 0px; padding-right: 0px">{{ tabulka7body }}</h1><br />
-             </td>
-         </tr>
-         <tr>
-             <td>
-                 <h1 class="question-text align-right2" style="padding-left: 0px; padding-right: 0px">{{ tabulka8meno }}</h1>
-             </td>
-             <td>
-                 <h1 class="question-text" style="padding-left: 0px; padding-right: 0px">{{ tabulka8body }}</h1><br />
-             </td>
-         </tr>
-         <tr>
-             <td>
-                 <h1 class="question-text align-right2" style="padding-left: 0px; padding-right: 0px">{{ tabulka9meno }}</h1>
-             </td>
-             <td>
-                 <h1 class="question-text" style="padding-left: 0px; padding-right: 0px">{{ tabulka9body }}</h1><br />
-             </td>
-         </tr>
-         <tr>
-             <td>
-                 <h1 class="question-text align-right2" style="padding-left: 0px; padding-right: 0px">{{ tabulka10meno }}</h1>
-             </td>
-             <td>
-                 <h1 class="question-text" style="padding-left: 0px; padding-right: 0px">{{ tabulka10body }}</h1><br />
-             </td>
-         </tr>
-
      </table>
      
      

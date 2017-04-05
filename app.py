@@ -125,7 +125,7 @@ def get():
 
 @app.route('/', methods=['POST'])
 def post():
-    if request.form['btn'] == 'Nová otazka':
+    if request.form['btn'] == 'Nová otázka':
         kokie = request.cookies.get('nameID')
         pole = json.loads(kokie)
         meno = str(pole[:1])
@@ -293,7 +293,7 @@ def post():
                                 tabulka4meno=tabulkovydic['tabulka4meno'], tabulka4body=tabulkovydic['tabulka4body'],
                                 tabulka5meno=tabulkovydic['tabulka5meno'], tabulka5body=tabulkovydic['tabulka5body'])
                 
-    if request.form['btn'] == 'Resetuje otazky':
+    if request.form['btn'] == 'Resetuje otázky':
         starekokie = request.cookies.get('nameID')
         starepole = json.loads(starekokie)
         staremeno = str(starepole[:1])
@@ -334,7 +334,7 @@ def post():
         respond.set_cookie('nameID', json.dumps(pole))
         return respond
 
-    if request.form['btn'] == 'Pridat meno':
+    if request.form['btn'] == 'Pridať meno':
         kokie = request.cookies.get('nameID')
         pole = json.loads(kokie)
         meno = str(pole[:1])
