@@ -1,0 +1,153 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta name="viewport" content="width=device-width">
+<script type="text/javascript" 
+        src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/x-mathjax-config">
+</script>
+<style>
+       .question-text 
+            {font-size: 20px;
+             word-wrap: break-word;
+             vertical-align: top;
+             text-align: justify;
+             padding-left: 1em;
+             padding-right: 1em;}
+             
+        .padding_otazka
+             {padding-left: 23%;
+              padding-right: 23%;
+             }
+        
+        .b-color
+            {background-color:#CACACA; }
+        
+        .image 
+            {max-width: 100%;
+             display: block;
+             margin-top: 10px;
+             margin-bottom: 10px;
+             margin-left: auto;
+             margin-right: auto;} 
+        
+        .instructions 
+            {font-size: 15px;
+             word-wrap: break-word;
+             vertical-align: top;
+             font-weight: 700; }
+             
+        .center
+            {text-align: center;}
+            
+        .align-right
+            {float: right;
+             width: 90px;}
+             
+        .align-right2
+            {float: right;
+             width: 10em;}
+             
+        .column
+            {float: left;
+             display: inline-block;
+             word-wrap: break-word;
+             vertical-align: top;
+             background-color: #CACACA;
+             padding: 5px;}
+            
+        
+        table 
+            {border: none;
+             width: 100%;}
+            table td 
+                {width: 33%;
+                 word-wrap: break-word;
+                 background-color: #CACACA;
+                 border: none;
+                 vertical-align: top;}
+</style>
+
+</head>
+<body class="b-color">
+    <form action="/" method = "post">
+  
+    <table>  
+        <tr>
+            <img class="image" src="https://chemistry-studio.com/wp-content/uploads/logo_chemistry_1024_RGB.png" style="width: 50%"/>
+        </tr>
+    </table>     
+
+    <table>
+        <tr>
+             <h1 class="question-text padding_otazka">{{ otazka }}</h1>
+        </tr>
+         <tr>
+             <td>
+                <input class="align-right2" type="text" name="vloztemeno" />
+             </td>
+             <td>
+                <input type="submit" name="btn" value="Pridať meno" />
+              </td>
+         </tr>
+    </table>
+  
+   <br /><br /><br />
+
+     <table>
+         <tr>
+             <td>
+                 <h1 class="question-text align-right2" style="padding-left: 0px; padding-right: 0px">{{ tabulka1meno }}</h1>
+             </td>
+             <td>
+                 <h1 class="question-text" style="padding-left: 0px; padding-right: 0px">{{ tabulka1body }}</h1><br />
+             </td>
+         </tr>
+         <tr>
+             <td>
+                 <h1 class="question-text align-right2" style="padding-left: 0px; padding-right: 0px">{{ tabulka2meno }}</h1>
+             </td>
+             <td>
+                 <h1 class="question-text" style="padding-left: 0px; padding-right: 0px">{{ tabulka2body }}</h1>
+             </td>
+         </tr>
+         <tr>
+             <td>
+                 <h1 class="question-text align-right2" style="padding-left: 0px; padding-right: 0px">{{ tabulka3meno }}</h1>
+             </td>
+             <td>
+                 <h1 class="question-text" style="padding-left: 0px; padding-right: 0px">{{ tabulka3body }}</h1><br />
+             </td>
+         </tr>
+         <tr>
+             <td>
+                 <h1 class="question-text align-right2" style="padding-left: 0px; padding-right: 0px">{{ tabulka4meno }}</h1>
+             </td>
+             <td>
+                 <h1 class="question-text" style="padding-left: 0px; padding-right: 0px">{{ tabulka4body }}</h1><br />
+             </td>
+         </tr>
+         <tr>
+             <td>
+                 <h1 class="question-text align-right2" style="padding-left: 0px; padding-right: 0px">{{ tabulka5meno }}</h1>
+             </td>
+             <td>
+                 <h1 class="question-text" style="padding-left: 0px; padding-right: 0px">{{ tabulka5body }}</h1><br />
+             </td>
+         </tr>
+     </table>
+       
+         </form>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+       Results:
+       <pre>
+        {% for message in messages %}
+            {{message}}
+        {% endfor %}
+       </pre>
+    {% endif %}
+   {% endwith %}
+
+
+</body>

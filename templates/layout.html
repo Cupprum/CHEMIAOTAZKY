@@ -66,7 +66,6 @@
                  background-color: #CACACA;
                  border: none;
                  vertical-align: top;}
- 
 </style>
 
 </head>
@@ -127,90 +126,30 @@
       </tr>
       <tr>
          <h1 class="question-text center">{{ bdy }} otáz{{ sklonovanie }} máš správne</h1>
-      </tr>
+      </tr>
       <tr> 
         <div class="column" style="padding-left: 40%"><h1> A <br /><input type="checkbox" name="A" value="A"/></div>  
         <div class="column"><h1> B <br /><input type="checkbox" name="B" value="B"/></div>
         <div class="column"><h1> C <br /><input type="checkbox" name="C" value="C"/></div>
-	      <div class="column"><h1> D <br /><input type="checkbox" name="D" value="D"/></div>
-	      <div class="column"><h1> E <br /><input type="checkbox" name="E" value="E"/></div>
-	      <div class="column"><h1> F <br /><input type="checkbox" name="F" value="F"/></div>
-	      <div class="column"><h1> G <br /><input type="checkbox" name="G" value="G"/></div>
-	      <div class="column" style="padding-right: 20%"><h1> H <br /><input type="checkbox" name="H" value="H"/></div>
+        <div class="column"><h1> D <br /><input type="checkbox" name="D" value="D"/></div>
+        <div class="column"><h1> E <br /><input type="checkbox" name="E" value="E"/></div>
+        <div class="column"><h1> F <br /><input type="checkbox" name="F" value="F"/></div>
+        <div class="column"><h1> G <br /><input type="checkbox" name="G" value="G"/></div>
+        <div class="column" style="padding-right: 20%"><h1> H <br /><input type="checkbox" name="H" value="H"/></div>
       </tr> 
+        <td>
+            <input type="submit" name="btn" value="Tabulka najlepších" />
+        </td>
     </table>
- 
- 
  <br /><br /><br />
- 
-    <table>
-         <tr>
-             <td>
-                <input class="align-right2" type="text" name="vloztemeno" />
-             </td>
-             <td>
-                <input type="submit" name="btn" value="Pridať meno" />
-              </td>
-         </tr>
-    </table>
-  
-   <br /><br /><br />
-  
-     <table>
-         <tr>
-             <td>
-                 <h1 class="question-text align-right2" style="padding-left: 0px; padding-right: 0px">{{ tabulka1meno }}</h1>
-             </td>
-             <td>
-                 <h1 class="question-text" style="padding-left: 0px; padding-right: 0px">{{ tabulka1body }}</h1><br />
-             </td>
-         </tr>
-         <tr>
-             <td>
-                 <h1 class="question-text align-right2" style="padding-left: 0px; padding-right: 0px">{{ tabulka2meno }}</h1>
-             </td>
-             <td>
-                 <h1 class="question-text" style="padding-left: 0px; padding-right: 0px">{{ tabulka2body }}</h1>
-             </td>
-         </tr>
-         <tr>
-             <td>
-                 <h1 class="question-text align-right2" style="padding-left: 0px; padding-right: 0px">{{ tabulka3meno }}</h1>
-             </td>
-             <td>
-                 <h1 class="question-text" style="padding-left: 0px; padding-right: 0px">{{ tabulka3body }}</h1><br />
-             </td>
-         </tr>
-         <tr>
-             <td>
-                 <h1 class="question-text align-right2" style="padding-left: 0px; padding-right: 0px">{{ tabulka4meno }}</h1>
-             </td>
-             <td>
-                 <h1 class="question-text" style="padding-left: 0px; padding-right: 0px">{{ tabulka4body }}</h1><br />
-             </td>
-         </tr>
-         <tr>
-             <td>
-                 <h1 class="question-text align-right2" style="padding-left: 0px; padding-right: 0px">{{ tabulka5meno }}</h1>
-             </td>
-             <td>
-                 <h1 class="question-text" style="padding-left: 0px; padding-right: 0px">{{ tabulka5body }}</h1><br />
-             </td>
-         </tr>
-     </table>
-     
-     
-     
-     
-     
-     
+
     </form>
     {% with messages = get_flashed_messages() %}
 	{% if messages %}
 	   Results:
 	   <pre>
 		{% for message in messages %}
-{{message}}
+            {{message}}
 		{% endfor %}
 	   </pre>
 	{% endif %}
