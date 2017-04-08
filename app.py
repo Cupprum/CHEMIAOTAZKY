@@ -319,6 +319,16 @@ def skusaP():
                                         tabulka5meno=tabulkovydic['tabulka5meno'], tabulka5body=tabulkovydic['tabulka5body']))
                 return respond
 
+    if request.form['btn'] == 'Späť na hlavnú stránku':
+        kokie = request.cookies.get('nameID')
+        pole = json.loads(kokie)
+        body = random.choice(list(pole[3:4]))
+        konc = str(pole[4:5])
+        koncovka = konc[2:-2]
+        respond = make_response(render_template('layout.html', uvod=True, bdy=body, sklonovanie=koncovka))
+        return respond
+
+
 app.secret_key = os.environ["SESSION_KEY"]
 
 if __name__ == '__main__':
