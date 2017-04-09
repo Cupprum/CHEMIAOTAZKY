@@ -72,17 +72,26 @@
 <body class="b-color">
     <form action="/" method = "post">
   
-  <table>  
-     <tr>
-        <img class="image" src="https://chemistry-studio.com/wp-content/uploads/logo_chemistry_1024_RGB.png" style="width: 50%"/>
-        <span class="instructions"><center>
-        {% if uvod %}
-        Zvoľ správne odpovede. Skontroluj svoje odpovede kliknutím na tlačítko kontrola.
-        {% endif %}
-        </center></span>
-  
+    <table>  
         <tr>
-	         <h1 class="question-text padding_otazka">{{ otazka }}</h1>
+            <img class="image" src="https://chemistry-studio.com/wp-content/uploads/logo_chemistry_1024_RGB.png" style="width: 50%"/>
+        </tr>
+    </table>     
+
+    <table>
+        <td>
+            <input type="submit" name="btn" value="Späť na hlavnú stránku" />
+        </td>
+    </table>
+  
+   <br /><br /><br />
+
+     <table>
+        <tr>
+            <h1 class="question-text padding_otazka">Na tieto otazky si odpovedal zle {{ zleotazky }}</h1>
+            <h1 class="question-text padding_otazka">Toto je otázka číslo {{ cislozlejotazky }}</h1>
+        <tr>
+             <h1 class="question-text padding_otazka">{{ otazka }}</h1>
         </tr>
         <tr>
            <h1 class="question-text padding_otazka">{{ ma }}</h1>
@@ -109,23 +118,8 @@
            <h1 class="question-text padding_otazka">{{ mh }}</h1>
         </tr>
       </tr>
-      
       <tr>
-	      <td class="align-right">
-           <input type="submit" name="btn" value="Nová otázka" />
-        </td>
-        <td>
-	         <center><input type="submit" name="btn" value="Kontrola" /></center>
-        </td>
-        <td>
-           <input type="submit" name="btn" value="Resetuje otázky" />
-        </td>
-      </tr>
-      <tr>
-	      <h1 class="question-text center">{{ control }} <br />{{ odp }}</h1>
-      </tr>
-      <tr>
-         <h1 class="question-text center">{{ bdy }} otáz{{ sklonovanie }} máš správne</h1>
+        <h1 class="question-text center">{{ control }} <br />{{ odp }}</h1>
       </tr>
       <tr> 
         <div class="column" style="padding-left: 40%"><h1> A <br /><input type="checkbox" name="A" value="A"/></div>  
@@ -138,24 +132,24 @@
         <div class="column" style="padding-right: 20%"><h1> H <br /><input type="checkbox" name="H" value="H"/></div>
       </tr> 
         <td>
-            <input type="submit" name="btn" value="Tabulka najlepších" />
+             <center><input type="submit" name="btn" value="Kontrola zlej otázky" /></center>
         </td>
         <td>
-            <input type="submit" name="btn" value="Otázky, na ktoré som odpovedal zle" />
-        </td>
-    </table>
- <br /><br /><br />
-
-    </form>
+             <center><input type="submit" name="btn" value="Ďalšia zlá otázka" /></center>
+        </td>           
+        </tr>
+     </table>
+       
+         </form>
     {% with messages = get_flashed_messages() %}
-	{% if messages %}
-	   Results:
-	   <pre>
-		{% for message in messages %}
+    {% if messages %}
+       Results:
+       <pre>
+        {% for message in messages %}
             {{message}}
-		{% endfor %}
-	   </pre>
-	{% endif %}
+        {% endfor %}
+       </pre>
+    {% endif %}
    {% endwith %}
 
 

@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, make_response, session
+from flask import Flask, request, render_template, make_response
 import flask.views
 import random
 import xml.etree.ElementTree as ET
@@ -54,12 +54,6 @@ def kont():
         moja.append('h')
 
 
-@app.before_first_request
-def permanentnasession():
-    session.permanent = True
-    print("vypise ak to funguje")
-
-
 @app.route('/', methods=['GET'])
 def skusaG():
     if request.cookies.get('nameID') is None:
@@ -68,7 +62,8 @@ def skusaG():
         ypsilon = 0
         body = 0
         koncovka = 'ok'
-        pole = (randommeno, mojeotazky, ypsilon, body, koncovka)
+        zleotazky = []
+        pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky)
         print('toto vypise kookie noveho uzivatela', pole)
 
         jozo = """INSERT INTO fiit (uuia4, meno, body, stav) VALUES (%s, NULL, %s, '0');"""
@@ -98,14 +93,17 @@ def skusaP():
         pole = json.loads(kokie)
         meno = str(pole[:1])
         randommeno = meno[2:-2]
+
         polevsetkychotazok = set(list(range(1, 500 + 1)))
         mojeotazky = random.choice(list(pole[1:2]))
         polesplnenychotazok = set(mojeotazky)
         finalneotazky = list(polevsetkychotazok - polesplnenychotazok)
+
         body = random.choice(list(pole[3:4]))
         konc = str(pole[4:5])
         koncovka = konc[2:-2]
-        print("mojeotazky = ", mojeotazky)
+        zleotazky = random.choice(list(pole[5:6]))
+        print("zleotazky = ", zleotazky)
 
         if len(finalneotazky) == 0:
             respond = make_response(render_template('layout.html', control='Nemame otazky', bdy=body, sklonovanie=koncovka))
@@ -113,11 +111,11 @@ def skusaP():
 
         else:
             ypsilon = random.choice(finalneotazky)
-            print('vypise pole po castiach nech s nimi moze robit', randommeno, '||', mojeotazky, '||', ypsilon, '||', body, '||', koncovka)
+            print('vypise pole po castiach nech s nimi moze robit', randommeno, '||', mojeotazky, '||', ypsilon, '||', body, '||', koncovka, '||', zleotazky)
             for otazky in root.findall('otazka'):
                 number = otazky.attrib.get('number')
-                print('ypsilon: ', ypsilon, 'number: ', number)
                 if str(ypsilon) == number:
+                    print('ypsilon: ', ypsilon, 'number: ', number)
                     ot = otazky.find('ot').text
                     od = otazky.find('od').text
                     ma = otazky.find('ma').text
@@ -128,7 +126,7 @@ def skusaP():
                     mf = otazky.find('mf').text
                     mg = otazky.find('mg').text
                     mh = otazky.find('mh').text
-                    pole = (randommeno, mojeotazky, ypsilon, body, koncovka)
+                    pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky)
 
                     respond = make_response(render_template('layout.html', otazka=ot, ma=ma, mb=mb, mc=mc, md=md, me=me, mf=mf, mg=mg, mh=mh,
                                             control=('Spravna odpoved je', od), bdy=body, sklonovanie=koncovka))
@@ -151,11 +149,12 @@ def skusaP():
         body = random.choice(list(pole[3:4]))
         konc = str(pole[4:5])
         koncovka = konc[2:-2]
+        zleotazky = random.choice(list(pole[5:6]))
 
         for otazky in root.findall('otazka'):
             number = otazky.attrib.get('number')
-            print('ypsilon: ', ypsilon, 'number: ', number)
             if str(ypsilon) == number:
+                print('ypsilon: ', ypsilon, 'number: ', number)
                 ot = otazky.find('ot').text
                 od = otazky.find('od').text
                 ma = otazky.find('ma').text
@@ -181,7 +180,7 @@ def skusaP():
                         koncovka = 'ky'
                     elif body >= 5:
                         koncovka = 'ok'
-                    pole = (randommeno, mojeotazky, ypsilon, body, koncovka)
+                    pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky)
                     print('toto vypise pole', pole)
 
                     jozo = """UPDATE FIIT SET body= %s WHERE uuia4= %s ;"""
@@ -193,8 +192,13 @@ def skusaP():
 
                 else:
                     moja[:] = []
-                    return flask.render_template('layout.html', control='Bohužiaľ nesprávne.', otazka=ot, odp=od,
-                                ma=ma, mb=mb, mc=mc, md=md, me=me, mf=mf, mg=mg, mh=mh, bdy=body, sklonovanie=koncovka)
+                    zleotazky.append(int(ypsilon))
+                    pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky)
+                    respond = make_response(render_template('layout.html', control='Bohužiaľ nesprávne.', otazka=ot, odp=od,
+                                                ma=ma, mb=mb, mc=mc, md=md, me=me, mf=mf, mg=mg, mh=mh, bdy=body,
+                                                sklonovanie=koncovka))
+                    respond.set_cookie('nameID', json.dumps(pole))
+                    return respond
 
     if request.form['btn'] == 'Resetuje otázky':
         starekokie = request.cookies.get('nameID')
@@ -210,8 +214,9 @@ def skusaP():
         ypsilon = 0
         body = 0
         koncovka = 'ok'
+        zleotazky = []
 
-        pole = (randommeno, mojeotazky, ypsilon, body, koncovka)
+        pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky)
         print('toto vypise kookie noveho uzivatela', pole)
 
         jozo = """INSERT INTO FIIT (uuia4, meno, body, stav) VALUES (%s, NULL, %s, '0');"""
@@ -318,6 +323,141 @@ def skusaP():
                                         tabulka4meno=tabulkovydic['tabulka4meno'], tabulka4body=tabulkovydic['tabulka4body'],
                                         tabulka5meno=tabulkovydic['tabulka5meno'], tabulka5body=tabulkovydic['tabulka5body']))
                 return respond
+
+    if request.form['btn'] == 'Otázky, na ktoré som odpovedal zle':
+        kokie = request.cookies.get('nameID')
+        pole = json.loads(kokie)
+        meno = str(pole[:1])
+        randommeno = meno[2:-2]
+
+        polevsetkychotazok = set(list(range(1, 500 + 1)))
+
+        mojeotazky = random.choice(list(pole[1:2]))
+
+        body = random.choice(list(pole[3:4]))
+        konc = str(pole[4:5])
+        koncovka = konc[2:-2]
+        zleotazky = random.choice(list(pole[5:6]))
+        print("zleotazky = ", zleotazky)
+
+        if len(zleotazky) == 0:
+            respond = make_response(render_template('zleotazky.html', otazka="Na všetky otázky si odpovedal dobre, nemáš si čo opraviť"))
+            return respond
+
+        else:
+            ypsilon = random.choice(zleotazky)
+            for otazky in root.findall('otazka'):
+                number = otazky.attrib.get('number')
+                if str(ypsilon) == number:
+                    print('vypise pole po castiach nech s nimi moze robit', randommeno, '||', mojeotazky, '||', ypsilon, '||', zleotazky)
+                    print('ypsilon Zle otazky: ', ypsilon, 'number: ', number)
+                    ot = otazky.find('ot').text
+                    od = otazky.find('od').text
+                    ma = otazky.find('ma').text
+                    mb = otazky.find('mb').text
+                    mc = otazky.find('mc').text
+                    md = otazky.find('md').text
+                    me = otazky.find('me').text
+                    mf = otazky.find('mf').text
+                    mg = otazky.find('mg').text
+                    mh = otazky.find('mh').text
+                    respond = make_response(render_template('zleotazky.html', otazka=ot, ma=ma, mb=mb, mc=mc, md=md, me=me, mf=mf, mg=mg, mh=mh,
+                                                    control=('Spravna odpoved je', od), zleotazky=zleotazky, cislozlejotazky=ypsilon))
+                    pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky)
+                    respond.set_cookie('nameID', json.dumps(pole))
+                    return respond
+
+    if request.form['btn'] == 'Ďalšia zlá otázka':
+        kokie = request.cookies.get('nameID')
+        pole = json.loads(kokie)
+        meno = str(pole[:1])
+        randommeno = meno[2:-2]
+
+        mojeotazky = random.choice(list(pole[1:2]))
+        body = random.choice(list(pole[3:4]))
+        konc = str(pole[4:5])
+        koncovka = konc[2:-2]
+        zleotazky = random.choice(list(pole[5:6]))
+        print("zleotazky = ", zleotazky)
+
+        if len(zleotazky) == 0:
+            respond = make_response(render_template('zleotazky.html', otazka="Na všetky otázky si odpovedal dobre, nemáš si čo opraviť"))
+            return respond
+
+        else:
+            ypsilon = random.choice(zleotazky)
+            for otazky in root.findall('otazka'):
+                number = otazky.attrib.get('number')
+                if str(ypsilon) == number:
+                    print('vypise pole po castiach nech s nimi moze robit', randommeno, '||', mojeotazky, '||', ypsilon, '||', zleotazky)
+                    print('ypsilon Zle otazky: ', ypsilon, 'number: ', number)
+                    ot = otazky.find('ot').text
+                    od = otazky.find('od').text
+                    ma = otazky.find('ma').text
+                    mb = otazky.find('mb').text
+                    mc = otazky.find('mc').text
+                    md = otazky.find('md').text
+                    me = otazky.find('me').text
+                    mf = otazky.find('mf').text
+                    mg = otazky.find('mg').text
+                    mh = otazky.find('mh').text
+                    respond = make_response(render_template('zleotazky.html', otazka=ot, ma=ma, mb=mb, mc=mc, md=md, me=me, mf=mf, mg=mg, mh=mh,
+                                                    control=('Spravna odpoved je', od), zleotazky=zleotazky, cislozlejotazky=ypsilon))
+                    pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky)
+                    respond.set_cookie('nameID', json.dumps(pole))
+                    return respond
+
+    if request.form['btn'] == 'Kontrola zlej otázky':
+        kokie = request.cookies.get('nameID')
+        pole = json.loads(kokie)
+        meno = str(pole[:1])
+        randommeno = meno[2:-2]
+
+        mojeotazky = random.choice(list(pole[1:2]))
+
+        y = str(pole[2:3])
+        ypsilon = y[1:-1]
+        print('ypsilon kontrola zlej otazky: ', ypsilon)
+        body = random.choice(list(pole[3:4]))
+        konc = str(pole[4:5])
+        koncovka = konc[2:-2]
+        zleotazky = random.choice(list(pole[5:6]))
+
+        print('vypise pole po castiach nech s nimi moze robit', randommeno, '||', mojeotazky, '||', ypsilon, '||', zleotazky)
+        for otazky in root.findall('otazka'):
+            number = otazky.attrib.get('number')
+            if str(ypsilon) == number:
+                print('ypsilon: ', ypsilon, 'number: ', number)
+                ot = otazky.find('ot').text
+                od = otazky.find('od').text
+                ma = otazky.find('ma').text
+                mb = otazky.find('mb').text
+                mc = otazky.find('mc').text
+                md = otazky.find('md').text
+                me = otazky.find('me').text
+                mf = otazky.find('mf').text
+                mg = otazky.find('mg').text
+                mh = otazky.find('mh').text
+
+                kont()
+                lst = str(od).split(',')
+                print('moja', moja, 'od', lst)
+
+                if list(moja) == lst:
+                    moja[:] = []
+                    zleotazky.remove(int(ypsilon))
+                    pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky)
+                    print('toto vypise pole', pole)
+
+                    respond = make_response(render_template('zleotazky.html', control='Vyborne, spravna odpoved!', zleotazky=zleotazky))
+                    respond.set_cookie('nameID', json.dumps(pole))
+                    return respond
+
+                else:
+                    moja[:] = []
+                    respond = make_response(render_template('zleotazky.html', control='Bohužiaľ nesprávne.', otazka=ot, odp=od,
+                                            ma=ma, mb=mb, mc=mc, md=md, me=me, mf=mf, mg=mg, mh=mh, zleotazky=zleotazky))
+                    return respond
 
     if request.form['btn'] == 'Späť na hlavnú stránku':
         kokie = request.cookies.get('nameID')
