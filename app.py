@@ -1,5 +1,4 @@
 from flask import Flask, request, render_template, make_response
-import flask.views
 import random
 import xml.etree.ElementTree as ET
 import json
