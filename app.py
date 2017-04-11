@@ -494,18 +494,34 @@ def skusaP():
         koncovka = konc[2:-2]
         zleotazky = random.choice(list(pole[5:6]))
 
-        najmensiaotazka = request.form['najmensiaotazka']
-        najvacsiaotazka = request.form['najvacsiaotazka']
+        mensiaotazka = request.form['najmensiaotazka']
+        vacsiaotazka = request.form['najvacsiaotazka']
 
-        if najmensiaotazka >= najvacsiaotazka:
-            respond = make_response(render_template('ktoreotazky.html', control='Najmenšia otázka musí byť menšia od najväčšej, zároveň si nemôžu byť rovné.'))
+        if len(mensiaotazka) == 0 or len(vacsiaotazka) == 0:
+            respond = make_response(render_template('ktoreotazky.html', control='Musíš zadať obe čísla.'))
             return respond
 
         else:
-            pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka)
-            respond = make_response(render_template('layout.html', uvod=True, bdy=body, sklonovanie=koncovka))
-            respond.set_cookie('nameID', json.dumps(pole))
-            return respond
+            najmensiaotazka = int(mensiaotazka)
+            najvacsiaotazka = int(vacsiaotazka)
+
+            if najmensiaotazka >= najvacsiaotazka:
+                respond = make_response(render_template('ktoreotazky.html', control='Najmenšia otázka musí byť menšia od najväčšej, zároveň si nemôžu byť rovné.'))
+                return respond
+
+            if najmensiaotazka <= 0:
+                respond = make_response(render_template('ktoreotazky.html', control='Najmenšia otázka musí byť väčšia ako 0.'))
+                return respond
+
+            if najvacsiaotazka >= 501:
+                respond = make_response(render_template('ktoreotazky.html', control='Najväčšia otázka môže byť maximálne 500.'))
+                return respond
+
+            else:
+                pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka)
+                respond = make_response(render_template('layout.html', uvod=True, bdy=body, sklonovanie=koncovka))
+                respond.set_cookie('nameID', json.dumps(pole))
+                return respond
 
     if request.form['btn'] == 'Späť na hlavnú stránku':
         kokie = request.cookies.get('nameID')
