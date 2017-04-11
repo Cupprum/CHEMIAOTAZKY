@@ -62,7 +62,9 @@ def skusaG():
         body = 0
         koncovka = 'ok'
         zleotazky = []
-        pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky)
+        najmensiaotazka = 1
+        najvacsiaotazka = 500
+        pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka)
         print('toto vypise kookie noveho uzivatela', pole)
 
         jozo = """INSERT INTO fiit (uuia4, meno, body, stav) VALUES (%s, NULL, %s, '0');"""
@@ -92,8 +94,12 @@ def skusaP():
         pole = json.loads(kokie)
         meno = str(pole[:1])
         randommeno = meno[2:-2]
-
-        polevsetkychotazok = set(list(range(1, 500 + 1)))
+        mensiaotazka = random.choice(list(pole[6:7]))
+        vacsiaotazka = random.choice(list(pole[7:8]))
+        najmensiaotazka = int(mensiaotazka)
+        najvacsiaotazka = int(vacsiaotazka)
+        print('cudneotazkyprvaposledna', najmensiaotazka, najvacsiaotazka)
+        polevsetkychotazok = set(list(range(najmensiaotazka, najvacsiaotazka + 1)))
         mojeotazky = random.choice(list(pole[1:2]))
         polesplnenychotazok = set(mojeotazky)
         finalneotazky = list(polevsetkychotazok - polesplnenychotazok)
@@ -125,7 +131,7 @@ def skusaP():
                     mf = otazky.find('mf').text
                     mg = otazky.find('mg').text
                     mh = otazky.find('mh').text
-                    pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky)
+                    pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka)
 
                     respond = make_response(render_template('layout.html', otazka=ot, ma=ma, mb=mb, mc=mc, md=md, me=me, mf=mf, mg=mg, mh=mh,
                                             control=('Spravna odpoved je', od), bdy=body, sklonovanie=koncovka))
@@ -137,8 +143,9 @@ def skusaP():
         pole = json.loads(kokie)
         meno = str(pole[:1])
         randommeno = meno[2:-2]
-
-        polevsetkychotazok = set(list(range(1, 500 + 1)))
+        najmensiaotazka = random.choice(list(pole[6:7]))
+        najvacsiaotazka = random.choice(list(pole[7:8]))
+        polevsetkychotazok = set(list(range(najmensiaotazka, najvacsiaotazka + 1)))
         mojeotazky = random.choice(list(pole[1:2]))
         polesplnenychotazok = set(mojeotazky)
         finalneotazky = list(polevsetkychotazok - polesplnenychotazok)
@@ -179,7 +186,7 @@ def skusaP():
                         koncovka = 'ky'
                     elif body >= 5:
                         koncovka = 'ok'
-                    pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky)
+                    pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka)
                     print('toto vypise pole', pole)
 
                     jozo = """UPDATE FIIT SET body= %s WHERE uuia4= %s ;"""
@@ -192,7 +199,7 @@ def skusaP():
                 else:
                     moja[:] = []
                     zleotazky.append(int(ypsilon))
-                    pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky)
+                    pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka)
                     respond = make_response(render_template('layout.html', control='Bohužiaľ nesprávne.', otazka=ot, odp=od,
                                                 ma=ma, mb=mb, mc=mc, md=md, me=me, mf=mf, mg=mg, mh=mh, bdy=body,
                                                 sklonovanie=koncovka))
@@ -214,8 +221,10 @@ def skusaP():
         body = 0
         koncovka = 'ok'
         zleotazky = []
+        najmensiaotazka = random.choice(list(pole[6:7]))
+        najvacsiaotazka = random.choice(list(pole[7:8]))
 
-        pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky)
+        pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka)
         print('toto vypise kookie noveho uzivatela', pole)
 
         jozo = """INSERT INTO FIIT (uuia4, meno, body, stav) VALUES (%s, NULL, %s, '0');"""
@@ -230,6 +239,8 @@ def skusaP():
         pole = json.loads(kokie)
         meno = str(pole[:1])
         randommeno = meno[2:-2]
+        najmensiaotazka = random.choice(list(pole[6:7]))
+        najvacsiaotazka = random.choice(list(pole[7:8]))
         body = random.choice(list(pole[3:4]))
         konc = str(pole[4:5])
         koncovka = konc[2:-2]
@@ -258,6 +269,8 @@ def skusaP():
         pole = json.loads(kokie)
         meno = str(pole[:1])
         randommeno = meno[2:-2]
+        najmensiaotazka = random.choice(list(pole[6:7]))
+        najvacsiaotazka = random.choice(list(pole[7:8]))
         body = random.choice(list(pole[3:4]))
         konc = str(pole[4:5])
         koncovka = konc[2:-2]
@@ -328,8 +341,10 @@ def skusaP():
         pole = json.loads(kokie)
         meno = str(pole[:1])
         randommeno = meno[2:-2]
+        najmensiaotazka = random.choice(list(pole[6:7]))
+        najvacsiaotazka = random.choice(list(pole[7:8]))
 
-        polevsetkychotazok = set(list(range(1, 500 + 1)))
+        polevsetkychotazok = set(list(range(najmensiaotazka, najvacsiaotazka + 1)))
 
         mojeotazky = random.choice(list(pole[1:2]))
 
@@ -362,7 +377,7 @@ def skusaP():
                     mh = otazky.find('mh').text
                     respond = make_response(render_template('zleotazky.html', otazka=ot, ma=ma, mb=mb, mc=mc, md=md, me=me, mf=mf, mg=mg, mh=mh,
                                                     control=('Spravna odpoved je', od), zleotazky=zleotazky, cislozlejotazky=ypsilon))
-                    pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky)
+                    pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka)
                     respond.set_cookie('nameID', json.dumps(pole))
                     return respond
 
@@ -371,6 +386,8 @@ def skusaP():
         pole = json.loads(kokie)
         meno = str(pole[:1])
         randommeno = meno[2:-2]
+        najmensiaotazka = random.choice(list(pole[6:7]))
+        najvacsiaotazka = random.choice(list(pole[7:8]))
 
         mojeotazky = random.choice(list(pole[1:2]))
         body = random.choice(list(pole[3:4]))
@@ -402,7 +419,7 @@ def skusaP():
                     mh = otazky.find('mh').text
                     respond = make_response(render_template('zleotazky.html', otazka=ot, ma=ma, mb=mb, mc=mc, md=md, me=me, mf=mf, mg=mg, mh=mh,
                                                     control=('Spravna odpoved je', od), zleotazky=zleotazky, cislozlejotazky=ypsilon))
-                    pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky)
+                    pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka)
                     respond.set_cookie('nameID', json.dumps(pole))
                     return respond
 
@@ -411,6 +428,8 @@ def skusaP():
         pole = json.loads(kokie)
         meno = str(pole[:1])
         randommeno = meno[2:-2]
+        najmensiaotazka = random.choice(list(pole[6:7]))
+        najvacsiaotazka = random.choice(list(pole[7:8]))
 
         mojeotazky = random.choice(list(pole[1:2]))
 
@@ -445,7 +464,7 @@ def skusaP():
                 if list(moja) == lst:
                     moja[:] = []
                     zleotazky.remove(int(ypsilon))
-                    pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky)
+                    pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka)
                     print('toto vypise pole', pole)
 
                     respond = make_response(render_template('zleotazky.html', control='Vyborne, spravna odpoved!', zleotazky=zleotazky))
@@ -457,6 +476,36 @@ def skusaP():
                     respond = make_response(render_template('zleotazky.html', control='Bohužiaľ nesprávne.', otazka=ot, odp=od,
                                             ma=ma, mb=mb, mc=mc, md=md, me=me, mf=mf, mg=mg, mh=mh, zleotazky=zleotazky))
                     return respond
+
+    if request.form['btn'] == 'Zmena skúšaných otázok':
+        respond = make_response(render_template('ktoreotazky.html'))
+        return respond
+
+    if request.form['btn'] == 'Pridať rozmedzie otázok':
+        kokie = request.cookies.get('nameID')
+        pole = json.loads(kokie)
+        meno = str(pole[:1])
+        randommeno = meno[2:-2]
+        mojeotazky = random.choice(list(pole[1:2]))
+        y = str(pole[2:3])
+        ypsilon = y[1:-1]
+        body = random.choice(list(pole[3:4]))
+        konc = str(pole[4:5])
+        koncovka = konc[2:-2]
+        zleotazky = random.choice(list(pole[5:6]))
+
+        najmensiaotazka = request.form['najmensiaotazka']
+        najvacsiaotazka = request.form['najvacsiaotazka']
+
+        if najmensiaotazka >= najvacsiaotazka:
+            respond = make_response(render_template('ktoreotazky.html', control='Najmenšia otázka musí byť menšia od najväčšej, zároveň si nemôžu byť rovné.'))
+            return respond
+
+        else:
+            pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka)
+            respond = make_response(render_template('layout.html', uvod=True, bdy=body, sklonovanie=koncovka))
+            respond.set_cookie('nameID', json.dumps(pole))
+            return respond
 
     if request.form['btn'] == 'Späť na hlavnú stránku':
         kokie = request.cookies.get('nameID')
