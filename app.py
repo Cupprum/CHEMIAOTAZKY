@@ -141,70 +141,76 @@ def skusaP():
     if request.form['btn'] == 'Kontrola':
         kokie = request.cookies.get('nameID')
         pole = json.loads(kokie)
-        meno = str(pole[:1])
-        randommeno = meno[2:-2]
-        najmensiaotazka = random.choice(list(pole[6:7]))
-        najvacsiaotazka = random.choice(list(pole[7:8]))
-        polevsetkychotazok = set(list(range(najmensiaotazka, najvacsiaotazka + 1)))
-        mojeotazky = random.choice(list(pole[1:2]))
-        polesplnenychotazok = set(mojeotazky)
-        finalneotazky = list(polevsetkychotazok - polesplnenychotazok)
-
         y = str(pole[2:3])
         ypsilon = y[1:-1]
+        print('ypsilon', ypsilon)
         body = random.choice(list(pole[3:4]))
         konc = str(pole[4:5])
         koncovka = konc[2:-2]
-        zleotazky = random.choice(list(pole[5:6]))
 
-        for otazky in root.findall('otazka'):
-            number = otazky.attrib.get('number')
-            if str(ypsilon) == number:
-                print('ypsilon: ', ypsilon, 'number: ', number)
-                ot = otazky.find('ot').text
-                od = otazky.find('od').text
-                ma = otazky.find('ma').text
-                mb = otazky.find('mb').text
-                mc = otazky.find('mc').text
-                md = otazky.find('md').text
-                me = otazky.find('me').text
-                mf = otazky.find('mf').text
-                mg = otazky.find('mg').text
-                mh = otazky.find('mh').text
+        if ypsilon == '0':
+            respond = make_response(render_template('layout.html', uvod=True, bdy=body, sklonovanie=koncovka, control='Ako chceš odpovedať na otázku ktorú nemáš?'))
+            return respond
 
-                kont()
-                lst = str(od).split(',')
-                print('moja', moja, 'od', lst)
+        else:
+            meno = str(pole[:1])
+            randommeno = meno[2:-2]
+            najmensiaotazka = random.choice(list(pole[6:7]))
+            najvacsiaotazka = random.choice(list(pole[7:8]))
+            polevsetkychotazok = set(list(range(najmensiaotazka, najvacsiaotazka + 1)))
+            mojeotazky = random.choice(list(pole[1:2]))
+            polesplnenychotazok = set(mojeotazky)
+            finalneotazky = list(polevsetkychotazok - polesplnenychotazok)
+            zleotazky = random.choice(list(pole[5:6]))
 
-                if list(moja) == lst:
-                    moja[:] = []
-                    mojeotazky.append(int(ypsilon))
-                    body = len(mojeotazky)
-                    if body == 1:
-                        koncovka = 'ku'
-                    elif body == 2 or body == 3 or body == 4:
-                        koncovka = 'ky'
-                    elif body >= 5:
-                        koncovka = 'ok'
-                    pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka)
-                    print('toto vypise pole', pole)
+            for otazky in root.findall('otazka'):
+                number = otazky.attrib.get('number')
+                if str(ypsilon) == number:
+                    print('ypsilon: ', ypsilon, 'number: ', number)
+                    ot = otazky.find('ot').text
+                    od = otazky.find('od').text
+                    ma = otazky.find('ma').text
+                    mb = otazky.find('mb').text
+                    mc = otazky.find('mc').text
+                    md = otazky.find('md').text
+                    me = otazky.find('me').text
+                    mf = otazky.find('mf').text
+                    mg = otazky.find('mg').text
+                    mh = otazky.find('mh').text
 
-                    jozo = """UPDATE FIIT SET body= %s WHERE uuia4= %s ;"""
-                    engine.execute(jozo, (body, randommeno,))
+                    kont()
+                    lst = str(od).split(',')
+                    print('moja', moja, 'od', lst)
 
-                    respond = make_response(render_template('layout.html', control='Vyborne, spravna odpoved!', bdy=body, sklonovanie=koncovka))
-                    respond.set_cookie('nameID', json.dumps(pole))
-                    return respond
+                    if list(moja) == lst:
+                        moja[:] = []
+                        mojeotazky.append(int(ypsilon))
+                        body = len(mojeotazky)
+                        if body == 1:
+                            koncovka = 'ku'
+                        elif body == 2 or body == 3 or body == 4:
+                            koncovka = 'ky'
+                        elif body >= 5:
+                            koncovka = 'ok'
+                        pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka)
+                        print('toto vypise pole', pole)
 
-                else:
-                    moja[:] = []
-                    zleotazky.append(int(ypsilon))
-                    pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka)
-                    respond = make_response(render_template('layout.html', control='Bohužiaľ nesprávne.', otazka=ot, odp=od,
-                                                ma=ma, mb=mb, mc=mc, md=md, me=me, mf=mf, mg=mg, mh=mh, bdy=body,
-                                                sklonovanie=koncovka))
-                    respond.set_cookie('nameID', json.dumps(pole))
-                    return respond
+                        jozo = """UPDATE FIIT SET body= %s WHERE uuia4= %s ;"""
+                        engine.execute(jozo, (body, randommeno,))
+
+                        respond = make_response(render_template('layout.html', control='Vyborne, spravna odpoved!', bdy=body, sklonovanie=koncovka))
+                        respond.set_cookie('nameID', json.dumps(pole))
+                        return respond
+
+                    else:
+                        moja[:] = []
+                        zleotazky.append(int(ypsilon))
+                        pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka)
+                        respond = make_response(render_template('layout.html', control='Bohužiaľ nesprávne.', otazka=ot, odp=od,
+                                                    ma=ma, mb=mb, mc=mc, md=md, me=me, mf=mf, mg=mg, mh=mh, bdy=body,
+                                                    sklonovanie=koncovka))
+                        respond.set_cookie('nameID', json.dumps(pole))
+                        return respond
 
     if request.form['btn'] == 'Resetuje otázky':
         starekokie = request.cookies.get('nameID')
