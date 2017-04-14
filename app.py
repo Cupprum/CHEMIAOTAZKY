@@ -343,7 +343,7 @@ def skusaP():
                                         tabulka5meno=tabulkovydic['tabulka5meno'], tabulka5body=tabulkovydic['tabulka5body']))
                 return respond
 
-    if request.form['btn'] == 'Otázky, na ktoré som odpovedal zle':
+    if request.form['btn'] == 'Zle zodpovedané otázky':
         kokie = request.cookies.get('nameID')
         pole = json.loads(kokie)
         meno = str(pole[:1])
