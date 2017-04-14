@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from flask import Flask, request, render_template, make_response
 import random
 import xml.etree.ElementTree as ET
