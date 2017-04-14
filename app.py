@@ -252,7 +252,9 @@ def skusaP():
         konc = str(pole[4:5])
         koncovka = konc[2:-2]
 
-        tabulkovydic = {'tabulka1meno': None, 'tabulka1body': None, 'tabulka2meno': None, 'tabulka2body': None}
+        tabulkovydic = {'tabulka1meno': None, 'tabulka1body': None, 'tabulka2meno': None, 'tabulka2body': None,
+                        'tabulka3meno': None, 'tabulka3body': None,'tabulka4meno': None, 'tabulka4body': None,
+                        'tabulka5meno': None, 'tabulka5body': None}
         engine.execute("SELECT meno, body FROM FIIT WHERE stav = '1' ORDER BY body DESC LIMIT 5;")
         omg = 1
         result_set = engine.fetchall()
@@ -283,14 +285,27 @@ def skusaP():
         koncovka = konc[2:-2]
 
         zadanemeno = request.form['vloztemeno']
+        
         if zadanemeno == "" or zadanemeno == " ":
-            respond = make_response(render_template('tabulkanajlpesich.html', otazka="Zvoľ iné meno.",
-                                    tabulka1meno=tabulkovydic['tabulka1meno'], tabulka1body=tabulkovydic['tabulka1body'],
-                                    tabulka2meno=tabulkovydic['tabulka2meno'], tabulka2body=tabulkovydic['tabulka2body'],
-                                    tabulka3meno=tabulkovydic['tabulka3meno'], tabulka3body=tabulkovydic['tabulka3body'],
-                                    tabulka4meno=tabulkovydic['tabulka4meno'], tabulka4body=tabulkovydic['tabulka4body'],
-                                    tabulka5meno=tabulkovydic['tabulka5meno'], tabulka5body=tabulkovydic['tabulka5body']))
-            return respond
+            tabulkovydic = {'tabulka1meno': None, 'tabulka1body': None, 'tabulka2meno': None, 'tabulka2body': None,
+                            'tabulka3meno': None, 'tabulka3body': None,'tabulka4meno': None, 'tabulka4body': None,
+                            'tabulka5meno': None, 'tabulka5body': None}
+            engine.execute("SELECT meno, body FROM FIIT WHERE stav = '1' ORDER BY body DESC LIMIT 5;")
+            omg = 1
+            result_set = engine.fetchall()
+            for r in result_set:
+                x = random.choice(r[:1])
+                y = random.choice(r[1:])
+                tabulkovydic['tabulka' + str(omg) + 'meno'] = x
+                tabulkovydic['tabulka' + str(omg) + 'body'] = y
+                omg += 1
+                respond = make_response(render_template('tabulkanajlpesich.html', otazka="Zvoľ iné meno.",
+                                        tabulka1meno=tabulkovydic['tabulka1meno'], tabulka1body=tabulkovydic['tabulka1body'],
+                                        tabulka2meno=tabulkovydic['tabulka2meno'], tabulka2body=tabulkovydic['tabulka2body'],
+                                        tabulka3meno=tabulkovydic['tabulka3meno'], tabulka3body=tabulkovydic['tabulka3body'],
+                                        tabulka4meno=tabulkovydic['tabulka4meno'], tabulka4body=tabulkovydic['tabulka4body'],
+                                        tabulka5meno=tabulkovydic['tabulka5meno'], tabulka5body=tabulkovydic['tabulka5body']))
+                return respond
 
         else:
             zistuje = """SELECT * FROM FIIT WHERE meno= %s"""
@@ -304,7 +319,9 @@ def skusaP():
                 fero = """UPDATE FIIT SET stav= '1' WHERE uuia4= %s ;"""
                 engine.execute(fero, (randommeno,))
 
-                tabulkovydic = {'tabulka1meno': None, 'tabulka1body': None, 'tabulka2meno': None, 'tabulka2body': None}
+                tabulkovydic = {'tabulka1meno': None, 'tabulka1body': None, 'tabulka2meno': None, 'tabulka2body': None,
+                                'tabulka3meno': None, 'tabulka3body': None,'tabulka4meno': None, 'tabulka4body': None,
+                                'tabulka5meno': None, 'tabulka5body': None}
                 engine.execute("SELECT meno, body FROM FIIT WHERE stav = '1' ORDER BY body DESC LIMIT 5;")
                 omg = 1
                 result_set = engine.fetchall()
@@ -324,7 +341,9 @@ def skusaP():
                 return respond
 
             else:
-                tabulkovydic = {'tabulka1meno': None, 'tabulka1body': None, 'tabulka2meno': None, 'tabulka2body': None}
+                tabulkovydic = {'tabulka1meno': None, 'tabulka1body': None, 'tabulka2meno': None, 'tabulka2body': None,
+                                'tabulka3meno': None, 'tabulka3body': None,'tabulka4meno': None, 'tabulka4body': None,
+                                'tabulka5meno': None, 'tabulka5body': None}                
                 engine.execute("SELECT meno, body FROM FIIT WHERE stav = '1' ORDER BY body DESC LIMIT 5;")
                 omg = 1
                 result_set = engine.fetchall()
