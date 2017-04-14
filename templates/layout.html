@@ -19,45 +19,64 @@
   
   <style>
      .image 
-            {max-width: 100%;
-             display: block;
-             margin-top: 5px;
-             margin-bottom: 5px;
-             margin-right: 23%;
-             margin-left: 23%;}
+            {
+            max-width: 100%;
+            display: block;
+            margin-top: 5px;
+            margin-bottom: 5px;
+            margin-right: 23%;
+            margin-left: 23%;
+            }
              
       .menu
-             {width: 100%;
+             {
+             width: 100%;
              font-size: 25px;
              text-align: center;
              font-family: Baumans;
              margin-top: 0px;
              margin-bottom: 0px;
+             cursor: pointer;
+             transition-duration: 0.2s;
              }
              
+      .menu:hover 
+              {
+              background-color: #8ED3D6;
+              color: white;
+              }
       .text
-             {font-size: 20px;
-              text-align: center;
-              word-wrap: break-word;
-              font-family: Arial;
-              margin-right: 23%;
-              margin-left: 23%;
+             {
+             font-size: 20px;
+             text-align: center;
+             word-wrap: break-word;
+             font-family: Arial;
+             margin-right: 23%;
+             margin-left: 23%;
              } 
              
       .center
-             {text-align: center;
+             {
+             text-align: center;
              }
              
       .question-text
-             {font-size: 20px;
-              word-wrap: break-word;
-              font-family: Arial;
-              margin-right: 23%;
-              margin-left: 23%;
+             {
+             font-size: 20px;
+             word-wrap: break-word;
+             font-family: Arial;
+             margin-right: 23%;
+             margin-left: 23%;
+             }
+             
+      .control
+             {
+             color: #A4759D;
              }
              
       .option
-             {width: 7%;
+             {
+             width: 7%;
              font-size: 20px;
              font-family: Arial;
              margin-right: 23%;
@@ -65,19 +84,44 @@
              text-align: center;}
              
       .justify
-             {text-align: justify;
+             {
+             text-align: justify;
              }
              
-      .buttons
-             {width: 13%;
-              font-size: 15px;
-             font-family: Arial;
-             margin-right: 23%;
-             margin-left: 23%;
-             text-align: center;}
+      .button 
+             {
+              background-color: #8ED3D6;
+              border: none;
+              color: black;
+              border-radius: 6px;
+              padding: 15px 20px;
+              text-align: center;
+              text-decoration: none;
+              display: inline-block;
+              font-size: 20px;
+              font-family: Baumans;
+              cursor: pointer;
+              transition-duration: 0.2s;    
+              }
+              
+      .button:hover 
+              {
+              background-color: #8ED3D6;
+              color: white;
+              }
+              
+      .menu_table
+              {
+              "border: solid;
+              border-width: 1 px;
+              border-color: white;
+              border-radius: 6px;
+              background-color: #8ED3D6;
+              }
              
       table
-             {width: 54%;
+             {
+             width: 54%;
               "border: solid;
               margin-right: 23%;
               margin-left: 23%;
@@ -89,16 +133,12 @@
   <body style="background-color:#CACACA;">
      <form action="/" method = "post">
   
-     <img class="image" src="https://chemistry-studio.com/wp-content/uploads/logo_chemistry_1024_RGB.png" alt="logo" style="width: 50%"/>
-     <table style="border: solid; border-width: 1px; background-color: #8ED3D6;">
+     <a href="https://chemiaotazky.herokuapp.com/"><img class="image" src="https://chemistry-studio.com/wp-content/uploads/logo_chemistry_1024_RGB.png" alt="logo" style="width: 50%"/></a>
+     <table class="menu_table">
         <tr style="background-color: #8ED3D6;">
-           <td> <p class="menu">\( \cdot \)
-           <td class="buttons"><input type="submit" style="border: none;background-color: #8ED3D6;" name="btn" value="O projekte" /></td></p>   </td>
-           <td> <p class="menu">\( \cdot \)
-           <td class="buttons"><input type="submit" style="border: none;background-color: #8ED3D6;" name="btn" value="Tabulka najlepších" /></td></p>   </td>
-           <td> <p class="menu">\( \cdot \)
-           <td class="buttons"><input type="submit" style="border: none;background-color: #8ED3D6;" name="btn" value="Zmena skúšaných otázok" /></td></p>   </td>
-           <td><p class="menu">\( \cdot \)</td>
+           <td><input type="submit" style="border: none;background-color: #8ED3D6;" name="btn" value="O projekte" class="menu"/></td>
+           <td><input type="submit" style="border: none;background-color: #8ED3D6;" name="btn" value="Tabulka najlepších" class="menu"/></td>
+           <td><input type="submit" style="border: none;background-color: #8ED3D6;" name="btn" value="Zmena skúšaných otázok" class="menu"/></td>
         </tr> 
      </table>  
      <p class="text">
@@ -113,7 +153,7 @@
      <p class="question-text justify">{{ me }}</p>
      <p class="question-text justify">{{ mf }}</p>
      <p class="question-text justify">{{ mg }}</p><br />
-     <p class="question-text center">{{ control }}</p>
+     <p class="question-text center control">{{ control }}</p>
      <p class="question-text center">{{ odp }}</p>
      <p class="question-text center">{{ bdy }} otáz{{ sklonovanie }} máš správne</p>
      <br />
@@ -142,12 +182,13 @@
     <br /><br />
     <table>
         <tr>
-           <td class="buttons"><input type="submit" name="btn" value="Nová otázka" /></td>
-           <td class="buttons"><input type="submit" name="btn" value="Kontrola" /></td>
-           <td class="buttons"><input type="submit" name="btn" value="Resetuje otázky" /></td>
-           <td class="buttons"><input type="submit" name="btn" value="Otázky, na ktoré som odpovedal zle" /></td>
+           <td><input type="submit" name="btn" value="Nová otázka" class="button"/></td>
+           <td><input type="submit" name="btn" value="Kontrola" class="button"/></td>
+           <td><input type="submit" name="btn" value="Resetuje otázky" class="button"/></td>
+           <td><input type="submit" name="btn" value="Zle zodpovedané otázky" class="button"/></td>
         </tr>
-     </table>
+    </table>
+ <br /><br /><br /> 
      
     </form>
     {% with messages = get_flashed_messages() %}
