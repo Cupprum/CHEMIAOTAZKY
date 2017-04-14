@@ -228,8 +228,8 @@ def skusaP():
         body = 0
         koncovka = 'ok'
         zleotazky = []
-        najmensiaotazka = random.choice(list(pole[6:7]))
-        najvacsiaotazka = random.choice(list(pole[7:8]))
+        najmensiaotazka = random.choice(list(starepole[6:7]))
+        najvacsiaotazka = random.choice(list(starepole[7:8]))
 
         pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka)
         print('toto vypise kookie noveho uzivatela', pole)
