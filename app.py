@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from flask import Flask, request, render_template, make_response
 import random
 import xml.etree.ElementTree as ET
@@ -13,6 +14,7 @@ db = "dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url
 conn = psycopg2.connect(db)
 conn.autocommit = True
 engine = conn.cursor()
+engine.execute("DROP TABLE FIIT")
 engine.execute("CREATE TABLE IF NOT EXISTS FIIT (uuia4 text, meno text, body text, stav text);")
 
 
