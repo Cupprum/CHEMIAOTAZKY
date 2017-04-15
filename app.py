@@ -8,7 +8,6 @@ import psycopg2
 import os
 from urllib.parse import urlparse
 
-
 app = Flask(__name__)
 url = urlparse(os.environ["DATABASE_URL"])
 db = "dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname)
