@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html>
   <head>
@@ -190,3 +191,197 @@
    {% endwith %}
   </body>
 </html>
+=======
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Chemia 2.1/ZmenaSkusanychOtazok</title>
+  <script type="text/javascript" 
+          src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>     
+    <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({
+            "HTML-CSS" : {
+             availableFonts : ["STIX"],
+             preferredFont : "STIX",
+             webFont : "STIX General",
+             imageFont : null
+             }
+             });</script>    
+  <link href='//fonts.googleapis.com/css?family=Baumans' rel='stylesheet'>
+  
+  <style>
+     .image 
+            {
+            max-width: 100%;
+            display: block;
+            margin-top: 5px;
+            margin-bottom: 5px;
+            margin-right: 23%;
+            margin-left: 23%;
+            }
+             
+      .menu
+             {
+             width: 100%;
+             font-size: 25px;
+             text-align: center;
+             font-family: Baumans;
+             margin-top: 0px;
+             margin-bottom: 0px;
+             cursor: pointer;
+             transition-duration: 0.2s;
+             }
+             
+      .menu:hover 
+              {
+              background-color: #8ED3D6;
+              color: white;
+              }
+      .text
+             {
+             font-size: 20px;
+             text-align: center;
+             word-wrap: break-word;
+             font-family: Arial;
+             margin-right: 23%;
+             margin-left: 23%;
+             } 
+             
+      .center
+             {
+             text-align: center;
+             }
+             
+             
+      .control
+             {
+             color: #876083;
+             }
+             
+             
+      .justify
+             {
+             text-align: justify;
+             }
+             
+      .column1
+             {
+             width: 4em ;
+             }
+             
+      .button 
+             {
+              background-color: #8ED3D6;
+              border: none;
+              color: black;
+              border-radius: 6px;
+              padding: 5px 10px;
+              text-align: center;
+              text-decoration: none;
+              display: inline-block;
+              font-size: 15px;
+              font-family: Baumans;
+              cursor: pointer;
+              transition-duration: 0.2s;    
+              }
+              
+      .button:hover 
+              {
+              background-color: #8ED3D6;
+              color: white;
+              }
+              
+      .menu_table
+              {
+              "border: solid;
+              border-width: 1 px;
+              border-color: white;
+              border-radius: 6px;
+              background-color: #8ED3D6;
+              }
+              
+      .align-right
+              {
+              float: right;
+              }
+              
+      .padding_table
+              {
+              padding-left: 15%; 
+              padding-right: 15%;
+              }
+              
+      input[type=text], select 
+              {
+              width: 100%;
+              padding: 6px 10px;
+              margin: 8px 0;
+              display: inline-block;
+              border: 1px solid #8ED3D6;
+              border-radius: 4px;
+              box-sizing: border-box;
+              }
+             
+      table
+             {
+             width: 54%;
+             "border: solid;
+             margin-right: 23%;
+             margin-left: 23%;
+             word-wrap: break-word;
+             font-family: Arial;
+             }
+  </style>
+  </head>
+  <body style="background-color:#CACACA;">
+     <form action="/" method = "post">
+  
+     <a href="https://chemiaotazky.herokuapp.com/"><img class="image" src="https://chemistry-studio.com/wp-content/uploads/logo_chemistry_1024_RGB.png" alt="logo" style="width: 50%"/></a>
+     <table class="menu_table">
+        <tr style="background-color: #8ED3D6;">
+           <td><input type="submit" style="border: none;background-color: #8ED3D6;" name="btn" value="O projekte" class="menu"/></td>
+           <td><input type="submit" style="border: none;background-color: #8ED3D6;" name="btn" value="Tabulka najlepších" class="menu"/></td>
+           <td><input type="submit" style="border: none;background-color: #8ED3D6;" name="btn" value="Zmena skúšaných otázok" class="menu"/></td>
+        </tr> 
+     </table> <br />
+     <p class="text justify">Pre nastavenie vlastného intervalu otázok zadaj číslo otázky od ktorej chceš začať a ktorou chceš skončiť. Otázky sú číslované
+                             od 1 po 500.</p>
+     <p class="control text">{{ control }}</p> <br />
+     <table class="padding_table">
+        <tr>
+           <td class="column1"><input type="text" name="najmensiaotazka" placeholder="Od.." class="align-right"/></td>
+           <td class="column1"><input type="text" name="najvacsiaotazka" placeholder="Do.." class="align-right"/></td>
+         </tr>
+         <td><input type="submit" name="btn" value="Pridať rozmedzie otázok" class="button"/></td>
+           <td><input type="submit" name="btn" value="atom" class="button"/></td>
+           <td><input type="submit" name="btn" value="sustavalatok" class="button"/></td>
+           <td><input type="submit" name="btn" value="latky" class="button"/></td>
+           <td><input type="submit" name="btn" value="psustava" class="button"/></td>
+           <td><input type="submit" name="btn" value="chvazba" class="button"/></td>
+           <td><input type="submit" name="btn" value="nazvoslovie" class="button"/></td>
+           <td><input type="submit" name="btn" value="veliciny" class="button"/></td>
+           <td><input type="submit" name="btn" value="kyszas" class="button"/></td>
+           <td><input type="submit" name="btn" value="reakcie" class="button"/></td>
+           <td><input type="submit" name="btn" value="rovnovaha" class="button"/></td>
+           <td><input type="submit" name="btn" value="komplexy" class="button"/></td>
+           <td><input type="submit" name="btn" value="priklady" class="button"/></td>
+     </table>
+
+ <br /><br /><br /> 
+     
+    </form>
+    {% with messages = get_flashed_messages() %}
+	{% if messages %}
+	   Results:
+	   <pre>
+		{% for message in messages %}
+{{message}}
+		{% endfor %}
+	   </pre>
+	{% endif %}
+   {% endwith %}
+  </body>
+</html>
+>>>>>>> 875ef07e0087d52a363ecab1b7846f5b45dd955a

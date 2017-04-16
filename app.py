@@ -66,8 +66,12 @@ def skusaG():
         najmensiaotazka = 1
         najvacsiaotazka = 500
         lastaction = None
+<<<<<<< HEAD
         skupinaotazok = None
         pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok)
+=======
+        pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction)
+>>>>>>> 875ef07e0087d52a363ecab1b7846f5b45dd955a
         print('toto vypise kookie noveho uzivatela', pole)
 
         jozo = """INSERT INTO fiit (uuia4, meno, body, stav) VALUES (%s, NULL, %s, '0');"""
@@ -146,6 +150,7 @@ def skusaP():
         zleotazky = random.choice(list(pole[5:6]))
         print("zleotazky = ", zleotazky)
         lastaction = None
+<<<<<<< HEAD
         skupinaotazok = str(random.choice(list(pole[9:10])))
         print('skupinaotazok |||||||', skupinaotazok)
 
@@ -187,6 +192,8 @@ def skusaP():
 
         elif skupinaotazok == 'priklady':
             finalneotazky = list(priklady - polesplnenychotazok)
+=======
+>>>>>>> 875ef07e0087d52a363ecab1b7846f5b45dd955a
 
         if len(finalneotazky) == 0:
             respond = make_response(render_template('layout.html', control='Nemame otazky', bdy=body, sklonovanie=koncovka))
@@ -209,7 +216,11 @@ def skusaP():
                     mf = otazky.find('mf').text
                     mg = otazky.find('mg').text
                     mh = otazky.find('mh').text
+<<<<<<< HEAD
                     pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok)
+=======
+                    pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction)
+>>>>>>> 875ef07e0087d52a363ecab1b7846f5b45dd955a
 
                     respond = make_response(render_template('layout.html', otazka=ot, ma=ma, mb=mb, mc=mc, md=md, me=me, mf=mf, mg=mg, mh=mh,
                                             control=('Spravna odpoved je', od), bdy=body, sklonovanie=koncovka))
@@ -225,9 +236,14 @@ def skusaP():
         body = random.choice(list(pole[3:4]))
         konc = str(pole[4:5])
         koncovka = konc[2:-2]
+<<<<<<< HEAD
         poslednaaction = random.choice(list(pole[8:9]))
         skupinaotazok = random.choice(list(pole[9:10]))
         print('posledna akcia |||||| ', poslednaaction, 'skupinaotazok', skupinaotazok)
+=======
+        poslednaaction= random.choice(list(pole[8:9]))
+        print('posledna akcia |||||| ', poslednaaction)
+>>>>>>> 875ef07e0087d52a363ecab1b7846f5b45dd955a
         lastaction = 'kontrola'
 
         if str(ypsilon) == '0':
@@ -278,7 +294,11 @@ def skusaP():
                             koncovka = 'ky'
                         elif body >= 5:
                             koncovka = 'ok'
+<<<<<<< HEAD
                         pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok)
+=======
+                        pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction)
+>>>>>>> 875ef07e0087d52a363ecab1b7846f5b45dd955a
                         print('toto vypise pole', pole)
 
                         jozo = """UPDATE FIIT SET body= %s WHERE uuia4= %s ;"""
@@ -291,7 +311,11 @@ def skusaP():
                     else:
                         moja[:] = []
                         zleotazky.append(int(ypsilon))
+<<<<<<< HEAD
                         pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok)
+=======
+                        pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction)
+>>>>>>> 875ef07e0087d52a363ecab1b7846f5b45dd955a
                         respond = make_response(render_template('layout.html', control='Bohužiaľ nesprávne.', otazka=ot, odp=od,
                                                     ma=ma, mb=mb, mc=mc, md=md, me=me, mf=mf, mg=mg, mh=mh, bdy=body,
                                                     sklonovanie=koncovka))
@@ -316,9 +340,14 @@ def skusaP():
         najmensiaotazka = random.choice(list(starepole[6:7]))
         najvacsiaotazka = random.choice(list(starepole[7:8]))
         lastaction = None
+<<<<<<< HEAD
         skupinaotazok = None
 
         pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok)
+=======
+
+        pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction)
+>>>>>>> 875ef07e0087d52a363ecab1b7846f5b45dd955a
         print('toto vypise kookie noveho uzivatela', pole)
 
         jozo = """INSERT INTO FIIT (uuia4, meno, body, stav) VALUES (%s, NULL, %s, '0');"""
@@ -340,7 +369,11 @@ def skusaP():
         koncovka = konc[2:-2]
 
         tabulkovydic = {'tabulka1meno': None, 'tabulka1body': None, 'tabulka2meno': None, 'tabulka2body': None,
+<<<<<<< HEAD
                         'tabulka3meno': None, 'tabulka3body': None, 'tabulka4meno': None, 'tabulka4body': None,
+=======
+                        'tabulka3meno': None, 'tabulka3body': None,'tabulka4meno': None, 'tabulka4body': None,
+>>>>>>> 875ef07e0087d52a363ecab1b7846f5b45dd955a
                         'tabulka5meno': None, 'tabulka5body': None}
         engine.execute("SELECT meno, body FROM FIIT WHERE stav = '1' ORDER BY body DESC LIMIT 5;")
         omg = 1
@@ -372,10 +405,17 @@ def skusaP():
         koncovka = konc[2:-2]
 
         zadanemeno = request.form['vloztemeno']
+<<<<<<< HEAD
 
         if zadanemeno == "" or zadanemeno == " ":
             tabulkovydic = {'tabulka1meno': None, 'tabulka1body': None, 'tabulka2meno': None, 'tabulka2body': None,
                             'tabulka3meno': None, 'tabulka3body': None, 'tabulka4meno': None, 'tabulka4body': None,
+=======
+        
+        if zadanemeno == "" or zadanemeno == " ":
+            tabulkovydic = {'tabulka1meno': None, 'tabulka1body': None, 'tabulka2meno': None, 'tabulka2body': None,
+                            'tabulka3meno': None, 'tabulka3body': None,'tabulka4meno': None, 'tabulka4body': None,
+>>>>>>> 875ef07e0087d52a363ecab1b7846f5b45dd955a
                             'tabulka5meno': None, 'tabulka5body': None}
             engine.execute("SELECT meno, body FROM FIIT WHERE stav = '1' ORDER BY body DESC LIMIT 5;")
             omg = 1
@@ -407,7 +447,11 @@ def skusaP():
                 engine.execute(fero, (randommeno,))
 
                 tabulkovydic = {'tabulka1meno': None, 'tabulka1body': None, 'tabulka2meno': None, 'tabulka2body': None,
+<<<<<<< HEAD
                                 'tabulka3meno': None, 'tabulka3body': None, 'tabulka4meno': None, 'tabulka4body': None,
+=======
+                                'tabulka3meno': None, 'tabulka3body': None,'tabulka4meno': None, 'tabulka4body': None,
+>>>>>>> 875ef07e0087d52a363ecab1b7846f5b45dd955a
                                 'tabulka5meno': None, 'tabulka5body': None}
                 engine.execute("SELECT meno, body FROM FIIT WHERE stav = '1' ORDER BY body DESC LIMIT 5;")
                 omg = 1
@@ -429,8 +473,13 @@ def skusaP():
 
             else:
                 tabulkovydic = {'tabulka1meno': None, 'tabulka1body': None, 'tabulka2meno': None, 'tabulka2body': None,
+<<<<<<< HEAD
                                 'tabulka3meno': None, 'tabulka3body': None, 'tabulka4meno': None, 'tabulka4body': None,
                                 'tabulka5meno': None, 'tabulka5body': None}
+=======
+                                'tabulka3meno': None, 'tabulka3body': None,'tabulka4meno': None, 'tabulka4body': None,
+                                'tabulka5meno': None, 'tabulka5body': None}                
+>>>>>>> 875ef07e0087d52a363ecab1b7846f5b45dd955a
                 engine.execute("SELECT meno, body FROM FIIT WHERE stav = '1' ORDER BY body DESC LIMIT 5;")
                 omg = 1
                 result_set = engine.fetchall()
@@ -465,7 +514,10 @@ def skusaP():
         zleotazky = random.choice(list(pole[5:6]))
         print("zleotazky = ", zleotazky)
         lastaction = None
+<<<<<<< HEAD
         skupinaotazok = random.choice(list(pole[9:10]))
+=======
+>>>>>>> 875ef07e0087d52a363ecab1b7846f5b45dd955a
 
         if len(zleotazky) == 0:
             respond = make_response(render_template('zleotazky.html', otazka="Na všetky otázky si odpovedal dobre, nemáš si čo opraviť"))
@@ -490,7 +542,11 @@ def skusaP():
                     mh = otazky.find('mh').text
                     respond = make_response(render_template('zleotazky.html', otazka=ot, ma=ma, mb=mb, mc=mc, md=md, me=me, mf=mf, mg=mg, mh=mh,
                                                     control=('Spravna odpoved je', od), zleotazky=zleotazky, cislozlejotazky=ypsilon))
+<<<<<<< HEAD
                     pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok)
+=======
+                    pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction)
+>>>>>>> 875ef07e0087d52a363ecab1b7846f5b45dd955a
                     respond.set_cookie('nameID', json.dumps(pole))
                     return respond
 
@@ -509,7 +565,10 @@ def skusaP():
         zleotazky = random.choice(list(pole[5:6]))
         print("zleotazky = ", zleotazky)
         lastaction = None
+<<<<<<< HEAD
         skupinaotazok = random.choice(list(pole[9:10]))
+=======
+>>>>>>> 875ef07e0087d52a363ecab1b7846f5b45dd955a
 
         if len(zleotazky) == 0:
             respond = make_response(render_template('zleotazky.html', otazka="Na všetky otázky si odpovedal dobre, nemáš si čo opraviť"))
@@ -534,7 +593,11 @@ def skusaP():
                     mh = otazky.find('mh').text
                     respond = make_response(render_template('zleotazky.html', otazka=ot, ma=ma, mb=mb, mc=mc, md=md, me=me, mf=mf, mg=mg, mh=mh,
                                                     control=('Spravna odpoved je', od), zleotazky=zleotazky, cislozlejotazky=ypsilon))
+<<<<<<< HEAD
                     pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok)
+=======
+                    pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction)
+>>>>>>> 875ef07e0087d52a363ecab1b7846f5b45dd955a
                     respond.set_cookie('nameID', json.dumps(pole))
                     return respond
 
@@ -556,7 +619,10 @@ def skusaP():
         koncovka = konc[2:-2]
         zleotazky = random.choice(list(pole[5:6]))
         lastaction = None
+<<<<<<< HEAD
         skupinaotazok = random.choice(list(pole[9:10]))
+=======
+>>>>>>> 875ef07e0087d52a363ecab1b7846f5b45dd955a
 
         print('vypise pole po castiach nech s nimi moze robit', randommeno, '||', mojeotazky, '||', ypsilon, '||', zleotazky)
         for otazky in root.findall('otazka'):
@@ -581,7 +647,11 @@ def skusaP():
                 if list(moja) == lst:
                     moja[:] = []
                     zleotazky.remove(int(ypsilon))
+<<<<<<< HEAD
                     pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok)
+=======
+                    pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction)
+>>>>>>> 875ef07e0087d52a363ecab1b7846f5b45dd955a
                     print('toto vypise pole', pole)
 
                     respond = make_response(render_template('zleotazky.html', control='Vyborne, spravna odpoved!', zleotazky=zleotazky))
@@ -611,6 +681,10 @@ def skusaP():
         koncovka = konc[2:-2]
         zleotazky = random.choice(list(pole[5:6]))
         lastaction = None
+<<<<<<< HEAD
+=======
+
+>>>>>>> 875ef07e0087d52a363ecab1b7846f5b45dd955a
         mensiaotazka = request.form['najmensiaotazka']
         vacsiaotazka = request.form['najvacsiaotazka']
 
@@ -635,8 +709,12 @@ def skusaP():
                 return respond
 
             else:
+<<<<<<< HEAD
                 skupinaotazok = None
                 pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok)
+=======
+                pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction)
+>>>>>>> 875ef07e0087d52a363ecab1b7846f5b45dd955a
                 respond = make_response(render_template('layout.html', uvod=True, bdy=body, sklonovanie=koncovka))
                 respond.set_cookie('nameID', json.dumps(pole))
                 return respond
