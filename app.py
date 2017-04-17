@@ -654,7 +654,7 @@ def skusaP():
                 respond.set_cookie('nameID', json.dumps(pole))
                 return respond
 
-    if request.form['btn'] == 'atom':
+    if request.form['btn'] == 'Atóm':
         kokie = request.cookies.get('nameID')
         pole = json.loads(kokie)
         meno = str(pole[:1])
@@ -675,7 +675,7 @@ def skusaP():
         respond.set_cookie('nameID', json.dumps(pole))
         return respond
 
-    if request.form['btn'] == 'sustavalatok':
+    if request.form['btn'] == 'Sústava látok':
         kokie = request.cookies.get('nameID')
         pole = json.loads(kokie)
         meno = str(pole[:1])
@@ -696,7 +696,7 @@ def skusaP():
         respond.set_cookie('nameID', json.dumps(pole))
         return respond
 
-    if request.form['btn'] == 'latky':
+    if request.form['btn'] == 'Látky':
         kokie = request.cookies.get('nameID')
         pole = json.loads(kokie)
         meno = str(pole[:1])
@@ -717,7 +717,7 @@ def skusaP():
         respond.set_cookie('nameID', json.dumps(pole))
         return respond
 
-    if request.form['btn'] == 'psustava':
+    if request.form['btn'] == 'Periodická sústava prvkov':
         kokie = request.cookies.get('nameID')
         pole = json.loads(kokie)
         meno = str(pole[:1])
@@ -738,7 +738,7 @@ def skusaP():
         respond.set_cookie('nameID', json.dumps(pole))
         return respond
 
-    if request.form['btn'] == 'chvazba':
+    if request.form['btn'] == 'Chemická väzba':
         kokie = request.cookies.get('nameID')
         pole = json.loads(kokie)
         meno = str(pole[:1])
@@ -759,7 +759,7 @@ def skusaP():
         respond.set_cookie('nameID', json.dumps(pole))
         return respond
 
-    if request.form['btn'] == 'nazvoslovie':
+    if request.form['btn'] == 'Názvoslovie':
         kokie = request.cookies.get('nameID')
         pole = json.loads(kokie)
         meno = str(pole[:1])
@@ -780,7 +780,7 @@ def skusaP():
         respond.set_cookie('nameID', json.dumps(pole))
         return respond
 
-    if request.form['btn'] == 'veliciny':
+    if request.form['btn'] == 'Chemické veličiny':
         kokie = request.cookies.get('nameID')
         pole = json.loads(kokie)
         meno = str(pole[:1])
@@ -801,7 +801,7 @@ def skusaP():
         respond.set_cookie('nameID', json.dumps(pole))
         return respond
 
-    if request.form['btn'] == 'kyszas':
+    if request.form['btn'] == 'Kyseliny a zásady':
         kokie = request.cookies.get('nameID')
         pole = json.loads(kokie)
         meno = str(pole[:1])
@@ -822,7 +822,7 @@ def skusaP():
         respond.set_cookie('nameID', json.dumps(pole))
         return respond
 
-    if request.form['btn'] == 'reakcie':
+    if request.form['btn'] == 'Chemické reakcie':
         kokie = request.cookies.get('nameID')
         pole = json.loads(kokie)
         meno = str(pole[:1])
@@ -843,7 +843,7 @@ def skusaP():
         respond.set_cookie('nameID', json.dumps(pole))
         return respond
 
-    if request.form['btn'] == 'rovnovaha':
+    if request.form['btn'] == 'Chemická rovnováha':
         kokie = request.cookies.get('nameID')
         pole = json.loads(kokie)
         meno = str(pole[:1])
@@ -864,7 +864,7 @@ def skusaP():
         respond.set_cookie('nameID', json.dumps(pole))
         return respond
 
-    if request.form['btn'] == 'komplexy':
+    if request.form['btn'] == 'Komplexné zlúčeniny':
         kokie = request.cookies.get('nameID')
         pole = json.loads(kokie)
         meno = str(pole[:1])
@@ -885,7 +885,7 @@ def skusaP():
         respond.set_cookie('nameID', json.dumps(pole))
         return respond
 
-    if request.form['btn'] == 'priklady':
+    if request.form['btn'] == 'Príklady':
         kokie = request.cookies.get('nameID')
         pole = json.loads(kokie)
         meno = str(pole[:1])
