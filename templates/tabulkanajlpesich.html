@@ -15,7 +15,7 @@
              imageFont : null
              }
              });</script>    
-  <link href='//fonts.googleapis.com/css?family=Baumans' rel='stylesheet'>
+  <link href='//fonts.googleapis.com/css?family=Didact Gothic' rel='stylesheet'>
   
   <style>
      .image 
@@ -33,7 +33,7 @@
              width: 100%;
              font-size: 25px;
              text-align: center;
-             font-family: Baumans;
+             font-family: Didact Gothic;
              margin-top: 0px;
              margin-bottom: 0px;
              cursor: pointer;
@@ -55,6 +55,14 @@
              margin-left: 23%;
              } 
              
+      .text_column
+             {
+             font-size: 20px;
+             text-align: center;
+             word-wrap: break-word;
+             font-family: Arial;
+             }
+             
       .control
              {
              color: #876083;
@@ -71,7 +79,7 @@
               text-decoration: none;
               display: inline-block;
               font-size: 15px;
-              font-family: Baumans;
+              font-family: Didact Gothic;
               cursor: pointer;
               transition-duration: 0.2s;    
               }
@@ -88,15 +96,17 @@
               width: 10em;
               }
               
-      .column1
-              {
-              float: right; 
-              padding-right: 1em;
-              }
+      .column
+             {
+             width: 10%;
+             padding-top: 3px;
+             padding-bottom: 3px;
+             }
+              
               
       .column2
               {
-              width: 50%;
+              width: 45%;
               padding-top: 3px;
               padding-bottom: 3px;
               }
@@ -115,6 +125,12 @@
               background-color: #8ED3D6;
               }
               
+      .body
+              {
+              background-color: #CACACA; 
+              width: 1335px;
+              }
+              
       input[type=text], select 
               {
               width: 50%;
@@ -129,7 +145,7 @@
       table
              {
              width: 54%;
-              "border: solid;
+             //border: solid;
              margin-right: 23%;
              margin-left: 23%;
              word-wrap: break-word;
@@ -137,7 +153,7 @@
              }
   </style>
   </head>
-  <body style="background-color:#CACACA;">
+  <body class="body">
      <form action="/" method = "post">
   
      <a href="https://chemiaotazky.herokuapp.com/"><img class="image" src="https://chemistry-studio.com/wp-content/uploads/logo_chemistry_1024_RGB.png" alt="logo" style="width: 50%"/></a>
@@ -160,24 +176,34 @@
      <br />
      <table>
         <tr>
-           <td class="column2"> <p class="column1">{{ tabulka1meno }}</p></td>
-           <td class="column2"> <p>{{ tabulka1body }}</p></td> 
+           <td class="column"></td>
+           <td class="column2"><p class="text_column control">Meno</p></td>
+           <td class="column2"><p class="text_column control">Počet bodov</p></td>
         </tr>
         <tr>
-           <td class="column2"> <p class="column1">{{ tabulka2meno }}</p></td>
-           <td class="column2"> <p>{{ tabulka2body }}</p></td> 
+           <td class="column"><p class="text_column control">1.</p></td>
+           <td class="column2"> <p class="text_column">{{ tabulka1meno }}</p></td>
+           <td class="column2"> <p class="text_column">{{ tabulka1body }}</p></td> 
         </tr>
         <tr>
-           <td class="column2"> <p class="column1">{{ tabulka3meno }}</p></td>
-           <td class="column2"> <p>{{ tabulka3body }}</p></td> 
+           <td class="column"><p class="text_column control">2.</p></td>
+           <td class="column2"> <p class="text_column">{{ tabulka2meno }}</p></td>
+           <td class="column2"> <p class="text_column">{{ tabulka2body }}</p></td> 
         </tr>
         <tr>
-           <td class="column2"> <p class="column1">{{ tabulka4meno }}</p></td>
-           <td class="column2"> <p>{{ tabulka4body }}</p></td> 
+           <td class="column"><p class="text_column control">3.</p></td>
+           <td class="column2"> <p class="text_column">{{ tabulka3meno }}</p></td>
+           <td class="column2"> <p class="text_column">{{ tabulka3body }}</p></td> 
         </tr>
         <tr>
-           <td class="column2"> <p class="column1">{{ tabulka5meno }}</p></td>
-           <td class="column2"> <p>{{ tabulka5body }}</p></td> 
+           <td class="column"><p class="text_column control">4.</p></td>
+           <td class="column2"> <p class="text_column">{{ tabulka4meno }}</p></td>
+           <td class="column2"> <p class="text_column">{{ tabulka4body }}</p></td> 
+        </tr>
+        <tr>
+           <td class="column"><p class="text_column control">5.</p></td>
+           <td class="column2"> <p class="text_column">{{ tabulka5meno }}</p></td>
+           <td class="column2"> <p class="text_column">{{ tabulka5body }}</p></td> 
         </tr>
      </table>
 
