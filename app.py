@@ -906,6 +906,9 @@ def skusaP():
         respond.set_cookie('nameID', json.dumps(pole))
         return respond
 
+    if request.form['btn'] == 'O projekte':
+        respond = make_response(render_template('oProjekte.html'))
+        return respond
 
 app.secret_key = os.environ["SESSION_KEY"]
 
