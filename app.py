@@ -14,10 +14,10 @@ db = "dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url
 conn = psycopg2.connect(db)
 conn.autocommit = True
 engine = conn.cursor()
-engine.execute("CREATE TABLE IF NOT EXISTS FIIT (uuia4 text, meno text, body text, stav text);")
+engine.execute("CREATE TABLE IF NOT EXISTS FIIT (uuia4 text, meno text, body int, stav text);")
 
 
-jozo = """INSERT INTO fiit (uuia4, meno, body, stav) VALUES (%s, NULL, %s, '0');"""
+jozo = """INSERT INTO FIIT (uuia4, meno, body, stav) VALUES (%s, NULL, %s, '0');"""
 engine.execute(jozo, ('hatlanina', 2))
 tree = ET.parse('chemia.xml')
 root = tree.getroot()
@@ -70,7 +70,7 @@ def skusaG():
         pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok)
         print('toto vypise kookie noveho uzivatela', pole)
 
-        jozo = """INSERT INTO fiit (uuia4, meno, body, stav) VALUES (%s, NULL, %s, '0');"""
+        jozo = """INSERT INTO FIIT (uuia4, meno, body, stav) VALUES (%s, NULL, %s, '0');"""
         engine.execute(jozo, (randommeno, body))
 
         respond = make_response(render_template('layout.html', uvod=True, bdy=body, sklonovanie=koncovka))
@@ -154,39 +154,51 @@ def skusaP():
 
         elif skupinaotazok == 'atom':
             finalneotazky = list(atom - polesplnenychotazok)
+            print('atom', finalneotazky)
 
         elif skupinaotazok == 'sustavalatok':
             finalneotazky = list(sustavalatok - polesplnenychotazok)
+            print('sustavalatok', finalneotazky)
 
         elif skupinaotazok == 'latky':
             finalneotazky = list(latky - polesplnenychotazok)
+            print('latky', finalneotazky)
 
         elif skupinaotazok == 'psustava':
             finalneotazky = list(psustava - polesplnenychotazok)
+            print('psustava', finalneotazky)
 
         elif skupinaotazok == 'chvazba':
             finalneotazky = list(chvazba - polesplnenychotazok)
+            print('chvazba', finalneotazky)
 
         elif skupinaotazok == 'nazvoslovie':
             finalneotazky = list(nazvoslovie - polesplnenychotazok)
+            print('nazvoslovie', finalneotazky)
 
         elif skupinaotazok == 'veliciny':
             finalneotazky = list(veliciny - polesplnenychotazok)
+            print('veliciny', finalneotazky)
 
         elif skupinaotazok == 'kyszas':
             finalneotazky = list(kyszas - polesplnenychotazok)
+            print('kyszas', finalneotazky)
 
         elif skupinaotazok == 'reakcie':
             finalneotazky = list(reakcie - polesplnenychotazok)
+            print('reakcie', finalneotazky)
 
         elif skupinaotazok == 'rovnovaha':
             finalneotazky = list(rovnovaha - polesplnenychotazok)
+            print('rovnovaha', finalneotazky)
 
         elif skupinaotazok == 'komplexy':
             finalneotazky = list(komplexy - polesplnenychotazok)
+            print('komplexy', finalneotazky)
 
         elif skupinaotazok == 'priklady':
             finalneotazky = list(priklady - polesplnenychotazok)
+            print('priklady', finalneotazky)
 
         if len(finalneotazky) == 0:
             respond = make_response(render_template('layout.html', control='Nemame otazky', bdy=body, sklonovanie=koncovka))
@@ -342,7 +354,7 @@ def skusaP():
         tabulkovydic = {'tabulka1meno': None, 'tabulka1body': None, 'tabulka2meno': None, 'tabulka2body': None,
                         'tabulka3meno': None, 'tabulka3body': None, 'tabulka4meno': None, 'tabulka4body': None,
                         'tabulka5meno': None, 'tabulka5body': None}
-        engine.execute("SELECT meno, body FROM FIIT WHERE stav = '1' ORDER BY body DESC LIMIT 5;")
+        engine.execute("SELECT meno, body FROM FIIT WHERE stav = '1' ORDER BY body DESC LIMIT 20;")
         omg = 1
         result_set = engine.fetchall()
         for r in result_set:
@@ -351,6 +363,7 @@ def skusaP():
             tabulkovydic['tabulka' + str(omg) + 'meno'] = x
             tabulkovydic['tabulka' + str(omg) + 'body'] = y
             omg += 1
+            print(r)
 
         respond = make_response(render_template('tabulkanajlpesich.html', otazka="Tvoje meno bolo uložené.", bdy=body, sklonovanie=koncovka,
                                 tabulka1meno=tabulkovydic['tabulka1meno'], tabulka1body=tabulkovydic['tabulka1body'],
@@ -367,7 +380,7 @@ def skusaP():
         randommeno = meno[2:-2]
         najmensiaotazka = random.choice(list(pole[6:7]))
         najvacsiaotazka = random.choice(list(pole[7:8]))
-        body = random.choice(list(pole[3:4]))
+        body = int(random.choice(list(pole[3:4])))
         konc = str(pole[4:5])
         koncovka = konc[2:-2]
 
@@ -891,27 +904,6 @@ def skusaP():
         pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok)
         respond = make_response(render_template('layout.html', uvod=True, bdy=body, sklonovanie=koncovka))
         respond.set_cookie('nameID', json.dumps(pole))
-        return respond
-
-    if request.form['btn'] == 'Späť na hlavnú stránku':
-        kokie = request.cookies.get('nameID')
-        pole = json.loads(kokie)
-        meno = str(pole[:1])
-        randommeno = meno[2:-2]
-        mojeotazky = random.choice(list(pole[1:2]))
-        y = str(pole[2:3])
-        ypsilon = y[1:-1]
-        body = random.choice(list(pole[3:4]))
-        konc = str(pole[4:5])
-        koncovka = konc[2:-2]
-        zleotazky = random.choice(list(pole[5:6]))
-        lastaction = None
-        kokie = request.cookies.get('nameID')
-        pole = json.loads(kokie)
-        body = random.choice(list(pole[3:4]))
-        konc = str(pole[4:5])
-        koncovka = konc[2:-2]
-        respond = make_response(render_template('layout.html', uvod=True, bdy=body, sklonovanie=koncovka))
         return respond
 
 
