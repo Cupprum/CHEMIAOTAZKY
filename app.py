@@ -309,7 +309,8 @@ def skusaP():
                         jozo = """UPDATE FIIT SET body= %s WHERE uuia4= %s ;"""
                         engine.execute(jozo, (body, randommeno,))
 
-                        respond = make_response(render_template('layout.html', control='Vyborne, spravna odpoved!', bdy=body, sklonovanie=koncovka))
+                        respond = make_response(render_template('layout.html', control='Vyborne, spravna odpoved!', otazka=ot, odp=od,
+                                                    ma=ma, mb=mb, mc=mc, md=md, me=me, mf=mf, mg=mg, mh=mh, bdy=body, sklonovanie=koncovka))
                         respond.set_cookie('nameID', json.dumps(pole))
                         return respond
 
