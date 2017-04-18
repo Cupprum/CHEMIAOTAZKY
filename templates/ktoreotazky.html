@@ -127,8 +127,8 @@
               
       .padding_table
               {
-              padding-left: 15%; 
-              padding-right: 15%;
+              padding-left: 5%; 
+              padding-right: 5%;
               }
               
       .body
@@ -176,13 +176,15 @@
         </tr> 
      </table> <br />
      <p class="text justify">Pre nastavenie vlastného intervalu otázok zadaj číslo otázky od ktorej chceš začať a ktorou chceš skončiť. Otázky sú číslované
-                             od 1 po 500.</p>
+                             od 1 po 500. Pokiaľ chceš prejsť na konkrétne číslo otázky, zadaj jej číslo.</p>
      <p class="control text">{{ control }}</p> <br />
      <table class="padding_table">
         <tr>
            <td class="column1"><input type="text" name="najmensiaotazka" placeholder="Od.." class="align-right"/></td>
            <td class="column1"><input type="text" name="najvacsiaotazka" placeholder="Do.." class="align-right"/></td>
            <td><input type="submit" name="btn" value="Pridať rozmedzie otázok" class="button"/></td>
+           <td class="column1"><input type="text" name="cislootazky" placeholder="Číslo.." class="align-right"/></td>
+           <td><input type="submit" name="btn" value="Prejsť na otázku" class="button"/></td>
          </tr>
      </table>
      <br />

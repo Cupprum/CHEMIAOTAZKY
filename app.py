@@ -924,6 +924,54 @@ def skusaP():
         respond = make_response(render_template('oProjekte.html'))
         return respond
 
+    if request.form['btn'] == 'Prejsť na otázku':
+        kokie = request.cookies.get('nameID')
+        pole = json.loads(kokie)
+        meno = str(pole[:1])
+        randommeno = meno[2:-2]
+        mensiaotazka = random.choice(list(pole[6:7]))
+        vacsiaotazka = random.choice(list(pole[7:8]))
+        najmensiaotazka = int(mensiaotazka)
+        najvacsiaotazka = int(vacsiaotazka)
+        print('cudneotazkyprvaposledna', najmensiaotazka, najvacsiaotazka)
+        polevsetkychotazok = set(list(range(najmensiaotazka, najvacsiaotazka + 1)))
+        mojeotazky = random.choice(list(pole[1:2]))
+        polesplnenychotazok = set(mojeotazky)
+
+        body = random.choice(list(pole[3:4]))
+        konc = str(pole[4:5])
+        koncovka = konc[2:-2]
+        zleotazky = random.choice(list(pole[5:6]))
+        print("zleotazky = ", zleotazky)
+        lastaction = None
+        skupinaotazok = str(random.choice(list(pole[9:10])))
+        print('skupinaotazok |||||||', skupinaotazok)
+
+        ypsilon = int(request.form['cislootazky'])
+
+        print('vypise pole po castiach nech s nimi moze robit', randommeno, '||', mojeotazky, '||', ypsilon, '||', body, '||', koncovka, '||', zleotazky)
+        for otazky in root.findall('otazka'):
+            number = otazky.attrib.get('number')
+            if str(ypsilon) == number:
+                print('ypsilon: ', ypsilon, 'number: ', number)
+                ot = otazky.find('ot').text
+                od = otazky.find('od').text
+                ma = otazky.find('ma').text
+                mb = otazky.find('mb').text
+                mc = otazky.find('mc').text
+                md = otazky.find('md').text
+                me = otazky.find('me').text
+                mf = otazky.find('mf').text
+                mg = otazky.find('mg').text
+                mh = otazky.find('mh').text
+                pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok)
+
+                respond = make_response(render_template('layout.html', otazka=ot, ma=ma, mb=mb, mc=mc, md=md, me=me, mf=mf, mg=mg, mh=mh,
+                                        control=('Spravna odpoved je', od), bdy=body, sklonovanie=koncovka))
+                respond.set_cookie('nameID', json.dumps(pole))
+                return respond
+
+
 app.secret_key = os.environ["SESSION_KEY"]
 
 if __name__ == '__main__':
