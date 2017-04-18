@@ -150,53 +150,66 @@ def skusaP():
         print('skupinaotazok |||||||', skupinaotazok)
 
         if skupinaotazok == 'None':
+            typotazky = "Si skúšaný zo všetkých otázok"
             finalneotazky = list(polevsetkychotazok - polesplnenychotazok)
 
         elif skupinaotazok == 'atom':
+            typotazky = "Atóm"
             finalneotazky = list(atom - polesplnenychotazok)
             print('atom', finalneotazky)
 
         elif skupinaotazok == 'sustavalatok':
+            typotazky = "Sústava látok"
             finalneotazky = list(sustavalatok - polesplnenychotazok)
             print('sustavalatok', finalneotazky)
 
         elif skupinaotazok == 'latky':
+            typotazky = "Látky"
             finalneotazky = list(latky - polesplnenychotazok)
             print('latky', finalneotazky)
 
         elif skupinaotazok == 'psustava':
+            typotazky = "Periodická sústava prvkov"
             finalneotazky = list(psustava - polesplnenychotazok)
             print('psustava', finalneotazky)
 
         elif skupinaotazok == 'chvazba':
+            typotazky = "Chemická väzba"
             finalneotazky = list(chvazba - polesplnenychotazok)
             print('chvazba', finalneotazky)
 
         elif skupinaotazok == 'nazvoslovie':
+            typotazky = "Názvoslovie"
             finalneotazky = list(nazvoslovie - polesplnenychotazok)
             print('nazvoslovie', finalneotazky)
 
         elif skupinaotazok == 'veliciny':
+            typotazky = "Chemické veličiny"
             finalneotazky = list(veliciny - polesplnenychotazok)
             print('veliciny', finalneotazky)
 
         elif skupinaotazok == 'kyszas':
+            typotazky = "Kyseliny a zásady"
             finalneotazky = list(kyszas - polesplnenychotazok)
             print('kyszas', finalneotazky)
 
         elif skupinaotazok == 'reakcie':
+            typotazky = "Chemické reakcie"
             finalneotazky = list(reakcie - polesplnenychotazok)
             print('reakcie', finalneotazky)
 
         elif skupinaotazok == 'rovnovaha':
+            typotazky = "Chemická rovnovaha"
             finalneotazky = list(rovnovaha - polesplnenychotazok)
             print('rovnovaha', finalneotazky)
 
         elif skupinaotazok == 'komplexy':
+            typotazky = "Komplexné zlúčeniny"
             finalneotazky = list(komplexy - polesplnenychotazok)
             print('komplexy', finalneotazky)
 
         elif skupinaotazok == 'priklady':
+            typotazky = "Príklady"
             finalneotazky = list(priklady - polesplnenychotazok)
             print('priklady', finalneotazky)
 
@@ -223,7 +236,7 @@ def skusaP():
                     mh = otazky.find('mh').text
                     pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok)
 
-                    respond = make_response(render_template('layout.html', otazka=ot, ma=ma, mb=mb, mc=mc, md=md, me=me, mf=mf, mg=mg, mh=mh,
+                    respond = make_response(render_template('layout.html', typotazok=typotazky, otazka=ot, ma=ma, mb=mb, mc=mc, md=md, me=me, mf=mf, mg=mg, mh=mh,
                                             control=('Spravna odpoved je', od), bdy=body, sklonovanie=koncovka))
                     respond.set_cookie('nameID', json.dumps(pole))
                     return respond
