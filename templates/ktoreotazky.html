@@ -15,7 +15,7 @@
              imageFont : null
              }
              });</script>    
-  <link href='//fonts.googleapis.com/css?family=Baumans' rel='stylesheet'>
+  <link href='//fonts.googleapis.com/css?family=Didact Gothic' rel='stylesheet'>
   
   <style>
      .image 
@@ -33,7 +33,7 @@
              width: 100%;
              font-size: 25px;
              text-align: center;
-             font-family: Baumans;
+             font-family: Didact Gothic;
              margin-top: 0px;
              margin-bottom: 0px;
              cursor: pointer;
@@ -53,6 +53,18 @@
              font-family: Arial;
              margin-right: 23%;
              margin-left: 23%;
+             } 
+             
+      .text_column
+             {
+             font-size: 15px;
+             text-align: center;
+             word-wrap: break-word;
+             font-family: Arial;
+             padding-left: 5px;
+             padding-right: 5px;
+             margin-top: 3px;
+             margin-bottom: 3px;
              } 
              
       .center
@@ -88,7 +100,7 @@
               text-decoration: none;
               display: inline-block;
               font-size: 15px;
-              font-family: Baumans;
+              font-family: Didact Gothic;
               cursor: pointer;
               transition-duration: 0.2s;    
               }
@@ -115,9 +127,20 @@
               
       .padding_table
               {
-              padding-left: 15%; 
-              padding-right: 15%;
+              padding-left: 5%; 
+              padding-right: 5%;
               }
+              
+      .body
+              {
+              background-color: #CACACA; 
+              width: 1335px;
+              }
+              
+      .column
+             {
+             width: 25%
+             }
               
       input[type=text], select 
               {
@@ -141,7 +164,7 @@
              }
   </style>
   </head>
-  <body style="background-color:#CACACA;">
+  <body class="body">
      <form action="/" method = "post">
   
      <a href="https://chemiaotazky.herokuapp.com/"><img class="image" src="https://chemistry-studio.com/wp-content/uploads/logo_chemistry_1024_RGB.png" alt="logo" style="width: 50%"/></a>
@@ -153,26 +176,62 @@
         </tr> 
      </table> <br />
      <p class="text justify">Pre nastavenie vlastného intervalu otázok zadaj číslo otázky od ktorej chceš začať a ktorou chceš skončiť. Otázky sú číslované
-                             od 1 po 500.</p>
+                             od 1 po 500. Pokiaľ chceš prejsť na konkrétne číslo otázky, zadaj jej číslo.</p>
      <p class="control text">{{ control }}</p> <br />
      <table class="padding_table">
         <tr>
            <td class="column1"><input type="text" name="najmensiaotazka" placeholder="Od.." class="align-right"/></td>
            <td class="column1"><input type="text" name="najvacsiaotazka" placeholder="Do.." class="align-right"/></td>
+           <td><input type="submit" name="btn" value="Pridať rozmedzie otázok" class="button"/></td>
+           <td class="column1"><input type="text" name="cislootazky" placeholder="Číslo.." class="align-right"/></td>
+           <td><input type="submit" name="btn" value="Prejsť na otázku" class="button"/></td>
          </tr>
-         <td><input type="submit" name="btn" value="Pridať rozmedzie otázok" class="button"/></td>
-           <td><input type="submit" name="btn" value="atom" class="button"/></td>
-           <td><input type="submit" name="btn" value="sustavalatok" class="button"/></td>
-           <td><input type="submit" name="btn" value="latky" class="button"/></td>
-           <td><input type="submit" name="btn" value="psustava" class="button"/></td>
-           <td><input type="submit" name="btn" value="chvazba" class="button"/></td>
-           <td><input type="submit" name="btn" value="nazvoslovie" class="button"/></td>
-           <td><input type="submit" name="btn" value="veliciny" class="button"/></td>
-           <td><input type="submit" name="btn" value="kyszas" class="button"/></td>
-           <td><input type="submit" name="btn" value="reakcie" class="button"/></td>
-           <td><input type="submit" name="btn" value="rovnovaha" class="button"/></td>
-           <td><input type="submit" name="btn" value="komplexy" class="button"/></td>
-           <td><input type="submit" name="btn" value="priklady" class="button"/></td>
+     </table>
+     <br />
+     <p class="text justify">Môžeš si vybrať konkrétnu oblasť otázok z ktorých sa chceš dať preskúšať. Otázky sú rozdelené podľa nasledujúcich tém:</p>
+     <table>
+        <tr class="menu_table">
+           <td class="column"><center><input type="submit" name="btn" value="Atóm" class="button"/></center></td>
+           <td class="column"><center><input type="submit" name="btn" value="Sústava látok" class="button"/></center></td>
+           <td class="column"><center><input type="submit" name="btn" value="Látky" class="button"/></center></td>
+           <td class="column"><center><input type="submit" name="btn" value="Periodická sústava prvkov" class="button"/></center></td>
+        </tr>
+        <tr>
+           <td class="column"><p class="text_column justify">Táto kategória obsahuje otázky týkajúce sa stavby atómu, správania sa elektrónov, protónov a podobne. </p></td>
+           <td class="column"><p class="text_column justify">Táto kategória obsahuje otázky týkajúce sa stavby sústav látok, emulzii, suspenzii a podobne. </p></td>
+           <td class="column"><p class="text_column justify">Táto kategória obsahuje otázky týkajúce sa konkrétnych látok, prvkov a zlúčenín.</p></td>
+           <td class="column"><p class="text_column justify">Táto kategória obsahuje otázky týkajúce sa periodizácie prvkov do periodickej tabuľky prvkov.</p></td>
+        </tr>
+     </table>
+     <br />
+     <table>
+        <tr class="menu_table">
+           <td class="column"><center><input type="submit" name="btn" value="Chemická väzba" class="button"/></center></td>
+           <td class="column"><center><input type="submit" name="btn" value="Názvoslovie" class="button"/></center></td>
+           <td class="column"><center><input type="submit" name="btn" value="Chemické veličiny" class="button"/></center></td>
+           <td class="column"><center><input type="submit" name="btn" value="Kyseliny a zásady" class="button"/></center></td>
+        </tr>
+        <tr>
+           <td class="column"><p class="text_column justify">Táto kategória obsahuje otázky týkajúce sa chemickej väzby, jej druhov a spôsobov akým je vytvorená. </p></td>
+           <td class="column"><p class="text_column justify">Táto kategória obsahuje otázky týkajúce sa názvoslovia, nazývania zlúčenín a tvorby vzorcov.</p></td>
+           <td class="column"><p class="text_column justify">Táto kategória obsahuje otázky týkajúce sa konkrétnych chemických veličín ich odvodenia a ich vlastností.</p></td>
+           <td class="column"><p class="text_column justify">Táto kategória obsahuje otázky týkajúce sa Brönstedovej teórie kyselín a zásad, ich klasifikácie a vlastností.</p></td>
+        </tr>
+     </table>
+     <br />
+     <table>
+        <tr class="menu_table">
+           <td class="column"><center><input type="submit" name="btn" value="Chemické reakcie" class="button"/></center></td>
+           <td class="column"><center><input type="submit" name="btn" value="Chemická rovnováha" class="button"/></center></td>
+           <td class="column"><center><input type="submit" name="btn" value="Komplexné zlúčeniny" class="button"/></center></td>
+           <td class="column"><center><input type="submit" name="btn" value="Príklady" class="button"/></center></td>
+        </tr>
+        <tr>
+           <td class="column"><p class="text_column justify">Táto kategória obsahuje otázky týkajúce sa chemických reakcií a stechimetrických koeficientov.</p></td> 
+           <td class="column"><p class="text_column justify">Táto kategória obsahuje otázky týkajúce sa chemickej rovnováhy a rovnovážnej konštanty látok. </p></td>
+           <td class="column"><p class="text_column justify">Táto kategória obsahuje otázky týkajúce sa komplexných zlúčenín, ich vzniku a vlastností.</p></td> 
+           <td class="column"><p class="text_column justify">Táto kategória obsahuje príklady na precvičenie molových veličín a iných výpočtov.</p></td> 
+        </tr>
      </table>
 
  <br /><br /><br /> 

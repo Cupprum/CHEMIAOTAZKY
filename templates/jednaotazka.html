@@ -3,7 +3,7 @@
   <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta name="viewport" content="width=device-width">
-  <title>Chemia 2.1/TabulkaNajlepsich</title>
+  <title>Chemia 2.1</title>
   <script type="text/javascript" 
           src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>     
     <script type="text/x-mathjax-config">
@@ -55,17 +55,37 @@
              margin-left: 23%;
              } 
              
-      .text_column
+      .center
+             {
+             text-align: center;
+             }
+             
+      .question-text
              {
              font-size: 20px;
-             text-align: center;
              word-wrap: break-word;
              font-family: Arial;
+             margin-right: 23%;
+             margin-left: 23%;
              }
              
       .control
              {
              color: #876083;
+             }
+             
+      .option
+             {
+             width: 7%;
+             font-size: 20px;
+             font-family: Arial;
+             margin-right: 23%;
+             margin-left: 23%;
+             text-align: center;}
+             
+      .justify
+             {
+             text-align: justify;
              }
              
       .button 
@@ -74,11 +94,11 @@
               border: none;
               color: black;
               border-radius: 6px;
-              padding: 5px 10px;
+              padding: 15px 20px;
               text-align: center;
               text-decoration: none;
               display: inline-block;
-              font-size: 15px;
+              font-size: 20px;
               font-family: Didact Gothic;
               cursor: pointer;
               transition-duration: 0.2s;    
@@ -89,32 +109,6 @@
               background-color: #8ED3D6;
               color: white;
               }
-              
-      .align-right
-              {
-              float: right;
-              width: 10em;
-              }
-              
-      .column
-             {
-             width: 10%;
-             padding-top: 3px;
-             padding-bottom: 3px;
-             }
-              
-              
-      .column2
-              {
-              width: 45%;
-              padding-top: 3px;
-              padding-bottom: 3px;
-              }
-              
-      .justify
-             {
-             text-align: justify;
-             }
               
       .menu_table
               {
@@ -130,26 +124,15 @@
               background-color: #CACACA; 
               width: 1335px;
               }
-              
-      input[type=text], select 
-              {
-              width: 50%;
-              padding: 6px 10px;
-              margin: 8px 0;
-              display: inline-block;
-              border: 1px solid #8ED3D6;
-              border-radius: 4px;
-              box-sizing: border-box;
-              }
              
       table
              {
              width: 54%;
-             //border: solid;
-             margin-right: 23%;
-             margin-left: 23%;
-             word-wrap: break-word;
-             font-family: Arial;
+              "border: solid;
+              margin-right: 23%;
+              margin-left: 23%;
+              word-wrap: break-word;
+              font-family: Arial;
              }
   </style>
   </head>
@@ -164,50 +147,53 @@
            <td><input type="submit" style="border: none;background-color: #8ED3D6;" name="btn" value="Zmena skúšaných otázok" class="menu"/></td>
         </tr> 
      </table>  
-     <p class="text control">{{ otazka }}</p> <br />
+     <p class="text">
+         {% if uvod %}
+            Zvoľ správne odpovede. Skontroluj svoje odpovede kliknutím na tlačítko kontrola.
+         {% endif %}</p><br />
+     <p class="question-text justify">{{ typotazok }}</p>
+     <p class="question-text justify">{{ otazka }}</p>
+     <p class="question-text justify">{{ ma }}</p>
+     <p class="question-text justify">{{ mb }}</p>
+     <p class="question-text justify">{{ mc }}</p>
+     <p class="question-text justify">{{ md }}</p>
+     <p class="question-text justify">{{ me }}</p>
+     <p class="question-text justify">{{ mf }}</p>
+     <p class="question-text justify">{{ mg }}</p><br />
+     <p class="question-text center control">{{ control }}</p>
+     <p class="question-text center">{{ odp }}</p>
+     <p class="question-text center">{{ bdy }} otáz{{ sklonovanie }} máš správne</p>
+     <br />
      <table>
         <tr>
-           <td class="column2"><input class="align-right" type="text" name="vloztemeno" placeholder="Tvoje meno.."/></td>
-           <td class="column2"><input type="submit" name="btn" value="Pridať meno" class="button"/></td>
-        </tr>
-     </table>
-     <br />
-     <p class="text justify"> Pre zaradenie do tabuľky najlepších prosím zadaj svoje meno a tvoje body budú automaticky zaznamenané a pridané do tabuľky najlepších.</p>
-     <br />
-     <table>
-        <tr>
-           <td class="column"></td>
-           <td class="column2"><p class="text_column control">Meno</p></td>
-           <td class="column2"><p class="text_column control">Počet bodov</p></td>
+           <td class="option">A</td>
+           <td class="option">B</td>
+           <td class="option">C</td>
+           <td class="option">D</td>
+           <td class="option">E</td>
+           <td class="option">F</td>
+           <td class="option">G</td>
+           <td class="option">H</td>
         </tr>
         <tr>
-           <td class="column"><p class="text_column control">1.</p></td>
-           <td class="column2"> <p class="text_column">{{ tabulka1meno }}</p></td>
-           <td class="column2"> <p class="text_column">{{ tabulka1body }}</p></td> 
+           <td class="option"><input type="checkbox" name="A" value="A"/></td>
+           <td class="option"><input type="checkbox" name="B" value="B"/></td>
+           <td class="option"><input type="checkbox" name="C" value="C"/></td>
+           <td class="option"><input type="checkbox" name="D" value="D"/></td>
+           <td class="option"><input type="checkbox" name="E" value="E"/></td>
+           <td class="option"><input type="checkbox" name="F" value="F"/></td>
+           <td class="option"><input type="checkbox" name="G" value="G"/></td>
+           <td class="option"><input type="checkbox" name="H" value="H"/></td>
         </tr>
+    </table>
+    <br /><br />
+    <table>
         <tr>
-           <td class="column"><p class="text_column control">2.</p></td>
-           <td class="column2"> <p class="text_column">{{ tabulka2meno }}</p></td>
-           <td class="column2"> <p class="text_column">{{ tabulka2body }}</p></td> 
+           <td><input type="submit" name="btn" value="Kontrola" class="button"/></td>
+           <td class="column1"><input type="text" name="cislootazky" placeholder="Číslo.." class="align-right"/></td>
+           <td><input type="submit" name="btn" value="Prejsť na otázku" class="button"/></td>
         </tr>
-        <tr>
-           <td class="column"><p class="text_column control">3.</p></td>
-           <td class="column2"> <p class="text_column">{{ tabulka3meno }}</p></td>
-           <td class="column2"> <p class="text_column">{{ tabulka3body }}</p></td> 
-        </tr>
-        <tr>
-           <td class="column"><p class="text_column control">4.</p></td>
-           <td class="column2"> <p class="text_column">{{ tabulka4meno }}</p></td>
-           <td class="column2"> <p class="text_column">{{ tabulka4body }}</p></td> 
-        </tr>
-        <tr>
-           <td class="column"><p class="text_column control">5.</p></td>
-           <td class="column2"> <p class="text_column">{{ tabulka5meno }}</p></td>
-           <td class="column2"> <p class="text_column">{{ tabulka5body }}</p></td> 
-        </tr>
-     </table>
-
-
+    </table>
  <br /><br /><br /> 
      
     </form>

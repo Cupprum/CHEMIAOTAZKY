@@ -150,53 +150,66 @@ def skusaP():
         print('skupinaotazok |||||||', skupinaotazok)
 
         if skupinaotazok == 'None':
+            typotazky = "Si skúšaný zo všetkých otázok"
             finalneotazky = list(polevsetkychotazok - polesplnenychotazok)
 
         elif skupinaotazok == 'atom':
+            typotazky = "Atóm"
             finalneotazky = list(atom - polesplnenychotazok)
             print('atom', finalneotazky)
 
         elif skupinaotazok == 'sustavalatok':
+            typotazky = "Sústava látok"
             finalneotazky = list(sustavalatok - polesplnenychotazok)
             print('sustavalatok', finalneotazky)
 
         elif skupinaotazok == 'latky':
+            typotazky = "Látky"
             finalneotazky = list(latky - polesplnenychotazok)
             print('latky', finalneotazky)
 
         elif skupinaotazok == 'psustava':
+            typotazky = "Periodická sústava prvkov"
             finalneotazky = list(psustava - polesplnenychotazok)
             print('psustava', finalneotazky)
 
         elif skupinaotazok == 'chvazba':
+            typotazky = "Chemická väzba"
             finalneotazky = list(chvazba - polesplnenychotazok)
             print('chvazba', finalneotazky)
 
         elif skupinaotazok == 'nazvoslovie':
+            typotazky = "Názvoslovie"
             finalneotazky = list(nazvoslovie - polesplnenychotazok)
             print('nazvoslovie', finalneotazky)
 
         elif skupinaotazok == 'veliciny':
+            typotazky = "Chemické veličiny"
             finalneotazky = list(veliciny - polesplnenychotazok)
             print('veliciny', finalneotazky)
 
         elif skupinaotazok == 'kyszas':
+            typotazky = "Kyseliny a zásady"
             finalneotazky = list(kyszas - polesplnenychotazok)
             print('kyszas', finalneotazky)
 
         elif skupinaotazok == 'reakcie':
+            typotazky = "Chemické reakcie"
             finalneotazky = list(reakcie - polesplnenychotazok)
             print('reakcie', finalneotazky)
 
         elif skupinaotazok == 'rovnovaha':
+            typotazky = "Chemická rovnovaha"
             finalneotazky = list(rovnovaha - polesplnenychotazok)
             print('rovnovaha', finalneotazky)
 
         elif skupinaotazok == 'komplexy':
+            typotazky = "Komplexné zlúčeniny"
             finalneotazky = list(komplexy - polesplnenychotazok)
             print('komplexy', finalneotazky)
 
         elif skupinaotazok == 'priklady':
+            typotazky = "Príklady"
             finalneotazky = list(priklady - polesplnenychotazok)
             print('priklady', finalneotazky)
 
@@ -223,7 +236,7 @@ def skusaP():
                     mh = otazky.find('mh').text
                     pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok)
 
-                    respond = make_response(render_template('layout.html', otazka=ot, ma=ma, mb=mb, mc=mc, md=md, me=me, mf=mf, mg=mg, mh=mh,
+                    respond = make_response(render_template('layout.html', typotazok=typotazky, otazka=ot, ma=ma, mb=mb, mc=mc, md=md, me=me, mf=mf, mg=mg, mh=mh,
                                             control=('Spravna odpoved je', od), bdy=body, sklonovanie=koncovka))
                     respond.set_cookie('nameID', json.dumps(pole))
                     return respond
@@ -296,7 +309,8 @@ def skusaP():
                         jozo = """UPDATE FIIT SET body= %s WHERE uuia4= %s ;"""
                         engine.execute(jozo, (body, randommeno,))
 
-                        respond = make_response(render_template('layout.html', control='Vyborne, spravna odpoved!', bdy=body, sklonovanie=koncovka))
+                        respond = make_response(render_template('layout.html', control='Vyborne, spravna odpoved!', otazka=ot, odp=od,
+                                                    ma=ma, mb=mb, mc=mc, md=md, me=me, mf=mf, mg=mg, mh=mh, bdy=body, sklonovanie=koncovka))
                         respond.set_cookie('nameID', json.dumps(pole))
                         return respond
 
@@ -654,7 +668,7 @@ def skusaP():
                 respond.set_cookie('nameID', json.dumps(pole))
                 return respond
 
-    if request.form['btn'] == 'atom':
+    if request.form['btn'] == 'Atóm':
         kokie = request.cookies.get('nameID')
         pole = json.loads(kokie)
         meno = str(pole[:1])
@@ -675,7 +689,7 @@ def skusaP():
         respond.set_cookie('nameID', json.dumps(pole))
         return respond
 
-    if request.form['btn'] == 'sustavalatok':
+    if request.form['btn'] == 'Sústava látok':
         kokie = request.cookies.get('nameID')
         pole = json.loads(kokie)
         meno = str(pole[:1])
@@ -696,7 +710,7 @@ def skusaP():
         respond.set_cookie('nameID', json.dumps(pole))
         return respond
 
-    if request.form['btn'] == 'latky':
+    if request.form['btn'] == 'Látky':
         kokie = request.cookies.get('nameID')
         pole = json.loads(kokie)
         meno = str(pole[:1])
@@ -717,7 +731,7 @@ def skusaP():
         respond.set_cookie('nameID', json.dumps(pole))
         return respond
 
-    if request.form['btn'] == 'psustava':
+    if request.form['btn'] == 'Periodická sústava prvkov':
         kokie = request.cookies.get('nameID')
         pole = json.loads(kokie)
         meno = str(pole[:1])
@@ -738,7 +752,7 @@ def skusaP():
         respond.set_cookie('nameID', json.dumps(pole))
         return respond
 
-    if request.form['btn'] == 'chvazba':
+    if request.form['btn'] == 'Chemická väzba':
         kokie = request.cookies.get('nameID')
         pole = json.loads(kokie)
         meno = str(pole[:1])
@@ -759,7 +773,7 @@ def skusaP():
         respond.set_cookie('nameID', json.dumps(pole))
         return respond
 
-    if request.form['btn'] == 'nazvoslovie':
+    if request.form['btn'] == 'Názvoslovie':
         kokie = request.cookies.get('nameID')
         pole = json.loads(kokie)
         meno = str(pole[:1])
@@ -780,7 +794,7 @@ def skusaP():
         respond.set_cookie('nameID', json.dumps(pole))
         return respond
 
-    if request.form['btn'] == 'veliciny':
+    if request.form['btn'] == 'Chemické veličiny':
         kokie = request.cookies.get('nameID')
         pole = json.loads(kokie)
         meno = str(pole[:1])
@@ -801,7 +815,7 @@ def skusaP():
         respond.set_cookie('nameID', json.dumps(pole))
         return respond
 
-    if request.form['btn'] == 'kyszas':
+    if request.form['btn'] == 'Kyseliny a zásady':
         kokie = request.cookies.get('nameID')
         pole = json.loads(kokie)
         meno = str(pole[:1])
@@ -822,7 +836,7 @@ def skusaP():
         respond.set_cookie('nameID', json.dumps(pole))
         return respond
 
-    if request.form['btn'] == 'reakcie':
+    if request.form['btn'] == 'Chemické reakcie':
         kokie = request.cookies.get('nameID')
         pole = json.loads(kokie)
         meno = str(pole[:1])
@@ -843,7 +857,7 @@ def skusaP():
         respond.set_cookie('nameID', json.dumps(pole))
         return respond
 
-    if request.form['btn'] == 'rovnovaha':
+    if request.form['btn'] == 'Chemická rovnováha':
         kokie = request.cookies.get('nameID')
         pole = json.loads(kokie)
         meno = str(pole[:1])
@@ -864,7 +878,7 @@ def skusaP():
         respond.set_cookie('nameID', json.dumps(pole))
         return respond
 
-    if request.form['btn'] == 'komplexy':
+    if request.form['btn'] == 'Komplexné zlúčeniny':
         kokie = request.cookies.get('nameID')
         pole = json.loads(kokie)
         meno = str(pole[:1])
@@ -885,7 +899,7 @@ def skusaP():
         respond.set_cookie('nameID', json.dumps(pole))
         return respond
 
-    if request.form['btn'] == 'priklady':
+    if request.form['btn'] == 'Príklady':
         kokie = request.cookies.get('nameID')
         pole = json.loads(kokie)
         meno = str(pole[:1])
@@ -905,6 +919,57 @@ def skusaP():
         respond = make_response(render_template('layout.html', uvod=True, bdy=body, sklonovanie=koncovka))
         respond.set_cookie('nameID', json.dumps(pole))
         return respond
+
+    if request.form['btn'] == 'O projekte':
+        respond = make_response(render_template('oProjekte.html'))
+        return respond
+
+    if request.form['btn'] == 'Prejsť na otázku':
+        kokie = request.cookies.get('nameID')
+        pole = json.loads(kokie)
+        meno = str(pole[:1])
+        randommeno = meno[2:-2]
+        mensiaotazka = random.choice(list(pole[6:7]))
+        vacsiaotazka = random.choice(list(pole[7:8]))
+        najmensiaotazka = int(mensiaotazka)
+        najvacsiaotazka = int(vacsiaotazka)
+        print('cudneotazkyprvaposledna', najmensiaotazka, najvacsiaotazka)
+        polevsetkychotazok = set(list(range(najmensiaotazka, najvacsiaotazka + 1)))
+        mojeotazky = random.choice(list(pole[1:2]))
+        polesplnenychotazok = set(mojeotazky)
+
+        body = random.choice(list(pole[3:4]))
+        konc = str(pole[4:5])
+        koncovka = konc[2:-2]
+        zleotazky = random.choice(list(pole[5:6]))
+        print("zleotazky = ", zleotazky)
+        lastaction = None
+        skupinaotazok = str(random.choice(list(pole[9:10])))
+        print('skupinaotazok |||||||', skupinaotazok)
+
+        ypsilon = int(request.form['cislootazky'])
+
+        print('vypise pole po castiach nech s nimi moze robit', randommeno, '||', mojeotazky, '||', ypsilon, '||', body, '||', koncovka, '||', zleotazky)
+        for otazky in root.findall('otazka'):
+            number = otazky.attrib.get('number')
+            if str(ypsilon) == number:
+                print('ypsilon: ', ypsilon, 'number: ', number)
+                ot = otazky.find('ot').text
+                od = otazky.find('od').text
+                ma = otazky.find('ma').text
+                mb = otazky.find('mb').text
+                mc = otazky.find('mc').text
+                md = otazky.find('md').text
+                me = otazky.find('me').text
+                mf = otazky.find('mf').text
+                mg = otazky.find('mg').text
+                mh = otazky.find('mh').text
+                pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok)
+
+                respond = make_response(render_template('layout.html', otazka=ot, ma=ma, mb=mb, mc=mc, md=md, me=me, mf=mf, mg=mg, mh=mh,
+                                        control=('Spravna odpoved je', od), bdy=body, sklonovanie=koncovka))
+                respond.set_cookie('nameID', json.dumps(pole))
+                return respond
 
 
 app.secret_key = os.environ["SESSION_KEY"]
