@@ -977,11 +977,14 @@ def skusaP():
                 return respond
 
         except ValueError:
-            respond = make_response(render_template('jednaotazka.html', otazka='moj mily :) je pekne ze si myslis ze ta to bude skusat pismenka :D ale takto to nefunguje :D alebo si zadal cislo vacsie ako 500, koniec koncou si retard a ak sa ti nepaci ze ti tu teraz pindam tak v pravo hore mas tlacitko co vyriesi vsetky tvoje problemy', bdy=body, sklonovanie=koncovka))
+            respond = make_response(render_template('jednaotazka.html', otazka="""moj mily :) je pekne ze si myslis ze ta to 
+                                    bude skusat pismenka :D ale takto to nefunguje :D alebo si zadal cislo vacsie ako 500, koniec koncou 
+                                    si retard a ak sa ti nepaci ze ti tu teraz pindam tak v pravo hore mas tlacitko co vyriesi vsetky tvoje problemy""", 
+                                    bdy=body, sklonovanie=koncovka))
             return respond
                     
 
-    if request.form['btn'] == 'Kontrola jednej otázky':
+    if request.form['btn'] == 'Kontrola otázky':
         kokie = request.cookies.get('nameID')
         pole = json.loads(kokie)
         y = str(pole[2:3])
