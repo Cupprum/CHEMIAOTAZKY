@@ -966,10 +966,80 @@ def skusaP():
                 mh = otazky.find('mh').text
                 pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok)
 
-                respond = make_response(render_template('layout.html', otazka=ot, ma=ma, mb=mb, mc=mc, md=md, me=me, mf=mf, mg=mg, mh=mh,
+                respond = make_response(render_template('jednaotazka.html', otazka=ot, ma=ma, mb=mb, mc=mc, md=md, me=me, mf=mf, mg=mg, mh=mh,
                                         control=('Spravna odpoved je', od), bdy=body, sklonovanie=koncovka))
                 respond.set_cookie('nameID', json.dumps(pole))
                 return respond
+
+    if request.form['btn'] == 'Kontrola jednej otázky':
+        kokie = request.cookies.get('nameID')
+        pole = json.loads(kokie)
+        y = str(pole[2:3])
+        ypsilon = y[1:-1]
+        print('ypsilon', ypsilon)
+        body = random.choice(list(pole[3:4]))
+        konc = str(pole[4:5])
+        koncovka = konc[2:-2]
+        poslednaaction = random.choice(list(pole[8:9]))
+        skupinaotazok = random.choice(list(pole[9:10]))
+        print('posledna akcia |||||| ', poslednaaction, 'skupinaotazok', skupinaotazok)
+        lastaction = 'kontrola'
+
+        if poslednaaction == 'kontrola':
+            respond = make_response(render_template('jednaotazka.html', bdy=body, sklonovanie=koncovka, control='Kontrola kontroly.'))
+            return respond
+
+        else:
+            meno = str(pole[:1])
+            randommeno = meno[2:-2]
+            najmensiaotazka = random.choice(list(pole[6:7]))
+            najvacsiaotazka = random.choice(list(pole[7:8]))
+            polevsetkychotazok = set(list(range(najmensiaotazka, najvacsiaotazka + 1)))
+            mojeotazky = random.choice(list(pole[1:2]))
+            polesplnenychotazok = set(mojeotazky)
+            finalneotazky = list(polevsetkychotazok - polesplnenychotazok)
+            zleotazky = random.choice(list(pole[5:6]))
+
+            for otazky in root.findall('otazka'):
+                number = otazky.attrib.get('number')
+                if str(ypsilon) == number:
+                    print('ypsilon: ', ypsilon, 'number: ', number)
+                    ot = otazky.find('ot').text
+                    od = otazky.find('od').text
+                    ma = otazky.find('ma').text
+                    mb = otazky.find('mb').text
+                    mc = otazky.find('mc').text
+                    md = otazky.find('md').text
+                    me = otazky.find('me').text
+                    mf = otazky.find('mf').text
+                    mg = otazky.find('mg').text
+                    mh = otazky.find('mh').text
+
+                    kont()
+                    lst = str(od).split(',')
+                    print('moja', moja, 'od', lst)
+
+                    if list(moja) == lst:
+                        moja[:] = []
+                        if int(ypsilon) not in mojeotazky:
+                            mojeotazky.append(int(ypsilon))
+                        body = len(mojeotazky)
+                        if body == 1:
+                            koncovka = 'ku'
+                        elif body == 2 or body == 3 or body == 4:
+                            koncovka = 'ky'
+                        elif body >= 5:
+                            koncovka = 'ok'
+                        pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok)
+                        print('toto vypise pole', pole)
+
+                        jozo = """UPDATE FIIT SET body= %s WHERE uuia4= %s ;"""
+                        engine.execute(jozo, (body, randommeno,))
+
+                        respond = make_response(render_template('jednaotazka.html', control='Vyborne, spravna odpoved!', otazka=ot, odp=od,
+                                                    ma=ma, mb=mb, mc=mc, md=md, me=me, mf=mf, mg=mg, mh=mh, bdy=body, sklonovanie=koncovka))
+                        respond.set_cookie('nameID', json.dumps(pole))
+                        return respond
 
 
 app.secret_key = os.environ["SESSION_KEY"]
