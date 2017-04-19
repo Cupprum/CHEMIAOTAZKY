@@ -60,6 +60,11 @@
              text-align: center;
              }
              
+      .align_right
+             {
+             float: right;
+             }
+             
       .question-text
              {
              font-size: 20px;
@@ -72,6 +77,16 @@
       .control
              {
              color: #876083;
+             }
+             
+      .column
+             {
+             width: 45%;
+             }
+             
+      .column1
+             {
+             width: 10%;
              }
              
       .option
@@ -94,11 +109,11 @@
               border: none;
               color: black;
               border-radius: 6px;
-              padding: 15px 20px;
+              padding: 5px 13px;
               text-align: center;
               text-decoration: none;
               display: inline-block;
-              font-size: 20px;
+              font-size: 15px;
               font-family: Didact Gothic;
               cursor: pointer;
               transition-duration: 0.2s;    
@@ -123,6 +138,17 @@
               {
               background-color: #CACACA; 
               width: 1335px;
+              }
+              
+      input[type=text], select 
+              {
+              width: 30%;
+              padding: 6px 10px;
+              margin: 8px 0;
+              display: inline-block;
+              border: 1px solid #8ED3D6;
+              border-radius: 4px;
+              box-sizing: border-box;
               }
              
       table
@@ -189,9 +215,9 @@
     <br /><br />
     <table>
         <tr>
-           <td><input type="submit" name="btn" value="Kontrola jednej otázky" class="button"/></td>
-           <td class="column1"><input type="text" name="cislootazky" placeholder="Číslo.." class="align-right"/></td>
-           <td><input type="submit" name="btn" value="Prejsť na otázku" class="button"/></td>
+           <td class="column"><input type="text" name="cislootazky" placeholder="Číslo.."/ class="align_right"></td>
+           <td class="column1"><input type="submit" name="btn" value="Prejsť na otázku" class="button"/></td>
+           <td class="column"><input type="submit" name="btn" value="Kontrola otázky" class="button"/></td>
         </tr>
     </table>
  <br /><br /><br /> 

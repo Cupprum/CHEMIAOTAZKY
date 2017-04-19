@@ -947,29 +947,39 @@ def skusaP():
         skupinaotazok = str(random.choice(list(pole[9:10])))
         print('skupinaotazok |||||||', skupinaotazok)
 
-        ypsilon = int(request.form['cislootazky'])
+        try:
+            if int(request.form['cislootazky']) in list(range(1, 500 + 1)):
+                ypsilon = int(request.form['cislootazky'])
 
-        print('vypise pole po castiach nech s nimi moze robit', randommeno, '||', mojeotazky, '||', ypsilon, '||', body, '||', koncovka, '||', zleotazky)
-        for otazky in root.findall('otazka'):
-            number = otazky.attrib.get('number')
-            if str(ypsilon) == number:
-                print('ypsilon: ', ypsilon, 'number: ', number)
-                ot = otazky.find('ot').text
-                od = otazky.find('od').text
-                ma = otazky.find('ma').text
-                mb = otazky.find('mb').text
-                mc = otazky.find('mc').text
-                md = otazky.find('md').text
-                me = otazky.find('me').text
-                mf = otazky.find('mf').text
-                mg = otazky.find('mg').text
-                mh = otazky.find('mh').text
-                pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok)
+                print('vypise pole po castiach nech s nimi moze robit', randommeno, '||', mojeotazky, '||', ypsilon, '||', body, '||', koncovka, '||', zleotazky)
+                for otazky in root.findall('otazka'):
+                    number = otazky.attrib.get('number')
+                    if str(ypsilon) == number:
+                        print('ypsilon: ', ypsilon, 'number: ', number)
+                        ot = otazky.find('ot').text
+                        od = otazky.find('od').text
+                        ma = otazky.find('ma').text
+                        mb = otazky.find('mb').text
+                        mc = otazky.find('mc').text
+                        md = otazky.find('md').text
+                        me = otazky.find('me').text
+                        mf = otazky.find('mf').text
+                        mg = otazky.find('mg').text
+                        mh = otazky.find('mh').text
+                        pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok)
 
-                respond = make_response(render_template('jednaotazka.html', otazka=ot, ma=ma, mb=mb, mc=mc, md=md, me=me, mf=mf, mg=mg, mh=mh,
-                                        control=('Spravna odpoved je', od), bdy=body, sklonovanie=koncovka))
-                respond.set_cookie('nameID', json.dumps(pole))
+                        respond = make_response(render_template('jednaotazka.html', otazka=ot, ma=ma, mb=mb, mc=mc, md=md, me=me, mf=mf, mg=mg, mh=mh,
+                                                control=('Spravna odpoved je', od), bdy=body, sklonovanie=koncovka))
+                        respond.set_cookie('nameID', json.dumps(pole))
+                        return respond
+            else:
+                respond = make_response(render_template('jednaotazka.html', control='something went wrong', bdy=body, sklonovanie=koncovka))
                 return respond
+
+        except ValueError:
+            respond = make_response(render_template('jednaotazka.html', otazka='moj mily :) je pekne ze si myslis ze ta to bude skusat pismenka :D ale takto to nefunguje :D alebo si zadal cislo vacsie ako 500, koniec koncou si retard a ak sa ti nepaci ze ti tu teraz pindam tak v pravo hore mas tlacitko co vyriesi vsetky tvoje problemy', bdy=body, sklonovanie=koncovka))
+            return respond
+                    
 
     if request.form['btn'] == 'Kontrola jednej otázky':
         kokie = request.cookies.get('nameID')
