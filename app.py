@@ -586,40 +586,45 @@ def skusaP():
         skupinaotazok = random.choice(list(pole[9:10]))
 
         print('vypise pole po castiach nech s nimi moze robit', randommeno, '||', mojeotazky, '||', ypsilon, '||', zleotazky)
-        for otazky in root.findall('otazka'):
-            number = otazky.attrib.get('number')
-            if str(ypsilon) == number:
-                print('ypsilon: ', ypsilon, 'number: ', number)
-                ot = otazky.find('ot').text
-                od = otazky.find('od').text
-                ma = otazky.find('ma').text
-                mb = otazky.find('mb').text
-                mc = otazky.find('mc').text
-                md = otazky.find('md').text
-                me = otazky.find('me').text
-                mf = otazky.find('mf').text
-                mg = otazky.find('mg').text
-                mh = otazky.find('mh').text
+        if ypsilon in zleotazky:
+            for otazky in root.findall('otazka'):
+                number = otazky.attrib.get('number')
+                if str(ypsilon) == number:
+                    print('ypsilon: ', ypsilon, 'number: ', number)
+                    ot = otazky.find('ot').text
+                    od = otazky.find('od').text
+                    ma = otazky.find('ma').text
+                    mb = otazky.find('mb').text
+                    mc = otazky.find('mc').text
+                    md = otazky.find('md').text
+                    me = otazky.find('me').text
+                    mf = otazky.find('mf').text
+                    mg = otazky.find('mg').text
+                    mh = otazky.find('mh').text
 
-                kont()
-                lst = str(od).split(',')
-                print('moja', moja, 'od', lst)
+                    kont()
+                    lst = str(od).split(',')
+                    print('moja', moja, 'od', lst)
 
-                if list(moja) == lst:
-                    moja[:] = []
-                    zleotazky.remove(int(ypsilon))
-                    pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok)
-                    print('toto vypise pole', pole)
+                    if list(moja) == lst:
+                        moja[:] = []
+                        zleotazky.remove(int(ypsilon))
+                        pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok)
+                        print('toto vypise pole', pole)
 
-                    respond = make_response(render_template('zleotazky.html', control='Vyborne, spravna odpoved!', zleotazky=zleotazky))
-                    respond.set_cookie('nameID', json.dumps(pole))
-                    return respond
+                        respond = make_response(render_template('zleotazky.html', control='Vyborne, spravna odpoved!', zleotazky=zleotazky))
+                        respond.set_cookie('nameID', json.dumps(pole))
+                        return respond
 
-                else:
-                    moja[:] = []
-                    respond = make_response(render_template('zleotazky.html', control='Bohužiaľ nesprávne.', otazka=ot, odp=od,
-                                            ma=ma, mb=mb, mc=mc, md=md, me=me, mf=mf, mg=mg, mh=mh, zleotazky=zleotazky))
-                    return respond
+                    else:
+                        moja[:] = []
+                        respond = make_response(render_template('zleotazky.html', control='Bohužiaľ nesprávne.', otazka=ot, odp=od,
+                                                ma=ma, mb=mb, mc=mc, md=md, me=me, mf=mf, mg=mg, mh=mh, zleotazky=zleotazky))
+                        return respond
+
+        else:
+            respond = make_response(render_template('zleotazky.html', control='Na všetky otázky si odpovedal správne, nemáš čo opravovať.'))
+            return respond
 
     if request.form['btn'] == 'Zmena skúšaných otázok':
         respond = make_response(render_template('ktoreotazky.html'))
