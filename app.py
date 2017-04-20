@@ -1007,6 +1007,10 @@ def skusaP():
             respond = make_response(render_template('jednaotazka.html', bdy=body, sklonovanie=koncovka, control='Kontrola kontroly.'))
             return respond
 
+        elif ypsilon == 0:
+            respond = make_response(render_template('jednaotazka.html', bdy=body, sklonovanie=koncovka, control='A co by si rád kontroloval, keď nemás zadanú otázku.'))
+            return respond
+
         else:
             meno = str(pole[:1])
             randommeno = meno[2:-2]
