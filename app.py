@@ -59,7 +59,8 @@ def make_session_permanent():
 
 @app.route('/', methods=['GET'])
 def skusaG():
-    if session['nameID'] is None:
+    kokie = session['nameID']
+    if kokie is None:
         randommeno = str(uuid.uuid4())
         mojeotazky = []
         ypsilon = 0
