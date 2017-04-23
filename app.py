@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from flask import Flask, request, render_template, make_response
+from flask import Flask, request, render_template, make_response, session
 import random
 import xml.etree.ElementTree as ET
 import json
@@ -53,10 +53,13 @@ def kont():
     if H:
         moja.append('h')
 
+@app.before_request
+def make_session_permanent():
+    session.permanent = True
 
 @app.route('/', methods=['GET'])
 def skusaG():
-    if request.cookies.get('nameID') is None:
+    if session['nameID'] is None:
         randommeno = str(uuid.uuid4())
         mojeotazky = []
         ypsilon = 0
@@ -68,17 +71,17 @@ def skusaG():
         lastaction = None
         skupinaotazok = None
         pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok)
-        print('toto vypise kookie noveho uzivatela', pole)
+        print('novy uzivatel', pole)
 
         jozo = """INSERT INTO FIIT (uuia4, meno, body, stav) VALUES (%s, NULL, %s, '0');"""
         engine.execute(jozo, (randommeno, body))
 
         respond = make_response(render_template('layout.html', uvod=True, bdy=body, sklonovanie=koncovka))
-        respond.set_cookie('nameID', json.dumps(pole))
+        session['nameID'] = json.dumps(pole)
         return respond
 
     else:
-        kokie = request.cookies.get('nameID')
+        kokie = session['nameID']
         pole = json.loads(kokie)
         print('stary uzivatel', pole)
         body = random.choice(list(pole[3:4]))
@@ -127,7 +130,7 @@ def skusaP():
                     455, 456, 457, 458, 459, 460, 461, 462, 463, 464, 465, 466, 467, 468, 469, 470, 471,
                     472, 473, 474, 475, 476, 477, 478, 479, 480, 481, 482, 483, 484, 485, 486, 487, 488,
                     489, 490, 491, 492, 493, 494, 495, 496, 497, 498, 499, 500])
-        kokie = request.cookies.get('nameID')
+        kokie = session['nameID']
         pole = json.loads(kokie)
         meno = str(pole[:1])
         randommeno = meno[2:-2]
@@ -238,11 +241,11 @@ def skusaP():
 
                     respond = make_response(render_template('layout.html', typotazok=typotazky, otazka=ot, ma=ma, mb=mb, mc=mc, md=md, me=me, mf=mf, mg=mg, mh=mh,
                                             control=('Spravna odpoved je', od), bdy=body, sklonovanie=koncovka))
-                    respond.set_cookie('nameID', json.dumps(pole))
+                    session['nameID'] = json.dumps(pole)
                     return respond
 
     if request.form['btn'] == 'Kontrola':
-        kokie = request.cookies.get('nameID')
+        kokie = session['nameID']
         pole = json.loads(kokie)
         y = str(pole[2:3])
         ypsilon = y[1:-1]
@@ -311,7 +314,7 @@ def skusaP():
 
                         respond = make_response(render_template('layout.html', control='Vyborne, spravna odpoved!', otazka=ot, odp=od,
                                                     ma=ma, mb=mb, mc=mc, md=md, me=me, mf=mf, mg=mg, mh=mh, bdy=body, sklonovanie=koncovka))
-                        respond.set_cookie('nameID', json.dumps(pole))
+                        session['nameID'] = json.dumps(pole)
                         return respond
 
                     else:
@@ -321,11 +324,11 @@ def skusaP():
                         respond = make_response(render_template('layout.html', control='Bohužiaľ nesprávne.', otazka=ot, odp=od,
                                                     ma=ma, mb=mb, mc=mc, md=md, me=me, mf=mf, mg=mg, mh=mh, bdy=body,
                                                     sklonovanie=koncovka))
-                        respond.set_cookie('nameID', json.dumps(pole))
+                        session['nameID'] = json.dumps(pole)
                         return respond
 
     if request.form['btn'] == 'Resetuje otázky':
-        starekokie = request.cookies.get('nameID')
+        starekokie = session['nameID']
         starepole = json.loads(starekokie)
         staremeno = str(starepole[:1])
         starerandommeno = staremeno[2:-2]
@@ -351,11 +354,11 @@ def skusaP():
         engine.execute(jozo, (randommeno, body))
 
         respond = make_response(render_template('layout.html', uvod=True, bdy=body, sklonovanie=koncovka))
-        respond.set_cookie('nameID', json.dumps(pole))
+        session['nameID'] = json.dumps(pole)
         return respond
 
     if request.form['btn'] == 'Tabulka najlepších':
-        kokie = request.cookies.get('nameID')
+        kokie = session['nameID']
         pole = json.loads(kokie)
         meno = str(pole[:1])
         randommeno = meno[2:-2]
@@ -388,7 +391,7 @@ def skusaP():
         return respond
 
     if request.form['btn'] == 'Pridať meno':
-        kokie = request.cookies.get('nameID')
+        kokie = session['nameID']
         pole = json.loads(kokie)
         meno = str(pole[:1])
         randommeno = meno[2:-2]
@@ -477,7 +480,7 @@ def skusaP():
                 return respond
 
     if request.form['btn'] == 'Zle zodpovedané otázky':
-        kokie = request.cookies.get('nameID')
+        kokie = session['nameID']
         pole = json.loads(kokie)
         meno = str(pole[:1])
         randommeno = meno[2:-2]
@@ -518,11 +521,11 @@ def skusaP():
                     respond = make_response(render_template('zleotazky.html', otazka=ot, ma=ma, mb=mb, mc=mc, md=md, me=me, mf=mf, mg=mg, mh=mh,
                                                     control=('Spravna odpoved je', od), zleotazky=zleotazky, cislozlejotazky=ypsilon))
                     pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok)
-                    respond.set_cookie('nameID', json.dumps(pole))
+                    session['nameID'] = json.dumps(pole)
                     return respond
 
     if request.form['btn'] == 'Ďalšia zlá otázka':
-        kokie = request.cookies.get('nameID')
+        kokie = session['nameID']
         pole = json.loads(kokie)
         meno = str(pole[:1])
         randommeno = meno[2:-2]
@@ -562,11 +565,11 @@ def skusaP():
                     respond = make_response(render_template('zleotazky.html', otazka=ot, ma=ma, mb=mb, mc=mc, md=md, me=me, mf=mf, mg=mg, mh=mh,
                                                     control=('Spravna odpoved je', od), zleotazky=zleotazky, cislozlejotazky=ypsilon))
                     pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok)
-                    respond.set_cookie('nameID', json.dumps(pole))
+                    session['nameID'] = json.dumps(pole)
                     return respond
 
     if request.form['btn'] == 'Kontrola zlej otázky':
-        kokie = request.cookies.get('nameID')
+        kokie = session['nameID']
         pole = json.loads(kokie)
         meno = str(pole[:1])
         randommeno = meno[2:-2]
@@ -613,7 +616,7 @@ def skusaP():
                         print('toto vypise pole', pole)
 
                         respond = make_response(render_template('zleotazky.html', control='Vyborne, spravna odpoved!', zleotazky=zleotazky))
-                        respond.set_cookie('nameID', json.dumps(pole))
+                        session['nameID'] = json.dumps(pole)
                         return respond
 
                     else:
@@ -631,7 +634,7 @@ def skusaP():
         return respond
 
     if request.form['btn'] == 'Pridať rozmedzie otázok':
-        kokie = request.cookies.get('nameID')
+        kokie = session['nameID']
         pole = json.loads(kokie)
         meno = str(pole[:1])
         randommeno = meno[2:-2]
@@ -670,11 +673,11 @@ def skusaP():
                 skupinaotazok = None
                 pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok)
                 respond = make_response(render_template('layout.html', uvod=True, bdy=body, sklonovanie=koncovka))
-                respond.set_cookie('nameID', json.dumps(pole))
+                session['nameID'] = json.dumps(pole)
                 return respond
 
     if request.form['btn'] == 'Atóm':
-        kokie = request.cookies.get('nameID')
+        kokie = session['nameID']
         pole = json.loads(kokie)
         meno = str(pole[:1])
         randommeno = meno[2:-2]
@@ -691,11 +694,11 @@ def skusaP():
         skupinaotazok = 'atom'
         pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok)
         respond = make_response(render_template('layout.html', uvod=True, bdy=body, sklonovanie=koncovka))
-        respond.set_cookie('nameID', json.dumps(pole))
+        session['nameID'] = json.dumps(pole)
         return respond
 
     if request.form['btn'] == 'Sústava látok':
-        kokie = request.cookies.get('nameID')
+        kokie = session['nameID']
         pole = json.loads(kokie)
         meno = str(pole[:1])
         randommeno = meno[2:-2]
@@ -712,11 +715,11 @@ def skusaP():
         skupinaotazok = 'sustavalatok'
         pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok)
         respond = make_response(render_template('layout.html', uvod=True, bdy=body, sklonovanie=koncovka))
-        respond.set_cookie('nameID', json.dumps(pole))
+        session['nameID'] = json.dumps(pole)
         return respond
 
     if request.form['btn'] == 'Látky':
-        kokie = request.cookies.get('nameID')
+        kokie = session['nameID']
         pole = json.loads(kokie)
         meno = str(pole[:1])
         randommeno = meno[2:-2]
@@ -733,11 +736,11 @@ def skusaP():
         skupinaotazok = 'latky'
         pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok)
         respond = make_response(render_template('layout.html', uvod=True, bdy=body, sklonovanie=koncovka))
-        respond.set_cookie('nameID', json.dumps(pole))
+        session['nameID'] = json.dumps(pole)
         return respond
 
     if request.form['btn'] == 'Periodická sústava prvkov':
-        kokie = request.cookies.get('nameID')
+        kokie = session['nameID']
         pole = json.loads(kokie)
         meno = str(pole[:1])
         randommeno = meno[2:-2]
@@ -754,11 +757,11 @@ def skusaP():
         skupinaotazok = 'psustava'
         pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok)
         respond = make_response(render_template('layout.html', uvod=True, bdy=body, sklonovanie=koncovka))
-        respond.set_cookie('nameID', json.dumps(pole))
+        session['nameID'] = json.dumps(pole)
         return respond
 
     if request.form['btn'] == 'Chemická väzba':
-        kokie = request.cookies.get('nameID')
+        kokie = session['nameID']
         pole = json.loads(kokie)
         meno = str(pole[:1])
         randommeno = meno[2:-2]
@@ -775,11 +778,11 @@ def skusaP():
         skupinaotazok = 'chvazba'
         pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok)
         respond = make_response(render_template('layout.html', uvod=True, bdy=body, sklonovanie=koncovka))
-        respond.set_cookie('nameID', json.dumps(pole))
+        session['nameID'] = json.dumps(pole)
         return respond
 
     if request.form['btn'] == 'Názvoslovie':
-        kokie = request.cookies.get('nameID')
+        kokie = session['nameID']
         pole = json.loads(kokie)
         meno = str(pole[:1])
         randommeno = meno[2:-2]
@@ -796,11 +799,11 @@ def skusaP():
         skupinaotazok = 'nazvoslovie'
         pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok)
         respond = make_response(render_template('layout.html', uvod=True, bdy=body, sklonovanie=koncovka))
-        respond.set_cookie('nameID', json.dumps(pole))
+        session['nameID'] = json.dumps(pole)
         return respond
 
     if request.form['btn'] == 'Chemické veličiny':
-        kokie = request.cookies.get('nameID')
+        kokie = session['nameID']
         pole = json.loads(kokie)
         meno = str(pole[:1])
         randommeno = meno[2:-2]
@@ -817,11 +820,11 @@ def skusaP():
         skupinaotazok = 'veliciny'
         pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok)
         respond = make_response(render_template('layout.html', uvod=True, bdy=body, sklonovanie=koncovka))
-        respond.set_cookie('nameID', json.dumps(pole))
+        session['nameID'] = json.dumps(pole)
         return respond
 
     if request.form['btn'] == 'Kyseliny a zásady':
-        kokie = request.cookies.get('nameID')
+        kokie = session['nameID']
         pole = json.loads(kokie)
         meno = str(pole[:1])
         randommeno = meno[2:-2]
@@ -838,11 +841,11 @@ def skusaP():
         skupinaotazok = 'kyszas'
         pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok)
         respond = make_response(render_template('layout.html', uvod=True, bdy=body, sklonovanie=koncovka))
-        respond.set_cookie('nameID', json.dumps(pole))
+        session['nameID'] = json.dumps(pole)
         return respond
 
     if request.form['btn'] == 'Chemické reakcie':
-        kokie = request.cookies.get('nameID')
+        kokie = session['nameID']
         pole = json.loads(kokie)
         meno = str(pole[:1])
         randommeno = meno[2:-2]
@@ -859,11 +862,11 @@ def skusaP():
         skupinaotazok = 'reakcie'
         pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok)
         respond = make_response(render_template('layout.html', uvod=True, bdy=body, sklonovanie=koncovka))
-        respond.set_cookie('nameID', json.dumps(pole))
+        session['nameID'] = json.dumps(pole)
         return respond
 
     if request.form['btn'] == 'Chemická rovnováha':
-        kokie = request.cookies.get('nameID')
+        kokie = session['nameID']
         pole = json.loads(kokie)
         meno = str(pole[:1])
         randommeno = meno[2:-2]
@@ -880,11 +883,11 @@ def skusaP():
         skupinaotazok = 'rovnovaha'
         pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok)
         respond = make_response(render_template('layout.html', uvod=True, bdy=body, sklonovanie=koncovka))
-        respond.set_cookie('nameID', json.dumps(pole))
+        session['nameID'] = json.dumps(pole)
         return respond
 
     if request.form['btn'] == 'Komplexné zlúčeniny':
-        kokie = request.cookies.get('nameID')
+        kokie = session['nameID']
         pole = json.loads(kokie)
         meno = str(pole[:1])
         randommeno = meno[2:-2]
@@ -901,11 +904,11 @@ def skusaP():
         skupinaotazok = 'komplexy'
         pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok)
         respond = make_response(render_template('layout.html', uvod=True, bdy=body, sklonovanie=koncovka))
-        respond.set_cookie('nameID', json.dumps(pole))
+        session['nameID'] = json.dumps(pole)
         return respond
 
     if request.form['btn'] == 'Príklady':
-        kokie = request.cookies.get('nameID')
+        kokie = session['nameID']
         pole = json.loads(kokie)
         meno = str(pole[:1])
         randommeno = meno[2:-2]
@@ -922,7 +925,7 @@ def skusaP():
         skupinaotazok = 'priklady'
         pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok)
         respond = make_response(render_template('layout.html', uvod=True, bdy=body, sklonovanie=koncovka))
-        respond.set_cookie('nameID', json.dumps(pole))
+        session['nameID'] = json.dumps(pole)
         return respond
 
     if request.form['btn'] == 'O projekte':
@@ -930,7 +933,7 @@ def skusaP():
         return respond
 
     if request.form['btn'] == 'Prejsť na otázku':
-        kokie = request.cookies.get('nameID')
+        kokie = session['nameID']
         pole = json.loads(kokie)
         meno = str(pole[:1])
         randommeno = meno[2:-2]
@@ -975,7 +978,7 @@ def skusaP():
 
                         respond = make_response(render_template('jednaotazka.html', otazka=ot, ma=ma, mb=mb, mc=mc, md=md, me=me, mf=mf, mg=mg, mh=mh,
                                                 control=('Spravna odpoved je', od), bdy=body, sklonovanie=koncovka))
-                        respond.set_cookie('nameID', json.dumps(pole))
+                        session['nameID'] = json.dumps(pole)
                         return respond
             else:
                 respond = make_response(render_template('jednaotazka.html', control='something went wrong', bdy=body, sklonovanie=koncovka))
@@ -990,7 +993,7 @@ def skusaP():
                     
 
     if request.form['btn'] == 'Kontrola otázky':
-        kokie = request.cookies.get('nameID')
+        kokie = session['nameID']
         pole = json.loads(kokie)
         y = str(pole[2:3])
         ypsilon = y[1:-1]
@@ -1060,7 +1063,7 @@ def skusaP():
 
                         respond = make_response(render_template('jednaotazka.html', control='Vyborne, spravna odpoved!', otazka=ot, odp=od,
                                                     ma=ma, mb=mb, mc=mc, md=md, me=me, mf=mf, mg=mg, mh=mh, bdy=body, sklonovanie=koncovka))
-                        respond.set_cookie('nameID', json.dumps(pole))
+                        session['nameID'] = json.dumps(pole)
                         return respond
 
 
