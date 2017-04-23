@@ -59,7 +59,19 @@ def make_session_permanent():
 
 @app.route('/', methods=['GET'])
 def skusaG():
-    if session['nameID'] is None:
+    if session['nameID'] is not None:
+        kokie = session['nameID']
+        pole = json.loads(kokie)
+        print('stary uzivatel', pole)
+        body = random.choice(list(pole[3:4]))
+        konc = str(pole[4:5])
+        koncovka = konc[2:-2]
+        print(koncovka)
+
+        respond = make_response(render_template('layout.html', uvod=True, bdy=body, sklonovanie=koncovka))
+        return respond
+
+    else:
         randommeno = str(uuid.uuid4())
         mojeotazky = []
         ypsilon = 0
@@ -78,18 +90,6 @@ def skusaG():
 
         respond = make_response(render_template('layout.html', uvod=True, bdy=body, sklonovanie=koncovka))
         session['nameID'] = json.dumps(pole)
-        return respond
-
-    else:
-        kokie = session['nameID']
-        pole = json.loads(kokie)
-        print('stary uzivatel', pole)
-        body = random.choice(list(pole[3:4]))
-        konc = str(pole[4:5])
-        koncovka = konc[2:-2]
-        print(koncovka)
-
-        respond = make_response(render_template('layout.html', uvod=True, bdy=body, sklonovanie=koncovka))
         return respond
 
 
