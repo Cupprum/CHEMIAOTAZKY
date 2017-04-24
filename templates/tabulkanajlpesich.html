@@ -20,12 +20,11 @@
   <style>
      .image 
             {
-            max-width: 100%;
+            width: 700px;
+            height: 342px;
             display: block;
             margin-top: 5px;
             margin-bottom: 5px;
-            margin-right: 23%;
-            margin-left: 23%;
             }
              
       .menu
@@ -51,8 +50,6 @@
              text-align: center;
              word-wrap: break-word;
              font-family: Arial;
-             margin-right: 23%;
-             margin-left: 23%;
              } 
              
       .text_column
@@ -94,6 +91,11 @@
               {
               float: right;
               width: 10em;
+              }
+              
+      .width
+              {
+              width: 721px;
               }
               
       .column
@@ -144,16 +146,14 @@
              
       table
              {
-             width: 54%;
+             width: 721px;
              //border: solid;
-             margin-right: 23%;
-             margin-left: 23%;
              word-wrap: break-word;
              font-family: Arial;
              }
   </style>
   </head>
-  <body class="body">
+  <body class="body"><center><div>
      <form action="/" method = "post">
   
      <a href="https://chemiaotazky.herokuapp.com/"><img class="image" src="https://chemistry-studio.com/wp-content/uploads/logo_chemistry_1024_RGB.png" alt="logo" style="width: 50%"/></a>
@@ -172,7 +172,7 @@
         </tr>
      </table>
      <br />
-     <p class="text justify"> Pre zaradenie do tabuľky najlepších prosím zadaj svoje meno a tvoje body budú automaticky zaznamenané a pridané do tabuľky najlepších.</p>
+     <p class="text justify width"> Pre zaradenie do tabuľky najlepších prosím zadaj svoje meno a tvoje body budú automaticky zaznamenané a pridané do tabuľky najlepších.</p>
      <br />
      <table>
         <tr>
@@ -221,5 +221,5 @@
 	   </pre>
 	{% endif %}
    {% endwith %}
-  </body>
+  </div></center></body>
 </html>

@@ -20,12 +20,11 @@
   <style>
      .image 
             {
-            max-width: 100%;
+            width: 700px;
+            height: 342px;
             display: block;
             margin-top: 5px;
             margin-bottom: 5px;
-            margin-right: 23%;
-            margin-left: 23%;
             }
              
       .menu
@@ -45,14 +44,18 @@
               background-color: #8ED3D6;
               color: white;
               }
+              
+      .width
+              {
+              width: 721px;
+              }
+      
       .text
              {
              font-size: 20px;
              text-align: center;
              word-wrap: break-word;
              font-family: Arial;
-             margin-right: 23%;
-             margin-left: 23%;
              } 
              
       .text_column
@@ -155,16 +158,14 @@
              
       table
              {
-             width: 54%;
+             width: 721px;
              "border: solid;
-             margin-right: 23%;
-             margin-left: 23%;
              word-wrap: break-word;
              font-family: Arial;
              }
   </style>
   </head>
-  <body class="body">
+  <body class="body"><center><div>>
      <form action="/" method = "post">
   
      <a href="https://chemiaotazky.herokuapp.com/"><img class="image" src="https://chemistry-studio.com/wp-content/uploads/logo_chemistry_1024_RGB.png" alt="logo" style="width: 50%"/></a>
@@ -175,7 +176,7 @@
            <td><input type="submit" style="border: none;background-color: #8ED3D6;" name="btn" value="Zmena skúšaných otázok" class="menu"/></td>
         </tr> 
      </table> <br />
-     <p class="text justify">Pre nastavenie vlastného intervalu otázok zadaj číslo otázky od ktorej chceš začať a ktorou chceš skončiť. Otázky sú číslované
+     <p class="text justify width">Pre nastavenie vlastného intervalu otázok zadaj číslo otázky od ktorej chceš začať a ktorou chceš skončiť. Otázky sú číslované
                              od 1 po 500. Pokiaľ chceš prejsť na konkrétne číslo otázky, zadaj jej číslo.</p>
      <p class="control text">{{ control }}</p> <br />
      <table class="padding_table">
@@ -188,7 +189,7 @@
          </tr>
      </table>
      <br />
-     <p class="text justify">Môžeš si vybrať konkrétnu oblasť otázok z ktorých sa chceš dať preskúšať. Otázky sú rozdelené podľa nasledujúcich tém:</p>
+     <p class="text justify width">Môžeš si vybrať konkrétnu oblasť otázok z ktorých sa chceš dať preskúšať. Otázky sú rozdelené podľa nasledujúcich tém:</p>
      <table>
         <tr class="menu_table">
            <td class="column"><center><input type="submit" name="btn" value="Atóm" class="button"/></center></td>
@@ -247,5 +248,5 @@
 	   </pre>
 	{% endif %}
    {% endwith %}
-  </body>
+  </div></center></body>
 </html>

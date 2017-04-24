@@ -20,12 +20,11 @@
   <style>
      .image 
             {
-            max-width: 100%;
+            width: 700px;
+            height: 342px;
             display: block;
             margin-top: 5px;
             margin-bottom: 5px;
-            margin-right: 23%;
-            margin-left: 23%;
             }
              
       .menu
@@ -51,8 +50,6 @@
              text-align: center;
              word-wrap: break-word;
              font-family: Arial;
-             margin-right: 23%;
-             margin-left: 23%;
              } 
              
       .center
@@ -70,8 +67,6 @@
              font-size: 20px;
              word-wrap: break-word;
              font-family: Arial;
-             margin-right: 23%;
-             margin-left: 23%;
              }
              
       .control
@@ -94,8 +89,6 @@
              width: 7%;
              font-size: 20px;
              font-family: Arial;
-             margin-right: 23%;
-             margin-left: 23%;
              text-align: center;}
              
       .justify
@@ -140,6 +133,11 @@
               width: 1335px;
               }
               
+      .width
+              {
+              width: 721px;
+              }
+              
       input[type=text], select 
               {
               width: 30%;
@@ -153,16 +151,14 @@
              
       table
              {
-             width: 54%;
+             width: 721px;
               "border: solid;
-              margin-right: 23%;
-              margin-left: 23%;
               word-wrap: break-word;
               font-family: Arial;
              }
   </style>
   </head>
-  <body class="body">
+  <body class="body"><center><div>
      <form action="/" method = "post">
   
      <a href="https://chemiaotazky.herokuapp.com/"><img class="image" src="https://chemistry-studio.com/wp-content/uploads/logo_chemistry_1024_RGB.png" alt="logo" style="width: 50%"/></a>
@@ -173,22 +169,22 @@
            <td><input type="submit" style="border: none;background-color: #8ED3D6;" name="btn" value="Zmena skúšaných otázok" class="menu"/></td>
         </tr> 
      </table>  
-     <p class="text">
+     <p class="text width">
          {% if uvod %}
             Zvoľ správne odpovede. Skontroluj svoje odpovede kliknutím na tlačítko kontrola.
          {% endif %}</p><br />
-     <p class="question-text justify">{{ typotazok }}</p>
-     <p class="question-text justify">{{ otazka }}</p>
-     <p class="question-text justify">{{ ma }}</p>
-     <p class="question-text justify">{{ mb }}</p>
-     <p class="question-text justify">{{ mc }}</p>
-     <p class="question-text justify">{{ md }}</p>
-     <p class="question-text justify">{{ me }}</p>
-     <p class="question-text justify">{{ mf }}</p>
-     <p class="question-text justify">{{ mg }}</p><br />
-     <p class="question-text center control">{{ control }}</p>
-     <p class="question-text center">{{ odp }}</p>
-     <p class="question-text center">{{ bdy }} otáz{{ sklonovanie }} máš správne</p>
+     <p class="question-text width justify">{{ typotazok }}</p>
+     <p class="question-text width justify">{{ otazka }}</p>
+     <p class="question-text width justify">{{ ma }}</p>
+     <p class="question-text width justify">{{ mb }}</p>
+     <p class="question-text width justify">{{ mc }}</p>
+     <p class="question-text width justify">{{ md }}</p>
+     <p class="question-text width justify">{{ me }}</p>
+     <p class="question-text width justify">{{ mf }}</p>
+     <p class="question-text width justify">{{ mg }}</p><br />
+     <p class="question-text width center control">{{ control }}</p>
+     <p class="question-text width center">{{ odp }}</p>
+     <p class="question-text width center">{{ bdy }} otáz{{ sklonovanie }} máš správne</p>
      <br />
      <table>
         <tr>
@@ -233,5 +229,5 @@
 	   </pre>
 	{% endif %}
    {% endwith %}
-  </body>
+  </div></center></body>
 </html>
