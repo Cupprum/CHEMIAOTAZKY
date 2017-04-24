@@ -240,7 +240,7 @@ def skusaP():
                     mh = otazky.find('mh').text
                     pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok)
 
-                    respond = make_response(render_template('layout.html', typotazok=typotazky, otazka=ot, ma=ma, mb=mb, mc=mc, md=md, me=me, mf=mf, mg=mg, mh=mh,
+                    respond = make_response(render_template('layout.html', checkbuttons=True, typotazok=typotazky, otazka=ot, ma=ma, mb=mb, mc=mc, md=md, me=me, mf=mf, mg=mg, mh=mh,
                                             control=('Spravna odpoved je', od), bdy=body, sklonovanie=koncovka))
                     session['nameID'] = json.dumps(pole)
                     return respond
