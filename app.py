@@ -313,7 +313,7 @@ def skusaP():
                         jozo = """UPDATE FIIT SET body= %s WHERE uuia4= %s ;"""
                         engine.execute(jozo, (body, randommeno,))
 
-                        respond = make_response(render_template('layout.html', control='Vyborne, spravna odpoved!', otazka=ot, odp=od,
+                        respond = make_response(render_template('layout.html', control='Výborne, správna odpoveď!', otazka=ot, odp=od,
                                                     ma=ma, mb=mb, mc=mc, md=md, me=me, mf=mf, mg=mg, mh=mh, bdy=body, sklonovanie=koncovka))
                         session['nameID'] = json.dumps(pole)
                         return respond
@@ -499,7 +499,8 @@ def skusaP():
         skupinaotazok = random.choice(list(pole[9:10]))
 
         if len(zleotazky) == 0:
-            respond = make_response(render_template('zleotazky.html', otazka="Na všetky otázky si odpovedal dobre, nemáš si čo opraviť"))
+            respond = make_response(render_template('zleotazky.html', control="Na všetky otázky si odpovedal dobre, nemáš si čo opraviť",
+                                    bdy=body, sklonovanie=koncovka))
             return respond
 
         else:
@@ -520,7 +521,7 @@ def skusaP():
                     mg = otazky.find('mg').text
                     mh = otazky.find('mh').text
                     respond = make_response(render_template('zleotazky.html', otazka=ot, ma=ma, mb=mb, mc=mc, md=md, me=me, mf=mf, mg=mg, mh=mh,
-                                                    control=('Spravna odpoved je', od), zleotazky=zleotazky, cislozlejotazky=ypsilon))
+                                                    control=('Spravna odpoved je', od), zleotazky=zleotazky, cislozlejotazky=ypsilon, totosuzleotazky=True))
                     pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok)
                     session['nameID'] = json.dumps(pole)
                     return respond
@@ -543,7 +544,8 @@ def skusaP():
         skupinaotazok = random.choice(list(pole[9:10]))
 
         if len(zleotazky) == 0:
-            respond = make_response(render_template('zleotazky.html', otazka="Na všetky otázky si odpovedal dobre, nemáš si čo opraviť"))
+            respond = make_response(render_template('zleotazky.html', control="Na všetky otázky si odpovedal dobre, nemáš si čo opraviť",
+                                            bdy=body, sklonovanie=koncovka))
             return respond
 
         else:
@@ -564,7 +566,7 @@ def skusaP():
                     mg = otazky.find('mg').text
                     mh = otazky.find('mh').text
                     respond = make_response(render_template('zleotazky.html', otazka=ot, ma=ma, mb=mb, mc=mc, md=md, me=me, mf=mf, mg=mg, mh=mh,
-                                                    control=('Spravna odpoved je', od), zleotazky=zleotazky, cislozlejotazky=ypsilon))
+                                                    control=('Spravna odpoved je', od), zleotazky=zleotazky, cislozlejotazky=ypsilon, totosuzleotazky=True))
                     pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok)
                     session['nameID'] = json.dumps(pole)
                     return respond
@@ -616,18 +618,19 @@ def skusaP():
                         pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok)
                         print('toto vypise pole', pole)
 
-                        respond = make_response(render_template('zleotazky.html', control='Vyborne, spravna odpoved!', zleotazky=zleotazky))
+                        respond = make_response(render_template('zleotazky.html', control='Vyborne, spravna odpoved!', zleotazky=zleotazky, totosuzleotazky=True))
                         session['nameID'] = json.dumps(pole)
                         return respond
 
                     else:
                         moja[:] = []
                         respond = make_response(render_template('zleotazky.html', control='Bohužiaľ nesprávne.', otazka=ot, odp=od,
-                                                ma=ma, mb=mb, mc=mc, md=md, me=me, mf=mf, mg=mg, mh=mh, zleotazky=zleotazky))
+                                                ma=ma, mb=mb, mc=mc, md=md, me=me, mf=mf, mg=mg, mh=mh, zleotazky=zleotazky, totosuzleotazky=True))
                         return respond
 
         else:
-            respond = make_response(render_template('zleotazky.html', control='Na všetky otázky si odpovedal správne, nemáš čo opravovať.'))
+            respond = make_response(render_template('zleotazky.html', control='Na všetky otázky si odpovedal správne, nemáš čo opravovať.',
+                                    bdy=body, sklonovanie=koncovka))
             return respond
 
     if request.form['btn'] == 'Zmena skúšaných otázok':
@@ -986,12 +989,11 @@ def skusaP():
                 return respond
 
         except ValueError:
-            respond = make_response(render_template('jednaotazka.html', otazka="""moj mily :) je pekne ze si myslis ze ta to 
-                                    bude skusat pismenka :D ale takto to nefunguje :D alebo si zadal cislo vacsie ako 500, koniec koncou 
-                                    si retard a ak sa ti nepaci ze ti tu teraz pindam tak v pravo hore mas tlacitko co vyriesi vsetky tvoje problemy""", 
+            respond = make_response(render_template('jednaotazka.html', otazka="""moj mily :) je pekne ze si myslis ze ta to
+                                    bude skusat pismenka :D ale takto to nefunguje :D alebo si zadal cislo vacsie ako 500, koniec koncou
+                                    si retard a ak sa ti nepaci ze ti tu teraz pindam tak v pravo hore mas tlacitko co vyriesi vsetky tvoje problemy""",
                                     bdy=body, sklonovanie=koncovka))
             return respond
-                    
 
     if request.form['btn'] == 'Kontrola otázky':
         kokie = session['nameID']
@@ -1008,7 +1010,7 @@ def skusaP():
         lastaction = 'kontrola'
 
         if poslednaaction == 'kontrola':
-            respond = make_response(render_template('jednaotazka.html', bdy=body, sklonovanie=koncovka, control='Kontrola kontroly.'))
+            respond = make_response(render_template('jednaotazka.html', bdy=body, sklonovanie=koncovka, control='Na otázku už nemôžeš odpovedať.'))
             return respond
 
         elif ypsilon == 0:

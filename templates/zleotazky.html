@@ -147,17 +147,19 @@
            <td><input type="submit" style="border: none;background-color: #8ED3D6;" name="btn" value="Zmena skúšaných otázok" class="menu"/></td>
         </tr> 
      </table>  
-
+     {% if totosuzleotazky %}
      <p class="text control width">Na tieto otazky si odpovedal zle {{ zleotazky }}</p><br />
+     {% endif %}
      <p class="text width">Toto je otázka číslo {{ cislozlejotazky }}</p>
-          <p class="question-text width justify">{{ otazka }}</p>
+     <p class="question-text width justify">{{ otazka }}</p>
      <p class="question-text width justify">{{ ma }}</p>
      <p class="question-text width justify">{{ mb }}</p>
      <p class="question-text width justify">{{ mc }}</p>
      <p class="question-text width justify">{{ md }}</p>
      <p class="question-text width justify">{{ me }}</p>
      <p class="question-text width justify">{{ mf }}</p>
-     <p class="question-text width justify">{{ mg }}</p><br />
+     <p class="question-text width justify">{{ mg }}</p>
+     <p class="question-text width justify">{{ mh }}</p><br />
      <p class="question-text width center control">{{ control }}</p>
      <p class="question-text width center">{{ odp }}</p>
      <p class="question-text width center">{{ bdy }} otáz{{ sklonovanie }} máš správne</p>
