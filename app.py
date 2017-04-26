@@ -16,9 +16,6 @@ conn.autocommit = True
 engine = conn.cursor()
 engine.execute("CREATE TABLE IF NOT EXISTS FIIT (uuia4 text, meno text, body int, stav text);")
 
-
-jozo = """INSERT INTO FIIT (uuia4, meno, body, stav) VALUES (%s, NULL, %s, '0');"""
-engine.execute(jozo, ('hatlanina', 2))
 tree = ET.parse('chemia.xml')
 root = tree.getroot()
 moja = []
@@ -53,9 +50,11 @@ def kont():
     if H:
         moja.append('h')
 
+
 @app.before_request
 def make_session_permanent():
     session.permanent = True
+
 
 @app.route('/', methods=['GET'])
 def skusaG():
