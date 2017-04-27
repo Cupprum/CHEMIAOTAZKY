@@ -382,7 +382,7 @@ def skusaP():
             omg += 1
             print(r)
 
-        respond = make_response(render_template('tabulkanajlpesich.html', otazka="Tvoje meno bolo uložené.", bdy=body, sklonovanie=koncovka,
+        respond = make_response(render_template('tabulkanajlpesich.html', bdy=body, sklonovanie=koncovka,
                                 tabulka1meno=tabulkovydic['tabulka1meno'], tabulka1body=tabulkovydic['tabulka1body'],
                                 tabulka2meno=tabulkovydic['tabulka2meno'], tabulka2body=tabulkovydic['tabulka2body'],
                                 tabulka3meno=tabulkovydic['tabulka3meno'], tabulka3body=tabulkovydic['tabulka3body'],
@@ -471,7 +471,7 @@ def skusaP():
                     tabulkovydic['tabulka' + str(omg) + 'body'] = y
                     omg += 1
 
-                respond = make_response(render_template('tabulkanajlpesich.html', otazka="Toto meno bolo už použité, skús iné.", bdy=body, sklonovanie=koncovka,
+                respond = make_response(render_template('tabulkanajlpesich.html', otazka="Toto meno bolo už použité, skús zadať iné.", bdy=body, sklonovanie=koncovka,
                                         tabulka1meno=tabulkovydic['tabulka1meno'], tabulka1body=tabulkovydic['tabulka1body'],
                                         tabulka2meno=tabulkovydic['tabulka2meno'], tabulka2body=tabulkovydic['tabulka2body'],
                                         tabulka3meno=tabulkovydic['tabulka3meno'], tabulka3body=tabulkovydic['tabulka3body'],
