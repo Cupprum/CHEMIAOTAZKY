@@ -357,7 +357,7 @@ def skusaP():
         session['nameID'] = json.dumps(pole)
         return respond
 
-    if request.form['btn'] == 'Tabulka najlepších':
+    if request.form['btn'] == 'Tabuľka najlepších':
         kokie = session['nameID']
         pole = json.loads(kokie)
         meno = str(pole[:1])
