@@ -17,6 +17,13 @@ engine = conn.cursor()
 engine.execute("CREATE TABLE IF NOT EXISTS FIIT (uuia4 text, meno text, body int, stav text);")
 engine.execute("CREATE TABLE IF NOT EXISTS otazky (cislootazky int, ot text, od text, ma text, mb text, mc text, md text, me text, mf text, mg text, mh text);")
 
+tree = ET.parse('chemia.xml')
+root = tree.getroot()
+moja = []
+ID = []
+otazka = []
+uvod = 'Zvol spravne odpovede. Skontroluj svoje odpovede kliknutim na tlacitko kontrola.'
+
 ypsilon = 1
 for otazky in root.findall('otazka'):
     number = otazky.attrib.get('number')
@@ -40,13 +47,6 @@ engine.execute("""SELECT * FROM otazky""")
 result_set = engine.fetchall()
 for r in result_set:
     print(r)
-
-tree = ET.parse('chemia.xml')
-root = tree.getroot()
-moja = []
-ID = []
-otazka = []
-uvod = 'Zvol spravne odpovede. Skontroluj svoje odpovede kliknutim na tlacitko kontrola.'
 
 
 def kont():
