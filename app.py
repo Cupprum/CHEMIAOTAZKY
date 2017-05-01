@@ -223,26 +223,32 @@ def skusaP():
         else:
             ypsilon = random.choice(finalneotazky)
             print('vypise pole po castiach nech s nimi moze robit', randommeno, '||', mojeotazky, '||', ypsilon, '||', body, '||', koncovka, '||', zleotazky)
-            for otazky in root.findall('otazka'):
-                number = otazky.attrib.get('number')
-                if str(ypsilon) == number:
-                    print('ypsilon: ', ypsilon, 'number: ', number)
-                    ot = otazky.find('ot').text
-                    od = otazky.find('od').text
-                    ma = otazky.find('ma').text
-                    mb = otazky.find('mb').text
-                    mc = otazky.find('mc').text
-                    md = otazky.find('md').text
-                    me = otazky.find('me').text
-                    mf = otazky.find('mf').text
-                    mg = otazky.find('mg').text
-                    mh = otazky.find('mh').text
-                    pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok)
 
-                    respond = make_response(render_template('layout.html', checkbuttons=True, typotazok=typotazky, otazka=ot, ma=ma, mb=mb, mc=mc, md=md, me=me, mf=mf, mg=mg, mh=mh,
-                                            control=('Spravna odpoved je', od), bdy=body, sklonovanie=koncovka))
-                    session['nameID'] = json.dumps(pole)
-                    return respond
+            otazkyzdatabazy = {'cislootazky': None, 'ot': None, 'od': None, 'ma': None,'mb': None,
+                               'mc': None, 'md': None, 'me': None, 'mf': None, 'mg': None, 'mh': None}
+            hladavdatabaze = """SELECT * FROM otazky WHERE cislootazky = %s;"""
+            engine.execute(hladavdatabaze, (ypsilon,))
+            result_set = engine.fetchall()
+            for r in result_set:
+                otazkyzdatabazy['cislootazky'] = random.choice(r[0:1])
+                otazkyzdatabazy['ot'] = random.choice(r[1:2])
+                otazkyzdatabazy['od'] = random.choice(r[2:3])
+                otazkyzdatabazy['ma'] = random.choice(r[3:4])
+                otazkyzdatabazy['mb'] = random.choice(r[4:5])
+                otazkyzdatabazy['mc'] = random.choice(r[5:6])
+                otazkyzdatabazy['md'] = random.choice(r[6:7])
+                otazkyzdatabazy['me'] = random.choice(r[7:8])
+                otazkyzdatabazy['mf'] = random.choice(r[8:9])
+                otazkyzdatabazy['mg'] = random.choice(r[9:10])
+                otazkyzdatabazy['mh'] = random.choice(r[10:11])
+
+                pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok)
+
+                respond = make_response(render_template('layout.html', checkbuttons=True, typotazok=typotazky, otazka=otazkyzdatabazy['ot'], bdy=body, sklonovanie=koncovka,
+                                        ma=otazkyzdatabazy['ma'], mb=otazkyzdatabazy['mb'], mc=otazkyzdatabazy['mc'], md=otazkyzdatabazy['md'], me=otazkyzdatabazy['me'],
+                                        mf=otazkyzdatabazy['mf'], mg=otazkyzdatabazy['mg'], mh=otazkyzdatabazy['mh'], control=('Spravna odpoved je', otazkyzdatabazy['od'])))
+                session['nameID'] = json.dumps(pole)
+                return respond
 
     if request.form['btn'] == 'Kontrola':
         kokie = session['nameID']
@@ -277,55 +283,60 @@ def skusaP():
             finalneotazky = list(polevsetkychotazok - polesplnenychotazok)
             zleotazky = random.choice(list(pole[5:6]))
 
-            for otazky in root.findall('otazka'):
-                number = otazky.attrib.get('number')
-                if str(ypsilon) == number:
-                    print('ypsilon: ', ypsilon, 'number: ', number)
-                    ot = otazky.find('ot').text
-                    od = otazky.find('od').text
-                    ma = otazky.find('ma').text
-                    mb = otazky.find('mb').text
-                    mc = otazky.find('mc').text
-                    md = otazky.find('md').text
-                    me = otazky.find('me').text
-                    mf = otazky.find('mf').text
-                    mg = otazky.find('mg').text
-                    mh = otazky.find('mh').text
+            otazkyzdatabazy = {'cislootazky': None, 'ot': None, 'od': None, 'ma': None,'mb': None,
+                               'mc': None, 'md': None, 'me': None, 'mf': None, 'mg': None, 'mh': None}
+            hladavdatabaze = """SELECT * FROM otazky WHERE cislootazky = %s;"""
+            engine.execute(hladavdatabaze, (ypsilon,))
+            result_set = engine.fetchall()
+            for r in result_set:
+                otazkyzdatabazy['cislootazky'] = random.choice(r[0:1])
+                otazkyzdatabazy['ot'] = random.choice(r[1:2])
+                otazkyzdatabazy['od'] = random.choice(r[2:3])
+                otazkyzdatabazy['ma'] = random.choice(r[3:4])
+                otazkyzdatabazy['mb'] = random.choice(r[4:5])
+                otazkyzdatabazy['mc'] = random.choice(r[5:6])
+                otazkyzdatabazy['md'] = random.choice(r[6:7])
+                otazkyzdatabazy['me'] = random.choice(r[7:8])
+                otazkyzdatabazy['mf'] = random.choice(r[8:9])
+                otazkyzdatabazy['mg'] = random.choice(r[9:10])
+                otazkyzdatabazy['mh'] = random.choice(r[10:11])
 
-                    kont()
-                    lst = str(od).split(',')
-                    print('moja', moja, 'od', lst)
+                kont()
+                lst = str(otazkyzdatabazy['od']).split(',')
+                print('moja', moja, 'od', lst)
 
-                    if list(moja) == lst:
-                        moja[:] = []
-                        mojeotazky.append(int(ypsilon))
-                        body = len(mojeotazky)
-                        if body == 1:
-                            koncovka = 'ku'
-                        elif body == 2 or body == 3 or body == 4:
-                            koncovka = 'ky'
-                        elif body >= 5:
-                            koncovka = 'ok'
-                        pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok)
-                        print('toto vypise pole', pole)
+                if list(moja) == lst:
+                    moja[:] = []
+                    mojeotazky.append(int(ypsilon))
+                    body = len(mojeotazky)
+                    if body == 1:
+                        koncovka = 'ku'
+                    elif body == 2 or body == 3 or body == 4:
+                        koncovka = 'ky'
+                    elif body >= 5:
+                        koncovka = 'ok'
+                    pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok)
+                    print('toto vypise pole', pole)
 
-                        jozo = """UPDATE FIIT SET body= %s WHERE uuia4= %s ;"""
-                        engine.execute(jozo, (body, randommeno,))
+                    jozo = """UPDATE FIIT SET body= %s WHERE uuia4= %s ;"""
+                    engine.execute(jozo, (body, randommeno,))
 
-                        respond = make_response(render_template('layout.html', control='Výborne, správna odpoveď!', otazka=ot, odp=od,
-                                                    ma=ma, mb=mb, mc=mc, md=md, me=me, mf=mf, mg=mg, mh=mh, bdy=body, sklonovanie=koncovka))
-                        session['nameID'] = json.dumps(pole)
-                        return respond
+                    respond = make_response(render_template('layout.html', control='Výborne, správna odpoveď!', otazka=otazkyzdatabazy['ot'], odp=otazkyzdatabazy['od'],
+                                                ma=otazkyzdatabazy['ma'], mb=otazkyzdatabazy['mb'], mc=otazkyzdatabazy['mc'], md=otazkyzdatabazy['md'], me=otazkyzdatabazy['me'],
+                                                mf=otazkyzdatabazy['mf'], mg=otazkyzdatabazy['mg'], mh=otazkyzdatabazy['mh'], bdy=body, sklonovanie=koncovka))
+                    session['nameID'] = json.dumps(pole)
+                    return respond
 
-                    else:
-                        moja[:] = []
-                        zleotazky.append(int(ypsilon))
-                        pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok)
-                        respond = make_response(render_template('layout.html', control='Bohužiaľ nesprávne.', otazka=ot, odp=od,
-                                                    ma=ma, mb=mb, mc=mc, md=md, me=me, mf=mf, mg=mg, mh=mh, bdy=body,
-                                                    sklonovanie=koncovka))
-                        session['nameID'] = json.dumps(pole)
-                        return respond
+                else:
+                    moja[:] = []
+                    zleotazky.append(int(ypsilon))
+                    pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok)
+                    respond = make_response(render_template('layout.html', control='Bohužiaľ nesprávne.', otazka=otazkyzdatabazy['ot'], odp=otazkyzdatabazy['od'],
+                                                ma=otazkyzdatabazy['ma'], mb=otazkyzdatabazy['mb'], mc=otazkyzdatabazy['mc'], md=otazkyzdatabazy['md'], me=otazkyzdatabazy['me'],
+                                                mf=otazkyzdatabazy['mf'], mg=otazkyzdatabazy['mg'], mh=otazkyzdatabazy['mh'], bdy=body,
+                                                sklonovanie=koncovka))
+                    session['nameID'] = json.dumps(pole)
+                    return respond
 
     if request.form['btn'] == 'Resetuje otázky':
         starekokie = session['nameID']
