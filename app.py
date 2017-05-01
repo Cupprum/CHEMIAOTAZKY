@@ -15,6 +15,31 @@ conn = psycopg2.connect(db)
 conn.autocommit = True
 engine = conn.cursor()
 engine.execute("CREATE TABLE IF NOT EXISTS FIIT (uuia4 text, meno text, body int, stav text);")
+engine.execute("CREATE TABLE IF NOT EXISTS otazky (cislootazky int, ot text, od text, ma text, mb text, mc text, md text, me text, mf text, mg text, mh text);")
+
+ypsilon = 1
+for otazky in root.findall('otazka'):
+    number = otazky.attrib.get('number')
+    if str(ypsilon) == number:
+        print('ypsilon: ', ypsilon, 'number: ', number)
+        ot = str(otazky.find('ot').text)
+        od = str(otazky.find('od').text)
+        ma = str(otazky.find('ma').text)
+        mb = str(otazky.find('mb').text)
+        mc = str(otazky.find('mc').text)
+        md = str(otazky.find('md').text)
+        me = str(otazky.find('me').text)
+        mf = str(otazky.find('mf').text)
+        mg = str(otazky.find('mg').text)
+        mh = str(otazky.find('mh').text)
+        vklada = """INSERT INTO otazky (cislootazky, ot, od, ma, mb, mc, md, me, mf, mg, mh) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"""
+        engine.execute(vklada, (ypsilon, ot, od, ma, mb, mc, md, me, mf, mg, mh))
+        ypsilon += 1
+
+engine.execute("""SELECT * FROM otazky""")
+result_set = engine.fetchall()
+for r in result_set:
+    print(r)
 
 tree = ET.parse('chemia.xml')
 root = tree.getroot()
