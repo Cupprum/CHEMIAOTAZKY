@@ -234,7 +234,6 @@ def skusaP():
 
         else:
             ypsilon = random.choice(finalneotazky)
-            print('vypise pole po castiach nech s nimi moze robit', randommeno, '||', mojeotazky, '||', ypsilon, '||', body, '||', koncovka, '||', zleotazky)
 
             otazkyzdatabazy = {'cislootazky': None, 'ot': None, 'od': None, 'ma': None, 'mb': None,
                                'mc': None, 'md': None, 'me': None, 'mf': None, 'mg': None, 'mh': None}
@@ -244,6 +243,7 @@ def skusaP():
             for r in result_set:
                 vyberazdatabazy(otazkyzdatabazy, r)
                 pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok)
+                print(pole)
                 respond = make_response(render_template('layout.html', checkbuttons=True, typotazok=typotazky, otazka=otazkyzdatabazy['ot'], bdy=body, sklonovanie=koncovka,
                                                         ma=otazkyzdatabazy['ma'], mb=otazkyzdatabazy['mb'], mc=otazkyzdatabazy['mc'], md=otazkyzdatabazy['md'], me=otazkyzdatabazy['me'],
                                                         mf=otazkyzdatabazy['mf'], mg=otazkyzdatabazy['mg'], mh=otazkyzdatabazy['mh'], control=('Spravna odpoved je', otazkyzdatabazy['od'])))
@@ -255,13 +255,11 @@ def skusaP():
         pole = json.loads(kokie)
         y = str(pole[2:3])
         ypsilon = y[1:-1]
-        print('ypsilon', ypsilon)
         body = random.choice(list(pole[3:4]))
         konc = str(pole[4:5])
         koncovka = konc[2:-2]
         poslednaaction = random.choice(list(pole[8:9]))
         skupinaotazok = random.choice(list(pole[9:10]))
-        print('posledna akcia |||||| ', poslednaaction, 'skupinaotazok', skupinaotazok)
         lastaction = 'kontrola'
 
         if str(ypsilon) == '0':
@@ -293,7 +291,6 @@ def skusaP():
 
                 kont()
                 lst = str(otazkyzdatabazy['od']).split(',')
-                print('moja', moja, 'od', lst)
 
                 if list(moja) == lst:
                     moja[:] = []
@@ -306,7 +303,6 @@ def skusaP():
                     elif body >= 5:
                         koncovka = 'ok'
                     pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok)
-                    print('toto vypise pole', pole)
 
                     jozo = """UPDATE FIIT SET body= %s WHERE uuia4= %s ;"""
                     engine.execute(jozo, (body, randommeno,))
@@ -349,7 +345,6 @@ def skusaP():
         skupinaotazok = None
 
         pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok)
-        print('toto vypise kookie noveho uzivatela', pole)
 
         jozo = """INSERT INTO FIIT (uuia4, meno, body, stav) VALUES (%s, NULL, %s, '0');"""
         engine.execute(jozo, (randommeno, body))
@@ -381,7 +376,6 @@ def skusaP():
             tabulkovydic['tabulka' + str(omg) + 'meno'] = x
             tabulkovydic['tabulka' + str(omg) + 'body'] = y
             omg += 1
-            print(r)
 
         respond = make_response(render_template('tabulkanajlpesich.html', bdy=body, sklonovanie=koncovka,
                                 tabulka1meno=tabulkovydic['tabulka1meno'], tabulka1body=tabulkovydic['tabulka1body'],
@@ -429,8 +423,6 @@ def skusaP():
             zistuje = """SELECT * FROM FIIT WHERE meno= %s"""
             engine.execute(zistuje, (zadanemeno,))
             if engine.rowcount == 0:
-                print('meno este nebolo pouzite')
-                print("randommeno =", randommeno, "|| zadanemeno = ", zadanemeno, "|| body =", body)
 
                 jozo = """UPDATE FIIT SET meno= %s WHERE uuia4= %s ;"""
                 engine.execute(jozo, (zadanemeno, randommeno))
@@ -494,7 +486,6 @@ def skusaP():
         konc = str(pole[4:5])
         koncovka = konc[2:-2]
         zleotazky = random.choice(list(pole[5:6]))
-        print("zleotazky = ", zleotazky)
         lastaction = None
         skupinaotazok = random.choice(list(pole[9:10]))
 
@@ -505,7 +496,6 @@ def skusaP():
 
         else:
             ypsilon = random.choice(zleotazky)
-            print('vypise pole po castiach nech s nimi moze robit', randommeno, '||', mojeotazky, '||', ypsilon, '||', body, '||', koncovka, '||', zleotazky)
 
             otazkyzdatabazy = {'cislootazky': None, 'ot': None, 'od': None, 'ma': None, 'mb': None,
                                'mc': None, 'md': None, 'me': None, 'mf': None, 'mg': None, 'mh': None}
@@ -537,7 +527,6 @@ def skusaP():
         konc = str(pole[4:5])
         koncovka = konc[2:-2]
         zleotazky = random.choice(list(pole[5:6]))
-        print("zleotazky = ", zleotazky)
         lastaction = None
         skupinaotazok = random.choice(list(pole[9:10]))
 
@@ -548,7 +537,6 @@ def skusaP():
 
         else:
             ypsilon = random.choice(zleotazky)
-            print('vypise pole po castiach nech s nimi moze robit', randommeno, '||', mojeotazky, '||', ypsilon, '||', body, '||', koncovka, '||', zleotazky)
 
             otazkyzdatabazy = {'cislootazky': None, 'ot': None, 'od': None, 'ma': None, 'mb': None,
                                'mc': None, 'md': None, 'me': None, 'mf': None, 'mg': None, 'mh': None}
@@ -577,7 +565,6 @@ def skusaP():
 
         y = str(pole[2:3])
         ypsilon = y[1:-1]
-        print('ypsilon kontrola zlej otazky: ', ypsilon)
         body = random.choice(list(pole[3:4]))
         konc = str(pole[4:5])
         koncovka = konc[2:-2]
@@ -585,9 +572,7 @@ def skusaP():
         lastaction = None
         skupinaotazok = random.choice(list(pole[9:10]))
 
-        print('vypise pole po castiach nech s nimi moze robit', randommeno, '||', mojeotazky, '||', ypsilon, '||', zleotazky)
         if ypsilon in zleotazky:
-            print('vypise pole po castiach nech s nimi moze robit', randommeno, '||', mojeotazky, '||', ypsilon, '||', body, '||', koncovka, '||', zleotazky)
             otazkyzdatabazy = {'cislootazky': None, 'ot': None, 'od': None, 'ma': None, 'mb': None,
                                'mc': None, 'md': None, 'me': None, 'mf': None, 'mg': None, 'mh': None}
             hladavdatabaze = """SELECT * FROM otazky WHERE cislootazky = %s;"""
@@ -598,13 +583,11 @@ def skusaP():
 
                 kont()
                 lst = str(otazkyzdatabazy['od']).split(',')
-                print('moja', moja, 'od', lst)
 
                 if list(moja) == lst:
                     moja[:] = []
                     zleotazky.remove(int(ypsilon))
                     pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok)
-                    print('toto vypise pole', pole)
 
                     respond = make_response(render_template('zleotazky.html', control='Vyborne, spravna odpoved!', zleotazky=zleotazky, totosuzleotazky=True))
                     session['nameID'] = json.dumps(pole)
@@ -830,7 +813,6 @@ def skusaP():
             if int(request.form['cislootazky']) in list(range(1, 500 + 1)):
                 ypsilon = int(request.form['cislootazky'])
 
-                print('vypise pole po castiach nech s nimi moze robit', randommeno, '||', mojeotazky, '||', ypsilon, '||', body, '||', koncovka, '||', zleotazky)
                 otazkyzdatabazy = {'cislootazky': None, 'ot': None, 'od': None, 'ma': None, 'mb': None,
                                    'mc': None, 'md': None, 'me': None, 'mf': None, 'mg': None, 'mh': None}
                 hladavdatabaze = """SELECT * FROM otazky WHERE cislootazky = %s;"""
@@ -910,7 +892,6 @@ def skusaP():
                     elif body >= 5:
                         koncovka = 'ok'
                     pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok)
-                    print('toto vypise pole', pole)
 
                     jozo = """UPDATE FIIT SET body= %s WHERE uuia4= %s ;"""
                     engine.execute(jozo, (body, randommeno,))
