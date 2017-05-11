@@ -61,6 +61,21 @@ def vyberazdatabazy(otazkyzdatabazy, r):
     otazkyzdatabazy['mg'] = random.choice(r[9:10])
     otazkyzdatabazy['mh'] = random.choice(r[10:11])
 
+def rozborcookie():
+    kokie = session['nameID']
+    pole = json.loads(kokie)
+    randommeno = pole['randommeno']
+    mojeotazky = pole['mojeotazky']
+    ypsilon = pole['ypsilon']
+    body = pole['body']
+    koncovka = pole['koncovka']
+    zleotazky = pole['zleotazky']
+    najmensiaotazka = pole['najmensiaotazka']
+    najvacsiaotazka = pole['najvacsiaotazka']
+    lastaction = pole['lastaction']
+    skupinaotazok = pole['skupinaotazok']
+    return randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok
+
 
 @app.before_request
 def make_session_permanent():
@@ -139,68 +154,57 @@ def skusaP():
                         472, 473, 474, 475, 476, 477, 478, 479, 480, 481, 482, 483, 484, 485, 486, 487, 488,
                         489, 490, 491, 492, 493, 494, 495, 496, 497, 498, 499, 500])
 
-        kokie = session['nameID']
-        pole = json.loads(kokie)
-        randommeno = pole['randommeno']
-        mojeotazky = pole['mojeotazky']
-        ypsilon = pole['ypsilon']
-        body = pole['body']
-        koncovka = pole['koncovka']
-        zleotazky = pole['zleotazky']
-        najmensiaotazka = pole['najmensiaotazka']
-        najvacsiaotazka = pole['najvacsiaotazka']
-        lastaction = pole['lastaction']
-        skupinaotazok = pole['skupinaotazok']
+        randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok = rozborcookie()
 
         lastaction = None
         polesplnenychotazok = set(mojeotazky)
         polevsetkychotazok = set(list(range(najmensiaotazka, najvacsiaotazka + 1)))
 
-        if pole['skupinaotazok'] == 'atom':
+        if skupinaotazok == 'atom':
             typotazky = "Atóm"
             finalneotazky = list(atom - polesplnenychotazok)
 
-        elif pole['skupinaotazok'] == 'sustavalatok':
+        elif skupinaotazok == 'sustavalatok':
             typotazky = "Sústava látok"
             finalneotazky = list(sustavalatok - polesplnenychotazok)
 
-        elif pole['skupinaotazok'] == 'latky':
+        elif skupinaotazok == 'latky':
             typotazky = "Látky"
             finalneotazky = list(latky - polesplnenychotazok)
 
-        elif pole['skupinaotazok'] == 'psustava':
+        elif skupinaotazok == 'psustava':
             typotazky = "Periodická sústava prvkov"
             finalneotazky = list(psustava - polesplnenychotazok)
 
-        elif pole['skupinaotazok'] == 'chvazba':
+        elif skupinaotazok == 'chvazba':
             typotazky = "Chemická väzba"
             finalneotazky = list(chvazba - polesplnenychotazok)
 
-        elif pole['skupinaotazok'] == 'nazvoslovie':
+        elif skupinaotazok == 'nazvoslovie':
             typotazky = "Názvoslovie"
             finalneotazky = list(nazvoslovie - polesplnenychotazok)
 
-        elif pole['skupinaotazok'] == 'veliciny':
+        elif skupinaotazok == 'veliciny':
             typotazky = "Chemické veličiny"
             finalneotazky = list(veliciny - polesplnenychotazok)
 
-        elif pole['skupinaotazok'] == 'kyszas':
+        elif skupinaotazok == 'kyszas':
             typotazky = "Kyseliny a zásady"
             finalneotazky = list(kyszas - polesplnenychotazok)
 
-        elif pole['skupinaotazok'] == 'reakcie':
+        elif skupinaotazok == 'reakcie':
             typotazky = "Chemické reakcie"
             finalneotazky = list(reakcie - polesplnenychotazok)
 
-        elif pole['skupinaotazok'] == 'rovnovaha':
+        elif skupinaotazok == 'rovnovaha':
             typotazky = "Chemická rovnovaha"
             finalneotazky = list(rovnovaha - polesplnenychotazok)
 
-        elif pole['skupinaotazok'] == 'komplexy':
+        elif skupinaotazok == 'komplexy':
             typotazky = "Komplexné zlúčeniny"
             finalneotazky = list(komplexy - polesplnenychotazok)
 
-        elif pole['skupinaotazok'] == 'priklady':
+        elif skupinaotazok == 'priklady':
             typotazky = "Príklady"
             finalneotazky = list(priklady - polesplnenychotazok)
         else:
@@ -232,18 +236,7 @@ def skusaP():
                 return respond
 
     if request.form['btn'] == 'Kontrola':
-        kokie = session['nameID']
-        pole = json.loads(kokie)
-        randommeno = pole['randommeno']
-        mojeotazky = pole['mojeotazky']
-        ypsilon = pole['ypsilon']
-        body = pole['body']
-        koncovka = pole['koncovka']
-        zleotazky = pole['zleotazky']
-        najmensiaotazka = pole['najmensiaotazka']
-        najvacsiaotazka = pole['najvacsiaotazka']
-        lastaction = pole['lastaction']
-        skupinaotazok = pole['skupinaotazok']
+        randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok = rozborcookie()
 
         poslednaaction = lastaction
         lastaction = 'kontrola'
@@ -342,18 +335,7 @@ def skusaP():
         return respond
 
     if request.form['btn'] == 'Tabuľka najlepších':
-        kokie = session['nameID']
-        pole = json.loads(kokie)
-        randommeno = pole['randommeno']
-        mojeotazky = pole['mojeotazky']
-        ypsilon = pole['ypsilon']
-        body = pole['body']
-        koncovka = pole['koncovka']
-        zleotazky = pole['zleotazky']
-        najmensiaotazka = pole['najmensiaotazka']
-        najvacsiaotazka = pole['najvacsiaotazka']
-        lastaction = pole['lastaction']
-        skupinaotazok = pole['skupinaotazok']
+        randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok = rozborcookie()
 
         lastaction = None
 
@@ -379,18 +361,7 @@ def skusaP():
         return respond
 
     if request.form['btn'] == 'Pridať meno':
-        kokie = session['nameID']
-        pole = json.loads(kokie)
-        randommeno = pole['randommeno']
-        mojeotazky = pole['mojeotazky']
-        ypsilon = pole['ypsilon']
-        body = pole['body']
-        koncovka = pole['koncovka']
-        zleotazky = pole['zleotazky']
-        najmensiaotazka = pole['najmensiaotazka']
-        najvacsiaotazka = pole['najvacsiaotazka']
-        lastaction = pole['lastaction']
-        skupinaotazok = pole['skupinaotazok']
+        randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok = rozborcookie()
 
         zadanemeno = request.form['vloztemeno']
         lastaction = None
@@ -471,18 +442,7 @@ def skusaP():
                 return respond
 
     if request.form['btn'] == 'Zle zodpovedané otázky':
-        kokie = session['nameID']
-        pole = json.loads(kokie)
-        randommeno = pole['randommeno']
-        mojeotazky = pole['mojeotazky']
-        ypsilon = pole['ypsilon']
-        body = pole['body']
-        koncovka = pole['koncovka']
-        zleotazky = pole['zleotazky']
-        najmensiaotazka = pole['najmensiaotazka']
-        najvacsiaotazka = pole['najvacsiaotazka']
-        lastaction = pole['lastaction']
-        skupinaotazok = pole['skupinaotazok']
+        randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok = rozborcookie()
 
         polevsetkychotazok = set(list(range(najmensiaotazka, najvacsiaotazka + 1)))
         lastaction = None
@@ -515,18 +475,7 @@ def skusaP():
                 return respond
 
     if request.form['btn'] == 'Ďalšia zlá otázka':
-        kokie = session['nameID']
-        pole = json.loads(kokie)
-        randommeno = pole['randommeno']
-        mojeotazky = pole['mojeotazky']
-        ypsilon = pole['ypsilon']
-        body = pole['body']
-        koncovka = pole['koncovka']
-        zleotazky = pole['zleotazky']
-        najmensiaotazka = pole['najmensiaotazka']
-        najvacsiaotazka = pole['najvacsiaotazka']
-        lastaction = pole['lastaction']
-        skupinaotazok = pole['skupinaotazok']
+        randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok = rozborcookie()
 
         lastaction = None
 
@@ -556,18 +505,7 @@ def skusaP():
                 return respond
 
     if request.form['btn'] == 'Kontrola zlej otázky':
-        kokie = session['nameID']
-        pole = json.loads(kokie)
-        randommeno = pole['randommeno']
-        mojeotazky = pole['mojeotazky']
-        ypsilon = pole['ypsilon']
-        body = pole['body']
-        koncovka = pole['koncovka']
-        zleotazky = pole['zleotazky']
-        najmensiaotazka = pole['najmensiaotazka']
-        najvacsiaotazka = pole['najvacsiaotazka']
-        lastaction = pole['lastaction']
-        skupinaotazok = pole['skupinaotazok']
+        randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok = rozborcookie()
 
         poslednaaction = lastaction
         lastaction = 'kontrola'
@@ -616,18 +554,7 @@ def skusaP():
         return respond
 
     if request.form['btn'] == 'Pridať rozmedzie otázok':
-        kokie = session['nameID']
-        pole = json.loads(kokie)
-        randommeno = pole['randommeno']
-        mojeotazky = pole['mojeotazky']
-        ypsilon = pole['ypsilon']
-        body = pole['body']
-        koncovka = pole['koncovka']
-        zleotazky = pole['zleotazky']
-        najmensiaotazka = pole['najmensiaotazka']
-        najvacsiaotazka = pole['najvacsiaotazka']
-        lastaction = pole['lastaction']
-        skupinaotazok = pole['skupinaotazok']
+        randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok = rozborcookie()
 
         lastaction = None
 
@@ -664,18 +591,7 @@ def skusaP():
                 return respond
 
     if request.form['btn'] == 'Atóm':
-        kokie = session['nameID']
-        pole = json.loads(kokie)
-        randommeno = pole['randommeno']
-        mojeotazky = pole['mojeotazky']
-        ypsilon = pole['ypsilon']
-        body = pole['body']
-        koncovka = pole['koncovka']
-        zleotazky = pole['zleotazky']
-        najmensiaotazka = pole['najmensiaotazka']
-        najvacsiaotazka = pole['najvacsiaotazka']
-        lastaction = pole['lastaction']
-        skupinaotazok = pole['skupinaotazok']
+        randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok = rozborcookie()
 
         lastaction = None
 
@@ -688,18 +604,7 @@ def skusaP():
         return respond
 
     if request.form['btn'] == 'Sústava látok':
-        kokie = session['nameID']
-        pole = json.loads(kokie)
-        randommeno = pole['randommeno']
-        mojeotazky = pole['mojeotazky']
-        ypsilon = pole['ypsilon']
-        body = pole['body']
-        koncovka = pole['koncovka']
-        zleotazky = pole['zleotazky']
-        najmensiaotazka = pole['najmensiaotazka']
-        najvacsiaotazka = pole['najvacsiaotazka']
-        lastaction = pole['lastaction']
-        skupinaotazok = pole['skupinaotazok']
+        randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok = rozborcookie()
 
         lastaction = None
 
@@ -712,18 +617,7 @@ def skusaP():
         return respond
 
     if request.form['btn'] == 'Látky':
-        kokie = session['nameID']
-        pole = json.loads(kokie)
-        randommeno = pole['randommeno']
-        mojeotazky = pole['mojeotazky']
-        ypsilon = pole['ypsilon']
-        body = pole['body']
-        koncovka = pole['koncovka']
-        zleotazky = pole['zleotazky']
-        najmensiaotazka = pole['najmensiaotazka']
-        najvacsiaotazka = pole['najvacsiaotazka']
-        lastaction = pole['lastaction']
-        skupinaotazok = pole['skupinaotazok']
+        randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok = rozborcookie()
 
         lastaction = None
 
@@ -736,18 +630,7 @@ def skusaP():
         return respond
 
     if request.form['btn'] == 'Periodická sústava prvkov':
-        kokie = session['nameID']
-        pole = json.loads(kokie)
-        randommeno = pole['randommeno']
-        mojeotazky = pole['mojeotazky']
-        ypsilon = pole['ypsilon']
-        body = pole['body']
-        koncovka = pole['koncovka']
-        zleotazky = pole['zleotazky']
-        najmensiaotazka = pole['najmensiaotazka']
-        najvacsiaotazka = pole['najvacsiaotazka']
-        lastaction = pole['lastaction']
-        skupinaotazok = pole['skupinaotazok']
+        randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok = rozborcookie()
 
         lastaction = None
 
@@ -760,18 +643,7 @@ def skusaP():
         return respond
 
     if request.form['btn'] == 'Chemická väzba':
-        kokie = session['nameID']
-        pole = json.loads(kokie)
-        randommeno = pole['randommeno']
-        mojeotazky = pole['mojeotazky']
-        ypsilon = pole['ypsilon']
-        body = pole['body']
-        koncovka = pole['koncovka']
-        zleotazky = pole['zleotazky']
-        najmensiaotazka = pole['najmensiaotazka']
-        najvacsiaotazka = pole['najvacsiaotazka']
-        lastaction = pole['lastaction']
-        skupinaotazok = pole['skupinaotazok']
+        randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok = rozborcookie()
 
         lastaction = None
 
@@ -784,18 +656,7 @@ def skusaP():
         return respond
 
     if request.form['btn'] == 'Názvoslovie':
-        kokie = session['nameID']
-        pole = json.loads(kokie)
-        randommeno = pole['randommeno']
-        mojeotazky = pole['mojeotazky']
-        ypsilon = pole['ypsilon']
-        body = pole['body']
-        koncovka = pole['koncovka']
-        zleotazky = pole['zleotazky']
-        najmensiaotazka = pole['najmensiaotazka']
-        najvacsiaotazka = pole['najvacsiaotazka']
-        lastaction = pole['lastaction']
-        skupinaotazok = pole['skupinaotazok']
+        randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok = rozborcookie()
 
         lastaction = None
 
@@ -808,18 +669,7 @@ def skusaP():
         return respond
 
     if request.form['btn'] == 'Chemické veličiny':
-        kokie = session['nameID']
-        pole = json.loads(kokie)
-        randommeno = pole['randommeno']
-        mojeotazky = pole['mojeotazky']
-        ypsilon = pole['ypsilon']
-        body = pole['body']
-        koncovka = pole['koncovka']
-        zleotazky = pole['zleotazky']
-        najmensiaotazka = pole['najmensiaotazka']
-        najvacsiaotazka = pole['najvacsiaotazka']
-        lastaction = pole['lastaction']
-        skupinaotazok = pole['skupinaotazok']
+        randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok = rozborcookie()
 
         lastaction = None
 
@@ -832,18 +682,7 @@ def skusaP():
         return respond
 
     if request.form['btn'] == 'Kyseliny a zásady':
-        kokie = session['nameID']
-        pole = json.loads(kokie)
-        randommeno = pole['randommeno']
-        mojeotazky = pole['mojeotazky']
-        ypsilon = pole['ypsilon']
-        body = pole['body']
-        koncovka = pole['koncovka']
-        zleotazky = pole['zleotazky']
-        najmensiaotazka = pole['najmensiaotazka']
-        najvacsiaotazka = pole['najvacsiaotazka']
-        lastaction = pole['lastaction']
-        skupinaotazok = pole['skupinaotazok']
+        randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok = rozborcookie()
 
         lastaction = None
 
@@ -856,18 +695,7 @@ def skusaP():
         return respond
 
     if request.form['btn'] == 'Chemické reakcie':
-        kokie = session['nameID']
-        pole = json.loads(kokie)
-        randommeno = pole['randommeno']
-        mojeotazky = pole['mojeotazky']
-        ypsilon = pole['ypsilon']
-        body = pole['body']
-        koncovka = pole['koncovka']
-        zleotazky = pole['zleotazky']
-        najmensiaotazka = pole['najmensiaotazka']
-        najvacsiaotazka = pole['najvacsiaotazka']
-        lastaction = pole['lastaction']
-        skupinaotazok = pole['skupinaotazok']
+        randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok = rozborcookie()
 
         lastaction = None
 
@@ -880,18 +708,7 @@ def skusaP():
         return respond
 
     if request.form['btn'] == 'Chemická rovnováha':
-        kokie = session['nameID']
-        pole = json.loads(kokie)
-        randommeno = pole['randommeno']
-        mojeotazky = pole['mojeotazky']
-        ypsilon = pole['ypsilon']
-        body = pole['body']
-        koncovka = pole['koncovka']
-        zleotazky = pole['zleotazky']
-        najmensiaotazka = pole['najmensiaotazka']
-        najvacsiaotazka = pole['najvacsiaotazka']
-        lastaction = pole['lastaction']
-        skupinaotazok = pole['skupinaotazok']
+        randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok = rozborcookie()
 
         lastaction = None
 
@@ -904,18 +721,7 @@ def skusaP():
         return respond
 
     if request.form['btn'] == 'Komplexné zlúčeniny':
-        kokie = session['nameID']
-        pole = json.loads(kokie)
-        randommeno = pole['randommeno']
-        mojeotazky = pole['mojeotazky']
-        ypsilon = pole['ypsilon']
-        body = pole['body']
-        koncovka = pole['koncovka']
-        zleotazky = pole['zleotazky']
-        najmensiaotazka = pole['najmensiaotazka']
-        najvacsiaotazka = pole['najvacsiaotazka']
-        lastaction = pole['lastaction']
-        skupinaotazok = pole['skupinaotazok']
+        randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok = rozborcookie()
 
         lastaction = None
 
@@ -928,18 +734,7 @@ def skusaP():
         return respond
 
     if request.form['btn'] == 'Príklady':
-        kokie = session['nameID']
-        pole = json.loads(kokie)
-        randommeno = pole['randommeno']
-        mojeotazky = pole['mojeotazky']
-        ypsilon = pole['ypsilon']
-        body = pole['body']
-        koncovka = pole['koncovka']
-        zleotazky = pole['zleotazky']
-        najmensiaotazka = pole['najmensiaotazka']
-        najvacsiaotazka = pole['najvacsiaotazka']
-        lastaction = pole['lastaction']
-        skupinaotazok = pole['skupinaotazok']
+        randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok = rozborcookie()
 
         lastaction = None
 
@@ -956,18 +751,7 @@ def skusaP():
         return respond
 
     if request.form['btn'] == 'Prejsť na otázku':
-        kokie = session['nameID']
-        pole = json.loads(kokie)
-        randommeno = pole['randommeno']
-        mojeotazky = pole['mojeotazky']
-        ypsilon = pole['ypsilon']
-        body = pole['body']
-        koncovka = pole['koncovka']
-        zleotazky = pole['zleotazky']
-        najmensiaotazka = pole['najmensiaotazka']
-        najvacsiaotazka = pole['najvacsiaotazka']
-        lastaction = pole['lastaction']
-        skupinaotazok = pole['skupinaotazok']
+        randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok = rozborcookie()
 
         polevsetkychotazok = set(list(range(najmensiaotazka, najvacsiaotazka + 1)))
         polesplnenychotazok = set(mojeotazky)
@@ -1005,18 +789,7 @@ def skusaP():
             return respond
 
     if request.form['btn'] == 'Kontrola otázky':
-        kokie = session['nameID']
-        pole = json.loads(kokie)
-        randommeno = pole['randommeno']
-        mojeotazky = pole['mojeotazky']
-        ypsilon = pole['ypsilon']
-        body = pole['body']
-        koncovka = pole['koncovka']
-        zleotazky = pole['zleotazky']
-        najmensiaotazka = pole['najmensiaotazka']
-        najvacsiaotazka = pole['najvacsiaotazka']
-        lastaction = pole['lastaction']
-        skupinaotazok = pole['skupinaotazok']
+        randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok = rozborcookie()
 
         poslednaaction = lastaction
         lastaction = 'kontrola'
