@@ -62,24 +62,6 @@ def vyberazdatabazy(otazkyzdatabazy, r):
     otazkyzdatabazy['mh'] = random.choice(r[10:11])
 
 
-def deftypotazky(pole):
-    meno = str(pole[:1])
-    randommeno = meno[2:-2]
-    mojeotazky = random.choice(list(pole[1:2]))
-    y = str(pole[2:3])
-    ypsilon = y[1:-1]
-    body = random.choice(list(pole[3:4]))
-    konc = str(pole[4:5])
-    koncovka = konc[2:-2]
-    zleotazky = random.choice(list(pole[5:6]))
-    najmensiaotazka = 1
-    najvacsiaotazka = 500
-    lastaction = None
-    skupinaotazok = str(random.choice(list(pole[9:10])))
-
-    return randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok
-
-
 @app.before_request
 def make_session_permanent():
     session.permanent = True
@@ -99,7 +81,9 @@ def skusaG():
         najvacsiaotazka = 500
         lastaction = None
         skupinaotazok = None
-        pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok)
+        pole = {'randommeno': randommeno, 'mojeotazky': mojeotazky, 'ypsilon': ypsilon, 'body': body,
+                'koncovka': koncovka, 'zleotazky': zleotazky, 'najmensiaotazka': najmensiaotazka, 'najvacsiaotazka': najvacsiaotazka,
+                'lastaction': lastaction, 'skupinaotazok': skupinaotazok}
         print('novy uzivatel', pole)
 
         jozo = """INSERT INTO FIIT (uuia4, meno, body, stav) VALUES (%s, NULL, %s, '0');"""
@@ -113,11 +97,7 @@ def skusaG():
         kokie = session['nameID']
         pole = json.loads(kokie)
         print('stary uzivatel', pole)
-        body = random.choice(list(pole[3:4]))
-        konc = str(pole[4:5])
-        koncovka = konc[2:-2]
-
-        respond = make_response(render_template('layout.html', uvod=True, bdy=body, sklonovanie=koncovka))
+        respond = make_response(render_template('layout.html', uvod=True, bdy=pole['body'], sklonovanie=pole['koncovka']))
         return respond
 
 
@@ -158,75 +138,74 @@ def skusaP():
                         455, 456, 457, 458, 459, 460, 461, 462, 463, 464, 465, 466, 467, 468, 469, 470, 471,
                         472, 473, 474, 475, 476, 477, 478, 479, 480, 481, 482, 483, 484, 485, 486, 487, 488,
                         489, 490, 491, 492, 493, 494, 495, 496, 497, 498, 499, 500])
+
         kokie = session['nameID']
         pole = json.loads(kokie)
-        meno = str(pole[:1])
-        randommeno = meno[2:-2]
-        mensiaotazka = random.choice(list(pole[6:7]))
-        vacsiaotazka = random.choice(list(pole[7:8]))
-        najmensiaotazka = int(mensiaotazka)
-        najvacsiaotazka = int(vacsiaotazka)
-        polevsetkychotazok = set(list(range(najmensiaotazka, najvacsiaotazka + 1)))
-        mojeotazky = random.choice(list(pole[1:2]))
-        polesplnenychotazok = set(mojeotazky)
-        body = random.choice(list(pole[3:4]))
-        konc = str(pole[4:5])
-        koncovka = konc[2:-2]
-        zleotazky = random.choice(list(pole[5:6]))
+        randommeno = pole['randommeno']
+        mojeotazky = pole['mojeotazky']
+        ypsilon = pole['ypsilon']
+        body = pole['body']
+        koncovka = pole['koncovka']
+        zleotazky = pole['zleotazky']
+        najmensiaotazka = pole['najmensiaotazka']
+        najvacsiaotazka = pole['najvacsiaotazka']
+        lastaction = pole['lastaction']
+        skupinaotazok = pole['skupinaotazok']
+
         lastaction = None
-        skupinaotazok = str(random.choice(list(pole[9:10])))
+        polesplnenychotazok = set(mojeotazky)
+        polevsetkychotazok = set(list(range(najmensiaotazka, najvacsiaotazka + 1)))
 
-        if skupinaotazok == 'None':
-            typotazky = "Si skúšaný zo všetkých otázok"
-            finalneotazky = list(polevsetkychotazok - polesplnenychotazok)
-
-        elif skupinaotazok == 'atom':
+        if pole['skupinaotazok'] == 'atom':
             typotazky = "Atóm"
             finalneotazky = list(atom - polesplnenychotazok)
 
-        elif skupinaotazok == 'sustavalatok':
+        elif pole['skupinaotazok'] == 'sustavalatok':
             typotazky = "Sústava látok"
             finalneotazky = list(sustavalatok - polesplnenychotazok)
 
-        elif skupinaotazok == 'latky':
+        elif pole['skupinaotazok'] == 'latky':
             typotazky = "Látky"
             finalneotazky = list(latky - polesplnenychotazok)
 
-        elif skupinaotazok == 'psustava':
+        elif pole['skupinaotazok'] == 'psustava':
             typotazky = "Periodická sústava prvkov"
             finalneotazky = list(psustava - polesplnenychotazok)
 
-        elif skupinaotazok == 'chvazba':
+        elif pole['skupinaotazok'] == 'chvazba':
             typotazky = "Chemická väzba"
             finalneotazky = list(chvazba - polesplnenychotazok)
 
-        elif skupinaotazok == 'nazvoslovie':
+        elif pole['skupinaotazok'] == 'nazvoslovie':
             typotazky = "Názvoslovie"
             finalneotazky = list(nazvoslovie - polesplnenychotazok)
 
-        elif skupinaotazok == 'veliciny':
+        elif pole['skupinaotazok'] == 'veliciny':
             typotazky = "Chemické veličiny"
             finalneotazky = list(veliciny - polesplnenychotazok)
 
-        elif skupinaotazok == 'kyszas':
+        elif pole['skupinaotazok'] == 'kyszas':
             typotazky = "Kyseliny a zásady"
             finalneotazky = list(kyszas - polesplnenychotazok)
 
-        elif skupinaotazok == 'reakcie':
+        elif pole['skupinaotazok'] == 'reakcie':
             typotazky = "Chemické reakcie"
             finalneotazky = list(reakcie - polesplnenychotazok)
 
-        elif skupinaotazok == 'rovnovaha':
+        elif pole['skupinaotazok'] == 'rovnovaha':
             typotazky = "Chemická rovnovaha"
             finalneotazky = list(rovnovaha - polesplnenychotazok)
 
-        elif skupinaotazok == 'komplexy':
+        elif pole['skupinaotazok'] == 'komplexy':
             typotazky = "Komplexné zlúčeniny"
             finalneotazky = list(komplexy - polesplnenychotazok)
 
-        elif skupinaotazok == 'priklady':
+        elif pole['skupinaotazok'] == 'priklady':
             typotazky = "Príklady"
             finalneotazky = list(priklady - polesplnenychotazok)
+        else:
+            typotazky = "Si skúšaný zo všetkých otázok"
+            finalneotazky = list(polevsetkychotazok - polesplnenychotazok)
 
         if len(finalneotazky) == 0:
             respond = make_response(render_template('layout.html', control='Nemame otazky', bdy=body, sklonovanie=koncovka))
@@ -242,7 +221,9 @@ def skusaP():
             result_set = engine.fetchall()
             for r in result_set:
                 vyberazdatabazy(otazkyzdatabazy, r)
-                pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok)
+                pole = {'randommeno': randommeno, 'mojeotazky': mojeotazky, 'ypsilon': ypsilon, 'body': body,
+                        'koncovka': koncovka, 'zleotazky': zleotazky, 'najmensiaotazka': najmensiaotazka, 'najvacsiaotazka': najvacsiaotazka,
+                        'lastaction': lastaction, 'skupinaotazok': skupinaotazok}
                 print(pole)
                 respond = make_response(render_template('layout.html', checkbuttons=True, typotazok=typotazky, otazka=otazkyzdatabazy['ot'], bdy=body, sklonovanie=koncovka,
                                                         ma=otazkyzdatabazy['ma'], mb=otazkyzdatabazy['mb'], mc=otazkyzdatabazy['mc'], md=otazkyzdatabazy['md'], me=otazkyzdatabazy['me'],
@@ -253,13 +234,18 @@ def skusaP():
     if request.form['btn'] == 'Kontrola':
         kokie = session['nameID']
         pole = json.loads(kokie)
-        y = str(pole[2:3])
-        ypsilon = y[1:-1]
-        body = random.choice(list(pole[3:4]))
-        konc = str(pole[4:5])
-        koncovka = konc[2:-2]
-        poslednaaction = random.choice(list(pole[8:9]))
-        skupinaotazok = random.choice(list(pole[9:10]))
+        randommeno = pole['randommeno']
+        mojeotazky = pole['mojeotazky']
+        ypsilon = pole['ypsilon']
+        body = pole['body']
+        koncovka = pole['koncovka']
+        zleotazky = pole['zleotazky']
+        najmensiaotazka = pole['najmensiaotazka']
+        najvacsiaotazka = pole['najvacsiaotazka']
+        lastaction = pole['lastaction']
+        skupinaotazok = pole['skupinaotazok']
+
+        poslednaaction = lastaction
         lastaction = 'kontrola'
 
         if str(ypsilon) == '0':
@@ -271,19 +257,14 @@ def skusaP():
             return respond
 
         else:
-            meno = str(pole[:1])
-            randommeno = meno[2:-2]
-            najmensiaotazka = random.choice(list(pole[6:7]))
-            najvacsiaotazka = random.choice(list(pole[7:8]))
             polevsetkychotazok = set(list(range(najmensiaotazka, najvacsiaotazka + 1)))
-            mojeotazky = random.choice(list(pole[1:2]))
             polesplnenychotazok = set(mojeotazky)
             finalneotazky = list(polevsetkychotazok - polesplnenychotazok)
-            zleotazky = random.choice(list(pole[5:6]))
 
             otazkyzdatabazy = {'cislootazky': None, 'ot': None, 'od': None, 'ma': None, 'mb': None,
                                'mc': None, 'md': None, 'me': None, 'mf': None, 'mg': None, 'mh': None}
             hladavdatabaze = """SELECT * FROM otazky WHERE cislootazky = %s;"""
+
             engine.execute(hladavdatabaze, (ypsilon,))
             result_set = engine.fetchall()
             for r in result_set:
@@ -302,7 +283,10 @@ def skusaP():
                         koncovka = 'ky'
                     elif body >= 5:
                         koncovka = 'ok'
-                    pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok)
+
+                    pole = {'randommeno': randommeno, 'mojeotazky': mojeotazky, 'ypsilon': ypsilon, 'body': body,
+                            'koncovka': koncovka, 'zleotazky': zleotazky, 'najmensiaotazka': najmensiaotazka, 'najvacsiaotazka': najvacsiaotazka,
+                            'lastaction': lastaction, 'skupinaotazok': skupinaotazok}
 
                     jozo = """UPDATE FIIT SET body= %s WHERE uuia4= %s ;"""
                     engine.execute(jozo, (body, randommeno,))
@@ -316,7 +300,10 @@ def skusaP():
                 else:
                     moja[:] = []
                     zleotazky.append(int(ypsilon))
-                    pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok)
+                    pole = {'randommeno': randommeno, 'mojeotazky': mojeotazky, 'ypsilon': ypsilon, 'body': body,
+                            'koncovka': koncovka, 'zleotazky': zleotazky, 'najmensiaotazka': najmensiaotazka, 'najvacsiaotazka': najvacsiaotazka,
+                            'lastaction': lastaction, 'skupinaotazok': skupinaotazok}
+
                     respond = make_response(render_template('layout.html', control='Bohužiaľ nesprávne.', otazka=otazkyzdatabazy['ot'], odp=otazkyzdatabazy['od'],
                                             ma=otazkyzdatabazy['ma'], mb=otazkyzdatabazy['mb'], mc=otazkyzdatabazy['mc'], md=otazkyzdatabazy['md'], me=otazkyzdatabazy['me'],
                                             mf=otazkyzdatabazy['mf'], mg=otazkyzdatabazy['mg'], mh=otazkyzdatabazy['mh'], bdy=body,
@@ -327,8 +314,7 @@ def skusaP():
     if request.form['btn'] == 'Resetuje otázky':
         starekokie = session['nameID']
         starepole = json.loads(starekokie)
-        staremeno = str(starepole[:1])
-        starerandommeno = staremeno[2:-2]
+        starerandommeno = starepole['randommeno']
 
         staryjozo = """DELETE FROM FIIT WHERE uuia4 = %s ;"""
         engine.execute(staryjozo, (starerandommeno, ))
@@ -339,12 +325,14 @@ def skusaP():
         body = 0
         koncovka = 'ok'
         zleotazky = []
-        najmensiaotazka = random.choice(list(starepole[6:7]))
-        najvacsiaotazka = random.choice(list(starepole[7:8]))
+        najmensiaotazka = 1
+        najvacsiaotazka = 500
         lastaction = None
         skupinaotazok = None
 
-        pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok)
+        pole = {'randommeno': randommeno, 'mojeotazky': mojeotazky, 'ypsilon': ypsilon, 'body': body,
+                'koncovka': koncovka, 'zleotazky': zleotazky, 'najmensiaotazka': najmensiaotazka, 'najvacsiaotazka': najvacsiaotazka,
+                'lastaction': lastaction, 'skupinaotazok': skupinaotazok}
 
         jozo = """INSERT INTO FIIT (uuia4, meno, body, stav) VALUES (%s, NULL, %s, '0');"""
         engine.execute(jozo, (randommeno, body))
@@ -356,13 +344,18 @@ def skusaP():
     if request.form['btn'] == 'Tabuľka najlepších':
         kokie = session['nameID']
         pole = json.loads(kokie)
-        meno = str(pole[:1])
-        randommeno = meno[2:-2]
-        najmensiaotazka = random.choice(list(pole[6:7]))
-        najvacsiaotazka = random.choice(list(pole[7:8]))
-        body = random.choice(list(pole[3:4]))
-        konc = str(pole[4:5])
-        koncovka = konc[2:-2]
+        randommeno = pole['randommeno']
+        mojeotazky = pole['mojeotazky']
+        ypsilon = pole['ypsilon']
+        body = pole['body']
+        koncovka = pole['koncovka']
+        zleotazky = pole['zleotazky']
+        najmensiaotazka = pole['najmensiaotazka']
+        najvacsiaotazka = pole['najvacsiaotazka']
+        lastaction = pole['lastaction']
+        skupinaotazok = pole['skupinaotazok']
+
+        lastaction = None
 
         tabulkovydic = {'tabulka1meno': None, 'tabulka1body': None, 'tabulka2meno': None, 'tabulka2body': None,
                         'tabulka3meno': None, 'tabulka3body': None, 'tabulka4meno': None, 'tabulka4body': None,
@@ -388,15 +381,19 @@ def skusaP():
     if request.form['btn'] == 'Pridať meno':
         kokie = session['nameID']
         pole = json.loads(kokie)
-        meno = str(pole[:1])
-        randommeno = meno[2:-2]
-        najmensiaotazka = random.choice(list(pole[6:7]))
-        najvacsiaotazka = random.choice(list(pole[7:8]))
-        body = int(random.choice(list(pole[3:4])))
-        konc = str(pole[4:5])
-        koncovka = konc[2:-2]
+        randommeno = pole['randommeno']
+        mojeotazky = pole['mojeotazky']
+        ypsilon = pole['ypsilon']
+        body = pole['body']
+        koncovka = pole['koncovka']
+        zleotazky = pole['zleotazky']
+        najmensiaotazka = pole['najmensiaotazka']
+        najvacsiaotazka = pole['najvacsiaotazka']
+        lastaction = pole['lastaction']
+        skupinaotazok = pole['skupinaotazok']
 
         zadanemeno = request.form['vloztemeno']
+        lastaction = None
 
         if zadanemeno == "" or zadanemeno == " ":
             tabulkovydic = {'tabulka1meno': None, 'tabulka1body': None, 'tabulka2meno': None, 'tabulka2body': None,
@@ -464,7 +461,8 @@ def skusaP():
                     tabulkovydic['tabulka' + str(omg) + 'body'] = y
                     omg += 1
 
-                respond = make_response(render_template('tabulkanajlpesich.html', otazka="Toto meno bolo už použité, skús zadať iné.", bdy=body, sklonovanie=koncovka,
+                respond = make_response(render_template('tabulkanajlpesich.html', otazka="Toto meno bolo už použité, skús zadať iné.",
+                                        bdy=body, sklonovanie=koncovka,
                                         tabulka1meno=tabulkovydic['tabulka1meno'], tabulka1body=tabulkovydic['tabulka1body'],
                                         tabulka2meno=tabulkovydic['tabulka2meno'], tabulka2body=tabulkovydic['tabulka2body'],
                                         tabulka3meno=tabulkovydic['tabulka3meno'], tabulka3body=tabulkovydic['tabulka3body'],
@@ -475,19 +473,19 @@ def skusaP():
     if request.form['btn'] == 'Zle zodpovedané otázky':
         kokie = session['nameID']
         pole = json.loads(kokie)
-        meno = str(pole[:1])
-        randommeno = meno[2:-2]
-        najmensiaotazka = random.choice(list(pole[6:7]))
-        najvacsiaotazka = random.choice(list(pole[7:8]))
-        polevsetkychotazok = set(list(range(najmensiaotazka, najvacsiaotazka + 1)))
-        mojeotazky = random.choice(list(pole[1:2]))
+        randommeno = pole['randommeno']
+        mojeotazky = pole['mojeotazky']
+        ypsilon = pole['ypsilon']
+        body = pole['body']
+        koncovka = pole['koncovka']
+        zleotazky = pole['zleotazky']
+        najmensiaotazka = pole['najmensiaotazka']
+        najvacsiaotazka = pole['najvacsiaotazka']
+        lastaction = pole['lastaction']
+        skupinaotazok = pole['skupinaotazok']
 
-        body = random.choice(list(pole[3:4]))
-        konc = str(pole[4:5])
-        koncovka = konc[2:-2]
-        zleotazky = random.choice(list(pole[5:6]))
+        polevsetkychotazok = set(list(range(najmensiaotazka, najvacsiaotazka + 1)))
         lastaction = None
-        skupinaotazok = random.choice(list(pole[9:10]))
 
         if len(zleotazky) == 0:
             respond = make_response(render_template('zleotazky.html', control="Na všetky otázky si odpovedal dobre, nemáš si čo opraviť",
@@ -505,7 +503,9 @@ def skusaP():
             for r in result_set:
                 vyberazdatabazy(otazkyzdatabazy, r)
 
-                pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok)
+                pole = {'randommeno': randommeno, 'mojeotazky': mojeotazky, 'ypsilon': ypsilon, 'body': body,
+                        'koncovka': koncovka, 'zleotazky': zleotazky, 'najmensiaotazka': najmensiaotazka, 'najvacsiaotazka': najvacsiaotazka,
+                        'lastaction': lastaction, 'skupinaotazok': skupinaotazok}
 
                 respond = make_response(render_template('zleotazky.html', otazka=otazkyzdatabazy['ot'], bdy=body, sklonovanie=koncovka,
                                         ma=otazkyzdatabazy['ma'], mb=otazkyzdatabazy['mb'], mc=otazkyzdatabazy['mc'], md=otazkyzdatabazy['md'], me=otazkyzdatabazy['me'],
@@ -517,18 +517,18 @@ def skusaP():
     if request.form['btn'] == 'Ďalšia zlá otázka':
         kokie = session['nameID']
         pole = json.loads(kokie)
-        meno = str(pole[:1])
-        randommeno = meno[2:-2]
-        najmensiaotazka = random.choice(list(pole[6:7]))
-        najvacsiaotazka = random.choice(list(pole[7:8]))
+        randommeno = pole['randommeno']
+        mojeotazky = pole['mojeotazky']
+        ypsilon = pole['ypsilon']
+        body = pole['body']
+        koncovka = pole['koncovka']
+        zleotazky = pole['zleotazky']
+        najmensiaotazka = pole['najmensiaotazka']
+        najvacsiaotazka = pole['najvacsiaotazka']
+        lastaction = pole['lastaction']
+        skupinaotazok = pole['skupinaotazok']
 
-        mojeotazky = random.choice(list(pole[1:2]))
-        body = random.choice(list(pole[3:4]))
-        konc = str(pole[4:5])
-        koncovka = konc[2:-2]
-        zleotazky = random.choice(list(pole[5:6]))
         lastaction = None
-        skupinaotazok = random.choice(list(pole[9:10]))
 
         if len(zleotazky) == 0:
             respond = make_response(render_template('zleotazky.html', control="Na všetky otázky si odpovedal dobre, nemáš si čo opraviť",
@@ -549,62 +549,67 @@ def skusaP():
                                         ma=otazkyzdatabazy['ma'], mb=otazkyzdatabazy['mb'], mc=otazkyzdatabazy['mc'], md=otazkyzdatabazy['md'], me=otazkyzdatabazy['me'],
                                         mf=otazkyzdatabazy['mf'], mg=otazkyzdatabazy['mg'], mh=otazkyzdatabazy['mh'], control=('Spravna odpoved je', otazkyzdatabazy['od']),
                                         zleotazky=zleotazky, cislozlejotazky=ypsilon, totosuzleotazky=True))
-                pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok)
+                pole = {'randommeno': randommeno, 'mojeotazky': mojeotazky, 'ypsilon': ypsilon, 'body': body,
+                        'koncovka': koncovka, 'zleotazky': zleotazky, 'najmensiaotazka': najmensiaotazka, 'najvacsiaotazka': najvacsiaotazka,
+                        'lastaction': lastaction, 'skupinaotazok': skupinaotazok}
                 session['nameID'] = json.dumps(pole)
                 return respond
 
     if request.form['btn'] == 'Kontrola zlej otázky':
         kokie = session['nameID']
         pole = json.loads(kokie)
-        meno = str(pole[:1])
-        randommeno = meno[2:-2]
-        najmensiaotazka = random.choice(list(pole[6:7]))
-        najvacsiaotazka = random.choice(list(pole[7:8]))
+        randommeno = pole['randommeno']
+        mojeotazky = pole['mojeotazky']
+        ypsilon = pole['ypsilon']
+        body = pole['body']
+        koncovka = pole['koncovka']
+        zleotazky = pole['zleotazky']
+        najmensiaotazka = pole['najmensiaotazka']
+        najvacsiaotazka = pole['najvacsiaotazka']
+        lastaction = pole['lastaction']
+        skupinaotazok = pole['skupinaotazok']
 
-        mojeotazky = random.choice(list(pole[1:2]))
+        poslednaaction = lastaction
+        lastaction = 'kontrola'
 
-        y = str(pole[2:3])
-        ypsilon = y[1:-1]
-        body = random.choice(list(pole[3:4]))
-        konc = str(pole[4:5])
-        koncovka = konc[2:-2]
-        zleotazky = random.choice(list(pole[5:6]))
-        lastaction = None
-        skupinaotazok = random.choice(list(pole[9:10]))
-
-        if ypsilon in zleotazky:
-            otazkyzdatabazy = {'cislootazky': None, 'ot': None, 'od': None, 'ma': None, 'mb': None,
-                               'mc': None, 'md': None, 'me': None, 'mf': None, 'mg': None, 'mh': None}
-            hladavdatabaze = """SELECT * FROM otazky WHERE cislootazky = %s;"""
-            engine.execute(hladavdatabaze, (ypsilon,))
-            result_set = engine.fetchall()
-            for r in result_set:
-                vyberazdatabazy(otazkyzdatabazy, r)
-
-                kont()
-                lst = str(otazkyzdatabazy['od']).split(',')
-
-                if list(moja) == lst:
-                    moja[:] = []
-                    zleotazky.remove(int(ypsilon))
-                    pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok)
-
-                    respond = make_response(render_template('zleotazky.html', control='Vyborne, spravna odpoved!', zleotazky=zleotazky, totosuzleotazky=True))
-                    session['nameID'] = json.dumps(pole)
-                    return respond
-
-                else:
-                    moja[:] = []
-                    respond = make_response(render_template('zleotazky.html', control='Bohužiaľ nesprávne.', otazka=otazkyzdatabazy['ot'], bdy=body, sklonovanie=koncovka,
-                                            ma=otazkyzdatabazy['ma'], mb=otazkyzdatabazy['mb'], mc=otazkyzdatabazy['mc'], md=otazkyzdatabazy['md'], me=otazkyzdatabazy['me'],
-                                            mf=otazkyzdatabazy['mf'], mg=otazkyzdatabazy['mg'], mh=otazkyzdatabazy['mh'],
-                                            zleotazky=zleotazky, cislozlejotazky=ypsilon, totosuzleotazky=True))
-                    return respond
-
-        else:
-            respond = make_response(render_template('zleotazky.html', control='Na všetky otázky si odpovedal správne, nemáš čo opravovať.',
-                                    bdy=body, sklonovanie=koncovka))
+        if poslednaaction == 'kontrola':
+            respond = make_response(render_template('zleotazky.html', bdy=body, sklonovanie=koncovka, control='Kontrola kontroly.'))
             return respond
+        else:
+            if ypsilon in zleotazky:
+                otazkyzdatabazy = {'cislootazky': None, 'ot': None, 'od': None, 'ma': None, 'mb': None,
+                                   'mc': None, 'md': None, 'me': None, 'mf': None, 'mg': None, 'mh': None}
+                hladavdatabaze = """SELECT * FROM otazky WHERE cislootazky = %s;"""
+                engine.execute(hladavdatabaze, (ypsilon,))
+                result_set = engine.fetchall()
+                for r in result_set:
+                    vyberazdatabazy(otazkyzdatabazy, r)
+
+                    kont()
+                    lst = str(otazkyzdatabazy['od']).split(',')
+
+                    if list(moja) == lst:
+                        moja[:] = []
+                        zleotazky.remove(int(ypsilon))
+                        pole = {'randommeno': randommeno, 'mojeotazky': mojeotazky, 'ypsilon': ypsilon, 'body': body,
+                                'koncovka': koncovka, 'zleotazky': zleotazky, 'najmensiaotazka': najmensiaotazka, 'najvacsiaotazka': najvacsiaotazka,
+                                'lastaction': lastaction, 'skupinaotazok': skupinaotazok}
+                        respond = make_response(render_template('zleotazky.html', control='Vyborne, spravna odpoved!', zleotazky=zleotazky, totosuzleotazky=True))
+                        session['nameID'] = json.dumps(pole)
+                        return respond
+
+                    else:
+                        moja[:] = []
+                        respond = make_response(render_template('zleotazky.html', control='Bohužiaľ nesprávne.', otazka=otazkyzdatabazy['ot'], bdy=body, sklonovanie=koncovka,
+                                                ma=otazkyzdatabazy['ma'], mb=otazkyzdatabazy['mb'], mc=otazkyzdatabazy['mc'], md=otazkyzdatabazy['md'], me=otazkyzdatabazy['me'],
+                                                mf=otazkyzdatabazy['mf'], mg=otazkyzdatabazy['mg'], mh=otazkyzdatabazy['mh'],
+                                                zleotazky=zleotazky, cislozlejotazky=ypsilon, totosuzleotazky=True))
+                        return respond
+
+            else:
+                respond = make_response(render_template('zleotazky.html', control='Na všetky otázky si odpovedal správne, nemáš čo opravovať.',
+                                        bdy=body, sklonovanie=koncovka))
+                return respond
 
     if request.form['btn'] == 'Zmena skúšaných otázok':
         respond = make_response(render_template('ktoreotazky.html'))
@@ -613,16 +618,19 @@ def skusaP():
     if request.form['btn'] == 'Pridať rozmedzie otázok':
         kokie = session['nameID']
         pole = json.loads(kokie)
-        meno = str(pole[:1])
-        randommeno = meno[2:-2]
-        mojeotazky = random.choice(list(pole[1:2]))
-        y = str(pole[2:3])
-        ypsilon = y[1:-1]
-        body = random.choice(list(pole[3:4]))
-        konc = str(pole[4:5])
-        koncovka = konc[2:-2]
-        zleotazky = random.choice(list(pole[5:6]))
+        randommeno = pole['randommeno']
+        mojeotazky = pole['mojeotazky']
+        ypsilon = pole['ypsilon']
+        body = pole['body']
+        koncovka = pole['koncovka']
+        zleotazky = pole['zleotazky']
+        najmensiaotazka = pole['najmensiaotazka']
+        najvacsiaotazka = pole['najvacsiaotazka']
+        lastaction = pole['lastaction']
+        skupinaotazok = pole['skupinaotazok']
+
         lastaction = None
+
         mensiaotazka = request.form['najmensiaotazka']
         vacsiaotazka = request.form['najvacsiaotazka']
 
@@ -648,7 +656,9 @@ def skusaP():
 
             else:
                 skupinaotazok = None
-                pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok)
+                pole = {'randommeno': randommeno, 'mojeotazky': mojeotazky, 'ypsilon': ypsilon, 'body': body,
+                        'koncovka': koncovka, 'zleotazky': zleotazky, 'najmensiaotazka': najmensiaotazka, 'najvacsiaotazka': najvacsiaotazka,
+                        'lastaction': lastaction, 'skupinaotazok': skupinaotazok}
                 respond = make_response(render_template('layout.html', uvod=True, bdy=body, sklonovanie=koncovka))
                 session['nameID'] = json.dumps(pole)
                 return respond
@@ -656,10 +666,23 @@ def skusaP():
     if request.form['btn'] == 'Atóm':
         kokie = session['nameID']
         pole = json.loads(kokie)
-        deftypotazky(pole)
-        randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok = deftypotazky(pole)
+        randommeno = pole['randommeno']
+        mojeotazky = pole['mojeotazky']
+        ypsilon = pole['ypsilon']
+        body = pole['body']
+        koncovka = pole['koncovka']
+        zleotazky = pole['zleotazky']
+        najmensiaotazka = pole['najmensiaotazka']
+        najvacsiaotazka = pole['najvacsiaotazka']
+        lastaction = pole['lastaction']
+        skupinaotazok = pole['skupinaotazok']
+
+        lastaction = None
+
         skupinaotazok = 'atom'
-        pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok)
+        pole = {'randommeno': randommeno, 'mojeotazky': mojeotazky, 'ypsilon': ypsilon, 'body': body,
+                'koncovka': koncovka, 'zleotazky': zleotazky, 'najmensiaotazka': najmensiaotazka, 'najvacsiaotazka': najvacsiaotazka,
+                'lastaction': lastaction, 'skupinaotazok': skupinaotazok}
         respond = make_response(render_template('layout.html', uvod=True, bdy=body, sklonovanie=koncovka))
         session['nameID'] = json.dumps(pole)
         return respond
@@ -667,10 +690,23 @@ def skusaP():
     if request.form['btn'] == 'Sústava látok':
         kokie = session['nameID']
         pole = json.loads(kokie)
-        deftypotazky(pole)
-        randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok = deftypotazky(pole)
+        randommeno = pole['randommeno']
+        mojeotazky = pole['mojeotazky']
+        ypsilon = pole['ypsilon']
+        body = pole['body']
+        koncovka = pole['koncovka']
+        zleotazky = pole['zleotazky']
+        najmensiaotazka = pole['najmensiaotazka']
+        najvacsiaotazka = pole['najvacsiaotazka']
+        lastaction = pole['lastaction']
+        skupinaotazok = pole['skupinaotazok']
+
+        lastaction = None
+
         skupinaotazok = 'sustavalatok'
-        pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok)
+        pole = {'randommeno': randommeno, 'mojeotazky': mojeotazky, 'ypsilon': ypsilon, 'body': body,
+                'koncovka': koncovka, 'zleotazky': zleotazky, 'najmensiaotazka': najmensiaotazka, 'najvacsiaotazka': najvacsiaotazka,
+                'lastaction': lastaction, 'skupinaotazok': skupinaotazok}
         respond = make_response(render_template('layout.html', uvod=True, bdy=body, sklonovanie=koncovka))
         session['nameID'] = json.dumps(pole)
         return respond
@@ -678,10 +714,23 @@ def skusaP():
     if request.form['btn'] == 'Látky':
         kokie = session['nameID']
         pole = json.loads(kokie)
-        deftypotazky(pole)
-        randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok = deftypotazky(pole)
+        randommeno = pole['randommeno']
+        mojeotazky = pole['mojeotazky']
+        ypsilon = pole['ypsilon']
+        body = pole['body']
+        koncovka = pole['koncovka']
+        zleotazky = pole['zleotazky']
+        najmensiaotazka = pole['najmensiaotazka']
+        najvacsiaotazka = pole['najvacsiaotazka']
+        lastaction = pole['lastaction']
+        skupinaotazok = pole['skupinaotazok']
+
+        lastaction = None
+
         skupinaotazok = 'latky'
-        pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok)
+        pole = {'randommeno': randommeno, 'mojeotazky': mojeotazky, 'ypsilon': ypsilon, 'body': body,
+                'koncovka': koncovka, 'zleotazky': zleotazky, 'najmensiaotazka': najmensiaotazka, 'najvacsiaotazka': najvacsiaotazka,
+                'lastaction': lastaction, 'skupinaotazok': skupinaotazok}
         respond = make_response(render_template('layout.html', uvod=True, bdy=body, sklonovanie=koncovka))
         session['nameID'] = json.dumps(pole)
         return respond
@@ -689,10 +738,23 @@ def skusaP():
     if request.form['btn'] == 'Periodická sústava prvkov':
         kokie = session['nameID']
         pole = json.loads(kokie)
-        deftypotazky(pole)
-        randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok = deftypotazky(pole)
+        randommeno = pole['randommeno']
+        mojeotazky = pole['mojeotazky']
+        ypsilon = pole['ypsilon']
+        body = pole['body']
+        koncovka = pole['koncovka']
+        zleotazky = pole['zleotazky']
+        najmensiaotazka = pole['najmensiaotazka']
+        najvacsiaotazka = pole['najvacsiaotazka']
+        lastaction = pole['lastaction']
+        skupinaotazok = pole['skupinaotazok']
+
+        lastaction = None
+
         skupinaotazok = 'psustava'
-        pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok)
+        pole = {'randommeno': randommeno, 'mojeotazky': mojeotazky, 'ypsilon': ypsilon, 'body': body,
+                'koncovka': koncovka, 'zleotazky': zleotazky, 'najmensiaotazka': najmensiaotazka, 'najvacsiaotazka': najvacsiaotazka,
+                'lastaction': lastaction, 'skupinaotazok': skupinaotazok}
         respond = make_response(render_template('layout.html', uvod=True, bdy=body, sklonovanie=koncovka))
         session['nameID'] = json.dumps(pole)
         return respond
@@ -700,10 +762,23 @@ def skusaP():
     if request.form['btn'] == 'Chemická väzba':
         kokie = session['nameID']
         pole = json.loads(kokie)
-        deftypotazky(pole)
-        randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok = deftypotazky(pole)
+        randommeno = pole['randommeno']
+        mojeotazky = pole['mojeotazky']
+        ypsilon = pole['ypsilon']
+        body = pole['body']
+        koncovka = pole['koncovka']
+        zleotazky = pole['zleotazky']
+        najmensiaotazka = pole['najmensiaotazka']
+        najvacsiaotazka = pole['najvacsiaotazka']
+        lastaction = pole['lastaction']
+        skupinaotazok = pole['skupinaotazok']
+
+        lastaction = None
+
         skupinaotazok = 'chvazba'
-        pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok)
+        pole = {'randommeno': randommeno, 'mojeotazky': mojeotazky, 'ypsilon': ypsilon, 'body': body,
+                'koncovka': koncovka, 'zleotazky': zleotazky, 'najmensiaotazka': najmensiaotazka, 'najvacsiaotazka': najvacsiaotazka,
+                'lastaction': lastaction, 'skupinaotazok': skupinaotazok}
         respond = make_response(render_template('layout.html', uvod=True, bdy=body, sklonovanie=koncovka))
         session['nameID'] = json.dumps(pole)
         return respond
@@ -711,10 +786,23 @@ def skusaP():
     if request.form['btn'] == 'Názvoslovie':
         kokie = session['nameID']
         pole = json.loads(kokie)
-        deftypotazky(pole)
-        randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok = deftypotazky(pole)
+        randommeno = pole['randommeno']
+        mojeotazky = pole['mojeotazky']
+        ypsilon = pole['ypsilon']
+        body = pole['body']
+        koncovka = pole['koncovka']
+        zleotazky = pole['zleotazky']
+        najmensiaotazka = pole['najmensiaotazka']
+        najvacsiaotazka = pole['najvacsiaotazka']
+        lastaction = pole['lastaction']
+        skupinaotazok = pole['skupinaotazok']
+
+        lastaction = None
+
         skupinaotazok = 'nazvoslovie'
-        pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok)
+        pole = {'randommeno': randommeno, 'mojeotazky': mojeotazky, 'ypsilon': ypsilon, 'body': body,
+                'koncovka': koncovka, 'zleotazky': zleotazky, 'najmensiaotazka': najmensiaotazka, 'najvacsiaotazka': najvacsiaotazka,
+                'lastaction': lastaction, 'skupinaotazok': skupinaotazok}
         respond = make_response(render_template('layout.html', uvod=True, bdy=body, sklonovanie=koncovka))
         session['nameID'] = json.dumps(pole)
         return respond
@@ -722,10 +810,23 @@ def skusaP():
     if request.form['btn'] == 'Chemické veličiny':
         kokie = session['nameID']
         pole = json.loads(kokie)
-        deftypotazky(pole)
-        randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok = deftypotazky(pole)
+        randommeno = pole['randommeno']
+        mojeotazky = pole['mojeotazky']
+        ypsilon = pole['ypsilon']
+        body = pole['body']
+        koncovka = pole['koncovka']
+        zleotazky = pole['zleotazky']
+        najmensiaotazka = pole['najmensiaotazka']
+        najvacsiaotazka = pole['najvacsiaotazka']
+        lastaction = pole['lastaction']
+        skupinaotazok = pole['skupinaotazok']
+
+        lastaction = None
+
         skupinaotazok = 'veliciny'
-        pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok)
+        pole = {'randommeno': randommeno, 'mojeotazky': mojeotazky, 'ypsilon': ypsilon, 'body': body,
+                'koncovka': koncovka, 'zleotazky': zleotazky, 'najmensiaotazka': najmensiaotazka, 'najvacsiaotazka': najvacsiaotazka,
+                'lastaction': lastaction, 'skupinaotazok': skupinaotazok}
         respond = make_response(render_template('layout.html', uvod=True, bdy=body, sklonovanie=koncovka))
         session['nameID'] = json.dumps(pole)
         return respond
@@ -733,10 +834,23 @@ def skusaP():
     if request.form['btn'] == 'Kyseliny a zásady':
         kokie = session['nameID']
         pole = json.loads(kokie)
-        deftypotazky(pole)
-        randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok = deftypotazky(pole)
+        randommeno = pole['randommeno']
+        mojeotazky = pole['mojeotazky']
+        ypsilon = pole['ypsilon']
+        body = pole['body']
+        koncovka = pole['koncovka']
+        zleotazky = pole['zleotazky']
+        najmensiaotazka = pole['najmensiaotazka']
+        najvacsiaotazka = pole['najvacsiaotazka']
+        lastaction = pole['lastaction']
+        skupinaotazok = pole['skupinaotazok']
+
+        lastaction = None
+
         skupinaotazok = 'kyszas'
-        pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok)
+        pole = {'randommeno': randommeno, 'mojeotazky': mojeotazky, 'ypsilon': ypsilon, 'body': body,
+                'koncovka': koncovka, 'zleotazky': zleotazky, 'najmensiaotazka': najmensiaotazka, 'najvacsiaotazka': najvacsiaotazka,
+                'lastaction': lastaction, 'skupinaotazok': skupinaotazok}
         respond = make_response(render_template('layout.html', uvod=True, bdy=body, sklonovanie=koncovka))
         session['nameID'] = json.dumps(pole)
         return respond
@@ -744,10 +858,23 @@ def skusaP():
     if request.form['btn'] == 'Chemické reakcie':
         kokie = session['nameID']
         pole = json.loads(kokie)
-        deftypotazky(pole)
-        randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok = deftypotazky(pole)
+        randommeno = pole['randommeno']
+        mojeotazky = pole['mojeotazky']
+        ypsilon = pole['ypsilon']
+        body = pole['body']
+        koncovka = pole['koncovka']
+        zleotazky = pole['zleotazky']
+        najmensiaotazka = pole['najmensiaotazka']
+        najvacsiaotazka = pole['najvacsiaotazka']
+        lastaction = pole['lastaction']
+        skupinaotazok = pole['skupinaotazok']
+
+        lastaction = None
+
         skupinaotazok = 'reakcie'
-        pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok)
+        pole = {'randommeno': randommeno, 'mojeotazky': mojeotazky, 'ypsilon': ypsilon, 'body': body,
+                'koncovka': koncovka, 'zleotazky': zleotazky, 'najmensiaotazka': najmensiaotazka, 'najvacsiaotazka': najvacsiaotazka,
+                'lastaction': lastaction, 'skupinaotazok': skupinaotazok}
         respond = make_response(render_template('layout.html', uvod=True, bdy=body, sklonovanie=koncovka))
         session['nameID'] = json.dumps(pole)
         return respond
@@ -755,10 +882,23 @@ def skusaP():
     if request.form['btn'] == 'Chemická rovnováha':
         kokie = session['nameID']
         pole = json.loads(kokie)
-        deftypotazky(pole)
-        randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok = deftypotazky(pole)
+        randommeno = pole['randommeno']
+        mojeotazky = pole['mojeotazky']
+        ypsilon = pole['ypsilon']
+        body = pole['body']
+        koncovka = pole['koncovka']
+        zleotazky = pole['zleotazky']
+        najmensiaotazka = pole['najmensiaotazka']
+        najvacsiaotazka = pole['najvacsiaotazka']
+        lastaction = pole['lastaction']
+        skupinaotazok = pole['skupinaotazok']
+
+        lastaction = None
+
         skupinaotazok = 'rovnovaha'
-        pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok)
+        pole = {'randommeno': randommeno, 'mojeotazky': mojeotazky, 'ypsilon': ypsilon, 'body': body,
+                'koncovka': koncovka, 'zleotazky': zleotazky, 'najmensiaotazka': najmensiaotazka, 'najvacsiaotazka': najvacsiaotazka,
+                'lastaction': lastaction, 'skupinaotazok': skupinaotazok}
         respond = make_response(render_template('layout.html', uvod=True, bdy=body, sklonovanie=koncovka))
         session['nameID'] = json.dumps(pole)
         return respond
@@ -766,10 +906,23 @@ def skusaP():
     if request.form['btn'] == 'Komplexné zlúčeniny':
         kokie = session['nameID']
         pole = json.loads(kokie)
-        deftypotazky(pole)
-        randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok = deftypotazky(pole)
+        randommeno = pole['randommeno']
+        mojeotazky = pole['mojeotazky']
+        ypsilon = pole['ypsilon']
+        body = pole['body']
+        koncovka = pole['koncovka']
+        zleotazky = pole['zleotazky']
+        najmensiaotazka = pole['najmensiaotazka']
+        najvacsiaotazka = pole['najvacsiaotazka']
+        lastaction = pole['lastaction']
+        skupinaotazok = pole['skupinaotazok']
+
+        lastaction = None
+
         skupinaotazok = 'komplexy'
-        pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok)
+        pole = {'randommeno': randommeno, 'mojeotazky': mojeotazky, 'ypsilon': ypsilon, 'body': body,
+                'koncovka': koncovka, 'zleotazky': zleotazky, 'najmensiaotazka': najmensiaotazka, 'najvacsiaotazka': najvacsiaotazka,
+                'lastaction': lastaction, 'skupinaotazok': skupinaotazok}
         respond = make_response(render_template('layout.html', uvod=True, bdy=body, sklonovanie=koncovka))
         session['nameID'] = json.dumps(pole)
         return respond
@@ -777,10 +930,23 @@ def skusaP():
     if request.form['btn'] == 'Príklady':
         kokie = session['nameID']
         pole = json.loads(kokie)
-        deftypotazky(pole)
-        randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok = deftypotazky(pole)
+        randommeno = pole['randommeno']
+        mojeotazky = pole['mojeotazky']
+        ypsilon = pole['ypsilon']
+        body = pole['body']
+        koncovka = pole['koncovka']
+        zleotazky = pole['zleotazky']
+        najmensiaotazka = pole['najmensiaotazka']
+        najvacsiaotazka = pole['najvacsiaotazka']
+        lastaction = pole['lastaction']
+        skupinaotazok = pole['skupinaotazok']
+
+        lastaction = None
+
         skupinaotazok = 'priklady'
-        pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok)
+        pole = {'randommeno': randommeno, 'mojeotazky': mojeotazky, 'ypsilon': ypsilon, 'body': body,
+                'koncovka': koncovka, 'zleotazky': zleotazky, 'najmensiaotazka': najmensiaotazka, 'najvacsiaotazka': najvacsiaotazka,
+                'lastaction': lastaction, 'skupinaotazok': skupinaotazok}
         respond = make_response(render_template('layout.html', uvod=True, bdy=body, sklonovanie=koncovka))
         session['nameID'] = json.dumps(pole)
         return respond
@@ -792,22 +958,20 @@ def skusaP():
     if request.form['btn'] == 'Prejsť na otázku':
         kokie = session['nameID']
         pole = json.loads(kokie)
-        meno = str(pole[:1])
-        randommeno = meno[2:-2]
-        mensiaotazka = random.choice(list(pole[6:7]))
-        vacsiaotazka = random.choice(list(pole[7:8]))
-        najmensiaotazka = int(mensiaotazka)
-        najvacsiaotazka = int(vacsiaotazka)
-        polevsetkychotazok = set(list(range(najmensiaotazka, najvacsiaotazka + 1)))
-        mojeotazky = random.choice(list(pole[1:2]))
-        polesplnenychotazok = set(mojeotazky)
+        randommeno = pole['randommeno']
+        mojeotazky = pole['mojeotazky']
+        ypsilon = pole['ypsilon']
+        body = pole['body']
+        koncovka = pole['koncovka']
+        zleotazky = pole['zleotazky']
+        najmensiaotazka = pole['najmensiaotazka']
+        najvacsiaotazka = pole['najvacsiaotazka']
+        lastaction = pole['lastaction']
+        skupinaotazok = pole['skupinaotazok']
 
-        body = random.choice(list(pole[3:4]))
-        konc = str(pole[4:5])
-        koncovka = konc[2:-2]
-        zleotazky = random.choice(list(pole[5:6]))
+        polevsetkychotazok = set(list(range(najmensiaotazka, najvacsiaotazka + 1)))
+        polesplnenychotazok = set(mojeotazky)
         lastaction = None
-        skupinaotazok = str(random.choice(list(pole[9:10])))
 
         try:
             if int(request.form['cislootazky']) in list(range(1, 500 + 1)):
@@ -820,8 +984,9 @@ def skusaP():
                 result_set = engine.fetchall()
                 for r in result_set:
                     vyberazdatabazy(otazkyzdatabazy, r)
-                    pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok)
-
+                    pole = {'randommeno': randommeno, 'mojeotazky': mojeotazky, 'ypsilon': ypsilon, 'body': body,
+                            'koncovka': koncovka, 'zleotazky': zleotazky, 'najmensiaotazka': najmensiaotazka, 'najvacsiaotazka': najvacsiaotazka,
+                            'lastaction': lastaction, 'skupinaotazok': skupinaotazok}
                     respond = make_response(render_template('jednaotazka.html', otazka=otazkyzdatabazy['ot'],
                                             ma=otazkyzdatabazy['ma'], mb=otazkyzdatabazy['mb'], mc=otazkyzdatabazy['mc'], md=otazkyzdatabazy['md'],
                                             me=otazkyzdatabazy['me'], mf=otazkyzdatabazy['mf'], mg=otazkyzdatabazy['mg'], mh=otazkyzdatabazy['mh'],
@@ -842,14 +1007,22 @@ def skusaP():
     if request.form['btn'] == 'Kontrola otázky':
         kokie = session['nameID']
         pole = json.loads(kokie)
-        y = str(pole[2:3])
-        ypsilon = y[1:-1]
-        body = random.choice(list(pole[3:4]))
-        konc = str(pole[4:5])
-        koncovka = konc[2:-2]
-        poslednaaction = random.choice(list(pole[8:9]))
-        skupinaotazok = random.choice(list(pole[9:10]))
+        randommeno = pole['randommeno']
+        mojeotazky = pole['mojeotazky']
+        ypsilon = pole['ypsilon']
+        body = pole['body']
+        koncovka = pole['koncovka']
+        zleotazky = pole['zleotazky']
+        najmensiaotazka = pole['najmensiaotazka']
+        najvacsiaotazka = pole['najvacsiaotazka']
+        lastaction = pole['lastaction']
+        skupinaotazok = pole['skupinaotazok']
+
+        poslednaaction = lastaction
         lastaction = 'kontrola'
+        polevsetkychotazok = set(list(range(najmensiaotazka, najvacsiaotazka + 1)))
+        polesplnenychotazok = set(mojeotazky)
+        finalneotazky = list(polevsetkychotazok - polesplnenychotazok)
 
         if poslednaaction == 'kontrola':
             respond = make_response(render_template('jednaotazka.html', bdy=body, sklonovanie=koncovka, control='Na otázku už nemôžeš odpovedať.'))
@@ -860,16 +1033,6 @@ def skusaP():
             return respond
 
         else:
-            meno = str(pole[:1])
-            randommeno = meno[2:-2]
-            najmensiaotazka = random.choice(list(pole[6:7]))
-            najvacsiaotazka = random.choice(list(pole[7:8]))
-            polevsetkychotazok = set(list(range(najmensiaotazka, najvacsiaotazka + 1)))
-            mojeotazky = random.choice(list(pole[1:2]))
-            polesplnenychotazok = set(mojeotazky)
-            finalneotazky = list(polevsetkychotazok - polesplnenychotazok)
-            zleotazky = random.choice(list(pole[5:6]))
-
             otazkyzdatabazy = {'cislootazky': None, 'ot': None, 'od': None, 'ma': None, 'mb': None,
                                'mc': None, 'md': None, 'me': None, 'mf': None, 'mg': None, 'mh': None}
             hladavdatabaze = """SELECT * FROM otazky WHERE cislootazky = %s;"""
@@ -891,8 +1054,9 @@ def skusaP():
                         koncovka = 'ky'
                     elif body >= 5:
                         koncovka = 'ok'
-                    pole = (randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok)
-
+                    pole = {'randommeno': randommeno, 'mojeotazky': mojeotazky, 'ypsilon': ypsilon, 'body': body,
+                            'koncovka': koncovka, 'zleotazky': zleotazky, 'najmensiaotazka': najmensiaotazka, 'najvacsiaotazka': najvacsiaotazka,
+                            'lastaction': lastaction, 'skupinaotazok': skupinaotazok}
                     jozo = """UPDATE FIIT SET body= %s WHERE uuia4= %s ;"""
                     engine.execute(jozo, (body, randommeno,))
 
@@ -904,6 +1068,7 @@ def skusaP():
 
 
 app.secret_key = os.environ["SESSION_KEY"]
+
 
 if __name__ == '__main__':
     app.run(debug=True, use_reloader=True)
