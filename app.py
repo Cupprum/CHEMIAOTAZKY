@@ -16,12 +16,10 @@ engine = conn.cursor()
 engine.execute("CREATE TABLE IF NOT EXISTS FIIT (uuia4 text, meno text, body int, stav text);")
 
 moja = []
-ID = []
-otazka = []
 uvod = 'Zvol spravne odpovede. Skontroluj svoje odpovede kliknutim na tlacitko kontrola.'
 
 
-def kont():
+def kont(otazkyzdatabazy):
     A = request.form.get('A')
     if A:
         moja.append('a')
@@ -47,6 +45,93 @@ def kont():
     if H:
         moja.append('h')
 
+    lst = str(otazkyzdatabazy['od']).split(',')
+
+    maxbodovzaodpoved = len(lst)
+    mojbodovzaodpoved = 0
+
+    if 'a' in lst:
+        if 'a' in moja:
+            print('A si zadal tak ako malo byt')
+            mojbodovzaodpoved += 1
+            akoma = False
+        else:
+            print('A si nezadal tak ako malo byt')
+            akoma = True
+    else:
+        akoma = False
+    if 'b' in lst:
+        if 'b' in moja:
+            print('B si zadal tak ako malo byt')
+            mojbodovzaodpoved += 1
+            akomb = False
+        else:
+            print('B si nezadal tak ako malo byt')
+            akomb = True
+    else:
+        akomb = False
+    if 'c' in lst:
+        if 'c' in moja:
+            print('C si zadal tak ako malo byt')
+            mojbodovzaodpoved += 1
+            akomc = False
+        else:
+            print('C si nezadal tak ako malo byt')
+            akomc = True
+    else:
+        akomc = False
+    if 'd' in lst:
+        if 'd' in moja:
+            print('D si zadal tak ako malo byt')
+            mojbodovzaodpoved += 1
+            akomd = False
+        else:
+            print('D si nezadal tak ako malo byt')
+            akomd = True
+    else:
+        akomd = False
+    if 'e' in lst:
+        if 'e' in moja:
+            print('E si zadal tak ako malo byt')
+            mojbodovzaodpoved += 1
+            akome = False
+        else:
+            print('E si nezadal tak ako malo byt')
+            akome = True
+    else:
+        akome = False
+    if 'f' in lst:
+        if 'f' in moja:
+            print('F si zadal tak ako malo byt')
+            mojbodovzaodpoved += 1
+            akomf = False
+        else:
+            print('F si nezadal tak ako malo byt')
+            akomf = True
+    else:
+        akomf = False
+    if 'g' in lst:
+        if 'g' in moja:
+            print('G si zadal tak ako malo byt')
+            mojbodovzaodpoved += 1
+            akomg = False
+        else:
+            print('G si nezadal tak ako malo byt')
+            akomg = True
+    else:
+        akomg = False
+    if 'h' in lst:
+        if 'h' in moja:
+            print('H si zadal tak ako malo byt')
+            mojbodovzaodpoved += 1
+            akomh = False
+        else:
+            print('H si nezadal tak ako malo byt')
+            akomh = True
+    else:
+        akomh = False
+    return maxbodovzaodpoved, mojbodovzaodpoved, akoma, akomb, akomc, akomd, akome, akomf, akomg, akomh
+
 
 def vyberazdatabazy(otazkyzdatabazy, r):
     otazkyzdatabazy['cislootazky'] = random.choice(r[0:1])
@@ -60,6 +145,7 @@ def vyberazdatabazy(otazkyzdatabazy, r):
     otazkyzdatabazy['mf'] = random.choice(r[8:9])
     otazkyzdatabazy['mg'] = random.choice(r[9:10])
     otazkyzdatabazy['mh'] = random.choice(r[10:11])
+
 
 def rozborcookie():
     kokie = session['nameID']
@@ -109,110 +195,51 @@ def skusaG():
         return respond
 
     else:
-        kokie = session['nameID']
-        pole = json.loads(kokie)
-        print('stary uzivatel', pole)
-        respond = make_response(render_template('layout.html', uvod=True, bdy=pole['body'], sklonovanie=pole['koncovka']))
+        try:
+            kokie = session['nameID']
+            pole = json.loads(kokie)
+            print('stary uzivatel', pole)
+            respond = make_response(render_template('layout.html', uvod=True, bdy=pole['body'], sklonovanie=pole['koncovka']))
+            return respond
+
+        except TypeError:
+                    randommeno = str(uuid.uuid4())
+        mojeotazky = []
+        ypsilon = 0
+        body = 0
+        koncovka = 'ok'
+        zleotazky = []
+        najmensiaotazka = 1
+        najvacsiaotazka = 500
+        lastaction = None
+        skupinaotazok = None
+        pole = {'randommeno': randommeno, 'mojeotazky': mojeotazky, 'ypsilon': ypsilon, 'body': body,
+                'koncovka': koncovka, 'zleotazky': zleotazky, 'najmensiaotazka': najmensiaotazka, 'najvacsiaotazka': najvacsiaotazka,
+                'lastaction': lastaction, 'skupinaotazok': skupinaotazok}
+        print('novy uzivatel', pole)
+
+        jozo = """INSERT INTO FIIT (uuia4, meno, body, stav) VALUES (%s, NULL, %s, '0');"""
+        engine.execute(jozo, (randommeno, body))
+
+        respond = make_response(render_template('layout.html', uvod=True, bdy=body, sklonovanie=koncovka))
+        session['nameID'] = json.dumps(pole)
         return respond
 
 
 @app.route('/', methods=['POST'])
 def skusaP():
     if request.form['btn'] == 'Nová otázka':
-        atom = set([1, 10, 12, 14, 15, 16, 17, 18, 18, 20, 21, 22, 23, 24, 26, 27, 39, 51, 57, 58, 59, 60,
-                    67, 215, 374, 383, 384, 385])
-        sustavalatok = set([2, 3, 5, 6, 11, 13, 53, 56, 62, 94, 95, 96, 97, 111, 112, 121, 124, 125, 126,
-                            128])
-        latky = set([4, 7, 8, 9, 36, 40, 55, 78, 79, 105, 117, 118, 119, 120, 143, 144, 145, 202, 203, 212,
-                    213, 214, 216, 217, 219, 220, 221, 222, 223, 224, 225, 226, 227, 228, 230, 231, 232,
-                    233, 234, 235, 236, 237, 238, 239, 240, 241, 243, 244, 246, 247, 249, 250, 255, 256,
-                    258, 259, 262, 264, 265, 266, 267, 268, 271, 273, 274, 275, 277, 278, 279, 282, 283,
-                    284, 288, 289, 290, 291, 296, 297, 298, 300, 303, 304, 305, 306, 307, 308, 312, 313,
-                    314, 316, 318, 319, 322, 323, 326, 329, 330, 332, 334, 337, 338, 339, 343, 344, 347,
-                    380])
-        psustava = set([25, 28, 29, 30, 253, 254, 257, 294, 301, 321, 325, 335, 336, 341, 342, 345, 348,
-                        349, 350, 352, 353, 355, 356, 357, 358, 359, 360, 362, 367, 371, 372, 373, 375, 376,
-                        377, 379, 381])
-        chvazba = set([31, 32, 33, 34, 35, 37, 38, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 61, 63, 64, 65,
-                       66, 68, 242, 245, 263, 292, 293, 295, 315])
-        nazvoslovie = set([52, 54, 70, 147, 148, 149, 150, 151, 152, 153, 154, 155, 211, 229, 248, 261, 270,
-                           272, 281, 285, 286, 287, 299, 302, 310, 311, 320, 327, 331, 333])
-        veliciny = set([69, 100, 106, 107, 110, 113, 114, 116, 122, 123, 129, 130, 136, 139, 140])
-        kyszas = set([71, 72, 73, 74, 75, 76, 77, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93,
-                      98, 99, 102, 103, 104, 108, 109, 276, 280, 317, 351])
-        reakcie = set([101, 115, 127, 131, 132, 133, 134, 135, 137, 138, 141, 142, 146, 156, 157, 158, 159,
-                       160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176,
-                       177, 178, 179, 180, 181, 191, 192, 193, 194, 195, 196, 197, 198, 199, 200, 201, 204,
-                       205, 206, 207, 208, 209, 210, 218, 251, 252, 260, 269, 309, 324, 328, 340, 346, 354])
-        rovnovaha = set([182, 183, 184, 185, 186, 187, 188, 189, 190])
-        komplexy = set([361, 363, 364, 365, 366, 368, 369, 370, 378, 382])
-        priklady = set([386, 387, 388, 389, 390, 391, 392, 393, 394, 395, 396, 397, 398, 399, 400, 401, 402,
-                        403, 404, 405, 406, 407, 408, 409, 410, 411, 412, 413, 414, 415, 416, 417, 418, 419,
-                        420, 421, 422, 423, 425, 426, 427, 428, 429, 430, 431, 432, 433, 434, 435, 436, 437,
-                        438, 439, 440, 441, 442, 443, 444, 445, 446, 447, 448, 449, 450, 451, 452, 453, 454,
-                        455, 456, 457, 458, 459, 460, 461, 462, 463, 464, 465, 466, 467, 468, 469, 470, 471,
-                        472, 473, 474, 475, 476, 477, 478, 479, 480, 481, 482, 483, 484, 485, 486, 487, 488,
-                        489, 490, 491, 492, 493, 494, 495, 496, 497, 498, 499, 500])
-
         randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok = rozborcookie()
 
         lastaction = None
         polesplnenychotazok = set(mojeotazky)
         polevsetkychotazok = set(list(range(najmensiaotazka, najvacsiaotazka + 1)))
 
-        if skupinaotazok == 'atom':
-            typotazky = "Atóm"
-            finalneotazky = list(atom - polesplnenychotazok)
-
-        elif skupinaotazok == 'sustavalatok':
-            typotazky = "Sústava látok"
-            finalneotazky = list(sustavalatok - polesplnenychotazok)
-
-        elif skupinaotazok == 'latky':
-            typotazky = "Látky"
-            finalneotazky = list(latky - polesplnenychotazok)
-
-        elif skupinaotazok == 'psustava':
-            typotazky = "Periodická sústava prvkov"
-            finalneotazky = list(psustava - polesplnenychotazok)
-
-        elif skupinaotazok == 'chvazba':
-            typotazky = "Chemická väzba"
-            finalneotazky = list(chvazba - polesplnenychotazok)
-
-        elif skupinaotazok == 'nazvoslovie':
-            typotazky = "Názvoslovie"
-            finalneotazky = list(nazvoslovie - polesplnenychotazok)
-
-        elif skupinaotazok == 'veliciny':
-            typotazky = "Chemické veličiny"
-            finalneotazky = list(veliciny - polesplnenychotazok)
-
-        elif skupinaotazok == 'kyszas':
-            typotazky = "Kyseliny a zásady"
-            finalneotazky = list(kyszas - polesplnenychotazok)
-
-        elif skupinaotazok == 'reakcie':
-            typotazky = "Chemické reakcie"
-            finalneotazky = list(reakcie - polesplnenychotazok)
-
-        elif skupinaotazok == 'rovnovaha':
-            typotazky = "Chemická rovnovaha"
-            finalneotazky = list(rovnovaha - polesplnenychotazok)
-
-        elif skupinaotazok == 'komplexy':
-            typotazky = "Komplexné zlúčeniny"
-            finalneotazky = list(komplexy - polesplnenychotazok)
-
-        elif skupinaotazok == 'priklady':
-            typotazky = "Príklady"
-            finalneotazky = list(priklady - polesplnenychotazok)
-        else:
-            typotazky = "Si skúšaný zo všetkých otázok"
-            finalneotazky = list(polevsetkychotazok - polesplnenychotazok)
+        typotazky = "Si skúšaný zo všetkých otázok"
+        finalneotazky = list(polevsetkychotazok - polesplnenychotazok)
 
         if len(finalneotazky) == 0:
-            respond = make_response(render_template('layout.html', control='Nemame otazky', bdy=body, sklonovanie=koncovka))
+            respond = make_response(render_template('layout.html', moznosti=True, control='Nemame otazky', bdy=body, sklonovanie=koncovka))
             return respond
 
         else:
@@ -229,7 +256,7 @@ def skusaP():
                         'koncovka': koncovka, 'zleotazky': zleotazky, 'najmensiaotazka': najmensiaotazka, 'najvacsiaotazka': najvacsiaotazka,
                         'lastaction': lastaction, 'skupinaotazok': skupinaotazok}
                 print(pole)
-                respond = make_response(render_template('layout.html', checkbuttons=True, typotazok=typotazky, otazka=otazkyzdatabazy['ot'], bdy=body, sklonovanie=koncovka,
+                respond = make_response(render_template('layout.html', moznosti=True, checkbuttons=True, typotazok=typotazky, otazka=otazkyzdatabazy['ot'], bdy=body, sklonovanie=koncovka,
                                                         ma=otazkyzdatabazy['ma'], mb=otazkyzdatabazy['mb'], mc=otazkyzdatabazy['mc'], md=otazkyzdatabazy['md'], me=otazkyzdatabazy['me'],
                                                         mf=otazkyzdatabazy['mf'], mg=otazkyzdatabazy['mg'], mh=otazkyzdatabazy['mh'], control=('Spravna odpoved je', otazkyzdatabazy['od'])))
                 session['nameID'] = json.dumps(pole)
@@ -263,10 +290,9 @@ def skusaP():
             for r in result_set:
                 vyberazdatabazy(otazkyzdatabazy, r)
 
-                kont()
-                lst = str(otazkyzdatabazy['od']).split(',')
+                maxbodovzaodpoved, mojbodovzaodpoved, akoma, akomb, akomc, akomd, akome, akomf, akomg, akomh = kont(otazkyzdatabazy)
 
-                if list(moja) == lst:
+                if maxbodovzaodpoved == mojbodovzaodpoved:
                     moja[:] = []
                     mojeotazky.append(int(ypsilon))
                     body = len(mojeotazky)
@@ -283,10 +309,12 @@ def skusaP():
 
                     jozo = """UPDATE FIIT SET body= %s WHERE uuia4= %s ;"""
                     engine.execute(jozo, (body, randommeno,))
-
-                    respond = make_response(render_template('layout.html', control='Výborne, správna odpoveď!', otazka=otazkyzdatabazy['ot'], odp=otazkyzdatabazy['od'],
+                    print("akoma", akoma)
+                    respond = make_response(render_template('layout.html', moznosti=True, akoma=akoma, akomb=akomb, akomc=akomc, akomd=akomd,
+                                            akome=akome, akomf=akomf, akomg=akomg, akomh=akomh, bdy=body, sklonovanie=koncovka,
+                                            control='Výborne, správna odpoveď!', otazka=otazkyzdatabazy['ot'], odp=otazkyzdatabazy['od'],
                                             ma=otazkyzdatabazy['ma'], mb=otazkyzdatabazy['mb'], mc=otazkyzdatabazy['mc'], md=otazkyzdatabazy['md'], me=otazkyzdatabazy['me'],
-                                            mf=otazkyzdatabazy['mf'], mg=otazkyzdatabazy['mg'], mh=otazkyzdatabazy['mh'], bdy=body, sklonovanie=koncovka))
+                                            mf=otazkyzdatabazy['mf'], mg=otazkyzdatabazy['mg'], mh=otazkyzdatabazy['mh']))
                     session['nameID'] = json.dumps(pole)
                     return respond
 
@@ -297,10 +325,11 @@ def skusaP():
                             'koncovka': koncovka, 'zleotazky': zleotazky, 'najmensiaotazka': najmensiaotazka, 'najvacsiaotazka': najvacsiaotazka,
                             'lastaction': lastaction, 'skupinaotazok': skupinaotazok}
 
-                    respond = make_response(render_template('layout.html', control='Bohužiaľ nesprávne.', otazka=otazkyzdatabazy['ot'], odp=otazkyzdatabazy['od'],
+                    respond = make_response(render_template('layout.html', moznosti=True, akoma=akoma, akomb=akomb, akomc=akomc, akomd=akomd,
+                                            akome=akome, akomf=akomf, akomg=akomg, akomh=akomh, bdy=body, sklonovanie=koncovka,
+                                            control='Bohužiaľ nesprávne.', otazka=otazkyzdatabazy['ot'], odp=otazkyzdatabazy['od'],
                                             ma=otazkyzdatabazy['ma'], mb=otazkyzdatabazy['mb'], mc=otazkyzdatabazy['mc'], md=otazkyzdatabazy['md'], me=otazkyzdatabazy['me'],
-                                            mf=otazkyzdatabazy['mf'], mg=otazkyzdatabazy['mg'], mh=otazkyzdatabazy['mh'], bdy=body,
-                                            sklonovanie=koncovka))
+                                            mf=otazkyzdatabazy['mf'], mg=otazkyzdatabazy['mg'], mh=otazkyzdatabazy['mh']))
                     session['nameID'] = json.dumps(pole)
                     return respond
 
@@ -523,7 +552,7 @@ def skusaP():
                 for r in result_set:
                     vyberazdatabazy(otazkyzdatabazy, r)
 
-                    kont()
+                    maxbodovzaodpoved, mojbodovzaodpoved, akoma, akomb, akomc, akomd, akome, akomf, akomg, akomh = kont(otazkyzdatabazy)
                     lst = str(otazkyzdatabazy['od']).split(',')
 
                     if list(moja) == lst:
@@ -538,7 +567,9 @@ def skusaP():
 
                     else:
                         moja[:] = []
-                        respond = make_response(render_template('zleotazky.html', control='Bohužiaľ nesprávne.', otazka=otazkyzdatabazy['ot'], bdy=body, sklonovanie=koncovka,
+                        respond = make_response(render_template('zleotazky.html', akoma=akoma, akomb=akomb, akomc=akomc, akomd=akomd,
+                                                akome=akome, akomf=akomf, akomg=akomg, akomh=akomh,
+                                                control='Bohužiaľ nesprávne.', otazka=otazkyzdatabazy['ot'], bdy=body, sklonovanie=koncovka,
                                                 ma=otazkyzdatabazy['ma'], mb=otazkyzdatabazy['mb'], mc=otazkyzdatabazy['mc'], md=otazkyzdatabazy['md'], me=otazkyzdatabazy['me'],
                                                 mf=otazkyzdatabazy['mf'], mg=otazkyzdatabazy['mg'], mh=otazkyzdatabazy['mh'],
                                                 zleotazky=zleotazky, cislozlejotazky=ypsilon, totosuzleotazky=True))
@@ -813,7 +844,7 @@ def skusaP():
             result_set = engine.fetchall()
             for r in result_set:
                 vyberazdatabazy(otazkyzdatabazy, r)
-                kont()
+                maxbodovzaodpoved, mojbodovzaodpoved, akoma, akomb, akomc, akomd, akome, akomf, akomg, akomh = kont(otazkyzdatabazy)
                 lst = str(otazkyzdatabazy['od']).split(',')
 
                 if list(moja) == lst:
@@ -833,9 +864,11 @@ def skusaP():
                     jozo = """UPDATE FIIT SET body= %s WHERE uuia4= %s ;"""
                     engine.execute(jozo, (body, randommeno,))
 
-                    respond = make_response(render_template('jednaotazka.html', control='Vyborne, spravna odpoved!', otazka=otazkyzdatabazy['ot'],
+                    respond = make_response(render_template('jednaotazka.html', akoma=akoma, akomb=akomb, akomc=akomc, akomd=akomd,
+                                            akome=akome, akomf=akomf, akomg=akomg, akomh=akomh, bdy=body, sklonovanie=koncovka,
+                                            control='Vyborne, spravna odpoved!', otazka=otazkyzdatabazy['ot'],
                                             ma=otazkyzdatabazy['ma'], mb=otazkyzdatabazy['mb'], mc=otazkyzdatabazy['mc'], md=otazkyzdatabazy['md'],
-                                            me=otazkyzdatabazy['me'], mf=otazkyzdatabazy['mf'], mg=otazkyzdatabazy['mg'], mh=otazkyzdatabazy['mh'], bdy=body, sklonovanie=koncovka))
+                                            me=otazkyzdatabazy['me'], mf=otazkyzdatabazy['mf'], mg=otazkyzdatabazy['mg'], mh=otazkyzdatabazy['mh']))
                     session['nameID'] = json.dumps(pole)
                     return respond
 

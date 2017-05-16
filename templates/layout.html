@@ -16,70 +16,18 @@
              }
              });</script>    
   <link href='//fonts.googleapis.com/css?family=Didact Gothic' rel='stylesheet'>
+  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+  <link href='layout.css' rel='stylesheet'>
   
-  <style>
-     .image 
-            {
-            width: 700px;
-            height: 342px;
-            display: block;
-            margin-top: 5px;
-            margin-bottom: 5px;
-            }
+  <style>                     
              
-      .menu
+      .checkbox
              {
-             width: 100%;
-             font-size: 25px;
-             text-align: center;
-             font-family: Didact Gothic;
-             margin-top: 0px;
-             margin-bottom: 0px;
+             width: 23px; 
+             height: 23px;
              cursor: pointer;
-             transition-duration: 0.2s;
-             }
-             
-      .menu:hover 
-              {
-              background-color: #8ED3D6;
-              color: white;
-              }
-      .text
-             {
-             font-size: 20px;
-             text-align: center;
-             word-wrap: break-word;
-             font-family: Arial;
-             } 
-             
-      .center
-             {
-             text-align: center;
-             }
-             
-      .question-text
-             {
-             font-size: 20px;
-             word-wrap: break-word;
-             font-family: Arial;
-             }
-             
-      .control
-             {
-             color: #876083;
-             }
-             
-      .option
-             {
-             width: 7%;
-             font-size: 20px;
-             font-family: Arial;
-             text-align: center;}
-             
-      .justify
-             {
-             text-align: justify;
-             }
+             //border-radius: 60px; - nefunguje, netuším prečo..
+             }          
              
       .button 
              {
@@ -96,40 +44,12 @@
               cursor: pointer;
               transition-duration: 0.2s;    
               }
-              
-      .width
-              {
-              width: 721px;
-              }
-              
+
       .button:hover 
               {
               background-color: #8ED3D6;
               color: white;
               }
-              
-      .menu_table
-              {
-              "border: solid;
-              border-width: 1 px;
-              border-color: white;
-              border-radius: 6px;
-              background-color: #8ED3D6;
-              }
-              
-      .body
-              {
-              background-color: #CACACA; 
-              //width: 721px;
-              }
-             
-      table
-             {
-             width: 721px;
-              //border: solid;
-              word-wrap: break-word;
-              font-family: Arial;
-             }
   </style>
   </head>
   <body class="body"><center><div>
@@ -145,46 +65,88 @@
      </table>  
      <p class="text width">
          {% if uvod %}
-            Zvoľ správne odpovede. Skontroluj ich kliknutím na tlačítko kontrola.
+            Zvoľ správne odpovede. Skontroluj svoje odpovede kliknutím na tlačítko kontrola.
          {% endif %}</p><br />
-     <p class="question-text width center control">{{ typotazok }}</p>
-     <p class="question-text width justify">{{ otazka }}</p>
-     <p class="question-text width justify">{{ ma }}</p>
-     <p class="question-text width justify">{{ mb }}</p>
-     <p class="question-text width justify">{{ mc }}</p>
-     <p class="question-text width justify">{{ md }}</p>
-     <p class="question-text width justify">{{ me }}</p>
-     <p class="question-text width justify">{{ mf }}</p>
-     <p class="question-text width justify">{{ mg }}</p>
-     <p class="question-text width justify">{{ mh }}</p><br />
-     <p class="question-text width center control">{{ control }}</p>
-     <p class="question-text width center">{{ odp }}</p>
-     <p class="question-text width center">{{ bdy }} otáz{{ sklonovanie }} máš správne</p>
+      <p class="question-text-padding width center control">{{ typotazok }}</p><br />        
+     
+     <table>
+        <tr>
+           <td></td>
+           <td class="question-text-padding justify">{{ otazka }} <br /><br /></td>
+        </tr>
+        {% if moznosti %}
+        <tr>
+           <td class="option"><input type="checkbox" name="A" value="A" class="checkbox"/></td>
+           {% if akoma == True %}
+           <td class="question-text-padding justify wrong">{{ ma }}</td>
+           {% else %}
+           <td class="question-text-padding justify">{{ ma }}</td>
+           {% endif %}
+        </tr>
+        <tr>
+           <td class="option"><input type="checkbox" name="B" value="B" class="checkbox"/></td>
+           {% if akomb == True %}
+           <td class="question-text-padding justify wrong">{{ mb }}</td>
+           {% else %}
+           <td class="question-text-padding justify">{{ mb }}</td>
+           {% endif %}
+        </tr>
+        <tr>
+           <td class="option"><input type="checkbox" name="C" value="C" class="checkbox"/></td>
+           {% if akomc == True %}
+           <td class="question-text-padding justify wrong">{{ mc }}</td>
+           {% else %}
+           <td class="question-text-padding justify">{{ mc }}</td>
+           {% endif %}
+        </tr>
+        <tr>
+           <td class="option"><input type="checkbox" name="D" value="D" class="checkbox"/></td>
+           {% if akomd == True %}
+           <td class="question-text-padding justify wrong">{{ md }}</td>
+           {% else %}
+           <td class="question-text-padding justify">{{ md }}</td>
+           {% endif %}
+        </tr>
+        <tr>
+           <td class="option"><input type="checkbox" name="E" value="E" class="checkbox"/></td>
+           {% if akome == True %}
+           <td class="question-text-padding justify wrong">{{ me }}</td>
+           {% else %}
+           <td class="question-text-padding justify">{{ me }}</td>
+           {% endif %}
+        </tr>
+        <tr>
+           <td class="option"><input type="checkbox" name="F" value="F" class="checkbox"/></td>
+           {% if akomf == True %}
+           <td class="question-text-padding justify wrong">{{ mf }}</td>
+           {% else %}
+           <td class="question-text-padding justify">{{ mf }}</td>
+           {% endif %}
+        </tr>
+        <tr>
+           <td class="option"><input type="checkbox" name="G" value="G" class="checkbox"/></td>
+           {% if akomg == True %}
+           <td class="question-text-padding justify wrong">{{ mg }}</td>
+           {% else %}
+           <td class="question-text-padding justify">{{ mg }}</td>
+           {% endif %}
+        </tr>
+        <tr>
+           <td class="option"><input type="checkbox" name="H" value="H" class="checkbox"/></td>
+           {% if akomh == True %}
+           <td class="question-text-padding justify wrong">{{ mh }}</td>
+           {% else %}
+           <td class="question-text-padding justify">{{ mh }}</td>
+           {% endif %}
+        </tr>
+        {% endif %}
+     </table> 
+      
      <br />
-     {% if checkbuttons %}
-       <table>
-          <tr>
-             <td class="option">A</td>
-             <td class="option">B</td>
-             <td class="option">C</td>
-             <td class="option">D</td>
-             <td class="option">E</td>
-             <td class="option">F</td>
-             <td class="option">G</td>
-             <td class="option">H</td>
-          </tr>
-          <tr>
-             <td class="option"><input type="checkbox" name="A" value="A"/></td>
-             <td class="option"><input type="checkbox" name="B" value="B"/></td>
-             <td class="option"><input type="checkbox" name="C" value="C"/></td>
-             <td class="option"><input type="checkbox" name="D" value="D"/></td>
-             <td class="option"><input type="checkbox" name="E" value="E"/></td>
-             <td class="option"><input type="checkbox" name="F" value="F"/></td>
-             <td class="option"><input type="checkbox" name="G" value="G"/></td>
-             <td class="option"><input type="checkbox" name="H" value="H"/></td>
-          </tr>
-      </table>
-    {% endif %}
+     <p class="question-text-padding width center control">{{ control }}</p>
+     <p class="question-text-padding width center">{{ odp }}</p>
+     <p class="question-text-padding width center">{{ bdy }} otáz{{ sklonovanie }} máš správne</p>
+     
     <br /><br />
     <table>
         <tr>
@@ -193,7 +155,7 @@
            <td><input type="submit" name="btn" value="Resetuje otázky" class="button"/></td>
            <td><input type="submit" name="btn" value="Zle zodpovedané otázky" class="button"/></td>
         </tr>
-    </table>
+    </table> 
  <br /><br /><br /> 
      
     </form>
