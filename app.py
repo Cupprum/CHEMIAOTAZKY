@@ -50,86 +50,78 @@ def kont(otazkyzdatabazy):
     maxbodovzaodpoved = len(lst)
     mojbodovzaodpoved = 0
 
-    if 'a' in lst:
-        if 'a' in moja:
-            print('A si zadal tak ako malo byt')
-            mojbodovzaodpoved += 1
-            akoma = False
-        else:
-            print('A si nezadal tak ako malo byt')
-            akoma = True
+    if 'a' in lst and 'a' in moja:
+        print('A si zadal tak ako malo byt')
+        mojbodovzaodpoved += 1
+        akoma = 'spravne'
+    elif 'a' not in moja and 'a' not in lst:
+        akoma = 'spravne'
     else:
-        akoma = False
-    if 'b' in lst:
-        if 'b' in moja:
-            print('B si zadal tak ako malo byt')
-            mojbodovzaodpoved += 1
-            akomb = False
-        else:
-            print('B si nezadal tak ako malo byt')
-            akomb = True
+        akoma = 'zle'
+
+    if 'b' in lst and 'b' in moja:
+        print('B si zadal tak ako malo byt')
+        mojbodovzaodpoved += 1
+        akomb = 'spravne'
+    elif 'b' not in moja and 'b' not in lst:
+        akomb = 'spravne'
     else:
-        akomb = False
-    if 'c' in lst:
-        if 'c' in moja:
-            print('C si zadal tak ako malo byt')
-            mojbodovzaodpoved += 1
-            akomc = False
-        else:
-            print('C si nezadal tak ako malo byt')
-            akomc = True
+        akomb = 'zle'
+
+    if 'c' in lst and 'c' in moja:
+        print('C si zadal tak ako malo byt')
+        mojbodovzaodpoved += 1
+        akomc = 'spravne'
+    elif 'c' not in moja and 'c' not in lst:
+        akomc = 'spravne'
     else:
-        akomc = False
-    if 'd' in lst:
-        if 'd' in moja:
-            print('D si zadal tak ako malo byt')
-            mojbodovzaodpoved += 1
-            akomd = False
-        else:
-            print('D si nezadal tak ako malo byt')
-            akomd = True
+        akomc = 'zle'
+
+    if 'd' in lst and 'd' in moja:
+        print('D si zadal tak ako malo byt')
+        mojbodovzaodpoved += 1
+        akomd = 'spravne'
+    elif 'd' not in moja and 'd' not in lst:
+        akomd = 'spravne'
     else:
-        akomd = False
-    if 'e' in lst:
-        if 'e' in moja:
-            print('E si zadal tak ako malo byt')
-            mojbodovzaodpoved += 1
-            akome = False
-        else:
-            print('E si nezadal tak ako malo byt')
-            akome = True
+        akomd = 'zle'
+
+    if 'e' in lst and 'e' in moja:
+        print('E si zadal tak ako malo byt')
+        mojbodovzaodpoved += 1
+        akome = 'spravne'
+    elif 'e' not in moja and 'e' not in lst:
+        akome = 'spravne'
     else:
-        akome = False
-    if 'f' in lst:
-        if 'f' in moja:
-            print('F si zadal tak ako malo byt')
-            mojbodovzaodpoved += 1
-            akomf = False
-        else:
-            print('F si nezadal tak ako malo byt')
-            akomf = True
+        akome = 'zle'
+
+    if 'f' in lst and 'f' in moja:
+        print('F si zadal tak ako malo byt')
+        mojbodovzaodpoved += 1
+        akomf = 'spravne'
+    elif 'f' not in moja and 'f' not in lst:
+        akomf = 'spravne'
     else:
-        akomf = False
-    if 'g' in lst:
-        if 'g' in moja:
-            print('G si zadal tak ako malo byt')
-            mojbodovzaodpoved += 1
-            akomg = False
-        else:
-            print('G si nezadal tak ako malo byt')
-            akomg = True
+        akomf = 'zle'
+
+    if 'g' in lst and 'g' in moja:
+        print('G si zadal tak ako malo byt')
+        mojbodovzaodpoved += 1
+        akomg = 'spravne'
+    elif 'g' not in moja and 'g' not in lst:
+        akomg = 'spravne'
     else:
-        akomg = False
-    if 'h' in lst:
-        if 'h' in moja:
-            print('H si zadal tak ako malo byt')
-            mojbodovzaodpoved += 1
-            akomh = False
-        else:
-            print('H si nezadal tak ako malo byt')
-            akomh = True
+        akomg = 'zle'
+
+    if 'h' in lst and 'h' in moja:
+        print('H si zadal tak ako malo byt')
+        mojbodovzaodpoved += 1
+        akomh = 'spravne'
+    elif 'h' not in moja and 'h' not in lst:
+        akomh = 'spravne'
     else:
-        akomh = False
+        akomh = 'zle'
+
     return maxbodovzaodpoved, mojbodovzaodpoved, akoma, akomb, akomc, akomd, akome, akomf, akomg, akomh
 
 
@@ -309,7 +301,7 @@ def skusaP():
 
                     jozo = """UPDATE FIIT SET body= %s WHERE uuia4= %s ;"""
                     engine.execute(jozo, (body, randommeno,))
-                    print("akoma", akoma)
+
                     respond = make_response(render_template('layout.html', moznosti=True, akoma=akoma, akomb=akomb, akomc=akomc, akomd=akomd,
                                             akome=akome, akomf=akomf, akomg=akomg, akomh=akomh, bdy=body, sklonovanie=koncovka,
                                             control='Výborne, správna odpoveď!', otazka=otazkyzdatabazy['ot'], odp=otazkyzdatabazy['od'],

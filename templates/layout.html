@@ -77,64 +77,80 @@
         {% if moznosti %}
         <tr>
            <td class="option"><input type="checkbox" name="A" value="A" class="checkbox"/></td>
-           {% if akoma == True %}
+           {% if akoma == 'zle' %}
            <td class="question-text-padding justify wrong">{{ ma }}</td>
+           {% elif akoma == 'spravne' %}
+           <td class="question-text-padding justify right">{{ ma }}</td>
            {% else %}
            <td class="question-text-padding justify">{{ ma }}</td>
            {% endif %}
         </tr>
         <tr>
            <td class="option"><input type="checkbox" name="B" value="B" class="checkbox"/></td>
-           {% if akomb == True %}
+           {% if akomb == 'zle' %}
            <td class="question-text-padding justify wrong">{{ mb }}</td>
+           {% elif akomb == 'spravne' %}
+           <td class="question-text-padding justify right">{{ mb }}</td>
            {% else %}
            <td class="question-text-padding justify">{{ mb }}</td>
            {% endif %}
         </tr>
         <tr>
            <td class="option"><input type="checkbox" name="C" value="C" class="checkbox"/></td>
-           {% if akomc == True %}
+           {% if akomc == 'zle' %}
            <td class="question-text-padding justify wrong">{{ mc }}</td>
+           {% elif akomc == 'spravne' %}
+           <td class="question-text-padding justify right">{{ mc }}</td>
            {% else %}
            <td class="question-text-padding justify">{{ mc }}</td>
            {% endif %}
         </tr>
         <tr>
            <td class="option"><input type="checkbox" name="D" value="D" class="checkbox"/></td>
-           {% if akomd == True %}
+           {% if akomd == 'zle' %}
            <td class="question-text-padding justify wrong">{{ md }}</td>
+           {% elif akomd == 'spravne' %}
+           <td class="question-text-padding justify right">{{ md }}</td>
            {% else %}
            <td class="question-text-padding justify">{{ md }}</td>
            {% endif %}
         </tr>
         <tr>
            <td class="option"><input type="checkbox" name="E" value="E" class="checkbox"/></td>
-           {% if akome == True %}
+           {% if akome == 'zle' %}
            <td class="question-text-padding justify wrong">{{ me }}</td>
+           {% elif akome == 'spravne' %}
+           <td class="question-text-padding justify right">{{ me }}</td>
            {% else %}
            <td class="question-text-padding justify">{{ me }}</td>
            {% endif %}
         </tr>
         <tr>
            <td class="option"><input type="checkbox" name="F" value="F" class="checkbox"/></td>
-           {% if akomf == True %}
+           {% if akomf == 'zle' %}
            <td class="question-text-padding justify wrong">{{ mf }}</td>
+           {% elif akomf == 'spravne' %}
+           <td class="question-text-padding justify right">{{ mf }}</td>
            {% else %}
            <td class="question-text-padding justify">{{ mf }}</td>
            {% endif %}
         </tr>
         <tr>
            <td class="option"><input type="checkbox" name="G" value="G" class="checkbox"/></td>
-           {% if akomg == True %}
+           {% if akomg == 'zle' %}
            <td class="question-text-padding justify wrong">{{ mg }}</td>
+           {% elif akomg == 'spravne' %}
+           <td class="question-text-padding justify right">{{ mg }}</td>
            {% else %}
            <td class="question-text-padding justify">{{ mg }}</td>
            {% endif %}
         </tr>
         <tr>
            <td class="option"><input type="checkbox" name="H" value="H" class="checkbox"/></td>
-           {% if akomh == True %}
+           {% if akomh == 'zle' %}
            <td class="question-text-padding justify wrong">{{ mh }}</td>
+           {% elif akomh == 'spravne' %}
+           <td class="question-text-padding justify right">{{ mh }}</td>
            {% else %}
            <td class="question-text-padding justify">{{ mh }}</td>
            {% endif %}
