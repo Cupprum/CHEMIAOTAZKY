@@ -55,7 +55,7 @@ def kont(otazkyzdatabazy):
         mojbodovzaodpoved += 1
         akoma = 'spravne'
     elif 'a' not in moja and 'a' not in lst:
-        akoma = 'spravne'
+        akoma = 'neutralne'
     else:
         akoma = 'zle'
 
@@ -64,7 +64,7 @@ def kont(otazkyzdatabazy):
         mojbodovzaodpoved += 1
         akomb = 'spravne'
     elif 'b' not in moja and 'b' not in lst:
-        akomb = 'spravne'
+        akomb = 'neutralne'
     else:
         akomb = 'zle'
 
@@ -73,7 +73,7 @@ def kont(otazkyzdatabazy):
         mojbodovzaodpoved += 1
         akomc = 'spravne'
     elif 'c' not in moja and 'c' not in lst:
-        akomc = 'spravne'
+        akomc = 'neutralne'
     else:
         akomc = 'zle'
 
@@ -82,7 +82,7 @@ def kont(otazkyzdatabazy):
         mojbodovzaodpoved += 1
         akomd = 'spravne'
     elif 'd' not in moja and 'd' not in lst:
-        akomd = 'spravne'
+        akomd = 'neutralne'
     else:
         akomd = 'zle'
 
@@ -91,7 +91,7 @@ def kont(otazkyzdatabazy):
         mojbodovzaodpoved += 1
         akome = 'spravne'
     elif 'e' not in moja and 'e' not in lst:
-        akome = 'spravne'
+        akome = 'neutralne'
     else:
         akome = 'zle'
 
@@ -100,7 +100,7 @@ def kont(otazkyzdatabazy):
         mojbodovzaodpoved += 1
         akomf = 'spravne'
     elif 'f' not in moja and 'f' not in lst:
-        akomf = 'spravne'
+        akomf = 'neutralne'
     else:
         akomf = 'zle'
 
@@ -109,7 +109,7 @@ def kont(otazkyzdatabazy):
         mojbodovzaodpoved += 1
         akomg = 'spravne'
     elif 'g' not in moja and 'g' not in lst:
-        akomg = 'spravne'
+        akomg = 'neutralne'
     else:
         akomg = 'zle'
 
@@ -118,7 +118,7 @@ def kont(otazkyzdatabazy):
         mojbodovzaodpoved += 1
         akomh = 'spravne'
     elif 'h' not in moja and 'h' not in lst:
-        akomh = 'spravne'
+        akomh = 'neutralne'
     else:
         akomh = 'zle'
 
