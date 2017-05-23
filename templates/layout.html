@@ -76,7 +76,11 @@
         </tr>
         {% if moznosti %}
         <tr>
+           {% if zadana == 'zakliknute' %}
+           <td class="option"><input type="checkbox" name="A" value="A" class="checkbox" checked/></td>
+           {% else %}
            <td class="option"><input type="checkbox" name="A" value="A" class="checkbox"/></td>
+           {% endif %}
            {% if akoma == 'zle' %}
            <td class="question-text-padding justify wrong">{{ ma }}</td>
            {% elif akoma == 'spravne' %}
@@ -88,7 +92,11 @@
            {% endif %}
         </tr>
         <tr>
+           {% if zadanb == 'zakliknute' %}
+           <td class="option"><input type="checkbox" name="B" value="B" class="checkbox" checked/></td>
+           {% else %}
            <td class="option"><input type="checkbox" name="B" value="B" class="checkbox"/></td>
+           {% endif %}
            {% if akomb == 'zle' %}
            <td class="question-text-padding justify wrong">{{ mb }}</td>
            {% elif akomb == 'spravne' %}
@@ -100,7 +108,11 @@
            {% endif %}
         </tr>
         <tr>
+           {% if zadanc == 'zakliknute' %}
+           <td class="option"><input type="checkbox" name="C" value="C" class="checkbox" checked/></td>
+           {% else %}
            <td class="option"><input type="checkbox" name="C" value="C" class="checkbox"/></td>
+           {% endif %}
            {% if akomc == 'zle' %}
            <td class="question-text-padding justify wrong">{{ mc }}</td>
            {% elif akomc == 'spravne' %}
@@ -112,7 +124,11 @@
            {% endif %}
         </tr>
         <tr>
+           {% if zadand == 'zakliknute' %}
+           <td class="option"><input type="checkbox" name="D" value="D" class="checkbox" checked/></td>
+           {% else %}
            <td class="option"><input type="checkbox" name="D" value="D" class="checkbox"/></td>
+           {% endif %}
            {% if akomd == 'zle' %}
            <td class="question-text-padding justify wrong">{{ md }}</td>
            {% elif akomd == 'spravne' %}
@@ -124,7 +140,11 @@
            {% endif %}
         </tr>
         <tr>
+           {% if zadane == 'zakliknute' %}
+           <td class="option"><input type="checkbox" name="E" value="E" class="checkbox" checked/></td>
+           {% else %}
            <td class="option"><input type="checkbox" name="E" value="E" class="checkbox"/></td>
+           {% endif %}
            {% if akome == 'zle' %}
            <td class="question-text-padding justify wrong">{{ me }}</td>
            {% elif akome == 'spravne' %}
@@ -136,7 +156,11 @@
            {% endif %}
         </tr>
         <tr>
+           {% if zadanf == 'zakliknute' %}
+           <td class="option"><input type="checkbox" name="F" value="F" class="checkbox" checked/></td>
+           {% else %}
            <td class="option"><input type="checkbox" name="F" value="F" class="checkbox"/></td>
+           {% endif %}
            {% if akomf == 'zle' %}
            <td class="question-text-padding justify wrong">{{ mf }}</td>
            {% elif akomf == 'spravne' %}
@@ -148,7 +172,11 @@
            {% endif %}
         </tr>
         <tr>
+           {% if zadang == 'zakliknute' %}
+           <td class="option"><input type="checkbox" name="G" value="G" class="checkbox" checked/></td>
+           {% else %}
            <td class="option"><input type="checkbox" name="G" value="G" class="checkbox"/></td>
+           {% endif %}
            {% if akomg == 'zle' %}
            <td class="question-text-padding justify wrong">{{ mg }}</td>
            {% elif akomg == 'spravne' %}
@@ -160,7 +188,11 @@
            {% endif %}
         </tr>
         <tr>
+           {% if zadanh == 'zakliknute' %}
+           <td class="option"><input type="checkbox" name="H" value="H" class="checkbox" checked/></td>
+           {% else %}
            <td class="option"><input type="checkbox" name="H" value="H" class="checkbox"/></td>
+           {% endif %}
            {% if akomh == 'zle' %}
            <td class="question-text-padding justify wrong">{{ mh }}</td>
            {% elif akomh == 'spravne' %}

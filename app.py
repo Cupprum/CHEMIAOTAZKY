@@ -50,6 +50,10 @@ def kont(otazkyzdatabazy):
     maxbodovzaodpoved = len(lst)
     mojbodovzaodpoved = 0
 
+    if 'a' in moja:
+        zadana = 'zakliknute'
+    else:
+        zadana = 'nezakliknute'
     if 'a' in lst and 'a' in moja:
         print('A si zadal tak ako malo byt')
         mojbodovzaodpoved += 1
@@ -59,6 +63,10 @@ def kont(otazkyzdatabazy):
     else:
         akoma = 'zle'
 
+    if 'b' in moja:
+        zadanb = 'zakliknute'
+    else:
+        zadanb = 'nezakliknute'
     if 'b' in lst and 'b' in moja:
         print('B si zadal tak ako malo byt')
         mojbodovzaodpoved += 1
@@ -68,6 +76,10 @@ def kont(otazkyzdatabazy):
     else:
         akomb = 'zle'
 
+    if 'c' in moja:
+        zadanc = 'zakliknute'
+    else:
+        zadanc = 'nezakliknute'
     if 'c' in lst and 'c' in moja:
         print('C si zadal tak ako malo byt')
         mojbodovzaodpoved += 1
@@ -77,6 +89,10 @@ def kont(otazkyzdatabazy):
     else:
         akomc = 'zle'
 
+    if 'd' in moja:
+        zadand = 'zakliknute'
+    else:
+        zadand = 'nezakliknute'
     if 'd' in lst and 'd' in moja:
         print('D si zadal tak ako malo byt')
         mojbodovzaodpoved += 1
@@ -86,6 +102,10 @@ def kont(otazkyzdatabazy):
     else:
         akomd = 'zle'
 
+    if 'e' in moja:
+        zadane = 'zakliknute'
+    else:
+        zadane = 'nezakliknute'
     if 'e' in lst and 'e' in moja:
         print('E si zadal tak ako malo byt')
         mojbodovzaodpoved += 1
@@ -95,6 +115,10 @@ def kont(otazkyzdatabazy):
     else:
         akome = 'zle'
 
+    if 'f' in moja:
+        zadanf = 'zakliknute'
+    else:
+        zadanf = 'nezakliknute'
     if 'f' in lst and 'f' in moja:
         print('F si zadal tak ako malo byt')
         mojbodovzaodpoved += 1
@@ -104,6 +128,10 @@ def kont(otazkyzdatabazy):
     else:
         akomf = 'zle'
 
+    if 'g' in moja:
+        zadang = 'zakliknute'
+    else:
+        zadang = 'nezakliknute'
     if 'g' in lst and 'g' in moja:
         print('G si zadal tak ako malo byt')
         mojbodovzaodpoved += 1
@@ -113,6 +141,10 @@ def kont(otazkyzdatabazy):
     else:
         akomg = 'zle'
 
+    if 'h' in moja:
+        zadanh = 'zakliknute'
+    else:
+        zadanh = 'nezakliknute'
     if 'h' in lst and 'h' in moja:
         print('H si zadal tak ako malo byt')
         mojbodovzaodpoved += 1
@@ -122,7 +154,7 @@ def kont(otazkyzdatabazy):
     else:
         akomh = 'zle'
 
-    return maxbodovzaodpoved, mojbodovzaodpoved, akoma, akomb, akomc, akomd, akome, akomf, akomg, akomh
+    return maxbodovzaodpoved, mojbodovzaodpoved, akoma, akomb, akomc, akomd, akome, akomf, akomg, akomh, zadana, zadanb, zadanc, zadand, zadane, zadanf, zadang, zadanh
 
 
 def vyberazdatabazy(otazkyzdatabazy, r):
@@ -282,7 +314,7 @@ def skusaP():
             for r in result_set:
                 vyberazdatabazy(otazkyzdatabazy, r)
 
-                maxbodovzaodpoved, mojbodovzaodpoved, akoma, akomb, akomc, akomd, akome, akomf, akomg, akomh = kont(otazkyzdatabazy)
+                maxbodovzaodpoved, mojbodovzaodpoved, akoma, akomb, akomc, akomd, akome, akomf, akomg, akomh, zadana, zadanb, zadanc, zadand, zadane, zadanf, zadang, zadanh = kont(otazkyzdatabazy)
 
                 if maxbodovzaodpoved == mojbodovzaodpoved:
                     moja[:] = []
@@ -305,8 +337,10 @@ def skusaP():
                     respond = make_response(render_template('layout.html', moznosti=True, akoma=akoma, akomb=akomb, akomc=akomc, akomd=akomd,
                                             akome=akome, akomf=akomf, akomg=akomg, akomh=akomh, bdy=body, sklonovanie=koncovka,
                                             control='Výborne, správna odpoveď!', otazka=otazkyzdatabazy['ot'], odp=otazkyzdatabazy['od'],
-                                            ma=otazkyzdatabazy['ma'], mb=otazkyzdatabazy['mb'], mc=otazkyzdatabazy['mc'], md=otazkyzdatabazy['md'], me=otazkyzdatabazy['me'],
-                                            mf=otazkyzdatabazy['mf'], mg=otazkyzdatabazy['mg'], mh=otazkyzdatabazy['mh']))
+                                            ma=otazkyzdatabazy['ma'], mb=otazkyzdatabazy['mb'], mc=otazkyzdatabazy['mc'], md=otazkyzdatabazy['md'],
+                                            me=otazkyzdatabazy['me'], mf=otazkyzdatabazy['mf'], mg=otazkyzdatabazy['mg'], mh=otazkyzdatabazy['mh'],
+                                            zadana=zadana, zadanb=zadanb, zadanc=zadanc, zadand=zadand,
+                                            zadane=zadane, zadanf=zadanf, zadang=zadang, zadanh=zadanh))
                     session['nameID'] = json.dumps(pole)
                     return respond
 
@@ -320,8 +354,10 @@ def skusaP():
                     respond = make_response(render_template('layout.html', moznosti=True, akoma=akoma, akomb=akomb, akomc=akomc, akomd=akomd,
                                             akome=akome, akomf=akomf, akomg=akomg, akomh=akomh, bdy=body, sklonovanie=koncovka,
                                             control='Bohužiaľ nesprávne.', otazka=otazkyzdatabazy['ot'], odp=otazkyzdatabazy['od'],
-                                            ma=otazkyzdatabazy['ma'], mb=otazkyzdatabazy['mb'], mc=otazkyzdatabazy['mc'], md=otazkyzdatabazy['md'], me=otazkyzdatabazy['me'],
-                                            mf=otazkyzdatabazy['mf'], mg=otazkyzdatabazy['mg'], mh=otazkyzdatabazy['mh']))
+                                            ma=otazkyzdatabazy['ma'], mb=otazkyzdatabazy['mb'], mc=otazkyzdatabazy['mc'], md=otazkyzdatabazy['md'],
+                                            me=otazkyzdatabazy['me'], mf=otazkyzdatabazy['mf'], mg=otazkyzdatabazy['mg'], mh=otazkyzdatabazy['mh'],
+                                            zadana=zadana, zadanb=zadanb, zadanc=zadanc, zadand=zadand,
+                                            zadane=zadane, zadanf=zadanf, zadang=zadang, zadanh=zadanh))
                     session['nameID'] = json.dumps(pole)
                     return respond
 
@@ -515,13 +551,13 @@ def skusaP():
             result_set = engine.fetchall()
             for r in result_set:
                 vyberazdatabazy(otazkyzdatabazy, r)
+                pole = {'randommeno': randommeno, 'mojeotazky': mojeotazky, 'ypsilon': ypsilon, 'body': body,
+                        'koncovka': koncovka, 'zleotazky': zleotazky, 'najmensiaotazka': najmensiaotazka, 'najvacsiaotazka': najvacsiaotazka,
+                        'lastaction': lastaction, 'skupinaotazok': skupinaotazok}
                 respond = make_response(render_template('zleotazky.html', otazka=otazkyzdatabazy['ot'], bdy=body, sklonovanie=koncovka,
                                         ma=otazkyzdatabazy['ma'], mb=otazkyzdatabazy['mb'], mc=otazkyzdatabazy['mc'], md=otazkyzdatabazy['md'], me=otazkyzdatabazy['me'],
                                         mf=otazkyzdatabazy['mf'], mg=otazkyzdatabazy['mg'], mh=otazkyzdatabazy['mh'], control=('Spravna odpoved je', otazkyzdatabazy['od']),
                                         zleotazky=zleotazky, cislozlejotazky=ypsilon, totosuzleotazky=True))
-                pole = {'randommeno': randommeno, 'mojeotazky': mojeotazky, 'ypsilon': ypsilon, 'body': body,
-                        'koncovka': koncovka, 'zleotazky': zleotazky, 'najmensiaotazka': najmensiaotazka, 'najvacsiaotazka': najvacsiaotazka,
-                        'lastaction': lastaction, 'skupinaotazok': skupinaotazok}
                 session['nameID'] = json.dumps(pole)
                 return respond
 
