@@ -878,7 +878,7 @@ def zleotazky():
                     zlaotazkacislo += 1
                     otazkyzdatabazy['otazka' + str(zlaotazkacislo)] = random.choice(r[0:1])
                     loopdata.append(otazkyzdatabazy['otazka' + str(zlaotazkacislo)])
-                    print(loopdata)
+            print(loopdata)
 
             pole = {'randommeno': randommeno, 'mojeotazky': mojeotazky, 'ypsilon': ypsilon, 'body': body,
                     'koncovka': koncovka, 'zleotazky': zleotazky, 'najmensiaotazka': najmensiaotazka, 'najvacsiaotazka': najvacsiaotazka,
