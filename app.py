@@ -876,9 +876,7 @@ def zleotazky():
                 result_set = engine.fetchall()
                 for r in result_set:
                     zlaotazkacislo += 1
-                    print(r)
                     otazkyzdatabazy['otazka' + str(zlaotazkacislo)] = random.choice(r[0:1])
-                    print(otazkyzdatabazy['otazka' + str(zlaotazkacislo)])
                     loopdata.append(otazkyzdatabazy['otazka' + str(zlaotazkacislo)])
                     print(loopdata)
 
