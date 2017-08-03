@@ -868,7 +868,7 @@ def zleotazky():
 
         else:
             loopdata = []
-            zlaotazkacislo = 0
+            zlaotazkacislo = -1
             otazkyzdatabazy = {}
             for pocetotazok in range(1, len(zleotazky) + 1):
                 hladavdatabaze = """SELECT ot FROM otazky WHERE cislootazky = %s;"""
