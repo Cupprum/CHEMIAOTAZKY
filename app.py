@@ -863,7 +863,7 @@ def zleotazky():
 
         if len(zleotazky) == 0:
             respond = make_response(render_template('vsetkyzleotazky.html', control="Na všetky otázky si odpovedal dobre, nemáš si čo opraviť",
-                                    bdy=body, sklonovanie=koncovka, rows=('1', '2', '3')))
+                                    bdy=body, sklonovanie=koncovka))
             return respond
 
         else:
@@ -875,9 +875,12 @@ def zleotazky():
                 engine.execute(hladavdatabaze, (zleotazky[zlaotazkacislo],))
                 result_set = engine.fetchall()
                 for r in result_set:
-                    zlaotazkacislo += 1
                     otazkyzdatabazy['otazka' + str(zlaotazkacislo)] = random.choice(r[0:1])
-                    loopdata.append(otazkyzdatabazy['otazka' + str(zlaotazkacislo)])
+                    if otazkyzdatabazy['otazka' + str(zlaotazkacislo)] in loopdata:
+                        pass
+                    else:
+                        loopdata.append(otazkyzdatabazy['otazka' + str(zlaotazkacislo)])
+                        zlaotazkacislo += 1
             print(loopdata)
 
             pole = {'randommeno': randommeno, 'mojeotazky': mojeotazky, 'ypsilon': ypsilon, 'body': body,
