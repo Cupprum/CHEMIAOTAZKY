@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Chemia 2.1/PridatNovuOtazku</title>
+  <script type="text/javascript" 
+          src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>     
+    <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({
+            "HTML-CSS" : {
+             availableFonts : ["STIX"],
+             preferredFont : "STIX",
+             webFont : "STIX General",
+             imageFont : null
+             }
+             });</script>    
+  <link href='//fonts.googleapis.com/css?family=Didact Gothic' rel='stylesheet'>
+  <link href='styles.css' rel='stylesheet'>
+  
+  <style>             
+      .button 
+             {
+              background-color: #8ED3D6;
+              border: none;
+              color: black;
+              border-radius: 6px;
+              padding: 5px 10px;
+              text-align: center;
+              text-decoration: none;
+              display: inline-block;
+              font-size: 15px;
+              font-family: Didact Gothic;
+              cursor: pointer;
+              transition-duration: 0.2s;    
+              }
+              
+      .button:hover 
+              {
+              background-color: #8ED3D6;
+              color: white;
+              }
+              
+      .column
+             {
+             width: 75%
+             }
+             
+      .column1
+             {
+             width: 25% ;
+             }
+             
+              
+      input[type=text], select 
+              {
+              width: 100%;
+              padding: 6px 10px;
+              margin: 8px 0;
+              display: inline-block;
+              border: 1px solid #8ED3D6;
+              border-radius: 4px;
+              box-sizing: border-box;
+              } 
+             
+  </style>
+  </head>
+  <body class="body"><center><div>
+     <form action="/" method = "post">
+  
+     <a href="https://chemiaotazky.herokuapp.com/"><img class="image" src="https://chemistry-studio.com/wp-content/uploads/logo_chemistry_1024_RGB.png" alt="logo"/></a>
+     <table class="menu_table">
+        <tr style="background-color: #8ED3D6;">
+           <td><input type="submit" style="border: none;background-color: #8ED3D6;" name="btn" value="O projekte" class="menu"/></td>
+           <td><input type="submit" style="border: none;background-color: #8ED3D6;" name="btn" value="Tabulka najlepších" class="menu"/></td>
+           <td><input type="submit" style="border: none;background-color: #8ED3D6;" name="btn" value="Zmena skúšaných otázok" class="menu"/></td>
+        </tr> 
+     </table> <br />
+     <p class="text justify width">Budeme radi, ak nám pomôžeš pridať ďalšie otázky pre vylepšienie a rozšírenie našich testov. Prosím
+                                   vyplň nasledujúci formulár a pridávaj otázky z knižiek testových úloh.</p>
+                                   
+     <p class="text width control">{{ control }}</p>
+     <table>
+        <tr>
+           <td class="column1"><p class="text justify">Škola: </p></td> 
+           <td class="column"><input list="skola" name="skola" class="list">
+                    <datalist id="skola">
+                       <option value="LFUK Bratislava - Chémia">
+                  </datalist>
+                  <input type="image" src="http://www.freeiconspng.com/uploads/add-create-new-plus-icon-23.png" alt="Submit" name="pridat" class="plus"></td>
+        </tr>
+        <tr>
+           <td class="column1"><p class="text justify">Číslo otázky: </p></td> 
+           <td class="column"><input type="text" name="cislootazky" maxlength="4" placeholder="Číslo.." style="width: 8em;"/></td>
+        </tr>
+        <tr>
+           <td class="column1"><p class="text justify">Zadanie otázky: </p></td> 
+           <td class="column"><input type="text" name="zadanie" placeholder="Zadanie.."/></td>
+        </tr>
+        <tr>
+           <td class="column1"><p class="text justify">Možnosť a: </p></td> 
+           <td class="column"><input type="text" name="moznosta" placeholder="a) ..."/></td>
+        </tr>
+        <tr>
+           <td class="column1"><p class="text justify">Možnosť b: </p></td> 
+           <td class="column"><input type="text" name="moznostb" placeholder="b) ..."/></td>
+        </tr>
+        <tr>
+           <td class="column1"><p class="text justify">Možnosť c: </p></td> 
+           <td class="column"><input type="text" name="moznostc" placeholder="c) ..."/></td>
+        </tr>
+        <tr>
+           <td class="column1"><p class="text justify">Možnosť d: </p></td> 
+           <td class="column"><input type="text" name="moznostd" placeholder="d) ..."/></td>
+        </tr>
+        <tr>
+           <td class="column1"><p class="text justify">Možnosť e: </p></td> 
+           <td class="column"><input type="text" name="moznoste" placeholder="e) ..."/></td>
+        </tr>
+        <tr>
+           <td class="column1"><p class="text justify">Možnosť f: </p></td> 
+           <td class="column"><input type="text" name="moznostf" placeholder="f) ..."/></td>
+        </tr>
+        <tr>
+           <td class="column1"><p class="text justify">Možnosť g: </p></td> 
+           <td class="column"><input type="text" name="moznostg" placeholder="g) ..."/></td>
+        </tr>
+        <tr>
+           <td class="column1"><p class="text justify">Možnosť h: </p></td> 
+           <td class="column"><input type="text" name="moznosth" placeholder="h) ..."/></td>
+        </tr>
+        <tr>
+           <td class="column1"><p class="text justify">Kategória: </p></td> 
+           <td class="column">  <input list="kategoria" name="Kategória" class="list">
+                    <datalist id="kategoria">
+                       <option value="Atóm">
+                       <option value="Sústava látok">
+                       <option value="Látky">
+                       <option value="Periodická sústava prvkov">
+                       <option value="Chemická väzba">
+                       <option value="Názvoslovie">
+                       <option value="Chemické veličiny">
+                       <option value="Kyseliny a zásady">
+                       <option value="Chemické reakcie">
+                       <option value="Chemická rovnováha">
+                       <option value="Komplexné zlúčeniny">
+                       <option value="Príklady">
+                  </datalist>
+                  <input type="image" src="http://www.freeiconspng.com/uploads/add-create-new-plus-icon-23.png" alt="Submit" name="pridat" class="plus">
+        </tr>
+     </table>
+     
+
+ <br /><br /><br /> 
+     
+    </form>
+    {% with messages = get_flashed_messages() %}
+	{% if messages %}
+	   Results:
+	   <pre>
+		{% for message in messages %}
+{{message}}
+		{% endfor %}
+	   </pre>
+	{% endif %}
+   {% endwith %}
+  </div></center></body>
+</html>

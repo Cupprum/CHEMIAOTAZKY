@@ -758,7 +758,6 @@ def tabulkanajlepsich():
             randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok = rozborcookie()
 
             zadanemeno = request.form['vloztemeno']
-            lastaction = None
 
             if zadanemeno == "" or zadanemeno == " ":
                 tabulkovydic = {'tabulka1meno': None, 'tabulka1body': None, 'tabulka2meno': None, 'tabulka2body': None,
@@ -920,6 +919,12 @@ def zleotazky():
                                                     mf=otazkyzdatabazy['mf'], mg=otazkyzdatabazy['mg'], mh=otazkyzdatabazy['mh'], control=('Spravna odpoved je', otazkyzdatabazy['od'])))
             session['nameID'] = json.dumps(pole)
             return respond
+
+
+@app.route('/pridatotazku', methods=('GET', 'POST'))
+def pridatotazku():
+    respond = make_response(render_template('pridanieotazok.html'))
+    return respond
 
 
 app.secret_key = os.environ["SESSION_KEY"]
