@@ -430,7 +430,10 @@ def home():
 
                     else:
                         moja[:] = []
-                        zleotazky.append(int(ypsilon))
+                        if int(ypsilon) in zleotazky:
+                            pass
+                        else:
+                            zleotazky.append(int(ypsilon))
                         pole = {'randommeno': randommeno, 'mojeotazky': mojeotazky, 'ypsilon': ypsilon, 'body': body,
                                 'koncovka': koncovka, 'zleotazky': zleotazky, 'najmensiaotazka': najmensiaotazka, 'najvacsiaotazka': najvacsiaotazka,
                                 'lastaction': lastaction, 'skupinaotazok': skupinaotazok}
@@ -721,8 +724,34 @@ def home():
                 return respond
 
         else:
-            a = request.form['btn']
-            return(a)
+            htmlotazka = request.form['btn']
+
+            randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok = rozborcookie()
+
+            lastaction = None
+
+            otazkyzdatabazy = {'cislootazky': None, 'ot': None, 'od': None, 'ma': None, 'mb': None,
+                               'mc': None, 'md': None, 'me': None, 'mf': None, 'mg': None, 'mh': None}
+
+            htmlotazkalist = htmlotazka.split('.')
+            a = random.choice(htmlotazkalist[0:1])
+            print('OTAZKA CISLO', a)
+            hladavdatabaze = """SELECT * FROM otazky WHERE cislootazky = %s;"""
+            engine.execute(hladavdatabaze, (a,))
+            result_set = engine.fetchall()
+
+            for r in result_set:
+                vyberazdatabazy(otazkyzdatabazy, r)
+                pole = {'randommeno': randommeno, 'mojeotazky': mojeotazky, 'ypsilon': ypsilon, 'body': body,
+                        'koncovka': koncovka, 'zleotazky': zleotazky, 'najmensiaotazka': najmensiaotazka, 'najvacsiaotazka': najvacsiaotazka,
+                        'lastaction': lastaction, 'skupinaotazok': skupinaotazok}
+                print(pole)
+                respond = make_response(render_template('layout.html', layout=True, moznosti=True, checkbuttons=True,
+                                                        otazka=otazkyzdatabazy['ot'], bdy=body, sklonovanie=koncovka,
+                                                        ma=otazkyzdatabazy['ma'], mb=otazkyzdatabazy['mb'], mc=otazkyzdatabazy['mc'], md=otazkyzdatabazy['md'], me=otazkyzdatabazy['me'],
+                                                        mf=otazkyzdatabazy['mf'], mg=otazkyzdatabazy['mg'], mh=otazkyzdatabazy['mh'], control=('Spravna odpoved je', otazkyzdatabazy['od'])))
+                session['nameID'] = json.dumps(pole)
+                return respond
 
 
 @app.route('/tabulkanajlepsich', methods=['GET', 'POST'])
@@ -886,37 +915,7 @@ def zleotazky():
                     'koncovka': koncovka, 'zleotazky': zleotazky, 'najmensiaotazka': najmensiaotazka, 'najvacsiaotazka': najvacsiaotazka,
                     'lastaction': lastaction, 'skupinaotazok': skupinaotazok}
 
-            respond = make_response(render_template('vsetkyzleotazky.html', loopdata=loopdata))
-            session['nameID'] = json.dumps(pole)
-            return respond
-
-    elif request.method == 'POST':
-        htmlotazka = request.form['btn']
-
-        randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok = rozborcookie()
-
-        lastaction = None
-
-        otazkyzdatabazy = {'cislootazky': None, 'ot': None, 'od': None, 'ma': None, 'mb': None,
-                           'mc': None, 'md': None, 'me': None, 'mf': None, 'mg': None, 'mh': None}
-
-        htmlotazkalist = htmlotazka.split('.')
-        a = random.choice(htmlotazkalist[0:1])
-        print('OTAZKA CISLO', a)
-        hladavdatabaze = """SELECT * FROM otazky WHERE cislootazky = %s;"""
-        engine.execute(hladavdatabaze, (a,))
-        result_set = engine.fetchall()
-
-        for r in result_set:
-            vyberazdatabazy(otazkyzdatabazy, r)
-            pole = {'randommeno': randommeno, 'mojeotazky': mojeotazky, 'ypsilon': ypsilon, 'body': body,
-                    'koncovka': koncovka, 'zleotazky': zleotazky, 'najmensiaotazka': najmensiaotazka, 'najvacsiaotazka': najvacsiaotazka,
-                    'lastaction': lastaction, 'skupinaotazok': skupinaotazok}
-            print(pole)
-            respond = make_response(render_template('layout.html', layout=True, moznosti=True, checkbuttons=True,
-                                                    otazka=otazkyzdatabazy['ot'], bdy=body, sklonovanie=koncovka,
-                                                    ma=otazkyzdatabazy['ma'], mb=otazkyzdatabazy['mb'], mc=otazkyzdatabazy['mc'], md=otazkyzdatabazy['md'], me=otazkyzdatabazy['me'],
-                                                    mf=otazkyzdatabazy['mf'], mg=otazkyzdatabazy['mg'], mh=otazkyzdatabazy['mh'], control=('Spravna odpoved je', otazkyzdatabazy['od'])))
+            respond = make_response(render_template('layout.html', zleotazky=True, loopdata=loopdata))
             session['nameID'] = json.dumps(pole)
             return respond
 

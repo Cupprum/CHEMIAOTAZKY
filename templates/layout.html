@@ -381,19 +381,25 @@
                                               že projekty ako práve ten náš pomôžu študentom v tom študovať to, čo by chceli jednoduchším a modernejším spôsobom.</p></td>
         </tr>
      </table>
-     {% endif %}
  <br /><br /><br /> 
+     {% endif %}
+
+      <body class="body"><center><div>
+      <form action="/zleotazky" method = "post">
+      {% if zleotazky%}
+        <h1>{{ control }}</h1>
+        <h1>{{ bdy }}</h1>
+        <h1>{{ sklonovanie }}</h1> 
+
+        {% for x in loopdata %}
+          <p>
+          <tr><input type="submit" name="btn" value='{{ x }}' class="button"/></tr>
+          </p>
+        {% endfor %}
+
+ <br /><br /><br /> 
+      {% endif %}
      
     </form>
-    {% with messages = get_flashed_messages() %}
-	{% if messages %}
-	   Results:
-	   <pre>
-		{% for message in messages %}
-{{message}}
-		{% endfor %}
-	   </pre>
-	{% endif %}
-   {% endwith %}
  </div> </center> </body>
 </html>
