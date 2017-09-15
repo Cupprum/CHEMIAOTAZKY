@@ -154,7 +154,9 @@ def kont(otazkyzdatabazy):
     else:
         akomh = 'zle'
 
-    return maxbodovzaodpoved, mojbodovzaodpoved, akoma, akomb, akomc, akomd, akome, akomf, akomg, akomh, zadana, zadanb, zadanc, zadand, zadane, zadanf, zadang, zadanh
+    dlzkamojejodpovede=len(moja)
+
+    return maxbodovzaodpoved, mojbodovzaodpoved, akoma, akomb, akomc, akomd, akome, akomf, akomg, akomh, zadana, zadanb, zadanc, zadand, zadane, zadanf, zadang, zadanh, dlzkamojejodpovede
 
 
 def vyberazdatabazy(otazkyzdatabazy, r):
@@ -210,7 +212,7 @@ def home():
             pole = {'randommeno': randommeno, 'mojeotazky': mojeotazky, 'ypsilon': ypsilon, 'body': body,
                     'koncovka': koncovka, 'zleotazky': zleotazky, 'najmensiaotazka': najmensiaotazka, 'najvacsiaotazka': najvacsiaotazka,
                     'lastaction': lastaction, 'skupinaotazok': skupinaotazok}
-            print('novy uzivatel', pole)
+            print('novy uzivatel')
 
             jozo = """INSERT INTO FIIT (uuia4, meno, body, stav) VALUES (%s, NULL, %s, '0');"""
             engine.execute(jozo, (randommeno, body))
@@ -224,31 +226,41 @@ def home():
                 kokie = session['nameID']
                 pole = json.loads(kokie)
                 print('stary uzivatel', pole)
+                randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok = rozborcookie()
+                pracujenaotazke = 0
+                novezleotazky = []
+                for x in range(len(zleotazky)):
+                    novezleotazky.append(zleotazky[pracujenaotazke])
+                    pracujenaotazke += 1
+                novezleotazky = zleotazky
+                pole = {'randommeno': randommeno, 'mojeotazky': mojeotazky, 'ypsilon': ypsilon, 'body': body,
+                        'koncovka': koncovka, 'zleotazky': zleotazky, 'najmensiaotazka': najmensiaotazka, 'najvacsiaotazka': najvacsiaotazka,
+                        'lastaction': lastaction, 'skupinaotazok': skupinaotazok}
                 respond = make_response(render_template('layout.html', layout=True, uvod=True, bdy=pole['body'], sklonovanie=pole['koncovka']))
                 return respond
 
             except TypeError:
-                        randommeno = str(uuid.uuid4())
-            mojeotazky = []
-            ypsilon = 0
-            body = 0
-            koncovka = 'ok'
-            zleotazky = []
-            najmensiaotazka = 1
-            najvacsiaotazka = 500
-            lastaction = None
-            skupinaotazok = None
-            pole = {'randommeno': randommeno, 'mojeotazky': mojeotazky, 'ypsilon': ypsilon, 'body': body,
-                    'koncovka': koncovka, 'zleotazky': zleotazky, 'najmensiaotazka': najmensiaotazka, 'najvacsiaotazka': najvacsiaotazka,
-                    'lastaction': lastaction, 'skupinaotazok': skupinaotazok}
-            print('novy uzivatel', pole)
+                randommeno = str(uuid.uuid4())
+                mojeotazky = []
+                ypsilon = 0
+                body = 0
+                koncovka = 'ok'
+                zleotazky = []
+                najmensiaotazka = 1
+                najvacsiaotazka = 500
+                lastaction = None
+                skupinaotazok = None
+                pole = {'randommeno': randommeno, 'mojeotazky': mojeotazky, 'ypsilon': ypsilon, 'body': body,
+                        'koncovka': koncovka, 'zleotazky': zleotazky, 'najmensiaotazka': najmensiaotazka, 'najvacsiaotazka': najvacsiaotazka,
+                        'lastaction': lastaction, 'skupinaotazok': skupinaotazok}
+                print('novy uzivatel')
 
-            jozo = """INSERT INTO FIIT (uuia4, meno, body, stav) VALUES (%s, NULL, %s, '0');"""
-            engine.execute(jozo, (randommeno, body))
+                jozo = """INSERT INTO FIIT (uuia4, meno, body, stav) VALUES (%s, NULL, %s, '0');"""
+                engine.execute(jozo, (randommeno, body))
 
-            respond = make_response(render_template('layout.html', layout=True, uvod=True, bdy=body, sklonovanie=koncovka))
-            session['nameID'] = json.dumps(pole)
-            return respond
+                respond = make_response(render_template('layout.html', layout=True, uvod=True, bdy=body, sklonovanie=koncovka))
+                session['nameID'] = json.dumps(pole)
+                return respond
 
     elif request.method == 'POST':
         if request.form['btn'] == 'Nová otázka':
@@ -398,10 +410,9 @@ def home():
                 for r in result_set:
                     vyberazdatabazy(otazkyzdatabazy, r)
 
-                    maxbodovzaodpoved, mojbodovzaodpoved, akoma, akomb, akomc, akomd, akome, akomf, akomg, akomh, zadana, zadanb, zadanc, zadand, zadane, zadanf, zadang, zadanh = kont(otazkyzdatabazy)
+                    maxbodovzaodpoved, mojbodovzaodpoved, akoma, akomb, akomc, akomd, akome, akomf, akomg, akomh, zadana, zadanb, zadanc, zadand, zadane, zadanf, zadang, zadanh, dlzkamojejodpovede = kont(otazkyzdatabazy)
 
-                    if maxbodovzaodpoved == mojbodovzaodpoved:
-                        moja[:] = []
+                    if maxbodovzaodpoved == mojbodovzaodpoved and moja == maxbodovzaodpoved:
                         mojeotazky.append(int(ypsilon))
                         body = len(mojeotazky)
                         if body == 1:
@@ -418,6 +429,8 @@ def home():
                         jozo = """UPDATE FIIT SET body= %s WHERE uuia4= %s ;"""
                         engine.execute(jozo, (body, randommeno,))
 
+                        moja[:] = []
+
                         respond = make_response(render_template('layout.html', layout=True, moznosti=True, akoma=akoma, akomb=akomb, akomc=akomc, akomd=akomd,
                                                 akome=akome, akomf=akomf, akomg=akomg, akomh=akomh, bdy=body, sklonovanie=koncovka,
                                                 control='Výborne, správna odpoveď!', otazka=otazkyzdatabazy['ot'], odp=otazkyzdatabazy['od'],
@@ -429,7 +442,6 @@ def home():
                         return respond
 
                     else:
-                        moja[:] = []
                         if int(ypsilon) in zleotazky:
                             pass
                         else:
@@ -437,6 +449,8 @@ def home():
                         pole = {'randommeno': randommeno, 'mojeotazky': mojeotazky, 'ypsilon': ypsilon, 'body': body,
                                 'koncovka': koncovka, 'zleotazky': zleotazky, 'najmensiaotazka': najmensiaotazka, 'najvacsiaotazka': najvacsiaotazka,
                                 'lastaction': lastaction, 'skupinaotazok': skupinaotazok}
+
+                        moja[:] = []
 
                         respond = make_response(render_template('layout.html', layout=True, moznosti=True, akoma=akoma, akomb=akomb, akomc=akomc, akomd=akomd,
                                                 akome=akome, akomf=akomf, akomg=akomg, akomh=akomh, bdy=body, sklonovanie=koncovka,
@@ -723,6 +737,19 @@ def home():
                                         bdy=body, sklonovanie=koncovka))
                 return respond
 
+        elif request.form['btn'] == 'Potvrdiť.':
+            ma = request.form['moznosta']
+            mb = request.form['moznostb']
+            mc = request.form['moznostc']
+            md = request.form['moznostd']
+            me = request.form['moznoste']
+            mf = request.form['moznostf']
+            mg = request.form['moznostg']
+            mh = request.form['moznosth']
+            print(ma, mb, mc, md, me, mf, mg, mh)
+            respond = make_response(render_template('pridanieotazok.html'))
+            return respond
+
         else:
             htmlotazka = request.form['btn']
 
@@ -735,7 +762,6 @@ def home():
 
             htmlotazkalist = htmlotazka.split('.')
             a = random.choice(htmlotazkalist[0:1])
-            print('OTAZKA CISLO', a)
             hladavdatabaze = """SELECT * FROM otazky WHERE cislootazky = %s;"""
             engine.execute(hladavdatabaze, (a,))
             result_set = engine.fetchall()
@@ -887,7 +913,6 @@ def zleotazky():
 
         lastaction = None
         zleotazky = sorted(zleotazky, key=int)
-        print(zleotazky)
 
         if len(zleotazky) == 0:
             respond = make_response(render_template('vsetkyzleotazky.html', control="Na všetky otázky si odpovedal dobre, nemáš si čo opraviť",
@@ -909,7 +934,6 @@ def zleotazky():
                     else:
                         loopdata.append(otazkyzdatabazy['otazka' + str(zlaotazkacislo)])
                         zlaotazkacislo += 1
-            print(loopdata)
 
             pole = {'randommeno': randommeno, 'mojeotazky': mojeotazky, 'ypsilon': ypsilon, 'body': body,
                     'koncovka': koncovka, 'zleotazky': zleotazky, 'najmensiaotazka': najmensiaotazka, 'najvacsiaotazka': najvacsiaotazka,
@@ -922,8 +946,9 @@ def zleotazky():
 
 @app.route('/pridatotazku', methods=('GET', 'POST'))
 def pridatotazku():
-    respond = make_response(render_template('pridanieotazok.html'))
-    return respond
+    if request.method == 'GET':
+        respond = make_response(render_template('pridanieotazok.html'))
+        return respond
 
 
 app.secret_key = os.environ["SESSION_KEY"]

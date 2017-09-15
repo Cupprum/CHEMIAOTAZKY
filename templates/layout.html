@@ -225,9 +225,7 @@
 
      <form action="/zmenaotazok" method = "post">
 
-    {% if zmenaotazok %}
-     <p class="text justify width">Pre nastavenie vlastného intervalu otázok zadaj číslo otázky od ktorej chceš začať a ktorou chceš skončiť. Otázky sú číslované
-                             od 1 po 500. Pokiaľ chceš prejsť na konkrétne číslo otázky, zadaj jej číslo.</p>
+    {% if zmenaotazok %}     <p class="text justify width">Pre nastavenie vlastného intervalu otázok zadaj číslo otázky od ktorej chceš začať a ktorou chceš skončiť. Otázky sú číslované od 1 po 500. Pokiaľ chceš prejsť na konkrétne číslo otázky, zadaj jej číslo.</p>
      <p class="control text">{{ control }}</p> <br />
      <table class="padding_table">
         <tr>
@@ -284,6 +282,7 @@
            <td class="column"><p class="text_column justify">Táto kategória obsahuje príklady na precvičenie molových veličín a iných výpočtov.</p></td> 
         </tr>
      </table>
+
     {% endif %}
 
      <body class="body"><center><div>
