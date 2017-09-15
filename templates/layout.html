@@ -109,7 +109,15 @@
             padding-right: 5px;
             margin-top: 3px;
             margin-bottom: 3px;
-            } 
+            }
+
+        .text_column_tabulka
+            {
+            font-size: 20px;
+            text-align: center;
+            word-wrap: break-word;
+            font-family: Arial;
+            }
              
         .center
             {
@@ -132,6 +140,13 @@
             {
             width: 4em ;
             }
+
+        .column2
+            {
+            width: 45%;
+            padding-top: 3px;
+            padding-bottom: 3px;
+            }
              
         .menu_table
             {
@@ -147,10 +162,16 @@
             float: right;
             }
 
-      .align_right_oprojekte
-             {
-             text-align: right;
-             }
+        .align_right_oprojekte
+            {
+            text-align: right;
+            }
+
+        .align-right_tabulka
+            {
+            float: right;
+            width: 10em;
+            }
 
         .left-text
             {
@@ -178,11 +199,17 @@
             width: 25%
             }
 
-        .column-oprojekte
+        .column_oprojekte
             {
             width: 50%;
             }
-              
+
+        .column_tabulka
+            {
+            width: 10%;
+            padding-top: 3px;
+            padding-bottom: 3px;
+            }
         input[type=text], select 
             {
             width: 100%;
@@ -480,7 +507,7 @@
      <p class="text control">{{ otazka }}</p> <br />
      <table>
         <tr>
-           <td class="column2"><input class="align-right" type="text" name="vloztemeno" placeholder="Tvoje meno.."/></td>
+           <td class="column2"><input class="align-right_tabulka" type="text" name="vloztemeno" placeholder="Tvoje meno.."/></td>
            <td class="column2"><input type="submit" name="btn" value="Pridať meno" class="button"/></td>
         </tr>
      </table>
@@ -489,34 +516,34 @@
      <br />
      <table>
         <tr>
-           <td class="column"></td>
-           <td class="column2"><p class="text_column control">Meno</p></td>
-           <td class="column2"><p class="text_column control">Počet bodov</p></td>
+           <td class="column_tabulka"></td>
+           <td class="column2"><p class="text_column_tabulka control">Meno</p></td>
+           <td class="column2"><p class="text_column_tabulka control">Počet bodov</p></td>
         </tr>
         <tr>
-           <td class="column"><p class="text_column control">1.</p></td>
-           <td class="column2"> <p class="text_column">{{ tabulka1meno }}</p></td>
-           <td class="column2"> <p class="text_column">{{ tabulka1body }}</p></td> 
+           <td class="column_tabulka"><p class="text_column_tabulka control">1.</p></td>
+           <td class="column2"> <p class="text_column_tabulka">{{ tabulka1meno }}</p></td>
+           <td class="column2"> <p class="text_column_tabulka">{{ tabulka1body }}</p></td> 
         </tr>
         <tr>
-           <td class="column"><p class="text_column control">2.</p></td>
-           <td class="column2"> <p class="text_column">{{ tabulka2meno }}</p></td>
-           <td class="column2"> <p class="text_column">{{ tabulka2body }}</p></td> 
+           <td class="column_tabulka"><p class="text_column_tabulka control">2.</p></td>
+           <td class="column2"> <p class="text_column_tabulka">{{ tabulka2meno }}</p></td>
+           <td class="column2"> <p class="text_column_tabulka">{{ tabulka2body }}</p></td> 
         </tr>
         <tr>
-           <td class="column"><p class="text_column control">3.</p></td>
-           <td class="column2"> <p class="text_column">{{ tabulka3meno }}</p></td>
-           <td class="column2"> <p class="text_column">{{ tabulka3body }}</p></td> 
+           <td class="column_tabulka"><p class="text_column_tabulka control">3.</p></td>
+           <td class="column2"> <p class="text_column_tabulka">{{ tabulka3meno }}</p></td>
+           <td class="column2"> <p class="text_column_tabulka">{{ tabulka3body }}</p></td> 
         </tr>
         <tr>
-           <td class="column"><p class="text_column control">4.</p></td>
-           <td class="column2"> <p class="text_column">{{ tabulka4meno }}</p></td>
-           <td class="column2"> <p class="text_column">{{ tabulka4body }}</p></td> 
+           <td class="column_tabulka"><p class="text_column_tabulka control">4.</p></td>
+           <td class="column2"> <p class="text_column_tabulka">{{ tabulka4meno }}</p></td>
+           <td class="column2"> <p class="text_column_tabulka">{{ tabulka4body }}</p></td> 
         </tr>
         <tr>
-           <td class="column"><p class="text_column control">5.</p></td>
-           <td class="column2"> <p class="text_column">{{ tabulka5meno }}</p></td>
-           <td class="column2"> <p class="text_column">{{ tabulka5body }}</p></td> 
+           <td class="column_tabulka"><p class="text_column_tabulka control">5.</p></td>
+           <td class="column2"> <p class="text_column_tabulka">{{ tabulka5meno }}</p></td>
+           <td class="column2"> <p class="text_column_tabulka">{{ tabulka5body }}</p></td> 
         </tr>
      </table>
      {% endif %}
@@ -528,8 +555,8 @@
      <h1 class="h1 control align_right_oprojekte width"> ... O Projekte Chémia 2.1</h1>
      <table>
         <tr>
-           <td class="column-oprojekte"><img src="https://s11.postimg.org/zbxysyoab/soc.png" style="width: 100%"/></td>
-           <td class="column-oprojekte"><p class="text-oprojekte justify right-text">Myšlienka tohto projektu vznikla približne v novembri minulého roka (2016), keď sa ma spolužiak
+           <td class="column_oprojekte"><img src="https://s11.postimg.org/zbxysyoab/soc.png" style="width: 100%"/></td>
+           <td class="column_oprojekte"><p class="text-oprojekte justify right-text">Myšlienka tohto projektu vznikla približne v novembri minulého roka (2016), keď sa ma spolužiak
                                               spýtal, čo by mal naprogramovať aby reálne niekomu pomohol. Aby vytvoril niečo, čo bude pre ľudí využiteľné
                                               a reálne im to pomôže. Keďže som sa ja v tom čase zaujímala o štúdium medicíny v Bratislave, navrhla som
                                               mu, nech vytvorí niečo, čo mi pomôže naučiť sa otázky z podkladových knižiek. Nakoniec ma však viac zaujalo
@@ -540,7 +567,7 @@
                                               alebo Českej republiky.</p></td>
         </tr>
         <tr>
-           <td class="column-oprojekte"><p class="text-oprojekte justify left-text">
+           <td class="column_oprojekte"><p class="text-oprojekte justify left-text">
                                               Veľmi kreatívny názov "Chémia 2.1" je skôr symbolický a radi spomíname na to ako pred trištvrte rokom vznikol.
                                               Bol to názov úplne prvého programu, ktorý bol vytvorený pre tento účel a ponechali sme ho symbolicky až doteraz. 
                                               Do budúcna by sme chceli náš projekt rozšíriť o ďalšie funkcie a materiály, ktoré by boli potrebné
@@ -551,11 +578,11 @@
                                               nápad webovej aplikácie, v ktorom nakoniec projekt vznikol. Vo voľnom čase rád lozí, pláva a istý čas sa venoval 
                                               divokej vode. Programuje už dlhšiu dobu a práve Python, pod ktorým je aplikácia vytvorená patrí medzi
                                               jeho srdcovky.</p></td>
-           <td class="column-oprojekte"><img src="https://s23.postimg.org/48j9r8bez/13434938_10205048291847154_2973408412018241753_n.jpg" style="width: 100%"/></td>
+           <td class="column_oprojekte"><img src="https://s23.postimg.org/48j9r8bez/13434938_10205048291847154_2973408412018241753_n.jpg" style="width: 100%"/></td>
         </tr>
         <tr>
-           <td class="column-oprojekte"><img src="https://s29.postimg.org/4hndb55zr/16237123_1433969209947528_907836138_n.jpg" style="width: 100%"/></td>
-           <td class="column-oprojekte"><p class="text-oprojekte justify right-text">Spoluautorkou tohto projektu je Zuzana Wlachovská, Samova spolužiačka. Obaja sú aktuálne v septime
+           <td class="column_oprojekte"><img src="https://s29.postimg.org/4hndb55zr/16237123_1433969209947528_907836138_n.jpg" style="width: 100%"/></td>
+           <td class="column_oprojekte"><p class="text-oprojekte justify right-text">Spoluautorkou tohto projektu je Zuzana Wlachovská, Samova spolužiačka. Obaja sú aktuálne v septime
                                               (treťom ročníku strednej školy) na Gymnáziu Jána Papánka v Bratislave na Vazovovej ulici. Pôvodne do tohto
                                               projektu mala dodať len otázky a správne odpovede. Nakoniec to však dopadlo inak a so Samom spolupracovala na
                                               tvorbe celého projektu. Vo voľnom čase sa venuje kresleniu, čítaniu a hraniu volejbalu, ktorý kedysi
