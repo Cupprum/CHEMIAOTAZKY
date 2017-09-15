@@ -50,8 +50,155 @@
               background-color: #8ED3D6;
               color: white;
               }
+     .image 
+            {
+            width: 700px;
+            height: 342px;
+            display: block;
+            margin-top: 5px;
+            margin-bottom: 5px;
+            }
+             
+      .menu
+             {
+             width: 100%;
+             font-size: 25px;
+             text-align: center;
+             font-family: Didact Gothic;
+             margin-top: 0px;
+             margin-bottom: 0px;
+             cursor: pointer;
+             transition-duration: 0.2s;
+             }
+             
+      .menu:hover 
+              {
+              background-color: #8ED3D6;
+              color: white;
+              }
+              
+      .width
+              {
+              width: 721px;
+              }
+      
+      .text
+             {
+             font-size: 20px;
+             text-align: center;
+             word-wrap: break-word;
+             font-family: Arial;
+             } 
+             
+      .text_column
+             {
+             font-size: 15px;
+             text-align: center;
+             word-wrap: break-word;
+             font-family: Arial;
+             padding-left: 5px;
+             padding-right: 5px;
+             margin-top: 3px;
+             margin-bottom: 3px;
+             } 
+             
+      .center
+             {
+             text-align: center;
+             }
+             
+             
+      .control
+             {
+             color: #876083;
+             }
+             
+             
+      .justify
+             {
+             text-align: justify;
+             }
+             
+      .column1
+             {
+             width: 4em ;
+             }
+             
+      .menu_table
+              {
+              "border: solid;
+              border-width: 1 px;
+              border-color: white;
+              border-radius: 6px;
+              background-color: #8ED3D6;
+              }
+              
+      .align-right
+              {
+              float: right;
+              }
+              
+      .padding_table
+              {
+              padding-left: 5%; 
+              padding-right: 5%;
+              }
+              
+      .body
+              {
+              background-color: #CACACA; 
+              }
+              
+      .column
+             {
+             width: 25%
+             }
+              
+      input[type=text], select 
+              {
+              width: 100%;
+              padding: 6px 10px;
+              margin: 8px 0;
+              display: inline-block;
+              border: 1px solid #8ED3D6;
+              border-radius: 4px;
+              box-sizing: border-box;
+              }
+             
+      table
+             {
+             width: 721px;
+             "border: solid;
+             word-wrap: break-word;
+             font-family: Arial;
+             }
+
+
+      .button-ktoreotazky 
+             {
+              background-color: #8ED3D6;
+              border: none;
+              color: black;
+              border-radius: 6px;
+              padding: 5px 10px;
+              text-align: center;
+              text-decoration: none;
+              display: inline-block;
+              font-size: 15px;
+              font-family: Didact Gothic;
+              cursor: pointer;
+              transition-duration: 0.2s;    
+              }
+              
+      .button-ktoreotazky:hover 
+              {
+              background-color: #8ED3D6;
+              color: white;
+              }
+              
   </style>
   </head>
+
   <body class="body"><center><div>
      <form action="/" method = "post">
   
@@ -231,19 +378,19 @@
         <tr>
            <td class="column1"><input type="text" name="najmensiaotazka" placeholder="Od.." class="align-right"/></td>
            <td class="column1"><input type="text" name="najvacsiaotazka" placeholder="Do.." class="align-right"/></td>
-           <td><input type="submit" name="btn" value="Pridať rozmedzie otázok" class="button"/></td>
+           <td><input type="submit" name="btn" value="Pridať rozmedzie otázok" class="button-ktoreotazky"/></td>
            <td class="column1"><input type="text" name="cislootazky" placeholder="Číslo.." class="align-right"/></td>
-           <td><input type="submit" name="btn" value="Prejsť na otázku" class="button"/></td>
+           <td><input type="submit" name="btn" value="Prejsť na otázku" class="button-ktoreotazky"/></td>
          </tr>
      </table>
      <br />
      <p class="text justify width">Môžeš si vybrať konkrétnu oblasť otázok z ktorých sa chceš dať preskúšať. Otázky sú rozdelené podľa nasledujúcich tém:</p>
      <table>
         <tr class="menu_table">
-           <td class="column"><center><input type="submit" name="btn" value="Atóm" class="button"/></center></td>
-           <td class="column"><center><input type="submit" name="btn" value="Sústava látok" class="button"/></center></td>
-           <td class="column"><center><input type="submit" name="btn" value="Látky" class="button"/></center></td>
-           <td class="column"><center><input type="submit" name="btn" value="Periodická sústava prvkov" class="button"/></center></td>
+           <td class="column"><center><input type="submit" name="btn" value="Atóm" class="button-ktoreotazky"/></center></td>
+           <td class="column"><center><input type="submit" name="btn" value="Sústava látok" class="button-ktoreotazky"/></center></td>
+           <td class="column"><center><input type="submit" name="btn" value="Látky" class="button-ktoreotazky"/></center></td>
+           <td class="column"><center><input type="submit" name="btn" value="Periodická sústava prvkov" class="button-ktoreotazky"/></center></td>
         </tr>
         <tr>
            <td class="column"><p class="text_column justify">Táto kategória obsahuje otázky týkajúce sa stavby atómu, správania sa elektrónov, protónov a podobne. </p></td>
@@ -255,10 +402,10 @@
      <br />
      <table>
         <tr class="menu_table">
-           <td class="column"><center><input type="submit" name="btn" value="Chemická väzba" class="button"/></center></td>
-           <td class="column"><center><input type="submit" name="btn" value="Názvoslovie" class="button"/></center></td>
-           <td class="column"><center><input type="submit" name="btn" value="Chemické veličiny" class="button"/></center></td>
-           <td class="column"><center><input type="submit" name="btn" value="Kyseliny a zásady" class="button"/></center></td>
+           <td class="column"><center><input type="submit" name="btn" value="Chemická väzba" class="button-ktoreotazky"/></center></td>
+           <td class="column"><center><input type="submit" name="btn" value="Názvoslovie" class="button-ktoreotazky"/></center></td>
+           <td class="column"><center><input type="submit" name="btn" value="Chemické veličiny" class="button-ktoreotazky"/></center></td>
+           <td class="column"><center><input type="submit" name="btn" value="Kyseliny a zásady" class="button-ktoreotazky"/></center></td>
         </tr>
         <tr>
            <td class="column"><p class="text_column justify">Táto kategória obsahuje otázky týkajúce sa chemickej väzby, jej druhov a spôsobov akým je vytvorená. </p></td>
@@ -270,10 +417,10 @@
      <br />
      <table>
         <tr class="menu_table">
-           <td class="column"><center><input type="submit" name="btn" value="Chemické reakcie" class="button"/></center></td>
-           <td class="column"><center><input type="submit" name="btn" value="Chemická rovnováha" class="button"/></center></td>
-           <td class="column"><center><input type="submit" name="btn" value="Komplexné zlúčeniny" class="button"/></center></td>
-           <td class="column"><center><input type="submit" name="btn" value="Príklady" class="button"/></center></td>
+           <td class="column"><center><input type="submit" name="btn" value="Chemické reakcie" class="button-ktoreotazky"/></center></td>
+           <td class="column"><center><input type="submit" name="btn" value="Chemická rovnováha" class="button-ktoreotazky"/></center></td>
+           <td class="column"><center><input type="submit" name="btn" value="Komplexné zlúčeniny" class="button-ktoreotazky"/></center></td>
+           <td class="column"><center><input type="submit" name="btn" value="Príklady" class="button-ktoreotazky"/></center></td>
         </tr>
         <tr>
            <td class="column"><p class="text_column justify">Táto kategória obsahuje otázky týkajúce sa chemických reakcií a stechiometrických koeficientov.</p></td> 
