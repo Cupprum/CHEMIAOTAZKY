@@ -6,6 +6,8 @@ import uuid
 import psycopg2
 import os
 from urllib.parse import urlparse
+import xml.etree.ElementTree as ET
+
 
 app = Flask(__name__)
 url = urlparse(os.environ["DATABASE_URL"])
@@ -951,6 +953,95 @@ def pridatotazku():
         respond = make_response(render_template('pridanieotazok.html'))
         return respond
 
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'GET':
+        respond = render_template('login.html')
+        session['password'] = None
+        return respond
+    if request.method == 'POST':
+        if request.form['btn'] == 'Submit':
+            passcode = request.form['passcode']
+            mysecretkey = app.secret_key
+            if passcode == mysecretkey:
+                respond = redirect(url_for('justadminthings'))
+                session['password'] = app.secret_key
+                return respond 
+            respond = redirect(url_for('home'))
+            return respond
+
+@app.route('/justadminthings', methods=['GET', 'POST'])
+def justadminthings():
+    if request.method == 'GET':
+        kookie = session.get('password')
+        if kookie == app.secret_key:
+            global engine
+            pocetotazok = 0
+            loopdata = []
+            try:
+                engine.execute('''SELECT nazov FROM otazky''')
+                result_set = engine.fetchall()
+                for r in result_set:
+                    print(r)
+                    r = random.choice(r[0:1])
+                    pocetotazok += 1
+                    loopdata.append(r)
+            except psycopg2.ProgrammingError:
+                pass
+            respond = render_template('justadminthings.html', loopdata=loopdata)
+            return respond
+        else:
+            respond = redirect(url_for('home'))
+            return respond
+
+    elif request.method == 'POST':
+        if request.form['btn'] == 'Pridat vsetko z xml':
+            url = urlparse(os.environ["DATABASE_URL"])
+            db = "dbname=%s user=%s password=%s host=%s " % (url.path[1:], url.username, url.password, url.hostname)
+            conn = psycopg2.connect(db)
+            conn.autocommit = True
+            engine = conn.cursor()
+            engine.execute("CREATE TABLE IF NOT EXISTS otazky (cislootazky int, ot text, od text, ma text, mb text, mc text, md text, me text, mf text, mg text, mh text);")
+
+            tree = ET.parse('chemia.xml')
+            root = tree.getroot()
+
+            ypsilon = 1
+            for otazky in root.findall('otazka'):
+                number = otazky.attrib.get('number')
+                if str(ypsilon) == number:
+                    print('ypsilon: ', ypsilon, 'number: ', number)
+                    ot = str(otazky.find('ot').text)
+                    ot = ot.strip()
+                    od = str(otazky.find('od').text)
+                    od = od.strip()
+                    ma = str(otazky.find('ma').text)
+                    ma = ma.strip()
+                    mb = str(otazky.find('mb').text)
+                    mb = mb.strip()
+                    mc = str(otazky.find('mc').text)
+                    mc = mc.strip()
+                    md = str(otazky.find('md').text)
+                    md = md.strip()
+                    me = str(otazky.find('me').text)
+                    me = me.strip()
+                    mf = str(otazky.find('mf').text)
+                    mf = mf.strip()
+                    mg = str(otazky.find('mg').text)
+                    mg = mg.strip()
+                    mh = str(otazky.find('mh').text)
+                    mh = mh.strip()
+                    vklada = """INSERT INTO otazky (cislootazky, ot, od, ma, mb, mc, md, me, mf, mg, mh) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);"""
+                    engine.execute(vklada, (ypsilon, ot, od, ma, mb, mc, md, me, mf, mg, mh))
+                    ypsilon += 1
+
+            respond = render_template('justadminthings.html', cosatodeje='PREPISANE DO DATABAZY')
+            return respond
+
+        elif request.form['btn'] == 'Vymazat vsetko z databazy':
+            engine.execute('''DELETE FROM otazky''')
+            respond = render_template('justadminthings.html', cosatodeje='V DATABAZE SA NIC NENACHADZA')
+            return respond
 
 app.secret_key = os.environ["SESSION_KEY"]
 

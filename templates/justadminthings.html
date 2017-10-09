@@ -37,14 +37,9 @@
         <form action="/justadminthings" method = "post">
           <h1>Just admin things</h1>
           <h1>{{ cosatodeje }}</h1>
-          <input type="submit" name="btn" value="Potvrdit nove jedla" class="button"/>
-          <br><br>
           <input type="submit" name="btn" value="Pridat vsetko z xml" class="button"/>
           <br><br>
           <input type="submit" name="btn" value="Vymazat vsetko z databazy" class="button"/>
-          <br><br>
-          <input type="text" name="txt">
-          <input type="submit" name="btn" value="Vymaz jedno" class="button"/>
           {% for x in loopdata %}
             <p>{{ x }}</p>
           {% endfor %}
