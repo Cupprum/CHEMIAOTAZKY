@@ -46,7 +46,7 @@ def kont(otazkyzdatabazy):
         moja.append('h')
 
     lst = str(otazkyzdatabazy['od']).split(',')
-
+    print(lst)
     maxbodovzaodpoved = len(lst)
     mojbodovzaodpoved = 0
 
@@ -206,7 +206,7 @@ def home():
             koncovka = 'ok'
             zleotazky = []
             najmensiaotazka = 1
-            najvacsiaotazka = 500
+            najvacsiaotazka = 1500
             lastaction = None
             skupinaotazok = None
             pole = {'randommeno': randommeno, 'mojeotazky': mojeotazky, 'ypsilon': ypsilon, 'body': body,
@@ -247,7 +247,7 @@ def home():
                 koncovka = 'ok'
                 zleotazky = []
                 najmensiaotazka = 1
-                najvacsiaotazka = 500
+                najvacsiaotazka = 1500
                 lastaction = None
                 skupinaotazok = None
                 pole = {'randommeno': randommeno, 'mojeotazky': mojeotazky, 'ypsilon': ypsilon, 'body': body,
@@ -411,8 +411,9 @@ def home():
                     vyberazdatabazy(otazkyzdatabazy, r)
 
                     maxbodovzaodpoved, mojbodovzaodpoved, akoma, akomb, akomc, akomd, akome, akomf, akomg, akomh, zadana, zadanb, zadanc, zadand, zadane, zadanf, zadang, zadanh, dlzkamojejodpovede = kont(otazkyzdatabazy)
-
-                    if maxbodovzaodpoved == mojbodovzaodpoved and moja == maxbodovzaodpoved:
+                    lst = str(otazkyzdatabazy['od']).split(',')
+                    print('maxbodovzaodpoved:',maxbodovzaodpoved,'mojbodovzaodpoved: ',mojbodovzaodpoved,'moja', moja, 'lst',lst)
+                    if maxbodovzaodpoved == mojbodovzaodpoved and moja == lst:
                         mojeotazky.append(int(ypsilon))
                         body = len(mojeotazky)
                         if body == 1:
@@ -477,7 +478,7 @@ def home():
             koncovka = 'ok'
             zleotazky = []
             najmensiaotazka = 1
-            najvacsiaotazka = 500
+            najvacsiaotazka = 1500
             lastaction = None
             skupinaotazok = None
 
@@ -686,8 +687,8 @@ def home():
                     respond = make_response(render_template('layout.html', zmenaotazok=True, control='Najmenšia otázka musí byť väčšia ako 0.'))
                     return respond
 
-                if najvacsiaotazka >= 501:
-                    respond = make_response(render_template('layout.html', zmenaotazok=True, control='Najväčšia otázka môže byť maximálne 500.'))
+                if najvacsiaotazka > 1500:
+                    respond = make_response(render_template('layout.html', zmenaotazok=True, control='Najväčšia otázka môže byť maximálne 1500.'))
                     return respond
 
                 else:
@@ -707,7 +708,7 @@ def home():
             lastaction = None
 
             try:
-                if int(request.form['cislootazky']) in list(range(1, 500 + 1)):
+                if int(request.form['cislootazky']) in list(range(1, 1500 + 1)):
                     ypsilon = int(request.form['cislootazky'])
 
                     otazkyzdatabazy = {'cislootazky': None, 'ot': None, 'od': None, 'ma': None, 'mb': None,
@@ -732,7 +733,7 @@ def home():
 
             except ValueError:
                 respond = make_response(render_template('jednaotazka.html', otazka="""moj mily :) je pekne ze si myslis ze ta to
-                                        bude skusat pismenka :D ale takto to nefunguje :D alebo si zadal cislo vacsie ako 500, koniec koncou
+                                        bude skusat pismenka :D ale takto to nefunguje :D alebo si zadal cislo vacsie ako 1500, koniec koncou
                                         si retard a ak sa ti nepaci ze ti tu teraz pindam tak v pravo hore mas tlacitko co vyriesi vsetky tvoje problemy""",
                                         bdy=body, sklonovanie=koncovka))
                 return respond
