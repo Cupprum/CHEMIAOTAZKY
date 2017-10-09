@@ -1,0 +1,185 @@
+.image 
+            {
+            width: 700px;
+            height: 342px;
+            display: block;
+            margin-top: 5px;
+            margin-bottom: 5px;
+            }
+            
+.menu
+             {
+             width: 100%;
+             font-size: 25px;
+             text-align: center;
+             font-family: Didact Gothic;
+             margin-top: 0px;
+             margin-bottom: 0px;
+             cursor: pointer;
+             transition-duration: 0.2s;
+             }
+             
+.menu:hover 
+              {
+              background-color: #8ED3D6;
+              color: white;
+              }
+              
+.text
+             {
+             font-size: 20px;
+             text-align: center;
+             word-wrap: break-word;
+             font-family: Arial;
+             }
+             
+.text_column
+             {
+             font-size: 15px;
+             text-align: center;
+             word-wrap: break-word;
+             font-family: Arial;
+             padding-left: 5px;
+             padding-right: 5px;
+             margin-top: 3px;
+             margin-bottom: 3px;
+             }
+             
+.center
+             {
+             text-align: center;
+             }
+             
+.align_right
+             {
+             float: right;
+             }
+             
+.question-text
+             {
+             font-size: 20px;
+             word-wrap: break-word;
+             font-family: Arial;
+             }
+             
+.question-text-padding
+             {
+             font-size: 20px;
+             word-wrap: break-word;
+             font-family: Arial;
+             padding-top: 3px;
+             padding-bottom: 3px;
+             }
+             
+.option
+             {
+             width: 7%;
+             font-size: 20px;
+             font-family: Arial;
+             text-align: center;}
+             
+.control
+             {
+             color: #876083;
+             }
+            
+.column
+             {
+             width: 45%;
+             }
+             
+.option
+             {
+             width: 7%;
+             font-size: 20px;
+             font-family: Arial;
+             text-align: center;
+             }
+             
+.justify
+             {
+             text-align: justify;
+             }
+             
+.align-right
+              {
+              float: right;
+              }
+             
+.plus
+              {
+              width: 15px;
+              height: 15px;
+              display: inline;
+              }
+              
+.menu_table
+              {
+              //border: solid;
+              border-width: 1 px;
+              border-color: white;
+              border-radius: 6px;
+              background-color: #8ED3D6;
+              }
+              
+.body
+              {
+              background-color: #CACACA; 
+              }
+              
+.wrong
+             {
+             background-color: #E17170;
+             border-radius: 4px;
+             }
+             
+.right
+             {
+             background-color: #91D990;
+             border-radius: 4px;
+             }
+              
+.width
+              {
+              width: 721px;
+              }
+              
+.h1
+             {
+             font-size: 35px;
+             font-family: Didact Gothic;
+             }
+             
+a:link  
+              {
+              color: #876083;
+              font-family: Arial;
+              text-decoration: none;
+              }
+              
+a:visited 
+              {
+              color: #876083;
+              font-family: Arial;
+              text-decoration: none;
+              }
+              
+a:hover 
+              {
+              color: black;
+              font-family: Arial;
+              text-decoration: none;
+              }
+              
+table
+             {
+             width: 721px;
+              //border: solid;
+              word-wrap: break-word;
+              font-family: Arial;
+             }
+             
+table td 
+             {
+             //border: solid;
+             }
