@@ -377,10 +377,14 @@ def home():
                             'koncovka': koncovka, 'zleotazky': zleotazky, 'najmensiaotazka': najmensiaotazka, 'najvacsiaotazka': najvacsiaotazka,
                             'lastaction': lastaction, 'skupinaotazok': skupinaotazok}
                     print(pole)
+                    cookie_password = session.get('password')
+                    spravna_odpoved = ''
+                    if cookie_password == app.secret_key:
+                        spravna_odpoved = otazkyzdatabazy['od']
                     respond = make_response(render_template('layout.html', layout=True, moznosti=True, checkbuttons=True, typotazok=typotazky,
                                                             otazka=otazkyzdatabazy['ot'], bdy=body, sklonovanie=koncovka,
                                                             ma=otazkyzdatabazy['ma'], mb=otazkyzdatabazy['mb'], mc=otazkyzdatabazy['mc'], md=otazkyzdatabazy['md'], me=otazkyzdatabazy['me'],
-                                                            mf=otazkyzdatabazy['mf'], mg=otazkyzdatabazy['mg'], mh=otazkyzdatabazy['mh'], control=('Spravna odpoved je', otazkyzdatabazy['od'])))
+                                                            mf=otazkyzdatabazy['mf'], mg=otazkyzdatabazy['mg'], mh=otazkyzdatabazy['mh'], control=(spravna_odpoved)))
                     session['nameID'] = json.dumps(pole)
                     return respond
 
@@ -973,8 +977,8 @@ def login():
 @app.route('/justadminthings', methods=['GET', 'POST'])
 def justadminthings():
     if request.method == 'GET':
-        kookie = session.get('password')
-        if kookie == app.secret_key:
+        cookie_password = session.get('password')
+        if cookie_password == app.secret_key:
             global engine
             pocetotazok = 0
             loopdata = []
