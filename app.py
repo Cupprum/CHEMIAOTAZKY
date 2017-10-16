@@ -22,143 +22,41 @@ uvod = 'Zvol spravne odpovede. Skontroluj svoje odpovede kliknutim na tlacitko k
 
 
 def kont(otazkyzdatabazy):
-    A = request.form.get('A')
-    if A:
-        moja.append('a')
-    B = request.form.get('B')
-    if B:
-        moja.append('b')
-    C = request.form.get('C')
-    if C:
-        moja.append('c')
-    D = request.form.get('D')
-    if D:
-        moja.append('d')
-    E = request.form.get('E')
-    if E:
-        moja.append('e')
-    F = request.form.get('F')
-    if F:
-        moja.append('f')
-    G = request.form.get('G')
-    if G:
-        moja.append('g')
-    H = request.form.get('H')
-    if H:
-        moja.append('h')
+    list_moznosti = ['A','B','C','D','E','F','G','H']
+    dic_akomx = {'akoma':None,'akomb':None,'akomc':None,'akomd':None,'akome':None,'akomf':None,'akomg':None,'akomh':None}
+    dic_zadanx = {'zadana':None,'zadanb':None,'zadanc':None,'zadand':None,'zadane':None,'zadanf':None,'zadang':None,'zadanh':None}
+
+    for x in range(8):
+        zadane = request.form.get(list_moznosti[x])
+        if zadane:
+            moja.append(list_moznosti[x].lower())
 
     lst = str(otazkyzdatabazy['od']).split(',')
     print(lst)
     maxbodovzaodpoved = len(lst)
     mojbodovzaodpoved = 0
 
-    if 'a' in moja:
-        zadana = 'zakliknute'
-    else:
-        zadana = 'nezakliknute'
-    if 'a' in lst and 'a' in moja:
-        print('A si zadal tak ako malo byt')
-        mojbodovzaodpoved += 1
-        akoma = 'spravne'
-    elif 'a' not in moja and 'a' not in lst:
-        akoma = 'neutralne'
-    else:
-        akoma = 'zle'
+    for x in range(8):
+        aktualne = list_moznosti[x].lower()
+        print('AKTUALNEEEEE', aktualne)
+        print('TUTO', dic_zadanx['zadana'])
+        if aktualne in moja:
+            dic_zadanx['zadan'+aktualne] = 'zakliknute'
+        else:
+            dic_zadanx['zadan'+aktualne] = 'nezakliknute'
+        if aktualne in lst and aktualne in moja:
+            print(list_moznosti[x], 'si zadal tak ako malo byt')
+            mojbodovzaodpoved += 1
+            dic_akomx['akom'+aktualne] = 'spravne'
+        elif aktualne not in moja and aktualne not in lst:
+            dic_akomx['akom'+aktualne] = 'neutralne'
+        else:
+            dic_akomx['akom'+aktualne] = 'zle'
 
-    if 'b' in moja:
-        zadanb = 'zakliknute'
-    else:
-        zadanb = 'nezakliknute'
-    if 'b' in lst and 'b' in moja:
-        print('B si zadal tak ako malo byt')
-        mojbodovzaodpoved += 1
-        akomb = 'spravne'
-    elif 'b' not in moja and 'b' not in lst:
-        akomb = 'neutralne'
-    else:
-        akomb = 'zle'
-
-    if 'c' in moja:
-        zadanc = 'zakliknute'
-    else:
-        zadanc = 'nezakliknute'
-    if 'c' in lst and 'c' in moja:
-        print('C si zadal tak ako malo byt')
-        mojbodovzaodpoved += 1
-        akomc = 'spravne'
-    elif 'c' not in moja and 'c' not in lst:
-        akomc = 'neutralne'
-    else:
-        akomc = 'zle'
-
-    if 'd' in moja:
-        zadand = 'zakliknute'
-    else:
-        zadand = 'nezakliknute'
-    if 'd' in lst and 'd' in moja:
-        print('D si zadal tak ako malo byt')
-        mojbodovzaodpoved += 1
-        akomd = 'spravne'
-    elif 'd' not in moja and 'd' not in lst:
-        akomd = 'neutralne'
-    else:
-        akomd = 'zle'
-
-    if 'e' in moja:
-        zadane = 'zakliknute'
-    else:
-        zadane = 'nezakliknute'
-    if 'e' in lst and 'e' in moja:
-        print('E si zadal tak ako malo byt')
-        mojbodovzaodpoved += 1
-        akome = 'spravne'
-    elif 'e' not in moja and 'e' not in lst:
-        akome = 'neutralne'
-    else:
-        akome = 'zle'
-
-    if 'f' in moja:
-        zadanf = 'zakliknute'
-    else:
-        zadanf = 'nezakliknute'
-    if 'f' in lst and 'f' in moja:
-        print('F si zadal tak ako malo byt')
-        mojbodovzaodpoved += 1
-        akomf = 'spravne'
-    elif 'f' not in moja and 'f' not in lst:
-        akomf = 'neutralne'
-    else:
-        akomf = 'zle'
-
-    if 'g' in moja:
-        zadang = 'zakliknute'
-    else:
-        zadang = 'nezakliknute'
-    if 'g' in lst and 'g' in moja:
-        print('G si zadal tak ako malo byt')
-        mojbodovzaodpoved += 1
-        akomg = 'spravne'
-    elif 'g' not in moja and 'g' not in lst:
-        akomg = 'neutralne'
-    else:
-        akomg = 'zle'
-
-    if 'h' in moja:
-        zadanh = 'zakliknute'
-    else:
-        zadanh = 'nezakliknute'
-    if 'h' in lst and 'h' in moja:
-        print('H si zadal tak ako malo byt')
-        mojbodovzaodpoved += 1
-        akomh = 'spravne'
-    elif 'h' not in moja and 'h' not in lst:
-        akomh = 'neutralne'
-    else:
-        akomh = 'zle'
 
     dlzkamojejodpovede=len(moja)
 
-    return maxbodovzaodpoved, mojbodovzaodpoved, akoma, akomb, akomc, akomd, akome, akomf, akomg, akomh, zadana, zadanb, zadanc, zadand, zadane, zadanf, zadang, zadanh, dlzkamojejodpovede
+    return maxbodovzaodpoved, mojbodovzaodpoved,dic_akomx, dic_zadanx, dlzkamojejodpovede
 
 
 def vyberazdatabazy(otazkyzdatabazy, r):
@@ -416,7 +314,7 @@ def home():
                 for r in result_set:
                     vyberazdatabazy(otazkyzdatabazy, r)
 
-                    maxbodovzaodpoved, mojbodovzaodpoved, akoma, akomb, akomc, akomd, akome, akomf, akomg, akomh, zadana, zadanb, zadanc, zadand, zadane, zadanf, zadang, zadanh, dlzkamojejodpovede = kont(otazkyzdatabazy)
+                    maxbodovzaodpoved, mojbodovzaodpoved, dic_akomx, dic_zadanx, dlzkamojejodpovede = kont(otazkyzdatabazy)
                     lst = str(otazkyzdatabazy['od']).split(',')
                     print('maxbodovzaodpoved:',maxbodovzaodpoved,'mojbodovzaodpoved: ',mojbodovzaodpoved,'moja', moja, 'lst',lst)
                     if maxbodovzaodpoved == mojbodovzaodpoved and moja == lst:
@@ -438,13 +336,13 @@ def home():
 
                         moja[:] = []
 
-                        respond = make_response(render_template('layout.html', layout=True, moznosti=True, akoma=akoma, akomb=akomb, akomc=akomc, akomd=akomd,
-                                                akome=akome, akomf=akomf, akomg=akomg, akomh=akomh, bdy=body, sklonovanie=koncovka,
+                        respond = make_response(render_template('layout.html', layout=True, moznosti=True, akoma=dic_akomx['akoma'], akomb=dic_akomx['akomb'], akomc=dic_akomx['akomc'], akomd=dic_akomx['akomd'],
+                                                akome=dic_akomx['akome'], akomf=dic_akomx['akomf'], akomg=dic_akomx['akomg'], akomh=dic_akomx['akomh'], bdy=body, sklonovanie=koncovka,
                                                 control='Výborne, správna odpoveď!', otazka=otazkyzdatabazy['ot'], odp=otazkyzdatabazy['od'],
                                                 ma=otazkyzdatabazy['ma'], mb=otazkyzdatabazy['mb'], mc=otazkyzdatabazy['mc'], md=otazkyzdatabazy['md'],
                                                 me=otazkyzdatabazy['me'], mf=otazkyzdatabazy['mf'], mg=otazkyzdatabazy['mg'], mh=otazkyzdatabazy['mh'],
-                                                zadana=zadana, zadanb=zadanb, zadanc=zadanc, zadand=zadand,
-                                                zadane=zadane, zadanf=zadanf, zadang=zadang, zadanh=zadanh))
+                                                zadana=dic_zadanx['zadana'], zadanb=dic_zadanx['zadanb'], zadanc=dic_zadanx['zadanc'], zadand=dic_zadanx['zadand'],
+                                                zadane=dic_zadanx['zadane'], zadanf=dic_zadanx['zadanf'], zadang=dic_zadanx['zadang'], zadanh=dic_zadanx['zadanh']))
                         session['nameID'] = json.dumps(pole)
                         return respond
 
@@ -459,13 +357,13 @@ def home():
 
                         moja[:] = []
 
-                        respond = make_response(render_template('layout.html', layout=True, moznosti=True, akoma=akoma, akomb=akomb, akomc=akomc, akomd=akomd,
-                                                akome=akome, akomf=akomf, akomg=akomg, akomh=akomh, bdy=body, sklonovanie=koncovka,
+                        respond = make_response(render_template('layout.html', layout=True, moznosti=True, akoma=dic_akomx['akoma'], akomb=dic_akomx['akomb'], akomc=dic_akomx['akomc'], akomd=dic_akomx['akomd'],
+                                                akome=dic_akomx['akome'], akomf=dic_akomx['akomf'], akomg=dic_akomx['akomg'], akomh=dic_akomx['akomh'], bdy=body, sklonovanie=koncovka,
                                                 control='Bohužiaľ nesprávne.', otazka=otazkyzdatabazy['ot'], odp=otazkyzdatabazy['od'],
                                                 ma=otazkyzdatabazy['ma'], mb=otazkyzdatabazy['mb'], mc=otazkyzdatabazy['mc'], md=otazkyzdatabazy['md'],
                                                 me=otazkyzdatabazy['me'], mf=otazkyzdatabazy['mf'], mg=otazkyzdatabazy['mg'], mh=otazkyzdatabazy['mh'],
-                                                zadana=zadana, zadanb=zadanb, zadanc=zadanc, zadand=zadand,
-                                                zadane=zadane, zadanf=zadanf, zadang=zadang, zadanh=zadanh))
+                                                zadana=dic_zadanx['zadana'], zadanb=dic_zadanx['zadanb'], zadanc=dic_zadanx['zadanc'], zadand=dic_zadanx['zadand'],
+                                                zadane=dic_zadanx['zadane'], zadanf=dic_zadanx['zadanf'], zadang=dic_zadanx['zadang'], zadanh=dic_zadanx['zadanh']))
                         session['nameID'] = json.dumps(pole)
                         return respond
 
