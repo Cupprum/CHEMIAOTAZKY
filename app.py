@@ -60,18 +60,9 @@ def kont(otazkyzdatabazy):
 
 
 def vyberazdatabazy(otazkyzdatabazy, r):
-    otazkyzdatabazy['cislootazky'] = random.choice(r[0:1])
-    otazkyzdatabazy['ot'] = random.choice(r[1:2])
-    otazkyzdatabazy['od'] = random.choice(r[2:3])
-    otazkyzdatabazy['ma'] = random.choice(r[3:4])
-    otazkyzdatabazy['mb'] = random.choice(r[4:5])
-    otazkyzdatabazy['mc'] = random.choice(r[5:6])
-    otazkyzdatabazy['md'] = random.choice(r[6:7])
-    otazkyzdatabazy['me'] = random.choice(r[7:8])
-    otazkyzdatabazy['mf'] = random.choice(r[8:9])
-    otazkyzdatabazy['mg'] = random.choice(r[9:10])
-    otazkyzdatabazy['mh'] = random.choice(r[10:11])
-
+    list_vyberazdatabazy = ['cislootazky','ot','od','ma','mb','mc','md','me','mf','mg','mh']
+    for x in range(len(list_vyberazdatabazy)):
+        otazkyzdatabazy[list_vyberazdatabazy[x]] = r[x]
 
 def rozborcookie():
     kokie = session['nameID']
@@ -393,11 +384,11 @@ def home():
                     respond = make_response(render_template('layout.html', zmenaotazok=True, control='Najmenšia otázka musí byť menšia od najväčšej, zároveň si nemôžu byť rovné.'))
                     return respond
 
-                if najmensiaotazka <= 0:
+                elif najmensiaotazka <= 0:
                     respond = make_response(render_template('layout.html', zmenaotazok=True, control='Najmenšia otázka musí byť väčšia ako 0.'))
                     return respond
 
-                if najvacsiaotazka > 1500:
+                elif najvacsiaotazka > 1500:
                     respond = make_response(render_template('layout.html', zmenaotazok=True, control='Najväčšia otázka môže byť maximálne 1500.'))
                     return respond
 
@@ -467,7 +458,7 @@ def home():
             list_skupinaotazok = ['atom','sustavalatok','latky','psustava','chvazba','nazvoslovie','veliciny','kyszas','reakcie','rovnovaha','komplexy','priklady']
             list_typotazok = ['Atóm','Sústava látok','Látky','Periodická sústava prvkov','Chemická väzba','Názvoslovie','Chemické veličiny','Kyseliny a zásady','Chemické reakcie','Chemická rovnováha','Komplexné zlúčeniny','Príklady']
 
-            try:
+            if htmlotazka in list_typotazok:
                 for x in range(len(list_typotazok)):
                     if list_typotazok[x] == htmlotazka:
                         randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok = rozborcookie()
@@ -481,7 +472,15 @@ def home():
                         respond = make_response(redirect(url_for('home')))
                         session['nameID'] = json.dumps(pole)
                         return respond
-            except:
+
+            elif htmlotazka in list_tlacitok:
+                list_tlacitok = ['Tabuľka najlepších', 'O projekte', 'Zmena skúšaných otázok', 'Zle zodpovedané otázky']
+                list_redirect_func = ['tabulkanajlepsich', 'oprojekte', 'zmenaotazok', 'zleotazky']
+                for x in range(len(list_tlacitok)):
+                    if htmlotazka == list_tlacitok[x]:
+                        return redirect(url_for(list_redirect_func[x]))
+
+            else:
                 randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok = rozborcookie()
 
                 lastaction = None
