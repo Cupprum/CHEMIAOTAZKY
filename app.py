@@ -108,7 +108,7 @@ def home():
             jozo = """INSERT INTO FIIT (uuia4, meno, body, stav) VALUES (%s, NULL, %s, '0');"""
             engine.execute(jozo, (randommeno, body))
 
-            respond = make_response(render_template('layout.html', layout=True, uvod=True, bdy=body, sklonovanie=koncovka))
+            respond = make_response(render_template('layout.html', uvod=True, bdy=body, sklonovanie=koncovka))
             session['nameID'] = json.dumps(pole)
             return respond
 
@@ -127,7 +127,7 @@ def home():
                 pole = {'randommeno': randommeno, 'mojeotazky': mojeotazky, 'ypsilon': ypsilon, 'body': body,
                         'koncovka': koncovka, 'zleotazky': zleotazky, 'najmensiaotazka': najmensiaotazka, 'najvacsiaotazka': najvacsiaotazka,
                         'lastaction': lastaction, 'skupinaotazok': skupinaotazok}
-                respond = make_response(render_template('layout.html', layout=True, uvod=True, bdy=pole['body'], sklonovanie=pole['koncovka']))
+                respond = make_response(render_template('layout.html', uvod=True, bdy=pole['body'], sklonovanie=pole['koncovka']))
                 return respond
 
             except TypeError:
@@ -149,7 +149,7 @@ def home():
                 jozo = """INSERT INTO FIIT (uuia4, meno, body, stav) VALUES (%s, NULL, %s, '0');"""
                 engine.execute(jozo, (randommeno, body))
 
-                respond = make_response(render_template('layout.html', layout=True, uvod=True, bdy=body, sklonovanie=koncovka))
+                respond = make_response(render_template('layout.html', uvod=True, bdy=body, sklonovanie=koncovka))
                 session['nameID'] = json.dumps(pole)
                 return respond
 
@@ -211,7 +211,7 @@ def home():
                 finalneotazky = list(polevsetkychotazok - polesplnenychotazok)
 
             if len(finalneotazky) == 0:
-                respond = make_response(render_template('layout.html', layout=True, moznosti=True, control='Nemame otazky', bdy=body, sklonovanie=koncovka))
+                respond = make_response(render_template('layout.html', moznosti=True, control='Nemame otazky', bdy=body, sklonovanie=koncovka))
                 return respond
 
             else:
@@ -232,7 +232,7 @@ def home():
                     spravna_odpoved = ''
                     if cookie_password == app.secret_key:
                         spravna_odpoved = otazkyzdatabazy['od']
-                    respond = make_response(render_template('layout.html', layout=True, moznosti=True, checkbuttons=True, typotazok=typotazky,
+                    respond = make_response(render_template('layout.html', moznosti=True, checkbuttons=True, typotazok=typotazky,
                                                             otazka=otazkyzdatabazy['ot'], bdy=body, sklonovanie=koncovka,
                                                             ma=otazkyzdatabazy['ma'], mb=otazkyzdatabazy['mb'], mc=otazkyzdatabazy['mc'], md=otazkyzdatabazy['md'], me=otazkyzdatabazy['me'],
                                                             mf=otazkyzdatabazy['mf'], mg=otazkyzdatabazy['mg'], mh=otazkyzdatabazy['mh'], control=(spravna_odpoved)))
@@ -289,7 +289,7 @@ def home():
 
                         moja[:] = []
 
-                        respond = make_response(render_template('layout.html', layout=True, moznosti=True, akoma=dic_akomx['akoma'], akomb=dic_akomx['akomb'], akomc=dic_akomx['akomc'], akomd=dic_akomx['akomd'],
+                        respond = make_response(render_template('layout.html', moznosti=True, akoma=dic_akomx['akoma'], akomb=dic_akomx['akomb'], akomc=dic_akomx['akomc'], akomd=dic_akomx['akomd'],
                                                 akome=dic_akomx['akome'], akomf=dic_akomx['akomf'], akomg=dic_akomx['akomg'], akomh=dic_akomx['akomh'], bdy=body, sklonovanie=koncovka,
                                                 control='Výborne, správna odpoveď!', otazka=otazkyzdatabazy['ot'], odp=otazkyzdatabazy['od'],
                                                 ma=otazkyzdatabazy['ma'], mb=otazkyzdatabazy['mb'], mc=otazkyzdatabazy['mc'], md=otazkyzdatabazy['md'],
@@ -310,7 +310,7 @@ def home():
 
                         moja[:] = []
 
-                        respond = make_response(render_template('layout.html', layout=True, moznosti=True, akoma=dic_akomx['akoma'], akomb=dic_akomx['akomb'], akomc=dic_akomx['akomc'], akomd=dic_akomx['akomd'],
+                        respond = make_response(render_template('layout.html', moznosti=True, akoma=dic_akomx['akoma'], akomb=dic_akomx['akomb'], akomc=dic_akomx['akomc'], akomd=dic_akomx['akomd'],
                                                 akome=dic_akomx['akome'], akomf=dic_akomx['akomf'], akomg=dic_akomx['akomg'], akomh=dic_akomx['akomh'], bdy=body, sklonovanie=koncovka,
                                                 control='Bohužiaľ nesprávne.', otazka=otazkyzdatabazy['ot'], odp=otazkyzdatabazy['od'],
                                                 ma=otazkyzdatabazy['ma'], mb=otazkyzdatabazy['mb'], mc=otazkyzdatabazy['mc'], md=otazkyzdatabazy['md'],
@@ -346,166 +346,19 @@ def home():
             jozo = """INSERT INTO FIIT (uuia4, meno, body, stav) VALUES (%s, NULL, %s, '0');"""
             engine.execute(jozo, (randommeno, body))
 
-            respond = make_response(render_template('layout.html', layout=True, uvod=True, bdy=body, sklonovanie=koncovka))
+            respond = make_response(render_template('layout.html', uvod=True, bdy=body, sklonovanie=koncovka))
             session['nameID'] = json.dumps(pole)
-            return respond
-
-        elif request.form['btn'] == 'Tabuľka najlepších':
-            return redirect(url_for('tabulkanajlepsich'))
-
-        elif request.form['btn'] == 'O projekte':
-            return redirect(url_for('oprojekte'))
-
-        elif request.form['btn'] == 'Zmena skúšaných otázok':
-            return redirect(url_for('zmenaotazok'))
-
-        elif request.form['btn'] == 'Zle zodpovedané otázky':
-            return redirect(url_for('zleotazky'))
-
-        # nechapem preco to normalne nefunguje ale ked to dam do route(/) tak to ide
-
-        elif request.form['btn'] == 'Pridať rozmedzie otázok':
-            randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok = rozborcookie()
-
-            lastaction = None
-
-            mensiaotazka = request.form['najmensiaotazka']
-            vacsiaotazka = request.form['najvacsiaotazka']
-
-            if len(mensiaotazka) == 0 or len(vacsiaotazka) == 0:
-                respond = make_response(render_template('layout.html', zmenaotazok=True, control='Musíš zadať obe čísla.'))
-                return respond
-
-            else:
-                najmensiaotazka = int(mensiaotazka)
-                najvacsiaotazka = int(vacsiaotazka)
-
-                if najmensiaotazka >= najvacsiaotazka:
-                    respond = make_response(render_template('layout.html', zmenaotazok=True, control='Najmenšia otázka musí byť menšia od najväčšej, zároveň si nemôžu byť rovné.'))
-                    return respond
-
-                elif najmensiaotazka <= 0:
-                    respond = make_response(render_template('layout.html', zmenaotazok=True, control='Najmenšia otázka musí byť väčšia ako 0.'))
-                    return respond
-
-                elif najvacsiaotazka > 1500:
-                    respond = make_response(render_template('layout.html', zmenaotazok=True, control='Najväčšia otázka môže byť maximálne 1500.'))
-                    return respond
-
-                else:
-                    skupinaotazok = None
-                    pole = {'randommeno': randommeno, 'mojeotazky': mojeotazky, 'ypsilon': ypsilon, 'body': body,
-                            'koncovka': koncovka, 'zleotazky': zleotazky, 'najmensiaotazka': najmensiaotazka, 'najvacsiaotazka': najvacsiaotazka,
-                            'lastaction': lastaction, 'skupinaotazok': skupinaotazok}
-                    respond = make_response(render_template('layout.html', layout=True, uvod=True, bdy=body, sklonovanie=koncovka))
-                    session['nameID'] = json.dumps(pole)
-                    return respond
-
-        elif request.form['btn'] == 'Prejsť na otázku':
-            randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok = rozborcookie()
-
-            polevsetkychotazok = set(list(range(najmensiaotazka, najvacsiaotazka + 1)))
-            polesplnenychotazok = set(mojeotazky)
-            lastaction = None
-
-            try:
-                if int(request.form['cislootazky']) in list(range(1, 1500 + 1)):
-                    ypsilon = int(request.form['cislootazky'])
-
-                    otazkyzdatabazy = {'cislootazky': None, 'ot': None, 'od': None, 'ma': None, 'mb': None,
-                                       'mc': None, 'md': None, 'me': None, 'mf': None, 'mg': None, 'mh': None}
-                    hladavdatabaze = """SELECT * FROM otazky WHERE cislootazky = %s;"""
-                    engine.execute(hladavdatabaze, (ypsilon,))
-                    result_set = engine.fetchall()
-                    for r in result_set:
-                        vyberazdatabazy(otazkyzdatabazy, r)
-                        pole = {'randommeno': randommeno, 'mojeotazky': mojeotazky, 'ypsilon': ypsilon, 'body': body,
-                                'koncovka': koncovka, 'zleotazky': zleotazky, 'najmensiaotazka': najmensiaotazka, 'najvacsiaotazka': najvacsiaotazka,
-                                'lastaction': lastaction, 'skupinaotazok': skupinaotazok}
-                        respond = make_response(render_template('layout.html', layout=True, moznosti=True, checkbuttons=True, otazka=otazkyzdatabazy['ot'],
-                                                ma=otazkyzdatabazy['ma'], mb=otazkyzdatabazy['mb'], mc=otazkyzdatabazy['mc'], md=otazkyzdatabazy['md'],
-                                                me=otazkyzdatabazy['me'], mf=otazkyzdatabazy['mf'], mg=otazkyzdatabazy['mg'], mh=otazkyzdatabazy['mh'],
-                                                control=('Spravna odpoved je', otazkyzdatabazy['od']), bdy=body, sklonovanie=koncovka))
-                        session['nameID'] = json.dumps(pole)
-                        return respond
-                else:
-                    respond = make_response(render_template('jednaotazka.html', control='something went wrong', bdy=body, sklonovanie=koncovka))
-                    return respond
-
-            except ValueError:
-                respond = make_response(render_template('jednaotazka.html', otazka="""moj mily :) je pekne ze si myslis ze ta to
-                                        bude skusat pismenka :D ale takto to nefunguje :D alebo si zadal cislo vacsie ako 1500, koniec koncou
-                                        si retard a ak sa ti nepaci ze ti tu teraz pindam tak v pravo hore mas tlacitko co vyriesi vsetky tvoje problemy""",
-                                        bdy=body, sklonovanie=koncovka))
-                return respond
-
-        elif request.form['btn'] == 'Potvrdiť.':
-            ma = request.form['moznosta']
-            mb = request.form['moznostb']
-            mc = request.form['moznostc']
-            md = request.form['moznostd']
-            me = request.form['moznoste']
-            mf = request.form['moznostf']
-            mg = request.form['moznostg']
-            mh = request.form['moznosth']
-            print(ma, mb, mc, md, me, mf, mg, mh)
-            respond = make_response(render_template('pridanieotazok.html'))
             return respond
 
         else:
             htmlotazka = request.form['btn']
-
-            list_skupinaotazok = ['atom','sustavalatok','latky','psustava','chvazba','nazvoslovie','veliciny','kyszas','reakcie','rovnovaha','komplexy','priklady']
-            list_typotazok = ['Atóm','Sústava látok','Látky','Periodická sústava prvkov','Chemická väzba','Názvoslovie','Chemické veličiny','Kyseliny a zásady','Chemické reakcie','Chemická rovnováha','Komplexné zlúčeniny','Príklady']
-
-            if htmlotazka in list_typotazok:
-                for x in range(len(list_typotazok)):
-                    if list_typotazok[x] == htmlotazka:
-                        randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok = rozborcookie()
-
-                        lastaction = None
-
-                        skupinaotazok = list_skupinaotazok[x]
-                        pole = {'randommeno': randommeno, 'mojeotazky': mojeotazky, 'ypsilon': ypsilon, 'body': body,
-                                'koncovka': koncovka, 'zleotazky': zleotazky, 'najmensiaotazka': najmensiaotazka, 'najvacsiaotazka': najvacsiaotazka,
-                                'lastaction': lastaction, 'skupinaotazok': skupinaotazok}
-                        respond = make_response(redirect(url_for('home')))
-                        session['nameID'] = json.dumps(pole)
-                        return respond
-
-            elif htmlotazka in list_tlacitok:
-                list_tlacitok = ['Tabuľka najlepších', 'O projekte', 'Zmena skúšaných otázok', 'Zle zodpovedané otázky']
-                list_redirect_func = ['tabulkanajlepsich', 'oprojekte', 'zmenaotazok', 'zleotazky']
+            list_tlacitok = ['Tabuľka najlepších', 'O projekte', 'Zmena skúšaných otázok', 'Zle zodpovedané otázky']
+            list_redirect_func = ['tabulkanajlepsich', 'oprojekte', 'zmenaotazok', 'zleotazky']
+                    
+            if htmlotazka in list_tlacitok:
                 for x in range(len(list_tlacitok)):
                     if htmlotazka == list_tlacitok[x]:
                         return redirect(url_for(list_redirect_func[x]))
-
-            else:
-                randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok = rozborcookie()
-
-                lastaction = None
-
-                otazkyzdatabazy = {'cislootazky': None, 'ot': None, 'od': None, 'ma': None, 'mb': None,
-                                   'mc': None, 'md': None, 'me': None, 'mf': None, 'mg': None, 'mh': None}
-
-                htmlotazkalist = htmlotazka.split('.')
-                a = random.choice(htmlotazkalist[0:1])
-                hladavdatabaze = """SELECT * FROM otazky WHERE cislootazky = %s;"""
-                engine.execute(hladavdatabaze, (a,))
-                result_set = engine.fetchall()
-
-                for r in result_set:
-                    vyberazdatabazy(otazkyzdatabazy, r)
-                    pole = {'randommeno': randommeno, 'mojeotazky': mojeotazky, 'ypsilon': ypsilon, 'body': body,
-                            'koncovka': koncovka, 'zleotazky': zleotazky, 'najmensiaotazka': najmensiaotazka, 'najvacsiaotazka': najvacsiaotazka,
-                            'lastaction': lastaction, 'skupinaotazok': skupinaotazok}
-                    print(pole)
-                    respond = make_response(render_template('layout.html', layout=True, moznosti=True, checkbuttons=True,
-                                                            otazka=otazkyzdatabazy['ot'], bdy=body, sklonovanie=koncovka,
-                                                            ma=otazkyzdatabazy['ma'], mb=otazkyzdatabazy['mb'], mc=otazkyzdatabazy['mc'], md=otazkyzdatabazy['md'], me=otazkyzdatabazy['me'],
-                                                            mf=otazkyzdatabazy['mf'], mg=otazkyzdatabazy['mg'], mh=otazkyzdatabazy['mh'], control=('Spravna odpoved je', otazkyzdatabazy['od'])))
-                    session['nameID'] = json.dumps(pole)
-                    return respond
 
 
 @app.route('/tabulkanajlepsich', methods=['GET', 'POST'])
@@ -528,7 +381,7 @@ def tabulkanajlepsich():
             tabulkovydic['tabulka' + str(omg) + 'body'] = y
             omg += 1
 
-        respond = make_response(render_template("layout.html", tabulkanajlepsich=True, bdy=body, sklonovanie=koncovka,
+        respond = make_response(render_template("tabulkanajlepsich.html", bdy=body, sklonovanie=koncovka,
                                 tabulka1meno=tabulkovydic['tabulka1meno'], tabulka1body=tabulkovydic['tabulka1body'],
                                 tabulka2meno=tabulkovydic['tabulka2meno'], tabulka2body=tabulkovydic['tabulka2body'],
                                 tabulka3meno=tabulkovydic['tabulka3meno'], tabulka3body=tabulkovydic['tabulka3body'],
@@ -541,8 +394,7 @@ def tabulkanajlepsich():
             randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok = rozborcookie()
 
             zadanemeno = request.form['vloztemeno']
-
-            if zadanemeno == "" or zadanemeno == " ":
+            if zadanemeno == "" or zadanemeno == " " or len(zadanemeno) == 0:
                 tabulkovydic = {'tabulka1meno': None, 'tabulka1body': None, 'tabulka2meno': None, 'tabulka2body': None,
                                 'tabulka3meno': None, 'tabulka3body': None, 'tabulka4meno': None, 'tabulka4body': None,
                                 'tabulka5meno': None, 'tabulka5body': None}
@@ -555,7 +407,7 @@ def tabulkanajlepsich():
                     tabulkovydic['tabulka' + str(omg) + 'meno'] = x
                     tabulkovydic['tabulka' + str(omg) + 'body'] = y
                     omg += 1
-                    respond = make_response(render_template("layout.html", tabulkanajlepsich=True, otazka="Zvoľ iné meno.",
+                    respond = make_response(render_template("tabulkanajlepsich.html", otazka="Zvoľ iné meno.",
                                             tabulka1meno=tabulkovydic['tabulka1meno'], tabulka1body=tabulkovydic['tabulka1body'],
                                             tabulka2meno=tabulkovydic['tabulka2meno'], tabulka2body=tabulkovydic['tabulka2body'],
                                             tabulka3meno=tabulkovydic['tabulka3meno'], tabulka3body=tabulkovydic['tabulka3body'],
@@ -586,7 +438,7 @@ def tabulkanajlepsich():
                         tabulkovydic['tabulka' + str(omg) + 'body'] = y
                         omg += 1
 
-                    respond = make_response(render_template("layout.html", tabulkanajlepsich=True, otazka="Tvoje meno bolo uložené.", bdy=body, sklonovanie=koncovka,
+                    respond = make_response(render_template("tabulkanajlepsich.html", otazka="Tvoje meno bolo uložené.", bdy=body, sklonovanie=koncovka,
                                             tabulka1meno=tabulkovydic['tabulka1meno'], tabulka1body=tabulkovydic['tabulka1body'],
                                             tabulka2meno=tabulkovydic['tabulka2meno'], tabulka2body=tabulkovydic['tabulka2body'],
                                             tabulka3meno=tabulkovydic['tabulka3meno'], tabulka3body=tabulkovydic['tabulka3body'],
@@ -608,7 +460,7 @@ def tabulkanajlepsich():
                         tabulkovydic['tabulka' + str(omg) + 'body'] = y
                         omg += 1
 
-                    respond = make_response(render_template("layout.html", tabulkanajlepsich=True, otazka="Toto meno bolo už použité, skús zadať iné.",
+                    respond = make_response(render_template("tabulkanajlepsich.html", otazka="Toto meno bolo už použité, skús zadať iné.",
                                             bdy=body, sklonovanie=koncovka,
                                             tabulka1meno=tabulkovydic['tabulka1meno'], tabulka1body=tabulkovydic['tabulka1body'],
                                             tabulka2meno=tabulkovydic['tabulka2meno'], tabulka2body=tabulkovydic['tabulka2body'],
@@ -617,21 +469,142 @@ def tabulkanajlepsich():
                                             tabulka5meno=tabulkovydic['tabulka5meno'], tabulka5body=tabulkovydic['tabulka5body']))
                     return respond
 
+        else:
+            htmlotazka = request.form['btn']
+            list_tlacitok = ['Tabuľka najlepších', 'O projekte', 'Zmena skúšaných otázok', 'Zle zodpovedané otázky']
+            list_redirect_func = ['tabulkanajlepsich', 'oprojekte', 'zmenaotazok', 'zleotazky']
+                    
+            if htmlotazka in list_tlacitok:
+                for x in range(len(list_tlacitok)):
+                    if htmlotazka == list_tlacitok[x]:
+                        return redirect(url_for(list_redirect_func[x]))
+
 
 @app.route('/oprojekte', methods=('GET', 'POST'))
 def oprojekte():
     if request.method == 'GET':
-        respond = make_response(render_template('layout.html', oprojekte=True))
+        respond = make_response(render_template('oprojekte.html'))
         return respond
-    else:
-        pass
-
+    elif request.method == 'POST':
+        htmlotazka = request.form['btn']
+        list_tlacitok = ['Tabuľka najlepších', 'O projekte', 'Zmena skúšaných otázok', 'Zle zodpovedané otázky']
+        list_redirect_func = ['tabulkanajlepsich', 'oprojekte', 'zmenaotazok', 'zleotazky']
+                
+        if htmlotazka in list_tlacitok:
+            for x in range(len(list_tlacitok)):
+                if htmlotazka == list_tlacitok[x]:
+                    return redirect(url_for(list_redirect_func[x]))
 
 @app.route('/zmenaotazok', methods=('GET', 'POST'))
 def zmenaotazok():
     if request.method == 'GET':
-        respond = make_response(render_template('layout.html', zmenaotazok=True))
+        respond = make_response(render_template('zmenaotazok.html'))
         return respond
+    elif request.method == 'POST':
+        if request.form['btn'] == 'Pridať rozmedzie otázok':
+            randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok = rozborcookie()
+
+            lastaction = None
+
+            mensiaotazka = request.form['najmensiaotazka']
+            vacsiaotazka = request.form['najvacsiaotazka']
+
+            if len(mensiaotazka) == 0 or len(vacsiaotazka) == 0:
+                respond = make_response(render_template('layout.html', control='Musíš zadať obe čísla.'))
+                return respond
+
+            else:
+                najmensiaotazka = int(mensiaotazka)
+                najvacsiaotazka = int(vacsiaotazka)
+
+                if najmensiaotazka >= najvacsiaotazka:
+                    respond = make_response(render_template('layout.html', control='Najmenšia otázka musí byť menšia od najväčšej, zároveň si nemôžu byť rovné.'))
+                    return respond
+
+                elif najmensiaotazka <= 0:
+                    respond = make_response(render_template('layout.html', control='Najmenšia otázka musí byť väčšia ako 0.'))
+                    return respond
+
+                elif najvacsiaotazka > 1500:
+                    respond = make_response(render_template('layout.html', control='Najväčšia otázka môže byť maximálne 1500.'))
+                    return respond
+
+                else:
+                    skupinaotazok = None
+                    pole = {'randommeno': randommeno, 'mojeotazky': mojeotazky, 'ypsilon': ypsilon, 'body': body,
+                            'koncovka': koncovka, 'zleotazky': zleotazky, 'najmensiaotazka': najmensiaotazka, 'najvacsiaotazka': najvacsiaotazka,
+                            'lastaction': lastaction, 'skupinaotazok': skupinaotazok}
+                    respond = make_response(render_template('layout.html', uvod=True, bdy=body, sklonovanie=koncovka))
+                    session['nameID'] = json.dumps(pole)
+                    return respond
+
+        elif request.form['btn'] == 'Prejsť na otázku':
+            randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok = rozborcookie()
+
+            polevsetkychotazok = set(list(range(najmensiaotazka, najvacsiaotazka + 1)))
+            polesplnenychotazok = set(mojeotazky)
+            lastaction = None
+
+            try:
+                if int(request.form['cislootazky']) in list(range(1, 1500 + 1)):
+                    ypsilon = int(request.form['cislootazky'])
+
+                    otazkyzdatabazy = {'cislootazky': None, 'ot': None, 'od': None, 'ma': None, 'mb': None,
+                                       'mc': None, 'md': None, 'me': None, 'mf': None, 'mg': None, 'mh': None}
+                    hladavdatabaze = """SELECT * FROM otazky WHERE cislootazky = %s;"""
+                    engine.execute(hladavdatabaze, (ypsilon,))
+                    result_set = engine.fetchall()
+                    for r in result_set:
+                        vyberazdatabazy(otazkyzdatabazy, r)
+                        pole = {'randommeno': randommeno, 'mojeotazky': mojeotazky, 'ypsilon': ypsilon, 'body': body,
+                                'koncovka': koncovka, 'zleotazky': zleotazky, 'najmensiaotazka': najmensiaotazka, 'najvacsiaotazka': najvacsiaotazka,
+                                'lastaction': lastaction, 'skupinaotazok': skupinaotazok}
+                        respond = make_response(render_template('layout.html', moznosti=True, checkbuttons=True, otazka=otazkyzdatabazy['ot'],
+                                                ma=otazkyzdatabazy['ma'], mb=otazkyzdatabazy['mb'], mc=otazkyzdatabazy['mc'], md=otazkyzdatabazy['md'],
+                                                me=otazkyzdatabazy['me'], mf=otazkyzdatabazy['mf'], mg=otazkyzdatabazy['mg'], mh=otazkyzdatabazy['mh'],
+                                                control=('Spravna odpoved je', otazkyzdatabazy['od']), bdy=body, sklonovanie=koncovka))
+                        session['nameID'] = json.dumps(pole)
+                        return respond
+                else:
+                    respond = make_response(render_template('layout.html', control='something went wrong', bdy=body, sklonovanie=koncovka))
+                    return respond
+
+            except ValueError:
+                respond = make_response(render_template('layout.html', otazka="""moj mily :) je pekne ze si myslis ze ta to
+                                        bude skusat pismenka :D ale takto to nefunguje :D alebo si zadal cislo vacsie ako 1500, koniec koncou
+                                        si retard a ak sa ti nepaci ze ti tu teraz pindam tak v pravo hore mas tlacitko co vyriesi vsetky tvoje problemy""",
+                                        bdy=body, sklonovanie=koncovka))
+                return respond
+
+        else:
+            htmlotazka = request.form['btn']
+
+            list_skupinaotazok = ['atom','sustavalatok','latky','psustava','chvazba','nazvoslovie','veliciny','kyszas','reakcie','rovnovaha','komplexy','priklady']
+            list_typotazok = ['Atóm','Sústava látok','Látky','Periodická sústava prvkov','Chemická väzba','Názvoslovie','Chemické veličiny','Kyseliny a zásady','Chemické reakcie','Chemická rovnováha','Komplexné zlúčeniny','Príklady']
+            list_tlacitok = ['Tabuľka najlepších', 'O projekte', 'Zmena skúšaných otázok', 'Zle zodpovedané otázky']
+            list_redirect_func = ['tabulkanajlepsich', 'oprojekte', 'zmenaotazok', 'zleotazky']
+                
+            if htmlotazka in list_typotazok:
+                for x in range(len(list_typotazok)):
+                    if list_typotazok[x] == htmlotazka:
+                        randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok = rozborcookie()
+
+                        lastaction = None
+
+                        skupinaotazok = list_skupinaotazok[x]
+                        pole = {'randommeno': randommeno, 'mojeotazky': mojeotazky, 'ypsilon': ypsilon, 'body': body,
+                                'koncovka': koncovka, 'zleotazky': zleotazky, 'najmensiaotazka': najmensiaotazka, 'najvacsiaotazka': najvacsiaotazka,
+                                'lastaction': lastaction, 'skupinaotazok': skupinaotazok}
+                        respond = make_response(redirect(url_for('home')))
+                        session['nameID'] = json.dumps(pole)
+                        return respond
+
+            else:                
+                if htmlotazka in list_tlacitok:
+                    for x in range(len(list_tlacitok)):
+                        if htmlotazka == list_tlacitok[x]:
+                            return redirect(url_for(list_redirect_func[x]))
+
 
 
 @app.route('/zleotazky', methods=('GET', 'POST'))
@@ -643,7 +616,7 @@ def zleotazky():
         zleotazky = sorted(zleotazky, key=int)
 
         if len(zleotazky) == 0:
-            respond = make_response(render_template('vsetkyzleotazky.html', control="Na všetky otázky si odpovedal dobre, nemáš si čo opraviť",
+            respond = make_response(render_template('zleotazky.html', control="Na všetky otázky si odpovedal dobre, nemáš si čo opraviť",
                                     bdy=body, sklonovanie=koncovka))
             return respond
 
@@ -667,16 +640,47 @@ def zleotazky():
                     'koncovka': koncovka, 'zleotazky': zleotazky, 'najmensiaotazka': najmensiaotazka, 'najvacsiaotazka': najvacsiaotazka,
                     'lastaction': lastaction, 'skupinaotazok': skupinaotazok}
 
-            respond = make_response(render_template('layout.html', zleotazky=True, loopdata=loopdata))
+            respond = make_response(render_template('zleotazky.html', loopdata=loopdata))
             session['nameID'] = json.dumps(pole)
             return respond
 
+    elif request.method == 'POST':
+        try:
+            randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok = rozborcookie()
 
-@app.route('/pridatotazku', methods=('GET', 'POST'))
-def pridatotazku():
-    if request.method == 'GET':
-        respond = make_response(render_template('pridanieotazok.html'))
-        return respond
+            lastaction = None
+
+            otazkyzdatabazy = {'cislootazky': None, 'ot': None, 'od': None, 'ma': None, 'mb': None,
+                               'mc': None, 'md': None, 'me': None, 'mf': None, 'mg': None, 'mh': None}
+
+            htmlotazkalist = htmlotazka.split('.')
+            a = random.choice(htmlotazkalist[0:1])
+            hladavdatabaze = """SELECT * FROM otazky WHERE cislootazky = %s;"""
+            engine.execute(hladavdatabaze, (a,))
+            result_set = engine.fetchall()
+
+            for r in result_set:
+                vyberazdatabazy(otazkyzdatabazy, r)
+                pole = {'randommeno': randommeno, 'mojeotazky': mojeotazky, 'ypsilon': ypsilon, 'body': body,
+                        'koncovka': koncovka, 'zleotazky': zleotazky, 'najmensiaotazka': najmensiaotazka, 'najvacsiaotazka': najvacsiaotazka,
+                        'lastaction': lastaction, 'skupinaotazok': skupinaotazok}
+                print(pole)
+                respond = make_response(render_template('layout.html', moznosti=True, checkbuttons=True,
+                                                        otazka=otazkyzdatabazy['ot'], bdy=body, sklonovanie=koncovka,
+                                                        ma=otazkyzdatabazy['ma'], mb=otazkyzdatabazy['mb'], mc=otazkyzdatabazy['mc'], md=otazkyzdatabazy['md'], me=otazkyzdatabazy['me'],
+                                                        mf=otazkyzdatabazy['mf'], mg=otazkyzdatabazy['mg'], mh=otazkyzdatabazy['mh'], control=('Spravna odpoved je', otazkyzdatabazy['od'])))
+                session['nameID'] = json.dumps(pole)
+                return respond
+        except:
+            htmlotazka = request.form['btn']
+            list_tlacitok = ['Tabuľka najlepších', 'O projekte', 'Zmena skúšaných otázok', 'Zle zodpovedané otázky']
+            list_redirect_func = ['tabulkanajlepsich', 'oprojekte', 'zmenaotazok', 'zleotazky']
+                    
+            if htmlotazka in list_tlacitok:
+                for x in range(len(list_tlacitok)):
+                    if htmlotazka == list_tlacitok[x]:
+                        return redirect(url_for(list_redirect_func[x]))
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -694,6 +698,7 @@ def login():
                 return respond 
             respond = redirect(url_for('home'))
             return respond
+
 
 @app.route('/justadminthings', methods=['GET', 'POST'])
 def justadminthings():
