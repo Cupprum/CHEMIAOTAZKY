@@ -79,6 +79,15 @@ def rozborcookie():
     skupinaotazok = pole['skupinaotazok']
     return randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok
 
+def upperpanel(htmlotazka):
+    list_tlacitok = ['Tabuľka najlepších', 'O projekte', 'Zmena skúšaných otázok', 'Zle zodpovedané otázky']
+    list_redirect_func = ['tabulkanajlepsich', 'oprojekte', 'zmenaotazok', 'zleotazky']
+            
+    if htmlotazka in list_tlacitok:
+        for x in range(len(list_tlacitok)):
+            if htmlotazka == list_tlacitok[x]:
+                return list_redirect_func[x]
+
 
 @app.before_request
 def make_session_permanent():
@@ -352,13 +361,8 @@ def home():
 
         else:
             htmlotazka = request.form['btn']
-            list_tlacitok = ['Tabuľka najlepších', 'O projekte', 'Zmena skúšaných otázok', 'Zle zodpovedané otázky']
-            list_redirect_func = ['tabulkanajlepsich', 'oprojekte', 'zmenaotazok', 'zleotazky']
-                    
-            if htmlotazka in list_tlacitok:
-                for x in range(len(list_tlacitok)):
-                    if htmlotazka == list_tlacitok[x]:
-                        return redirect(url_for(list_redirect_func[x]))
+            button = upperpanel(htmlotazka)
+            return redirect(url_for(button))
 
 
 @app.route('/tabulkanajlepsich', methods=['GET', 'POST'])
@@ -471,13 +475,8 @@ def tabulkanajlepsich():
 
         else:
             htmlotazka = request.form['btn']
-            list_tlacitok = ['Tabuľka najlepších', 'O projekte', 'Zmena skúšaných otázok', 'Zle zodpovedané otázky']
-            list_redirect_func = ['tabulkanajlepsich', 'oprojekte', 'zmenaotazok', 'zleotazky']
-                    
-            if htmlotazka in list_tlacitok:
-                for x in range(len(list_tlacitok)):
-                    if htmlotazka == list_tlacitok[x]:
-                        return redirect(url_for(list_redirect_func[x]))
+            button = upperpanel(htmlotazka)
+            return redirect(url_for(button))
 
 
 @app.route('/oprojekte', methods=('GET', 'POST'))
@@ -487,13 +486,9 @@ def oprojekte():
         return respond
     elif request.method == 'POST':
         htmlotazka = request.form['btn']
-        list_tlacitok = ['Tabuľka najlepších', 'O projekte', 'Zmena skúšaných otázok', 'Zle zodpovedané otázky']
-        list_redirect_func = ['tabulkanajlepsich', 'oprojekte', 'zmenaotazok', 'zleotazky']
-                
-        if htmlotazka in list_tlacitok:
-            for x in range(len(list_tlacitok)):
-                if htmlotazka == list_tlacitok[x]:
-                    return redirect(url_for(list_redirect_func[x]))
+        htmlotazka = request.form['btn']
+        button = upperpanel(htmlotazka)
+        return redirect(url_for(button))
 
 @app.route('/zmenaotazok', methods=('GET', 'POST'))
 def zmenaotazok():
@@ -581,8 +576,6 @@ def zmenaotazok():
 
             list_skupinaotazok = ['atom','sustavalatok','latky','psustava','chvazba','nazvoslovie','veliciny','kyszas','reakcie','rovnovaha','komplexy','priklady']
             list_typotazok = ['Atóm','Sústava látok','Látky','Periodická sústava prvkov','Chemická väzba','Názvoslovie','Chemické veličiny','Kyseliny a zásady','Chemické reakcie','Chemická rovnováha','Komplexné zlúčeniny','Príklady']
-            list_tlacitok = ['Tabuľka najlepších', 'O projekte', 'Zmena skúšaných otázok', 'Zle zodpovedané otázky']
-            list_redirect_func = ['tabulkanajlepsich', 'oprojekte', 'zmenaotazok', 'zleotazky']
                 
             if htmlotazka in list_typotazok:
                 for x in range(len(list_typotazok)):
@@ -600,10 +593,9 @@ def zmenaotazok():
                         return respond
 
             else:                
-                if htmlotazka in list_tlacitok:
-                    for x in range(len(list_tlacitok)):
-                        if htmlotazka == list_tlacitok[x]:
-                            return redirect(url_for(list_redirect_func[x]))
+                htmlotazka = request.form['btn']
+                button = upperpanel(htmlotazka)
+                return redirect(url_for(button))
 
 
 
@@ -616,8 +608,7 @@ def zleotazky():
         zleotazky = sorted(zleotazky, key=int)
 
         if len(zleotazky) == 0:
-            respond = make_response(render_template('zleotazky.html', control="Na všetky otázky si odpovedal dobre, nemáš si čo opraviť",
-                                    bdy=body, sklonovanie=koncovka))
+            respond = make_response(render_template('zleotazky.html', control="Na všetky otázky si odpovedal dobre, nemáš si čo opraviť"))
             return respond
 
         else:
@@ -673,13 +664,8 @@ def zleotazky():
                 return respond
         except:
             htmlotazka = request.form['btn']
-            list_tlacitok = ['Tabuľka najlepších', 'O projekte', 'Zmena skúšaných otázok', 'Zle zodpovedané otázky']
-            list_redirect_func = ['tabulkanajlepsich', 'oprojekte', 'zmenaotazok', 'zleotazky']
-                    
-            if htmlotazka in list_tlacitok:
-                for x in range(len(list_tlacitok)):
-                    if htmlotazka == list_tlacitok[x]:
-                        return redirect(url_for(list_redirect_func[x]))
+            button = upperpanel(htmlotazka)
+            return redirect(url_for(button))
 
 
 @app.route('/login', methods=['GET', 'POST'])
