@@ -22,9 +22,9 @@ uvod = 'Zvol spravne odpovede. Skontroluj svoje odpovede kliknutim na tlacitko k
 
 
 def kont(otazkyzdatabazy):
-    list_moznosti = ['A','B','C','D','E','F','G','H']
-    dic_akomx = {'akoma':None,'akomb':None,'akomc':None,'akomd':None,'akome':None,'akomf':None,'akomg':None,'akomh':None}
-    dic_zadanx = {'zadana':None,'zadanb':None,'zadanc':None,'zadand':None,'zadane':None,'zadanf':None,'zadang':None,'zadanh':None}
+    list_moznosti = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
+    dic_akomx = {'akoma': None, 'akomb': None, 'akomc': None, 'akomd': None, 'akome': None, 'akomf': None, 'akomg': None, 'akomh': None}
+    dic_zadanx = {'zadana': None, 'zadanb': None, 'zadanc': None, 'zadand': None, 'zadane': None, 'zadanf': None, 'zadang': None, 'zadanh': None}
 
     for x in range(8):
         zadane = request.form.get(list_moznosti[x])
@@ -41,28 +41,28 @@ def kont(otazkyzdatabazy):
         print('AKTUALNEEEEE', aktualne)
         print('TUTO', dic_zadanx['zadana'])
         if aktualne in moja:
-            dic_zadanx['zadan'+aktualne] = 'zakliknute'
+            dic_zadanx['zadan' + aktualne] = 'zakliknute'
         else:
-            dic_zadanx['zadan'+aktualne] = 'nezakliknute'
+            dic_zadanx['zadan' + aktualne] = 'nezakliknute'
         if aktualne in lst and aktualne in moja:
             print(list_moznosti[x], 'si zadal tak ako malo byt')
             mojbodovzaodpoved += 1
-            dic_akomx['akom'+aktualne] = 'spravne'
+            dic_akomx['akom' + aktualne] = 'spravne'
         elif aktualne not in moja and aktualne not in lst:
-            dic_akomx['akom'+aktualne] = 'neutralne'
+            dic_akomx['akom' + aktualne] = 'neutralne'
         else:
-            dic_akomx['akom'+aktualne] = 'zle'
+            dic_akomx['akom' + aktualne] = 'zle'
 
+    dlzkamojejodpovede = len(moja)
 
-    dlzkamojejodpovede=len(moja)
-
-    return maxbodovzaodpoved, mojbodovzaodpoved,dic_akomx, dic_zadanx, dlzkamojejodpovede
+    return maxbodovzaodpoved, mojbodovzaodpoved, dic_akomx, dic_zadanx, dlzkamojejodpovede
 
 
 def vyberazdatabazy(otazkyzdatabazy, r):
-    list_vyberazdatabazy = ['cislootazky','ot','od','ma','mb','mc','md','me','mf','mg','mh']
+    list_vyberazdatabazy = ['cislootazky', 'ot', 'od', 'ma', 'mb', 'mc', 'md', 'me', 'mf', 'mg', 'mh']
     for x in range(len(list_vyberazdatabazy)):
         otazkyzdatabazy[list_vyberazdatabazy[x]] = r[x]
+
 
 def rozborcookie():
     kokie = session['nameID']
@@ -79,10 +79,11 @@ def rozborcookie():
     skupinaotazok = pole['skupinaotazok']
     return randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok
 
+
 def upperpanel(htmlotazka):
     list_tlacitok = ['Tabuľka najlepších', 'O projekte', 'Zmena skúšaných otázok', 'Zle zodpovedané otázky']
     list_redirect_func = ['tabulkanajlepsich', 'oprojekte', 'zmenaotazok', 'zleotazky']
-            
+
     if htmlotazka in list_tlacitok:
         for x in range(len(list_tlacitok)):
             if htmlotazka == list_tlacitok[x]:
@@ -205,10 +206,13 @@ def home():
             polesplnenychotazok = set(mojeotazky)
             polevsetkychotazok = set(list(range(najmensiaotazka, najvacsiaotazka + 1)))
 
-            list_skupinaotazok = ['atom','sustavalatok','latky','psustava','chvazba','nazvoslovie','veliciny','kyszas','reakcie','rovnovaha','komplexy','priklady']
-            dic_skupinaotazok = {'atom':atom,'sustavalatok':sustavalatok,'latky':latky,'psustava':psustava,'chvazba':chvazba,'nazvoslovie':nazvoslovie,
-            'veliciny':veliciny,'kyszas':kyszas,'reakcie':reakcie,'rovnovaha':rovnovaha,'komplexy':komplexy,'priklady':priklady}
-            list_typotazok = ['Atóm','Sústava látok','Látky','Periodická sústava prvkov','Chemická väzba','Názvoslovie','Chemické veličiny','Kyseliny a zásady','Chemické reakcie','Chemická rovnováha','Komplexné zlúčeniny','Príklady']
+            list_skupinaotazok = ['atom', 'sustavalatok', 'latky', 'psustava', 'chvazba',
+                                  'nazvoslovie', 'veliciny', 'kyszas', 'reakcie', 'rovnovaha', 'komplexy', 'priklady']
+            dic_skupinaotazok = {'atom': atom, 'sustavalatok': sustavalatok, 'latky': latky, 'psustava': psustava,
+                                 'chvazba': chvazba, 'nazvoslovie': nazvoslovie, 'veliciny': veliciny, 'kyszas': kyszas,
+                                 'reakcie': reakcie, 'rovnovaha': rovnovaha, 'komplexy': komplexy, 'priklady': priklady}
+            list_typotazok = ['Atóm', 'Sústava látok', 'Látky', 'Periodická sústava prvkov', 'Chemická väzba', 'Názvoslovie',
+                              'Chemické veličiny', 'Kyseliny a zásady', 'Chemické reakcie', 'Chemická rovnováha', 'Komplexné zlúčeniny', 'Príklady']
 
             for x in range(len(list_skupinaotazok)):
                 if skupinaotazok == list_skupinaotazok[x]:
@@ -278,7 +282,7 @@ def home():
 
                     maxbodovzaodpoved, mojbodovzaodpoved, dic_akomx, dic_zadanx, dlzkamojejodpovede = kont(otazkyzdatabazy)
                     lst = str(otazkyzdatabazy['od']).split(',')
-                    print('maxbodovzaodpoved:',maxbodovzaodpoved,'mojbodovzaodpoved: ',mojbodovzaodpoved,'moja', moja, 'lst',lst)
+                    print('maxbodovzaodpoved:', maxbodovzaodpoved, 'mojbodovzaodpoved: ', mojbodovzaodpoved, 'moja', moja, 'lst', lst)
                     if maxbodovzaodpoved == mojbodovzaodpoved and moja == lst:
                         mojeotazky.append(int(ypsilon))
                         body = len(mojeotazky)
@@ -490,6 +494,7 @@ def oprojekte():
         button = upperpanel(htmlotazka)
         return redirect(url_for(button))
 
+
 @app.route('/zmenaotazok', methods=('GET', 'POST'))
 def zmenaotazok():
     if request.method == 'GET':
@@ -535,9 +540,6 @@ def zmenaotazok():
 
         elif request.form['btn'] == 'Prejsť na otázku':
             randommeno, mojeotazky, ypsilon, body, koncovka, zleotazky, najmensiaotazka, najvacsiaotazka, lastaction, skupinaotazok = rozborcookie()
-
-            polevsetkychotazok = set(list(range(najmensiaotazka, najvacsiaotazka + 1)))
-            polesplnenychotazok = set(mojeotazky)
             lastaction = None
 
             try:
@@ -574,9 +576,11 @@ def zmenaotazok():
         else:
             htmlotazka = request.form['btn']
 
-            list_skupinaotazok = ['atom','sustavalatok','latky','psustava','chvazba','nazvoslovie','veliciny','kyszas','reakcie','rovnovaha','komplexy','priklady']
-            list_typotazok = ['Atóm','Sústava látok','Látky','Periodická sústava prvkov','Chemická väzba','Názvoslovie','Chemické veličiny','Kyseliny a zásady','Chemické reakcie','Chemická rovnováha','Komplexné zlúčeniny','Príklady']
-                
+            list_skupinaotazok = ['atom', 'sustavalatok', 'latky', 'psustava', 'chvazba', 'nazvoslovie',
+                                  'veliciny', 'kyszas', 'reakcie', 'rovnovaha', 'komplexy', 'priklady']
+            list_typotazok = ['Atóm', 'Sústava látok', 'Látky', 'Periodická sústava prvkov', 'Chemická väzba', 'Názvoslovie', 'Chemické veličiny',
+                              'Kyseliny a zásady', 'Chemické reakcie', 'Chemická rovnováha', 'Komplexné zlúčeniny', 'Príklady']
+
             if htmlotazka in list_typotazok:
                 for x in range(len(list_typotazok)):
                     if list_typotazok[x] == htmlotazka:
@@ -592,11 +596,10 @@ def zmenaotazok():
                         session['nameID'] = json.dumps(pole)
                         return respond
 
-            else:                
+            else:
                 htmlotazka = request.form['btn']
                 button = upperpanel(htmlotazka)
                 return redirect(url_for(button))
-
 
 
 @app.route('/zleotazky', methods=('GET', 'POST'))
@@ -644,6 +647,7 @@ def zleotazky():
             otazkyzdatabazy = {'cislootazky': None, 'ot': None, 'od': None, 'ma': None, 'mb': None,
                                'mc': None, 'md': None, 'me': None, 'mf': None, 'mg': None, 'mh': None}
 
+            htmlotazka = request.form['btn']
             htmlotazkalist = htmlotazka.split('.')
             a = random.choice(htmlotazkalist[0:1])
             hladavdatabaze = """SELECT * FROM otazky WHERE cislootazky = %s;"""
@@ -681,7 +685,7 @@ def login():
             if passcode == mysecretkey:
                 respond = redirect(url_for('justadminthings'))
                 session['password'] = app.secret_key
-                return respond 
+                return respond
             respond = redirect(url_for('home'))
             return respond
 
@@ -758,6 +762,7 @@ def justadminthings():
             engine.execute('''DELETE FROM otazky''')
             respond = render_template('justadminthings.html', cosatodeje='V DATABAZE SA NIC NENACHADZA')
             return respond
+
 
 app.secret_key = os.environ["SESSION_KEY"]
 

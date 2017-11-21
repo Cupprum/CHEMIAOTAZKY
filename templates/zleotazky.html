@@ -268,27 +268,27 @@
   </head>
 
     <body class="body"><center><div>
-    <form action="/zleotazky" method = "post">
-    
-        <a href="https://chemiaotazky.herokuapp.com/"><img class="image" src="https://chemistry-studio.com/wp-content/uploads/logo_chemistry_1024_RGB.png" alt="logo"/></a>
-        <table class="menu_table">
-            <tr style="background-color: #8ED3D6;">
-              <td><input type="submit" style="border: none;background-color: #8ED3D6;" name="btn" value="O projekte" class="menu"/></td>
-              <td><input type="submit" style="border: none;background-color: #8ED3D6;" name="btn" value="Tabuľka najlepších" class="menu"/></td>
-              <td><input type="submit" style="border: none;background-color: #8ED3D6;" name="btn" value="Zmena skúšaných otázok" class="menu"/></td>
-            </tr> 
-        </table>
+        <form action="/zleotazky" method = "post">
         
-        <h1>{{ control }}</h1>
-        <h1>{{ bdy }}</h1>
-        <h1>{{ sklonovanie }}</h1> 
+            <a href="https://chemiaotazky.herokuapp.com/"><img class="image" src="https://chemistry-studio.com/wp-content/uploads/logo_chemistry_1024_RGB.png" alt="logo"/></a>
+            <table class="menu_table">
+                <tr style="background-color: #8ED3D6;">
+                  <td><input type="submit" style="border: none;background-color: #8ED3D6;" name="btn" value="O projekte" class="menu"/></td>
+                  <td><input type="submit" style="border: none;background-color: #8ED3D6;" name="btn" value="Tabuľka najlepších" class="menu"/></td>
+                  <td><input type="submit" style="border: none;background-color: #8ED3D6;" name="btn" value="Zmena skúšaných otázok" class="menu"/></td>
+                </tr> 
+            </table>
+            
+            <h1>{{ control }}</h1>
+            <h1>{{ bdy }}</h1>
+            <h1>{{ sklonovanie }}</h1> 
 
-        {% for x in loopdata %}
-        <p>
-        <tr><input type="submit" name="btn" value='{{ x }}' class="button"/></tr>
-        </p>        
-        {% endfor %}
-
-    </form>
+            <table class="menu_table" width='100'>
+            {% for x in loopdata %}
+                <tr><input type="submit" name="btn" value='{{ x }}' class="button"/></tr>
+                <p></p>
+            {% endfor %}
+            </table>
+        </form>
     </div></center></body>
 </html>
