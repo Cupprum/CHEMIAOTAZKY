@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
-from flask import Flask, request, render_template, make_response, session, url_for, redirect
+from flask import (
+    Flask, request, render_template, make_response, session, url_for, redirect)
+from urllib.parse import urlparse
 import random
 import json
 import uuid
 import psycopg2
 import os
-from urllib.parse import urlparse
 import xml.etree.ElementTree as ET
 
 
@@ -615,26 +616,21 @@ def zleotazky():
             return respond
 
         else:
-            loopdata = []
-            zlaotazkacislo = 0
             otazkyzdatabazy = {}
-            for pocetotazok in range(1, len(zleotazky) + 1):
-                hladavdatabaze = """SELECT ot FROM otazky WHERE cislootazky = %s;"""
-                engine.execute(hladavdatabaze, (zleotazky[zlaotazkacislo],))
-                result_set = engine.fetchall()
-                for r in result_set:
-                    otazkyzdatabazy['otazka' + str(zlaotazkacislo)] = random.choice(r[0:1])
-                    if otazkyzdatabazy['otazka' + str(zlaotazkacislo)] in loopdata:
-                        pass
-                    else:
-                        loopdata.append(otazkyzdatabazy['otazka' + str(zlaotazkacislo)])
-                        zlaotazkacislo += 1
-
+            dic_loopdata = {}
+            for x in range(0, len(zleotazky), 5):
+                dic_loopdata[int(x / 5)] = []
+                for y in range(5):
+                    try:
+                        dic_loopdata[int(x / 5)].append(zleotazky[x + y])
+                    except:
+                        break
+            print(dic_loopdata)
             pole = {'randommeno': randommeno, 'mojeotazky': mojeotazky, 'ypsilon': ypsilon, 'body': body,
                     'koncovka': koncovka, 'zleotazky': zleotazky, 'najmensiaotazka': najmensiaotazka, 'najvacsiaotazka': najvacsiaotazka,
                     'lastaction': lastaction, 'skupinaotazok': skupinaotazok}
 
-            respond = make_response(render_template('zleotazky.html', loopdata=loopdata))
+            respond = make_response(render_template('zleotazky.html', loopdata=dic_loopdata))
             session['nameID'] = json.dumps(pole)
             return respond
 
@@ -648,10 +644,8 @@ def zleotazky():
                                'mc': None, 'md': None, 'me': None, 'mf': None, 'mg': None, 'mh': None}
 
             htmlotazka = request.form['btn']
-            htmlotazkalist = htmlotazka.split('.')
-            a = random.choice(htmlotazkalist[0:1])
             hladavdatabaze = """SELECT * FROM otazky WHERE cislootazky = %s;"""
-            engine.execute(hladavdatabaze, (a,))
+            engine.execute(hladavdatabaze, (htmlotazka,))
             result_set = engine.fetchall()
 
             for r in result_set:
