@@ -6,6 +6,8 @@ import xml.etree.ElementTree as ET
 client = MongoClient('mongodb://localhost:27017/')
 db = client.chemia
 qtable = db.table_questions
+utable = db.table_users
+
 
 tree = ET.parse('chemia.xml')
 root = tree.getroot()
@@ -46,4 +48,9 @@ def insert_all_func():
             counter += 1
 
 
-insert_all_func()
+dic_user = {"name": "skubgksargb",
+            "correct_answers": [],
+            "wrong_answers": [],
+            "points": 0}
+
+utable.insert_one(dic_user)
