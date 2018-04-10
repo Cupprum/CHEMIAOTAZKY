@@ -47,6 +47,3 @@ def insert_all_func():
 
 
 insert_all_func()
-
-for post in qtable.find():
-    pprint.pprint(post)
