@@ -33,6 +33,9 @@ def home():
             session['nameID'] = new_user_name
             utable.insert_one(dic_user)
 
+        else:
+            print(f"greetings summoner {user_name}")
+
         respond = make_response(render_template('layout.html',
                                                 uvod=True))
         return respond
