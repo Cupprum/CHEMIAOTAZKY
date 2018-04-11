@@ -37,8 +37,8 @@ def home():
         if user_id is None:
             user = {"my_chosen_name": "",
                     "group": "",
-                    "smallest": 0,
-                    "highest": 1500,
+                    "small": 0,
+                    "high": 1500,
                     "correct_answers": [],
                     "wrong_answers": [],
                     "points": 0}
@@ -67,6 +67,14 @@ def home():
 @app.route('/otazka', methods=['GET', 'POST'])
 def question():
     if request.method == 'GET':
+        user_id = session.get('nameID')
+        user = utable.find_one({"_id": ObjectId(user_id)})
+
+        while True:
+            number_of_question = random.randint(user["small"], user["high"])
+            if number_of_question not in user["correct_answers"]:
+                break
+
 
 app.secret_key = os.environ["SESSION_KEY"]
 
