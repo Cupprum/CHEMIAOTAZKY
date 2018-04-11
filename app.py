@@ -1,9 +1,10 @@
 from flask import (
     Flask, request, render_template, make_response, session, url_for, redirect)
-import random
-import uuid
-import os
 from pymongo import MongoClient
+from bson.objectid import ObjectId
+import random
+import os
+import pprint
 
 
 app = Flask(__name__)
@@ -14,6 +15,16 @@ qtable = db.table_questions
 utable = db.table_users
 
 
+def what_ending(my_points):
+    if my_points == 0 or my_points >= 5:
+        ending = "ok"
+    elif my_points == 1:
+        ending = "ku"
+    elif my_points > 0 and my_points < 5:
+        ending = "ky"
+    return ending
+
+
 @app.before_request
 def make_session_permanent():
     session.permanent = True
@@ -22,24 +33,40 @@ def make_session_permanent():
 @app.route('/', methods=['GET', 'POST'])
 def home():
     if request.method == 'GET':
-        user_name = session.get('nameID')
-        if user_name is None:
-            new_user_name = str(uuid.uuid4())
-            dic_user = {"name": new_user_name,
-                        "correct_answers": [],
-                        "wrong_answers": [],
-                        "points": 0}
+        user_id = session.get('nameID')
+        if user_id is None:
+            user = {"my_chosen_name": "",
+                    "group": "",
+                    "smallest": 0,
+                    "highest": 1500,
+                    "correct_answers": [],
+                    "wrong_answers": [],
+                    "points": 0}
 
-            session['nameID'] = new_user_name
-            utable.insert_one(dic_user)
+            new_user_id = utable.insert_one(user).inserted_id
+            session['nameID'] = str(new_user_id)
 
         else:
-            print(f"greetings summoner {user_name}")
+            user = utable.find_one({"_id": ObjectId(user_id)})
+
+        my_points = user["points"]
+
+        ending = what_ending(my_points)
 
         respond = make_response(render_template('layout.html',
-                                                uvod=True))
+                                                uvod=True,
+                                                my_points=my_points,
+                                                sklonovanie=ending))
         return respond
 
+    elif request.method == 'POST':
+        if request.form['btn'] == 'Nová otázka':
+            respond = make_response(redirect(url_for('question')))
+
+
+@app.route('/otazka', methods=['GET', 'POST'])
+def question():
+    if request.method == 'GET':
 
 app.secret_key = os.environ["SESSION_KEY"]
 
