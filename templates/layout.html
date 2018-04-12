@@ -18,7 +18,6 @@
         <link href='//fonts.googleapis.com/css?family=Didact Gothic' rel='stylesheet'>
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
     </head>
-
     <body class="body">
         <form action="/" method = "post">
             <center><div>
@@ -46,134 +45,25 @@
                     </tr>
                     
                     {% if moznosti %}
-                        <tr>
-                           {% if zadana == 'zakliknute' %}
-                           <td class="option"><input type="checkbox" name="A" value="A" class="checkbox" checked/></td>
-                           {% else %}
-                           <td class="option"><input type="checkbox" name="A" value="A" class="checkbox"/></td>
-                           {% endif %}
-                           {% if akoma == 'zle' %}
-                           <td class="question-text-padding justify wrong">{{ ma }}</td>
-                           {% elif akoma == 'spravne' %}
-                           <td class="question-text-padding justify right">{{ ma }}</td>
-                           {% elif akoma == 'neutralne' %}
-                           <td class="question-text-padding justify">{{ ma }}</td>
-                           {% else %}
-                           <td class="question-text-padding justify">{{ ma }}</td>
-                           {% endif %}
-                        </tr>
-                        <tr>
-                           {% if zadanb == 'zakliknute' %}
-                           <td class="option"><input type="checkbox" name="B" value="B" class="checkbox" checked/></td>
-                           {% else %}
-                           <td class="option"><input type="checkbox" name="B" value="B" class="checkbox"/></td>
-                           {% endif %}
-                           {% if akomb == 'zle' %}
-                           <td class="question-text-padding justify wrong">{{ mb }}</td>
-                           {% elif akomb == 'spravne' %}
-                           <td class="question-text-padding justify right">{{ mb }}</td>
-                           {% elif akomb == 'neutralne' %}
-                           <td class="question-text-padding justify">{{ mb }}</td>
-                           {% else %}
-                           <td class="question-text-padding justify">{{ mb }}</td>
-                           {% endif %}
-                        </tr>
-                        <tr>
-                           {% if zadanc == 'zakliknute' %}
-                           <td class="option"><input type="checkbox" name="C" value="C" class="checkbox" checked/></td>
-                           {% else %}
-                           <td class="option"><input type="checkbox" name="C" value="C" class="checkbox"/></td>
-                           {% endif %}
-                           {% if akomc == 'zle' %}
-                           <td class="question-text-padding justify wrong">{{ mc }}</td>
-                           {% elif akomc == 'spravne' %}
-                           <td class="question-text-padding justify right">{{ mc }}</td>
-                           {% elif akomc == 'neutralne' %}
-                           <td class="question-text-padding justify">{{ mc }}</td>
-                           {% else %}
-                           <td class="question-text-padding justify">{{ mc }}</td>
-                           {% endif %}
-                        </tr>
-                        <tr>
-                           {% if zadand == 'zakliknute' %}
-                           <td class="option"><input type="checkbox" name="D" value="D" class="checkbox" checked/></td>
-                           {% else %}
-                           <td class="option"><input type="checkbox" name="D" value="D" class="checkbox"/></td>
-                           {% endif %}
-                           {% if akomd == 'zle' %}
-                           <td class="question-text-padding justify wrong">{{ md }}</td>
-                           {% elif akomd == 'spravne' %}
-                           <td class="question-text-padding justify right">{{ md }}</td>
-                           {% elif akomd == 'neutralne' %}
-                           <td class="question-text-padding justify">{{ md }}</td>
-                           {% else %}
-                           <td class="question-text-padding justify">{{ md }}</td>
-                           {% endif %}
-                        </tr>
-                        <tr>
-                           {% if zadane == 'zakliknute' %}
-                           <td class="option"><input type="checkbox" name="E" value="E" class="checkbox" checked/></td>
-                           {% else %}
-                           <td class="option"><input type="checkbox" name="E" value="E" class="checkbox"/></td>
-                           {% endif %}
-                           {% if akome == 'zle' %}
-                           <td class="question-text-padding justify wrong">{{ me }}</td>
-                           {% elif akome == 'spravne' %}
-                           <td class="question-text-padding justify right">{{ me }}</td>
-                           {% elif akome == 'neutralne' %}
-                           <td class="question-text-padding justify">{{ me }}</td>
-                           {% else %}
-                           <td class="question-text-padding justify">{{ me }}</td>
-                           {% endif %}
-                        </tr>
-                        <tr>
-                           {% if zadanf == 'zakliknute' %}
-                           <td class="option"><input type="checkbox" name="F" value="F" class="checkbox" checked/></td>
-                           {% else %}
-                           <td class="option"><input type="checkbox" name="F" value="F" class="checkbox"/></td>
-                           {% endif %}
-                           {% if akomf == 'zle' %}
-                           <td class="question-text-padding justify wrong">{{ mf }}</td>
-                           {% elif akomf == 'spravne' %}
-                           <td class="question-text-padding justify right">{{ mf }}</td>
-                           {% elif akomf == 'neutralne' %}
-                           <td class="question-text-padding justify">{{ mf }}</td>
-                           {% else %}
-                           <td class="question-text-padding justify">{{ mf }}</td>
-                           {% endif %}
-                        </tr>
-                        <tr>
-                           {% if zadang == 'zakliknute' %}
-                           <td class="option"><input type="checkbox" name="G" value="G" class="checkbox" checked/></td>
-                           {% else %}
-                           <td class="option"><input type="checkbox" name="G" value="G" class="checkbox"/></td>
-                           {% endif %}
-                           {% if akomg == 'zle' %}
-                           <td class="question-text-padding justify wrong">{{ mg }}</td>
-                           {% elif akomg == 'spravne' %}
-                           <td class="question-text-padding justify right">{{ mg }}</td>
-                           {% elif akomg == 'neutralne' %}
-                           <td class="question-text-padding justify">{{ mg }}</td>
-                           {% else %}
-                           <td class="question-text-padding justify">{{ mg }}</td>
-                           {% endif %}
-                        </tr>
-                        <tr>
-                           {% if zadanh == 'zakliknute' %}
-                           <td class="option"><input type="checkbox" name="H" value="H" class="checkbox" checked/></td>
-                           {% else %}
-                           <td class="option"><input type="checkbox" name="H" value="H" class="checkbox"/></td>
-                           {% endif %}
-                           {% if akomh == 'zle' %}
-                           <td class="question-text-padding justify wrong">{{ mh }}</td>
-                           {% elif akomh == 'spravne' %}
-                           <td class="question-text-padding justify right">{{ mh }}</td>
-                           {% elif akomh == 'neutralne' %}
-                           <td class="question-text-padding justify">{{ mh }}</td>
-                           {% else %}
-                           <td class="question-text-padding justify">{{ mh }}</td>
-                           {% endif %}
-                        </tr>
+                        {% for x in range(8) %}
+                            <tr>
+                                {% if list1[x] == 'zakliknute' %}
+                                    <td class="option"><input type="checkbox" name="{{ list2[x] }}" value="{{ list2[x] }}" class="checkbox" checked/></td>
+                                {% else %}
+                                    <td class="option"><input type="checkbox" name="{{ list2[x] }}" value="{{ list2[x] }}" class="checkbox"/></td>
+                                {% endif %}
+                                
+                                {% if list3[x] == 'zle' %}
+                                    <td class="question-text-padding justify wrong">{{ list4[x] }}</td>
+                                {% elif list3[x] == 'spravne' %}
+                                    <td class="question-text-padding justify right">{{ list4[x] }}</td>
+                                {% elif list3[x] == 'neutralne' %}
+                                    <td class="question-text-padding justify">{{ list4[x] }}</td>
+                                {% else %}
+                                    <td class="question-text-padding justify">{{ list4[x] }}</td>
+                                {% endif %}
+                            </tr>
+                        {% endfor %}
                     {% endif %}
                 </table> 
                   

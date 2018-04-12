@@ -82,13 +82,46 @@ def questions():
         my_points = user["points"]
         ending = what_ending(my_points)
 
+        list1 = ["zadana",
+                 "zadanb",
+                 "zadanc",
+                 "zadand",
+                 "zadane",
+                 "zadanf",
+                 "zadang",
+                 "zadanh"]
+
+        list2 = ["A", "B", "C", "D",
+                 "E", "F", "G", "H"]
+
+        list3 = ["akoma",
+                 "akomb",
+                 "akomc",
+                 "akomd",
+                 "akome",
+                 "akomf",
+                 "akomg",
+                 "akomh"]
+
+        list4 = [question['ma'],
+                 question['mb'],
+                 question['mc'],
+                 question['md'],
+                 question['me'],
+                 question['mf'],
+                 question['mg'],
+                 question['mh']]
+
         respond = make_response(render_template('layout.html',
                                                 moznosti=True,
                                                 otazka=question['ot'],
                                                 my_points=user['points'],
                                                 sklonovanie=ending,
-                                                ma=question['ma'], mb=question['mb'], mc=question['mc'], md=question['md'], me=question['me'],
-                                                mf=question['mf'], mg=question['mg'], mh=question['mh']))
+                                                odp=question['od'],
+                                                list1=list1,
+                                                list2=list2,
+                                                list3=list3,
+                                                list4=list4))
         return respond
 
 
