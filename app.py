@@ -50,7 +50,6 @@ def home():
             user = utable.find_one({"_id": ObjectId(user_id)})
 
         my_points = user["points"]
-
         ending = what_ending(my_points)
 
         respond = make_response(render_template('layout.html',
@@ -79,7 +78,18 @@ def questions():
         question = qtable.find_one({"possition": number_of_question})
         print(number_of_question)
         print(question)
-        return 'skuska'
+
+        my_points = user["points"]
+        ending = what_ending(my_points)
+
+        respond = make_response(render_template('layout.html',
+                                                moznosti=True,
+                                                otazka=question['ot'],
+                                                my_points=user['points'],
+                                                sklonovanie=ending,
+                                                ma=question['ma'], mb=question['mb'], mc=question['mc'], md=question['md'], me=question['me'],
+                                                mf=question['mf'], mg=question['mg'], mh=question['mh']))
+        return respond
 
 
 app.secret_key = os.environ["SESSION_KEY"]

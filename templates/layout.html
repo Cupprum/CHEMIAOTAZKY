@@ -1,196 +1,197 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Chemia 2.1</title>
-    <script type="text/javascript" 
+    <head>
+        <title>Chemia 2.1</title>
+        <script type="text/javascript" 
             src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-    </script>     
-    <script type="text/x-mathjax-config">
-            MathJax.Hub.Config({
-            "HTML-CSS" : {
-             availableFonts : ["STIX"],
-             preferredFont : "STIX",
-             webFont : "STIX General",
-             imageFont : null
-             }
-             });
-    </script>    
-    <link href='//fonts.googleapis.com/css?family=Didact Gothic' rel='stylesheet'>
-    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/style.css') }}">
-  </head>
+        </script>     
+        <script type="text/x-mathjax-config">
+                MathJax.Hub.Config({
+                "HTML-CSS" : {
+                 availableFonts : ["STIX"],
+                 preferredFont : "STIX",
+                 webFont : "STIX General",
+                 imageFont : null
+                 }
+                 });
+        </script>    
+        <link href='//fonts.googleapis.com/css?family=Didact Gothic' rel='stylesheet'>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    </head>
 
-  <body class="body"><center><div>
-    <form action="/" method = "post">
-  
-    <a href="https://chemiaotazky.herokuapp.com/"><img class="image" src="https://chemistry-studio.com/wp-content/uploads/logo_chemistry_1024_RGB.png" alt="logo"/></a>
-    <table class="menu_table">
-        <tr style="background-color: #8ED3D6;">
-           <td><input type="submit" style="border: none;background-color: #8ED3D6;" name="btn" value="O projekte" class="menu"/></td>
-           <td><input type="submit" style="border: none;background-color: #8ED3D6;" name="btn" value="Tabuľka najlepších" class="menu"/></td>
-           <td><input type="submit" style="border: none;background-color: #8ED3D6;" name="btn" value="Zmena skúšaných otázok" class="menu"/></td>
-        </tr> 
-    </table>
-     
-    <p class="text width">
-         {% if uvod %}
-            Zvoľ správne odpovede. Skontroluj svoje odpovede kliknutím na tlačítko kontrola.
-         {% endif %}</p><br />
-    <p class="question-text-padding width center control">{{ typotazok }}</p><br />        
-     
-     <table>
-        <tr>
-           <td></td>
-           <td class="question-text-padding justify">{{ otazka }} <br /><br /></td>
-        </tr>
-        {% if moznosti %}
-        <tr>
-           {% if zadana == 'zakliknute' %}
-           <td class="option"><input type="checkbox" name="A" value="A" class="checkbox" checked/></td>
-           {% else %}
-           <td class="option"><input type="checkbox" name="A" value="A" class="checkbox"/></td>
-           {% endif %}
-           {% if akoma == 'zle' %}
-           <td class="question-text-padding justify wrong">{{ ma }}</td>
-           {% elif akoma == 'spravne' %}
-           <td class="question-text-padding justify right">{{ ma }}</td>
-           {% elif akoma == 'neutralne' %}
-           <td class="question-text-padding justify">{{ ma }}</td>
-           {% else %}
-           <td class="question-text-padding justify">{{ ma }}</td>
-           {% endif %}
-        </tr>
-        <tr>
-           {% if zadanb == 'zakliknute' %}
-           <td class="option"><input type="checkbox" name="B" value="B" class="checkbox" checked/></td>
-           {% else %}
-           <td class="option"><input type="checkbox" name="B" value="B" class="checkbox"/></td>
-           {% endif %}
-           {% if akomb == 'zle' %}
-           <td class="question-text-padding justify wrong">{{ mb }}</td>
-           {% elif akomb == 'spravne' %}
-           <td class="question-text-padding justify right">{{ mb }}</td>
-           {% elif akomb == 'neutralne' %}
-           <td class="question-text-padding justify">{{ mb }}</td>
-           {% else %}
-           <td class="question-text-padding justify">{{ mb }}</td>
-           {% endif %}
-        </tr>
-        <tr>
-           {% if zadanc == 'zakliknute' %}
-           <td class="option"><input type="checkbox" name="C" value="C" class="checkbox" checked/></td>
-           {% else %}
-           <td class="option"><input type="checkbox" name="C" value="C" class="checkbox"/></td>
-           {% endif %}
-           {% if akomc == 'zle' %}
-           <td class="question-text-padding justify wrong">{{ mc }}</td>
-           {% elif akomc == 'spravne' %}
-           <td class="question-text-padding justify right">{{ mc }}</td>
-           {% elif akomc == 'neutralne' %}
-           <td class="question-text-padding justify">{{ mc }}</td>
-           {% else %}
-           <td class="question-text-padding justify">{{ mc }}</td>
-           {% endif %}
-        </tr>
-        <tr>
-           {% if zadand == 'zakliknute' %}
-           <td class="option"><input type="checkbox" name="D" value="D" class="checkbox" checked/></td>
-           {% else %}
-           <td class="option"><input type="checkbox" name="D" value="D" class="checkbox"/></td>
-           {% endif %}
-           {% if akomd == 'zle' %}
-           <td class="question-text-padding justify wrong">{{ md }}</td>
-           {% elif akomd == 'spravne' %}
-           <td class="question-text-padding justify right">{{ md }}</td>
-           {% elif akomd == 'neutralne' %}
-           <td class="question-text-padding justify">{{ md }}</td>
-           {% else %}
-           <td class="question-text-padding justify">{{ md }}</td>
-           {% endif %}
-        </tr>
-        <tr>
-           {% if zadane == 'zakliknute' %}
-           <td class="option"><input type="checkbox" name="E" value="E" class="checkbox" checked/></td>
-           {% else %}
-           <td class="option"><input type="checkbox" name="E" value="E" class="checkbox"/></td>
-           {% endif %}
-           {% if akome == 'zle' %}
-           <td class="question-text-padding justify wrong">{{ me }}</td>
-           {% elif akome == 'spravne' %}
-           <td class="question-text-padding justify right">{{ me }}</td>
-           {% elif akome == 'neutralne' %}
-           <td class="question-text-padding justify">{{ me }}</td>
-           {% else %}
-           <td class="question-text-padding justify">{{ me }}</td>
-           {% endif %}
-        </tr>
-        <tr>
-           {% if zadanf == 'zakliknute' %}
-           <td class="option"><input type="checkbox" name="F" value="F" class="checkbox" checked/></td>
-           {% else %}
-           <td class="option"><input type="checkbox" name="F" value="F" class="checkbox"/></td>
-           {% endif %}
-           {% if akomf == 'zle' %}
-           <td class="question-text-padding justify wrong">{{ mf }}</td>
-           {% elif akomf == 'spravne' %}
-           <td class="question-text-padding justify right">{{ mf }}</td>
-           {% elif akomf == 'neutralne' %}
-           <td class="question-text-padding justify">{{ mf }}</td>
-           {% else %}
-           <td class="question-text-padding justify">{{ mf }}</td>
-           {% endif %}
-        </tr>
-        <tr>
-           {% if zadang == 'zakliknute' %}
-           <td class="option"><input type="checkbox" name="G" value="G" class="checkbox" checked/></td>
-           {% else %}
-           <td class="option"><input type="checkbox" name="G" value="G" class="checkbox"/></td>
-           {% endif %}
-           {% if akomg == 'zle' %}
-           <td class="question-text-padding justify wrong">{{ mg }}</td>
-           {% elif akomg == 'spravne' %}
-           <td class="question-text-padding justify right">{{ mg }}</td>
-           {% elif akomg == 'neutralne' %}
-           <td class="question-text-padding justify">{{ mg }}</td>
-           {% else %}
-           <td class="question-text-padding justify">{{ mg }}</td>
-           {% endif %}
-        </tr>
-        <tr>
-           {% if zadanh == 'zakliknute' %}
-           <td class="option"><input type="checkbox" name="H" value="H" class="checkbox" checked/></td>
-           {% else %}
-           <td class="option"><input type="checkbox" name="H" value="H" class="checkbox"/></td>
-           {% endif %}
-           {% if akomh == 'zle' %}
-           <td class="question-text-padding justify wrong">{{ mh }}</td>
-           {% elif akomh == 'spravne' %}
-           <td class="question-text-padding justify right">{{ mh }}</td>
-           {% elif akomh == 'neutralne' %}
-           <td class="question-text-padding justify">{{ mh }}</td>
-           {% else %}
-           <td class="question-text-padding justify">{{ mh }}</td>
-           {% endif %}
-        </tr>
-        {% endif %}
-    </table> 
-      
-    <br />
-    <p class="question-text-padding width center control">{{ control }}</p>
-    <p class="question-text-padding width center">{{ odp }}</p>
-    <p class="question-text-padding width center">{{ my_points }} otáz{{ sklonovanie }} máš správne</p>
-     
-    <br /><br />
-    <table>
-        <tr>
-           <td><input type="submit" name="btn" value="Nová otázka" class="button"/></td>
-           <td><input type="submit" name="btn" value="Kontrola" class="button"/></td>
-           <td><input type="submit" name="btn" value="Resetuje otázky" class="button"/></td>
-           <td><input type="submit" name="btn" value="Zle zodpovedané otázky" class="button"/></td>
-        </tr>
-    </table>
-  </form>
-</div>
-</center>
-</body>
+    <body class="body">
+        <form action="/" method = "post">
+            <center><div>
+                <a href="https://chemiaotazky.herokuapp.com/"><img class="image" src="https://chemistry-studio.com/wp-content/uploads/logo_chemistry_1024_RGB.png" alt="logo"/>
+                </a>
+
+                <table class="menu_table">
+                    <tr style="background-color: #8ED3D6;">
+                       <td><input type="submit" style="border: none;background-color: #8ED3D6;" name="btn" value="O projekte" class="menu"/></td>
+                       <td><input type="submit" style="border: none;background-color: #8ED3D6;" name="btn" value="Tabuľka najlepších" class="menu"/></td>
+                       <td><input type="submit" style="border: none;background-color: #8ED3D6;" name="btn" value="Zmena skúšaných otázok" class="menu"/></td>
+                    </tr> 
+                </table>
+                 
+                <p class="text width">
+                     {% if uvod %}
+                        Zvoľ správne odpovede. Skontroluj svoje odpovede kliknutím na tlačítko kontrola.
+                     {% endif %}</p><br />
+                <p class="question-text-padding width center control">{{ typotazok }}</p><br />        
+                 
+                 <table>
+                    <tr>
+                       <td></td>
+                       <td class="question-text-padding justify">{{ otazka }} <br /><br /></td>
+                    </tr>
+                    
+                    {% if moznosti %}
+                        <tr>
+                           {% if zadana == 'zakliknute' %}
+                           <td class="option"><input type="checkbox" name="A" value="A" class="checkbox" checked/></td>
+                           {% else %}
+                           <td class="option"><input type="checkbox" name="A" value="A" class="checkbox"/></td>
+                           {% endif %}
+                           {% if akoma == 'zle' %}
+                           <td class="question-text-padding justify wrong">{{ ma }}</td>
+                           {% elif akoma == 'spravne' %}
+                           <td class="question-text-padding justify right">{{ ma }}</td>
+                           {% elif akoma == 'neutralne' %}
+                           <td class="question-text-padding justify">{{ ma }}</td>
+                           {% else %}
+                           <td class="question-text-padding justify">{{ ma }}</td>
+                           {% endif %}
+                        </tr>
+                        <tr>
+                           {% if zadanb == 'zakliknute' %}
+                           <td class="option"><input type="checkbox" name="B" value="B" class="checkbox" checked/></td>
+                           {% else %}
+                           <td class="option"><input type="checkbox" name="B" value="B" class="checkbox"/></td>
+                           {% endif %}
+                           {% if akomb == 'zle' %}
+                           <td class="question-text-padding justify wrong">{{ mb }}</td>
+                           {% elif akomb == 'spravne' %}
+                           <td class="question-text-padding justify right">{{ mb }}</td>
+                           {% elif akomb == 'neutralne' %}
+                           <td class="question-text-padding justify">{{ mb }}</td>
+                           {% else %}
+                           <td class="question-text-padding justify">{{ mb }}</td>
+                           {% endif %}
+                        </tr>
+                        <tr>
+                           {% if zadanc == 'zakliknute' %}
+                           <td class="option"><input type="checkbox" name="C" value="C" class="checkbox" checked/></td>
+                           {% else %}
+                           <td class="option"><input type="checkbox" name="C" value="C" class="checkbox"/></td>
+                           {% endif %}
+                           {% if akomc == 'zle' %}
+                           <td class="question-text-padding justify wrong">{{ mc }}</td>
+                           {% elif akomc == 'spravne' %}
+                           <td class="question-text-padding justify right">{{ mc }}</td>
+                           {% elif akomc == 'neutralne' %}
+                           <td class="question-text-padding justify">{{ mc }}</td>
+                           {% else %}
+                           <td class="question-text-padding justify">{{ mc }}</td>
+                           {% endif %}
+                        </tr>
+                        <tr>
+                           {% if zadand == 'zakliknute' %}
+                           <td class="option"><input type="checkbox" name="D" value="D" class="checkbox" checked/></td>
+                           {% else %}
+                           <td class="option"><input type="checkbox" name="D" value="D" class="checkbox"/></td>
+                           {% endif %}
+                           {% if akomd == 'zle' %}
+                           <td class="question-text-padding justify wrong">{{ md }}</td>
+                           {% elif akomd == 'spravne' %}
+                           <td class="question-text-padding justify right">{{ md }}</td>
+                           {% elif akomd == 'neutralne' %}
+                           <td class="question-text-padding justify">{{ md }}</td>
+                           {% else %}
+                           <td class="question-text-padding justify">{{ md }}</td>
+                           {% endif %}
+                        </tr>
+                        <tr>
+                           {% if zadane == 'zakliknute' %}
+                           <td class="option"><input type="checkbox" name="E" value="E" class="checkbox" checked/></td>
+                           {% else %}
+                           <td class="option"><input type="checkbox" name="E" value="E" class="checkbox"/></td>
+                           {% endif %}
+                           {% if akome == 'zle' %}
+                           <td class="question-text-padding justify wrong">{{ me }}</td>
+                           {% elif akome == 'spravne' %}
+                           <td class="question-text-padding justify right">{{ me }}</td>
+                           {% elif akome == 'neutralne' %}
+                           <td class="question-text-padding justify">{{ me }}</td>
+                           {% else %}
+                           <td class="question-text-padding justify">{{ me }}</td>
+                           {% endif %}
+                        </tr>
+                        <tr>
+                           {% if zadanf == 'zakliknute' %}
+                           <td class="option"><input type="checkbox" name="F" value="F" class="checkbox" checked/></td>
+                           {% else %}
+                           <td class="option"><input type="checkbox" name="F" value="F" class="checkbox"/></td>
+                           {% endif %}
+                           {% if akomf == 'zle' %}
+                           <td class="question-text-padding justify wrong">{{ mf }}</td>
+                           {% elif akomf == 'spravne' %}
+                           <td class="question-text-padding justify right">{{ mf }}</td>
+                           {% elif akomf == 'neutralne' %}
+                           <td class="question-text-padding justify">{{ mf }}</td>
+                           {% else %}
+                           <td class="question-text-padding justify">{{ mf }}</td>
+                           {% endif %}
+                        </tr>
+                        <tr>
+                           {% if zadang == 'zakliknute' %}
+                           <td class="option"><input type="checkbox" name="G" value="G" class="checkbox" checked/></td>
+                           {% else %}
+                           <td class="option"><input type="checkbox" name="G" value="G" class="checkbox"/></td>
+                           {% endif %}
+                           {% if akomg == 'zle' %}
+                           <td class="question-text-padding justify wrong">{{ mg }}</td>
+                           {% elif akomg == 'spravne' %}
+                           <td class="question-text-padding justify right">{{ mg }}</td>
+                           {% elif akomg == 'neutralne' %}
+                           <td class="question-text-padding justify">{{ mg }}</td>
+                           {% else %}
+                           <td class="question-text-padding justify">{{ mg }}</td>
+                           {% endif %}
+                        </tr>
+                        <tr>
+                           {% if zadanh == 'zakliknute' %}
+                           <td class="option"><input type="checkbox" name="H" value="H" class="checkbox" checked/></td>
+                           {% else %}
+                           <td class="option"><input type="checkbox" name="H" value="H" class="checkbox"/></td>
+                           {% endif %}
+                           {% if akomh == 'zle' %}
+                           <td class="question-text-padding justify wrong">{{ mh }}</td>
+                           {% elif akomh == 'spravne' %}
+                           <td class="question-text-padding justify right">{{ mh }}</td>
+                           {% elif akomh == 'neutralne' %}
+                           <td class="question-text-padding justify">{{ mh }}</td>
+                           {% else %}
+                           <td class="question-text-padding justify">{{ mh }}</td>
+                           {% endif %}
+                        </tr>
+                    {% endif %}
+                </table> 
+                  
+                <br />
+                <p class="question-text-padding width center control">{{ control }}</p>
+                <p class="question-text-padding width center">{{ odp }}</p>
+                <p class="question-text-padding width center">{{ my_points }} otáz{{ sklonovanie }} máš správne</p>
+                 
+                <br /><br />
+                <table>
+                    <tr>
+                       <td><input type="submit" name="btn" value="Nová otázka" class="button"/></td>
+                       <td><input type="submit" name="btn" value="Kontrola" class="button"/></td>
+                       <td><input type="submit" name="btn" value="Resetuje otázky" class="button"/></td>
+                       <td><input type="submit" name="btn" value="Zle zodpovedané otázky" class="button"/></td>
+                    </tr>
+                </table>
+            </div></center>
+        </form>
+    </body>
 </html>

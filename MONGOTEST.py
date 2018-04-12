@@ -51,9 +51,4 @@ def insert_all_func():
             counter += 1
 
 
-dic_user = {"name": "skubgksargb",
-            "correct_answers": [],
-            "wrong_answers": [],
-            "points": 0}
-
 insert_all_func()
