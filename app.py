@@ -61,11 +61,12 @@ def home():
 
     elif request.method == 'POST':
         if request.form['btn'] == 'Nová otázka':
-            respond = make_response(redirect(url_for('question')))
+            respond = make_response(redirect(url_for('questions')))
+            return respond
 
 
 @app.route('/otazka', methods=['GET', 'POST'])
-def question():
+def questions():
     if request.method == 'GET':
         user_id = session.get('nameID')
         user = utable.find_one({"_id": ObjectId(user_id)})
@@ -74,6 +75,11 @@ def question():
             number_of_question = random.randint(user["small"], user["high"])
             if number_of_question not in user["correct_answers"]:
                 break
+
+        question = qtable.find_one({"possition": number_of_question})
+        print(number_of_question)
+        print(question)
+        return 'skuska'
 
 
 app.secret_key = os.environ["SESSION_KEY"]

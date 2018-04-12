@@ -29,7 +29,8 @@ def insert_all_func():
     for x in root.findall('otazka'):
         number = x.attrib.get('number')
         if str(counter) == number:
-            dic_otazka = {"ot": None,
+            dic_otazka = {"possition": counter,
+                          "ot": None,
                           "od": None,
                           "ma": None,
                           "mb": None,
@@ -44,6 +45,8 @@ def insert_all_func():
                 actual_possibilitie = str(x.find(y).text)
                 dic_otazka[str(y)] = actual_possibilitie.strip()
 
+            print(dic_otazka)
+
             qtable.insert_one(dic_otazka)
             counter += 1
 
@@ -53,4 +56,4 @@ dic_user = {"name": "skubgksargb",
             "wrong_answers": [],
             "points": 0}
 
-utable.insert_one(dic_user)
+insert_all_func()
