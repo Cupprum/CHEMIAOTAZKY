@@ -241,3 +241,15 @@ table
      word-wrap: break-word;
      font-family: Arial;
      }
+
+.wrong
+     {
+     background-color: #E17170;
+     border-radius: 4px;
+     }
+             
+.right
+     {
+     background-color: #91D990;
+     border-radius: 4px;
+     }

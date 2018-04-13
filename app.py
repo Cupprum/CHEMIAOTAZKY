@@ -94,8 +94,8 @@ def questions():
         list2 = ["A", "B", "C", "D",
                  "E", "F", "G", "H"]
 
-        list3 = ["akoma",
-                 "akomb",
+        list3 = ["zle",
+                 "spravne",
                  "akomc",
                  "akomd",
                  "akome",
