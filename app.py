@@ -80,6 +80,7 @@ def questions():
 
         question = qtable.find_one({"possition": num_of_q})
         utable.find_one_and_update(user_par, {"$set": {"lat_q_num": num_of_q}})
+        utable.find_one_and_update(user_par, {"$set": {"lat_q_ans": question["od"]}})
 
         my_points = user["points"]
         ending = what_ending(my_points)
@@ -118,10 +119,21 @@ def questions():
         user = utable.find_one({"_id": ObjectId(user_id)})
         pprint.pprint(user)
         if request.form['btn'] == 'Kontrola':
+            list1 = ["A", "B", "C", "D",
+                     "E", "F", "G", "H"]
+
+            my_q_ans = ""
+            for x in range(1, 8):
+                zadane = request.form.get(list1[x])
+                if zadane is not None:
+                    my_q_ans += zadane
+                    my_q_ans += ","
+            my_q_ans = my_q_ans[:-1].lower()
+            print(my_q_ans)
             return 'Kontrola'
 
-
         elif request.form['btn'] == 'Nová otázka':
+
             respond = make_response(redirect(url_for('questions')))
             return respond
 
