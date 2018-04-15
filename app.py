@@ -76,32 +76,17 @@ def questions():
                 break
 
         question = qtable.find_one({"possition": number_of_question})
-        print(number_of_question)
-        print(question)
 
         my_points = user["points"]
         ending = what_ending(my_points)
 
-        list1 = ["zadana",
-                 "zadanb",
-                 "zadanc",
-                 "zadand",
-                 "zadane",
-                 "zadanf",
-                 "zadang",
-                 "zadanh"]
+        list1 = ["a", "b", "c", "d",
+                 "e", "f", "g", "h"]
 
         list2 = ["A", "B", "C", "D",
                  "E", "F", "G", "H"]
 
-        list3 = ["zle",
-                 "spravne",
-                 "akomc",
-                 "akomd",
-                 "akome",
-                 "akomf",
-                 "akomg",
-                 "akomh"]
+        list3 = list1[:]
 
         list4 = [question['ma'],
                  question['mb'],
@@ -112,7 +97,7 @@ def questions():
                  question['mg'],
                  question['mh']]
 
-        respond = make_response(render_template('layout.html',
+        respond = make_response(render_template('otazka.html',
                                                 moznosti=True,
                                                 otazka=question['ot'],
                                                 my_points=user['points'],
@@ -123,6 +108,14 @@ def questions():
                                                 list3=list3,
                                                 list4=list4))
         return respond
+
+    elif request.method == 'POST':
+        user_id = session.get('nameID')
+        user = utable.find_one({"_id": ObjectId(user_id)})
+        print('skuska1')
+        if request.form['btn'] == 'Kontrola':
+            print('skuska2')
+            return 'Kontrola'
 
 
 app.secret_key = os.environ["SESSION_KEY"]
