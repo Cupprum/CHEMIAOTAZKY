@@ -41,7 +41,9 @@ def home():
                     "high": 1500,
                     "correct_answers": [],
                     "wrong_answers": [],
-                    "points": 0}
+                    "points": 0,
+                    "lat_q_num": None,
+                    "lat_q_ans": None}
 
             new_user_id = utable.insert_one(user).inserted_id
             session['nameID'] = str(new_user_id)
@@ -68,14 +70,16 @@ def home():
 def questions():
     if request.method == 'GET':
         user_id = session.get('nameID')
-        user = utable.find_one({"_id": ObjectId(user_id)})
+        user_par = {"_id": ObjectId(user_id)}
+        user = utable.find_one(user_par)
 
         while True:
-            number_of_question = random.randint(user["small"], user["high"])
-            if number_of_question not in user["correct_answers"]:
+            num_of_q = random.randint(user["small"], user["high"])
+            if num_of_q not in user["correct_answers"]:
                 break
 
-        question = qtable.find_one({"possition": number_of_question})
+        question = qtable.find_one({"possition": num_of_q})
+        utable.find_one_and_update(user_par, {"$set": {"lat_q_num": num_of_q}})
 
         my_points = user["points"]
         ending = what_ending(my_points)
@@ -112,10 +116,14 @@ def questions():
     elif request.method == 'POST':
         user_id = session.get('nameID')
         user = utable.find_one({"_id": ObjectId(user_id)})
-        print('skuska1')
+        pprint.pprint(user)
         if request.form['btn'] == 'Kontrola':
-            print('skuska2')
             return 'Kontrola'
+
+
+        elif request.form['btn'] == 'Nová otázka':
+            respond = make_response(redirect(url_for('questions')))
+            return respond
 
 
 app.secret_key = os.environ["SESSION_KEY"]
