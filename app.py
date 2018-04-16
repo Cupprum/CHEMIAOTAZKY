@@ -79,8 +79,10 @@ def questions():
                 break
 
         question = qtable.find_one({"possition": num_of_q})
-        utable.find_one_and_update(user_par, {"$set": {"lat_q_num": num_of_q}})
-        utable.find_one_and_update(user_par, {"$set": {"lat_q_ans": question["od"]}})
+        utable.find_one_and_update(
+            user_par, {"$set": {"lat_q_num": num_of_q}})
+        utable.find_one_and_update(
+            user_par, {"$set": {"lat_q_ans": question["od"]}})
 
         my_points = user["points"]
         ending = what_ending(my_points)
@@ -117,19 +119,35 @@ def questions():
     elif request.method == 'POST':
         user_id = session.get('nameID')
         user = utable.find_one({"_id": ObjectId(user_id)})
-        pprint.pprint(user)
+
         if request.form['btn'] == 'Kontrola':
             list1 = ["A", "B", "C", "D",
                      "E", "F", "G", "H"]
 
-            my_q_ans = ""
-            for x in range(1, 8):
+            list2 = [x.lower() for x in list1]
+
+            list_correct = str(user["lat_q_ans"]).split(",")
+
+            list_my = []
+            for x in range(0, 8):
                 zadane = request.form.get(list1[x])
                 if zadane is not None:
-                    my_q_ans += zadane
-                    my_q_ans += ","
-            my_q_ans = my_q_ans[:-1].lower()
-            print(my_q_ans)
+                    list_my.append(zadane.lower())
+
+            counter = 0
+
+            for x in list2:
+                if x in list_correct:
+                    if x in list_my:
+                        counter += 1
+                elif x not in list_correct:
+                    if x not in list_my:
+                        counter += 1
+
+            if counter == 8:
+                user_par = {"_id": ObjectId(user_id)}
+                utable.find_one_and_update(user_par, {"$inc": {"points": 1}})
+
             return 'Kontrola'
 
         elif request.form['btn'] == 'Nová otázka':
