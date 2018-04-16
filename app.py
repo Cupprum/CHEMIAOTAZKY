@@ -107,7 +107,7 @@ def questions():
         respond = make_response(render_template('otazka.html',
                                                 moznosti=True,
                                                 otazka=question['ot'],
-                                                my_points=user['points'],
+                                                my_points=my_points,
                                                 sklonovanie=ending,
                                                 odp=question['od'],
                                                 list1=list1,
@@ -121,34 +121,68 @@ def questions():
         user = utable.find_one({"_id": ObjectId(user_id)})
 
         if request.form['btn'] == 'Kontrola':
-            list1 = ["A", "B", "C", "D",
+            question = qtable.find_one({"possition": user['lat_q_num']})
+
+            list1 = ["a", "b", "c", "d",
+                     "e", "f", "g", "h"]
+
+            list2 = ["A", "B", "C", "D",
                      "E", "F", "G", "H"]
 
-            list2 = [x.lower() for x in list1]
+            list4 = [question['ma'],
+                     question['mb'],
+                     question['mc'],
+                     question['md'],
+                     question['me'],
+                     question['mf'],
+                     question['mg'],
+                     question['mh']]
 
             list_correct = str(user["lat_q_ans"]).split(",")
 
             list_my = []
-            for x in range(0, 8):
-                zadane = request.form.get(list1[x])
+            for x in range(8):
+                zadane = request.form.get(list2[x])
                 if zadane is not None:
                     list_my.append(zadane.lower())
 
-            counter = 0
+            list3 = []
 
-            for x in list2:
-                if x in list_correct:
-                    if x in list_my:
-                        counter += 1
-                elif x not in list_correct:
-                    if x not in list_my:
-                        counter += 1
+            for x in list1:
+                if x in list_correct and x in list_my:
+                    list3.append(1)
+                elif x not in list_correct and x not in list_my:
+                    list3.append(1)
+                else:
+                    list3.append(0)
 
-            if counter == 8:
+            list1 = []
+            for x in range(8):
+                zadane = request.form.get(list2[x])
+                if zadane is None:
+                    list1.append(0)
+                else:
+                    list1.append(1)
+
+            if list3.count(1) == 8:
                 user_par = {"_id": ObjectId(user_id)}
                 utable.find_one_and_update(user_par, {"$inc": {"points": 1}})
 
-            return 'Kontrola'
+            my_points = user["points"]
+            ending = what_ending(my_points)
+
+            respond = make_response(render_template('otazka.html',
+                                                    moznosti=True,
+                                                    otazka=question['ot'],
+                                                    my_points=my_points,
+                                                    sklonovanie=ending,
+                                                    odp=question['od'],
+                                                    list1=list1,
+                                                    list2=list2,
+                                                    list3=list3,
+                                                    list4=list4))
+
+            return respond
 
         elif request.form['btn'] == 'Nová otázka':
 

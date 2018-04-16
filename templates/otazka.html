@@ -47,18 +47,16 @@
                     {% if moznosti %}
                         {% for x in range(8) %}
                             <tr>
-                                {% if list1[x] == 'zakliknute' %}
+                                {% if list1[x] == 1 %}
                                     <td class="option"><input type="checkbox" name="{{ list2[x] }}" value="{{ list2[x] }}" class="checkbox" checked/></td>
                                 {% else %}
                                     <td class="option"><input type="checkbox" name="{{ list2[x] }}" value="{{ list2[x] }}" class="checkbox"/></td>
                                 {% endif %}
                                 
-                                {% if list3[x] == 'zle' %}
+                                {% if list3[x] == 0 %}
                                     <td class="question-text-padding justify wrong">{{ list4[x] }}</td>
-                                {% elif list3[x] == 'spravne' %}
+                                {% elif list3[x] == 1 %}
                                     <td class="question-text-padding justify right">{{ list4[x] }}</td>
-                                {% elif list3[x] == 'neutralne' %}
-                                    <td class="question-text-padding justify">{{ list4[x] }}</td>
                                 {% else %}
                                     <td class="question-text-padding justify">{{ list4[x] }}</td>
                                 {% endif %}
