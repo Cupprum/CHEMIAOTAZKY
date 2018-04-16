@@ -164,10 +164,11 @@ def questions():
                 else:
                     list1.append(1)
 
+            user_par = {"_id": ObjectId(user_id)}
             if list3.count(1) == 8:
-                user_par = {"_id": ObjectId(user_id)}
                 utable.find_one_and_update(user_par, {"$inc": {"points": 1}})
 
+            user = utable.find_one(user_par)
             my_points = user["points"]
             ending = what_ending(my_points)
 
