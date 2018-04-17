@@ -172,6 +172,10 @@ def questions():
                 utable.find_one_and_update(user_par, {"$push": {
                     "correct_answers": user['lat_q_num']}})
 
+                if user['lat_q_num'] in user["wrong_answers"]:
+                    utable.find_one_and_update(user_par, {"$pull": {
+                        "wrong_answers": user['lat_q_num']}})
+
             else:
                 utable.find_one_and_update(user_par, {"$push": {
                     "wrong_answers": user['lat_q_num']}})
@@ -193,8 +197,25 @@ def questions():
 
             return respond
 
-        elif request.form['btn'] == 'Nová otázka':
+        elif request.form['btn'] == 'Resetuje otázky':
+            user_id = session.get('nameID')
+            user_par = {"_id": ObjectId(user_id)}
+            old_user = utable.find_one(user_par)
 
+            user = {"my_chosen_name": "",
+                    "group": "",
+                    "small": 0,
+                    "high": 1500,
+                    "correct_answers": [],
+                    "wrong_answers": [],
+                    "points": 0,
+                    "lat_q_num": None,
+                    "lat_q_ans": None}
+
+            utable.find_one_and_replace(old_user, user)
+            return "skuska123"
+
+        elif request.form['btn'] == 'Nová otázka':
             respond = make_response(redirect(url_for('questions')))
             return respond
 
