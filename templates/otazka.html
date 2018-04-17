@@ -73,10 +73,12 @@
                 <br /><br />
                 <table>
                     <tr>
-                       <td><input type="submit" name="btn" value="Nová otázka" class="button"/></td>
-                       <td><input type="submit" name="btn" value="Kontrola" class="button"/></td>
-                       <td><input type="submit" name="btn" value="Resetuje otázky" class="button"/></td>
-                       <td><input type="submit" name="btn" value="Zle zodpovedané otázky" class="button"/></td>
+                        <td><input type="submit" name="btn" value="Nová otázka" class="button"/></td>
+                        {% if control_button %}
+                            <td><input type="submit" name="btn" value="Kontrola" class="button"/></td>
+                        {% endif %}
+                        <td><input type="submit" name="btn" value="Resetuje otázky" class="button"/></td>
+                        <td><input type="submit" name="btn" value="Zle zodpovedané otázky" class="button"/></td>
                     </tr>
                 </table>
             </div></center>

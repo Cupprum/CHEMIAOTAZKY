@@ -106,6 +106,7 @@ def questions():
 
         respond = make_response(render_template('otazka.html',
                                                 moznosti=True,
+                                                control_button=True,
                                                 otazka=question['ot'],
                                                 my_points=my_points,
                                                 sklonovanie=ending,
@@ -165,8 +166,15 @@ def questions():
                     list1.append(1)
 
             user_par = {"_id": ObjectId(user_id)}
+
             if list3.count(1) == 8:
                 utable.find_one_and_update(user_par, {"$inc": {"points": 1}})
+                utable.find_one_and_update(user_par, {"$push": {
+                    "correct_answers": user['lat_q_num']}})
+
+            else:
+                utable.find_one_and_update(user_par, {"$push": {
+                    "wrong_answers": user['lat_q_num']}})
 
             user = utable.find_one(user_par)
             my_points = user["points"]
