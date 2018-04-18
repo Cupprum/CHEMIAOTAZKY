@@ -83,10 +83,14 @@ def home():
             respond = make_response(redirect(url_for('questions')))
             return respond
 
-    elif request.form['btn'] == 'Resetuje otázky':
-        reset()
-        respond = make_response(redirect(url_for('home')))
-        return respond
+        elif request.form['btn'] == 'Tabuľka najlepších':
+            respond = make_response(redirect(url_for('table')))
+            return respond
+
+        elif request.form['btn'] == 'Resetuje otázky':
+            reset()
+            respond = make_response(redirect(url_for('home')))
+            return respond
 
 
 @app.route('/otazka', methods=['GET', 'POST'])
@@ -224,6 +228,10 @@ def questions():
             respond = make_response(redirect(url_for('questions')))
             return respond
 
+        elif request.form['btn'] == 'Tabuľka najlepších':
+            respond = make_response(redirect(url_for('table')))
+            return respond
+
         elif request.form['btn'] == 'Resetuje otázky':
             reset()
             respond = make_response(redirect(url_for('home')))
@@ -235,6 +243,18 @@ def table():
     if request.method == 'GET':
         respond = make_response(render_template('tabulkanajlepsich.html'))
         return respond
+
+    elif request.method == 'POST':
+        if request.form['btn'] == 'Pridať meno':
+            user_id = session.get('nameID')
+            user_par = {"_id": ObjectId(user_id)}
+
+            name = request.form['vloztemeno']
+            utable.find_one_and_update(user_par, {"$set": {
+                "my_chosen_name": name}})
+
+            respond = make_response(redirect(url_for('home')))
+            return respond
 
 
 app.secret_key = os.environ["SESSION_KEY"]
