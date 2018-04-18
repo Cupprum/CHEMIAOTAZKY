@@ -25,6 +25,24 @@ def what_ending(my_points):
     return ending
 
 
+def reset():
+    user_id = session.get('nameID')
+    user_par = {"_id": ObjectId(user_id)}
+    old_user = utable.find_one(user_par)
+
+    user = {"my_chosen_name": "",
+            "group": "",
+            "small": 0,
+            "high": 1500,
+            "correct_answers": [],
+            "wrong_answers": [],
+            "points": 0,
+            "lat_q_num": None,
+            "lat_q_ans": None}
+
+    utable.find_one_and_replace(old_user, user)
+
+
 @app.before_request
 def make_session_permanent():
     session.permanent = True
@@ -64,6 +82,11 @@ def home():
         if request.form['btn'] == 'Nová otázka':
             respond = make_response(redirect(url_for('questions')))
             return respond
+
+    elif request.form['btn'] == 'Resetuje otázky':
+        reset()
+        respond = make_response(redirect(url_for('home')))
+        return respond
 
 
 @app.route('/otazka', methods=['GET', 'POST'])
@@ -197,27 +220,21 @@ def questions():
 
             return respond
 
-        elif request.form['btn'] == 'Resetuje otázky':
-            user_id = session.get('nameID')
-            user_par = {"_id": ObjectId(user_id)}
-            old_user = utable.find_one(user_par)
-
-            user = {"my_chosen_name": "",
-                    "group": "",
-                    "small": 0,
-                    "high": 1500,
-                    "correct_answers": [],
-                    "wrong_answers": [],
-                    "points": 0,
-                    "lat_q_num": None,
-                    "lat_q_ans": None}
-
-            utable.find_one_and_replace(old_user, user)
-            return "skuska123"
-
         elif request.form['btn'] == 'Nová otázka':
             respond = make_response(redirect(url_for('questions')))
             return respond
+
+        elif request.form['btn'] == 'Resetuje otázky':
+            reset()
+            respond = make_response(redirect(url_for('home')))
+            return respond
+
+
+@app.route('/table', methods=['GET', 'POST'])
+def table():
+    if request.method == 'GET':
+        respond = make_response(render_template('tabulkanajlepsich.html'))
+        return respond
 
 
 app.secret_key = os.environ["SESSION_KEY"]
