@@ -5,6 +5,7 @@ from bson.objectid import ObjectId
 import random
 import os
 import pprint
+import operator
 
 
 app = Flask(__name__)
@@ -13,6 +14,12 @@ client = MongoClient('mongodb://localhost:27017/')
 db = client.chemia
 qtable = db.table_questions
 utable = db.table_users
+
+
+class table_obj:
+    def __init__(self, name, points):
+        self.name = name
+        self.points = points
 
 
 def what_ending(my_points):
@@ -241,7 +248,31 @@ def questions():
 @app.route('/table', methods=['GET', 'POST'])
 def table():
     if request.method == 'GET':
-        respond = make_response(render_template('tabulkanajlepsich.html'))
+        all_people = utable.find({"my_chosen_name": {"$ne": ""}})
+
+        dic_people = {}
+        for x in all_people:
+            dic_people.update({x['my_chosen_name']: x['points']})
+
+        sorted_people = sorted(dic_people.items(),
+                               key=operator.itemgetter(1),
+                               reverse=True)
+
+        list_of_names = []
+        list_of_points = []
+        list_of_numbers = ["1.", "2.", "3.", "4.", "5."]
+
+        for x in sorted_people:
+            list_of_names.append(x[0])
+            list_of_points.append(x[1])
+
+        print(list_of_names)
+        print(list_of_points)
+
+        respond = make_response(render_template('tabulkanajlepsich.html',
+                                                list1=list_of_numbers,
+                                                list2=list_of_names,
+                                                list3=list_of_points))
         return respond
 
     elif request.method == 'POST':

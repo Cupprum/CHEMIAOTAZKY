@@ -295,31 +295,13 @@
         <td class="column2"><p class="text_column_tabulka control">Meno</p></td>
         <td class="column2"><p class="text_column_tabulka control">Počet bodov</p></td>
       </tr>
-      <tr>
-        <td class="column_tabulka"><p class="text_column_tabulka control">1.</p></td>
-        <td class="column2"> <p class="text_column_tabulka">{{ tabulka1meno }}</p></td>
-        <td class="column2"> <p class="text_column_tabulka">{{ tabulka1body }}</p></td> 
-      </tr>
-      <tr>
-        <td class="column_tabulka"><p class="text_column_tabulka control">2.</p></td>
-        <td class="column2"> <p class="text_column_tabulka">{{ tabulka2meno }}</p></td>
-        <td class="column2"> <p class="text_column_tabulka">{{ tabulka2body }}</p></td> 
-      </tr>
-      <tr>
-        <td class="column_tabulka"><p class="text_column_tabulka control">3.</p></td>
-        <td class="column2"> <p class="text_column_tabulka">{{ tabulka3meno }}</p></td>
-        <td class="column2"> <p class="text_column_tabulka">{{ tabulka3body }}</p></td> 
-      </tr>
-      <tr>
-        <td class="column_tabulka"><p class="text_column_tabulka control">4.</p></td>
-        <td class="column2"> <p class="text_column_tabulka">{{ tabulka4meno }}</p></td>
-        <td class="column2"> <p class="text_column_tabulka">{{ tabulka4body }}</p></td> 
-      </tr>
-      <tr>
-        <td class="column_tabulka"><p class="text_column_tabulka control">5.</p></td>
-        <td class="column2"> <p class="text_column_tabulka">{{ tabulka5meno }}</p></td>
-        <td class="column2"> <p class="text_column_tabulka">{{ tabulka5body }}</p></td> 
-      </tr>
+        {% for x in range(0, 5) %}
+            <tr>
+            <td class="column_tabulka"><p class="text_column_tabulka control">{{ list1[x] }}</p></td>
+            <td class="column2"> <p class="text_column_tabulka">{{ list2[x] }}</p></td>
+            <td class="column2"> <p class="text_column_tabulka">{{ list3[x] }}</p></td> 
+            </tr>
+        {% endfor %}
     </table>
   </form></div></center>
 </body>
