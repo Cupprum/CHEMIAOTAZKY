@@ -94,6 +94,10 @@ def home():
             respond = make_response(redirect(url_for('table')))
             return respond
 
+        elif request.form['btn'] == 'Zmena skúšaných otázok':
+            respond = make_response(redirect(url_for('changequestions')))
+            return respond
+
         elif request.form['btn'] == 'Resetuje otázky':
             reset()
             respond = make_response(redirect(url_for('home')))
@@ -239,6 +243,10 @@ def questions():
             respond = make_response(redirect(url_for('table')))
             return respond
 
+        elif request.form['btn'] == 'Zmena skúšaných otázok':
+            respond = make_response(redirect(url_for('changequestions')))
+            return respond
+
         elif request.form['btn'] == 'Resetuje otázky':
             reset()
             respond = make_response(redirect(url_for('home')))
@@ -266,9 +274,6 @@ def table():
             list_of_names.append(x[0])
             list_of_points.append(x[1])
 
-        print(list_of_names)
-        print(list_of_points)
-
         respond = make_response(render_template('tabulkanajlepsich.html',
                                                 list1=list_of_numbers,
                                                 list2=list_of_names,
@@ -285,6 +290,30 @@ def table():
                 "my_chosen_name": name}})
 
             respond = make_response(redirect(url_for('home')))
+            return respond
+
+        elif request.form['btn'] == 'Tabuľka najlepších':
+            respond = make_response(redirect(url_for('table')))
+            return respond
+
+        elif request.form['btn'] == 'Zmena skúšaných otázok':
+            respond = make_response(redirect(url_for('changequestions')))
+            return respond
+
+
+@app.route('/changequestions', methods=['GET', 'POST'])
+def changequestions():
+    if request.method == 'GET':
+        respond = make_response(render_template('zmenaotazok.html'))
+        return respond
+
+    elif request.method == 'POST':
+        if request.form['btn'] == 'Tabuľka najlepších':
+            respond = make_response(redirect(url_for('table')))
+            return respond
+
+        elif request.form['btn'] == 'Zmena skúšaných otázok':
+            respond = make_response(redirect(url_for('changequestions')))
             return respond
 
 
