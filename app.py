@@ -308,7 +308,23 @@ def changequestions():
         return respond
 
     elif request.method == 'POST':
-        if request.form['btn'] == 'Tabuľka najlepších':
+        if request.form['btn'] == 'Pridať rozmedzie otázok':
+            user_id = session.get('nameID')
+            user_par = {"_id": ObjectId(user_id)}
+
+            smallest = int(request.form['najmensiaotazka'])
+            highest = int(request.form['najvacsiaotazka'])
+
+            utable.find_one_and_update(
+                user_par, {"$set": {"small": smallest}})
+
+            utable.find_one_and_update(
+                user_par, {"$set": {"high": highest}})
+
+            respond = make_response(redirect(url_for('home')))
+            return respond
+
+        elif request.form['btn'] == 'Tabuľka najlepších':
             respond = make_response(redirect(url_for('table')))
             return respond
 
