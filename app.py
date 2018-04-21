@@ -14,6 +14,7 @@ client = MongoClient('mongodb://localhost:27017/')
 db = client.chemia
 qtable = db.table_questions
 utable = db.table_users
+ltable = db.table_lists
 
 
 class table_obj:
@@ -112,10 +113,33 @@ def questions():
         user_par = {"_id": ObjectId(user_id)}
         user = utable.find_one(user_par)
 
-        while True:
-            num_of_q = random.randint(user["small"], user["high"])
-            if num_of_q not in user["correct_answers"]:
-                break
+        if user['group'] is not None:
+            help_var = ltable.find_one({"name_of_list": user['group']})
+            list_q_from_cat = help_var['lst']
+
+            counter = 0
+            for x in range(len(user["correct_answers"])):
+                if user["correct_answers"][x] not in list_q_from_cat:
+                    break
+                else:
+                    counter += 1
+
+                if counter == len(user["correct_answers"]):
+                    utable.find_one_and_update(
+                        user_par, {"$set": {"group": ""}})
+                    respond = make_response(redirect(url_for('otazka')))
+                    return respond
+
+            while True:
+                num_of_q = random.choice(list_q_from_cat)
+                if num_of_q not in user["correct_answers"]:
+                    break
+
+        else:
+            while True:
+                num_of_q = random.randint(user["small"], user["high"])
+                if num_of_q not in user["correct_answers"]:
+                    break
 
         if user['desired'] is not None:
             num_of_q = user['desired']
@@ -315,6 +339,9 @@ def changequestions():
         return respond
 
     elif request.method == 'POST':
+        help_var = ltable.find_one({"name_of_list": 'list_of_categories'})
+        list_of_categories = help_var['lst']
+
         if request.form['btn'] == 'Pridať rozmedzie otázok':
             user_id = session.get('nameID')
             user_par = {"_id": ObjectId(user_id)}
@@ -342,6 +369,18 @@ def changequestions():
 
             respond = make_response(redirect(url_for('questions')))
             return respond
+
+        elif request.form['btn'] in list_of_categories:
+            for x in list_of_categories:
+                if request.form['btn'] == x:
+                    user_id = session.get('nameID')
+                    user_par = {"_id": ObjectId(user_id)}
+
+                    utable.find_one_and_update(
+                        user_par, {"$set": {"group": x}})
+
+                    respond = make_response(redirect(url_for('home')))
+                    return respond
 
         elif request.form['btn'] == 'Tabuľka najlepších':
             respond = make_response(redirect(url_for('table')))
