@@ -61,14 +61,15 @@ def home():
         user_id = session.get('nameID')
         if user_id is None:
             user = {"my_chosen_name": "",
-                    "group": "",
-                    "small": 0,
-                    "high": 1500,
                     "correct_answers": [],
                     "wrong_answers": [],
                     "points": 0,
                     "lat_q_num": None,
-                    "lat_q_ans": None}
+                    "lat_q_ans": None,
+                    "group": "",
+                    "small": 0,
+                    "high": 1500,
+                    "desired": None}
 
             new_user_id = utable.insert_one(user).inserted_id
             session['nameID'] = str(new_user_id)
@@ -115,6 +116,12 @@ def questions():
             num_of_q = random.randint(user["small"], user["high"])
             if num_of_q not in user["correct_answers"]:
                 break
+
+        if user['desired'] is not None:
+            num_of_q = user['desired']
+
+            utable.find_one_and_update(
+                user_par, {"$set": {"desired": None}})
 
         question = qtable.find_one({"possition": num_of_q})
         utable.find_one_and_update(
@@ -322,6 +329,18 @@ def changequestions():
                 user_par, {"$set": {"high": highest}})
 
             respond = make_response(redirect(url_for('home')))
+            return respond
+
+        elif request.form['btn'] == 'Prejsť na otázku':
+            user_id = session.get('nameID')
+            user_par = {"_id": ObjectId(user_id)}
+
+            dreamed_question = int(request.form['cislootazky'])
+
+            utable.find_one_and_update(
+                user_par, {"$set": {"desired": dreamed_question}})
+
+            respond = make_response(redirect(url_for('questions')))
             return respond
 
         elif request.form['btn'] == 'Tabuľka najlepších':
