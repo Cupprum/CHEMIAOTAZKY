@@ -39,14 +39,15 @@ def reset():
     old_user = utable.find_one(user_par)
 
     user = {"my_chosen_name": "",
-            "group": "",
-            "small": 0,
-            "high": 1500,
             "correct_answers": [],
             "wrong_answers": [],
             "points": 0,
             "lat_q_num": None,
-            "lat_q_ans": None}
+            "lat_q_ans": None,
+            "group": "",
+            "small": 0,
+            "high": 1500,
+            "desired": None}
 
     utable.find_one_and_replace(old_user, user)
 
@@ -113,21 +114,21 @@ def questions():
         user_par = {"_id": ObjectId(user_id)}
         user = utable.find_one(user_par)
 
-        if user['group'] is not None:
+        if user['group'] != "":
             help_var = ltable.find_one({"name_of_list": user['group']})
             list_q_from_cat = help_var['lst']
 
             counter = 0
-            for x in range(len(user["correct_answers"])):
-                if user["correct_answers"][x] not in list_q_from_cat:
+            for x in range(len(list_q_from_cat)):
+                if list_q_from_cat[x] not in user["correct_answers"]:
                     break
                 else:
                     counter += 1
 
-                if counter == len(user["correct_answers"]):
+                if counter == len(list_q_from_cat):
                     utable.find_one_and_update(
                         user_par, {"$set": {"group": ""}})
-                    respond = make_response(redirect(url_for('otazka')))
+                    respond = make_response(redirect(url_for('questions')))
                     return respond
 
             while True:
