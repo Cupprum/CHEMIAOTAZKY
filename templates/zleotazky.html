@@ -268,7 +268,7 @@
   </head>
 
     <body class="body"><center><div>
-        <form action="/zleotazky" method = "post">
+        <form action="/wrong_answered" method = "post">
         
             <a href="https://chemiaotazky.herokuapp.com/"><img class="image" src="https://chemistry-studio.com/wp-content/uploads/logo_chemistry_1024_RGB.png" alt="logo"/></a>
             <table class="menu_table">
@@ -284,12 +284,12 @@
             <h1>{{ sklonovanie }}</h1> 
 
             <table>
-            {% for x in loopdata.values() %}
-                <tr>
-                    {% for y in x %}
-                        <td><input type="submit" name="btn" value='{{ y }}' class="button" style="width: 110px;" /></td>
+            {% for lst in dic.values() %}
+                <th>
+                    {% for num in lst %}
+                        <input type="submit" name="btn" value='{{ num }}' class="button" style="width: 110px;" />
                     {% endfor %}
-                </tr>
+                </th>
             {% endfor %}
             </table>
         </form>

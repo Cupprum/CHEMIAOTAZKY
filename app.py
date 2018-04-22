@@ -392,6 +392,38 @@ def changequestions():
             return respond
 
 
+@app.route('/wrong_answered', methods=['GET', 'POST'])
+def wrong_answered():
+    if request.method == 'GET':
+        user_id = session.get('nameID')
+        user_par = {"_id": ObjectId(user_id)}
+        user = utable.find_one(user_par)
+        wrong_answers = user['wrong_answers']
+
+        dic_wrong = {}
+        for x in range(0, len(wrong_answers) + 5, 5):
+            list_help = []
+            for y in range(5):
+                try:
+                    list_help.append(wrong_answers[x + y])
+                except IndexError:
+                    dic_wrong.update({str(int(x / 5)): list_help})
+                    break
+            dic_wrong.update({str(int(x / 5)): list_help})
+
+        will_delete = []
+        for x in dic_wrong:
+            if len(dic_wrong[x]) == 0:
+                will_delete.append(x)
+
+        for x in will_delete:
+            dic_wrong.pop(x)
+
+        respond = make_response(render_template('zleotazky.html',
+                                                dic=dic_wrong))
+        return respond
+
+
 app.secret_key = os.environ["SESSION_KEY"]
 
 
