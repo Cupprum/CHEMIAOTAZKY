@@ -106,6 +106,10 @@ def home():
             respond = make_response(redirect(url_for('home')))
             return respond
 
+        elif request.form['btn'] == 'Zle zodpovedané otázky':
+            respond = make_response(redirect(url_for('wrong_answered')))
+            return respond
+
 
 @app.route('/otazka', methods=['GET', 'POST'])
 def questions():
@@ -284,6 +288,10 @@ def questions():
             respond = make_response(redirect(url_for('home')))
             return respond
 
+        elif request.form['btn'] == 'Zle zodpovedané otázky':
+            respond = make_response(redirect(url_for('wrong_answered')))
+            return respond
+
 
 @app.route('/table', methods=['GET', 'POST'])
 def table():
@@ -418,6 +426,8 @@ def wrong_answered():
 
         for x in will_delete:
             dic_wrong.pop(x)
+
+        print(dic_wrong)
 
         respond = make_response(render_template('zleotazky.html',
                                                 dic=dic_wrong))

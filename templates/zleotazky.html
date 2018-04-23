@@ -283,13 +283,11 @@
             <h1>{{ bdy }}</h1>
             <h1>{{ sklonovanie }}</h1> 
 
-            <table>
             {% for lst in dic.values() %}
-                <th>
                     {% for num in lst %}
                         <input type="submit" name="btn" value='{{ num }}' class="button" style="width: 110px;" />
                     {% endfor %}
-                </th>
+                    <br><br>
             {% endfor %}
             </table>
         </form>
