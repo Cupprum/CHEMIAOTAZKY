@@ -253,3 +253,7 @@ table
      background-color: #91D990;
      border-radius: 4px;
      }
+
+ul#horizontal_list li {
+  display: inline;
+}

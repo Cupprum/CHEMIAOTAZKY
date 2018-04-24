@@ -1,5 +1,4 @@
 from pymongo import MongoClient
-import pprint
 import xml.etree.ElementTree as ET
 
 
@@ -175,3 +174,7 @@ def insert_categories():
 
         ltable.insert_one(dic)
 
+
+insert_all_func()
+insert_list_of_categories()
+insert_categories()
