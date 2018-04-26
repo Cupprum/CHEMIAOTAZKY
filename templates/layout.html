@@ -37,49 +37,21 @@
                 <li><button type="submit" name="btn" value="Zmena skúšaných otázok" class="btn btn-primary">Zmena skúšaných otázok</button></li>
             </ul>
 
-            <p class="text width">
-                 {% if uvod %}
+            <br><br>
+            
+            <p>
+                {% if uvod %}
                     Zvoľ správne odpovede. Skontroluj svoje odpovede kliknutím na tlačítko kontrola.
-                 {% endif %}</p><br />
-            <p class="question-text-padding width center control">{{ typotazok }}</p><br />        
-             
-             <table>
-                <tr>
-                   <td></td>
-                   <td class="question-text-padding justify">{{ otazka }} <br /><br /></td>
-                </tr>
-                
-                {% if moznosti %}
-                    {% for x in range(8) %}
-                        <tr>
-                            {% if list1[x] == 'zakliknute' %}
-                                <td class="option"><input type="checkbox" name="{{ list2[x] }}" value="{{ list2[x] }}" class="checkbox" checked/></td>
-                            {% else %}
-                                <td class="option"><input type="checkbox" name="{{ list2[x] }}" value="{{ list2[x] }}" class="checkbox"/></td>
-                            {% endif %}
-                            
-                            {% if list3[x] == 'zle' %}
-                                <td class="question-text-padding justify wrong">{{ list4[x] }}</td>
-                            {% elif list3[x] == 'spravne' %}
-                                <td class="question-text-padding justify right">{{ list4[x] }}</td>
-                            {% elif list3[x] == 'neutralne' %}
-                                <td class="question-text-padding justify">{{ list4[x] }}</td>
-                            {% else %}
-                                <td class="question-text-padding justify">{{ list4[x] }}</td>
-                            {% endif %}
-                        </tr>
-                    {% endfor %}
-                {% endif %}
-            </table> 
-              
-            <p class="question-text-padding width center control">{{ control }}</p>
-            <p class="question-text-padding width center">{{ odp }}</p>
-            <p class="question-text-padding width center">{{ my_points }} otáz{{ sklonovanie }} máš správne</p>
-        
+                {% endif %}</p><br />
+            
+            <p>{{ my_points }} otáz{{ sklonovanie }} máš správne</p>
+            
+            <br><br>
+            
             <ul id="horizontal_list">
-               <li><input type="submit" name="btn" value="Nová otázka" class="button"/></li>
-               <li><input type="submit" name="btn" value="Zle zodpovedané otázky" class="button"/></li>
-               <li><input type="submit" name="btn" value="Resetuje otázky" class="button"/></li>
+                <li><button type="submit" name="btn" value="Nová otázka" class="btn btn-primary">Nová otázka</button></li>
+                <li><button type="submit" name="btn" value="Zle zodpovedané otázky" class="btn btn-primary">Zle zodpovedané otázky</button></li>
+                <li><button type="submit" name="btn" value="Resetuje otázky" class="btn btn-primary">Resetuje otázky</button></li>
             </ul>
         </center>
     </form>
