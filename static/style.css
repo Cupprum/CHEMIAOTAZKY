@@ -1,10 +1,14 @@
-.image    {
+html, body {
+    background-color:#CACACA;
+}
+
+ul#horizontal_list li {
+  display: inline;
+}
+
+.image {
     width: 40%;
     display: block;
     margin-top: 2%;
     margin-bottom: 2%;
-    }
-
-ul#horizontal_list li {
-  display: inline;
 }
