@@ -1,14 +1,17 @@
 from flask import (
     Flask, request, render_template, make_response, session, url_for, redirect)
+from flask_bootstrap import Bootstrap
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 import random
 import os
-import pprint
 import operator
 
 
 app = Flask(__name__)
+Bootstrap(app)
+app.secret_key = os.environ["SESSION_KEY"]
+
 
 client = MongoClient('mongodb://localhost:27017/')
 db = client.chemia
@@ -432,9 +435,6 @@ def wrong_answered():
         respond = make_response(render_template('zleotazky.html',
                                                 dic=dic_wrong))
         return respond
-
-
-app.secret_key = os.environ["SESSION_KEY"]
 
 
 if __name__ == '__main__':
