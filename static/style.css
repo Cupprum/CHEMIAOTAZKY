@@ -1,10 +1,8 @@
-.image 
-    {
-    width: 700px;
-    height: 342px;
+.image    {
+    width: 40%;
     display: block;
-    margin-top: 5px;
-    margin-bottom: 5px;
+    margin-top: 2%;
+    margin-bottom: 2%;
     }
 
 ul#horizontal_list li {
