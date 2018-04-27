@@ -2,7 +2,7 @@ from pymongo import MongoClient
 import xml.etree.ElementTree as ET
 
 
-client = MongoClient('mongodb://localhost:27017/')
+client = MongoClient('mongodb://<dbuser>:<dbpassword>@ds159489.mlab.com:59489/heroku_847wntjv')
 db = client.chemia
 qtable = db.table_questions
 utable = db.table_users
