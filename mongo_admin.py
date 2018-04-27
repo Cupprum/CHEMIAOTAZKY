@@ -173,8 +173,3 @@ def insert_categories():
         dic.update({"lst": list_big_mess[x]})
 
         ltable.insert_one(dic)
-
-
-insert_all_func()
-insert_list_of_categories()
-insert_categories()
