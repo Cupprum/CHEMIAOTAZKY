@@ -14,7 +14,7 @@ app.secret_key = os.environ["SESSION_KEY"]
 
 
 client = MongoClient('mongodb://heroku_847wntjv:4gu7eu65bhl8upr57a022p4cqm@ds159489.mlab.com:59489/heroku_847wntjv')
-db = client.chemia
+db = client.heroku_847wntjv
 qtable = db.table_questions
 utable = db.table_users
 ltable = db.table_lists
@@ -57,7 +57,6 @@ def reset():
 
 @app.before_request
 def make_session_permanent():
-    db.auth('visitor', 'None')
     session.permanent = True
 
 
