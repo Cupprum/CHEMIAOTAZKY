@@ -14,7 +14,7 @@ Bootstrap(app)
 app.secret_key = os.environ["SESSION_KEY"]
 
 
-client = MongoClient('mongodb://localhost:27017/')
+client = MongoClient('mongodb://<dbuser>:<dbpassword>@ds159489.mlab.com:59489/heroku_847wntjv')
 db = client.chemia
 qtable = db.table_questions
 utable = db.table_users
@@ -69,6 +69,8 @@ def home():
         insert_list_of_categories()
         insert_categories()
 
+        return "skuska"
+        """
         user_id = session.get('nameID')
         if user_id is None:
             user = {"my_chosen_name": "",
@@ -441,7 +443,7 @@ def wrong_answered():
         respond = make_response(render_template('zleotazky.html',
                                                 dic=dic_wrong))
         return respond
-
+"""
 
 if __name__ == '__main__':
     app.jinja_env.auto_reload = True
