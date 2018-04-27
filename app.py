@@ -57,6 +57,7 @@ def reset():
 
 @app.before_request
 def make_session_permanent():
+    db.auth('visitor', 'None')
     session.permanent = True
 
 
@@ -75,6 +76,8 @@ def home():
                     "small": 0,
                     "high": 1500,
                     "desired": None}
+
+            db.command("createUser", "user", pwd="None", roles=["readWrite"])
 
             new_user_id = utable.insert_one(user).inserted_id
             session['nameID'] = str(new_user_id)
