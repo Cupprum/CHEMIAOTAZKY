@@ -14,7 +14,7 @@ Bootstrap(app)
 app.secret_key = os.environ["SESSION_KEY"]
 
 
-client = MongoClient('mongodb://<dbuser>:<dbpassword>@ds159489.mlab.com:59489/heroku_847wntjv')
+client = MongoClient('mongodb://atrumoram:atrumoram1@ds159489.mlab.com:59489/heroku_847wntjv')
 db = client.chemia
 qtable = db.table_questions
 utable = db.table_users
