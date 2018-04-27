@@ -6,7 +6,6 @@ from bson.objectid import ObjectId
 import random
 import os
 import operator
-from mongo_admin import insert_all_func, insert_list_of_categories, insert_categories
 
 
 app = Flask(__name__)
@@ -64,13 +63,6 @@ def make_session_permanent():
 @app.route('/', methods=['GET', 'POST'])
 def home():
     if request.method == 'GET':
-
-        insert_all_func()
-        insert_list_of_categories()
-        insert_categories()
-
-        return "skuska"
-        """
         user_id = session.get('nameID')
         if user_id is None:
             user = {"my_chosen_name": "",
@@ -443,7 +435,6 @@ def wrong_answered():
         respond = make_response(render_template('zleotazky.html',
                                                 dic=dic_wrong))
         return respond
-"""
 
 if __name__ == '__main__':
     app.jinja_env.auto_reload = True
