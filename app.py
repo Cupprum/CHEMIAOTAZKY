@@ -6,6 +6,8 @@ from bson.objectid import ObjectId
 import random
 import os
 import operator
+from mongo_admin import (
+    insert_all_func, insert_list_of_categories, insert_categories)
 
 
 app = Flask(__name__)
@@ -13,7 +15,6 @@ Bootstrap(app)
 app.secret_key = os.environ["SESSION_KEY"]
 
 mongodb_uri = os.environ["MONGODB_URI"]
-
 client = MongoClient(mongodb_uri)
 
 if mongodb_uri == "mongodb://localhost:27017/":
@@ -22,11 +23,13 @@ if mongodb_uri == "mongodb://localhost:27017/":
 else:
     db = client.heroku_847wntjv
 
-print(f"uri {mongodb_uri}")
-
 qtable = db.table_questions
 utable = db.table_users
 ltable = db.table_lists
+
+insert_all_func()
+insert_list_of_categories()
+insert_categories()
 
 
 class table_obj:

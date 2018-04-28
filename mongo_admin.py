@@ -1,9 +1,17 @@
 from pymongo import MongoClient
 import xml.etree.ElementTree as ET
+import os
 
+mongodb_uri = os.environ["MONGODB_URI"]
 
-client = MongoClient('mongodb://heroku_847wntjv:4gu7eu65bhl8upr57a022p4cqm@ds159489.mlab.com:59489/heroku_847wntjv')
-db = client.chemia
+client = MongoClient(mongodb_uri)
+
+if mongodb_uri == "mongodb://localhost:27017/":
+    db = client.chemia
+
+else:
+    db = client.heroku_847wntjv
+
 qtable = db.table_questions
 utable = db.table_users
 ltable = db.table_lists
