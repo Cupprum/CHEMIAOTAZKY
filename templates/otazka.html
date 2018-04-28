@@ -42,17 +42,16 @@
 
             <p>{{ typotazok }}</p>
              
-             <table>
-                <tr>
-                   <td></td>
-                   <td>{{ otazka }}</td>
+            <p>{{ otazka }}</p>
+            
+            <table>
                 </tr>
                 
                 {% if moznosti %}
                     {% for x in range(8) %}
                         <tr>
                             {% if list1[x] == 1 %}
-                                <td><input type="checkbox" name="{{ list2[x] }}" value="{{ list2[x] }}" class="checkbox" checked/></td>
+                                <td><input type="checkbox" class="checkbox-lg" name="{{ list2[x] }}" value="{{ list2[x] }}" checked/></td>
                             {% else %}
                                 <td><input type="checkbox" class="checkbox-lg" name="{{ list2[x] }}" value="{{ list2[x] }}"/></td>
                             {% endif %}
