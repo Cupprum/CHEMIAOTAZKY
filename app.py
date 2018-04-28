@@ -12,9 +12,18 @@ app = Flask(__name__)
 Bootstrap(app)
 app.secret_key = os.environ["SESSION_KEY"]
 
+mongodb_uri = os.environ["MONGODB_URI"]
 
-client = MongoClient('mongodb://heroku_847wntjv:4gu7eu65bhl8upr57a022p4cqm@ds159489.mlab.com:59489/heroku_847wntjv')
-db = client.heroku_847wntjv
+client = MongoClient(mongodb_uri)
+
+if mongodb_uri == "mongodb://localhost:27017/":
+    db = client.chemia
+
+else:
+    db = client.heroku_847wntjv
+
+print(f"uri {mongodb_uri}")
+
 qtable = db.table_questions
 utable = db.table_users
 ltable = db.table_lists
@@ -155,7 +164,9 @@ def questions():
             utable.find_one_and_update(
                 user_par, {"$set": {"desired": None}})
 
+        print(num_of_q)
         question = qtable.find_one({"possition": num_of_q})
+
         utable.find_one_and_update(
             user_par, {"$set": {"lat_q_num": num_of_q}})
         utable.find_one_and_update(
