@@ -1,87 +1,91 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Chemia 2.1</title>
-        <script type="text/javascript" 
-            src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-        </script>     
-        <script type="text/x-mathjax-config">
-                MathJax.Hub.Config({
-                "HTML-CSS" : {
-                 availableFonts : ["STIX"],
-                 preferredFont : "STIX",
-                 webFont : "STIX General",
-                 imageFont : null
-                 }
-                 });
-        </script>    
-        <link href='//fonts.googleapis.com/css?family=Didact Gothic' rel='stylesheet'>
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
-    </head>
-    <body class="body">
-        <form action="/otazka" method = "post">
-            <center><div>
-                <a href="https://chemiaotazky.herokuapp.com/"><img class="image" src="https://chemistry-studio.com/wp-content/uploads/logo_chemistry_1024_RGB.png" alt="logo"/>
-                </a>
+{% extends "bootstrap/base.html" %}
 
-                <table class="menu_table">
-                    <tr style="background-color: #8ED3D6;">
-                       <td><input type="submit" style="border: none;background-color: #8ED3D6;" name="btn" value="O projekte" class="menu"/></td>
-                       <td><input type="submit" style="border: none;background-color: #8ED3D6;" name="btn" value="Tabuľka najlepších" class="menu"/></td>
-                       <td><input type="submit" style="border: none;background-color: #8ED3D6;" name="btn" value="Zmena skúšaných otázok" class="menu"/></td>
-                    </tr> 
-                </table>
-                 
-                <p class="text width">
-                     {% if uvod %}
-                        Zvoľ správne odpovede. Skontroluj svoje odpovede kliknutím na tlačítko kontrola.
-                     {% endif %}</p><br />
-                <p class="question-text-padding width center control">{{ typotazok }}</p><br />        
-                 
-                 <table>
-                    <tr>
-                       <td></td>
-                       <td class="question-text-padding justify">{{ otazka }} <br /><br /></td>
-                    </tr>
-                    
-                    {% if moznosti %}
-                        {% for x in range(8) %}
-                            <tr>
-                                {% if list1[x] == 1 %}
-                                    <td class="option"><input type="checkbox" name="{{ list2[x] }}" value="{{ list2[x] }}" class="checkbox" checked/></td>
-                                {% else %}
-                                    <td class="option"><input type="checkbox" name="{{ list2[x] }}" value="{{ list2[x] }}" class="checkbox"/></td>
-                                {% endif %}
-                                
-                                {% if list3[x] == 0 %}
-                                    <td class="question-text-padding justify wrong">{{ list4[x] }}</td>
-                                {% elif list3[x] == 1 %}
-                                    <td class="question-text-padding justify right">{{ list4[x] }}</td>
-                                {% else %}
-                                    <td class="question-text-padding justify">{{ list4[x] }}</td>
-                                {% endif %}
-                            </tr>
-                        {% endfor %}
-                    {% endif %}
-                </table> 
-                  
-                <br />
-                <p class="question-text-padding width center control">{{ control }}</p>
-                <p class="question-text-padding width center">{{ odp }}</p>
-                <p class="question-text-padding width center">{{ my_points }} otáz{{ sklonovanie }} máš správne</p>
-                 
-                <br /><br />
-                <table>
-                    <tr>
-                        <td><input type="submit" name="btn" value="Nová otázka" class="button"/></td>
-                        {% if control_button %}
-                            <td><input type="submit" name="btn" value="Kontrola" class="button"/></td>
-                        {% endif %}
-                        <td><input type="submit" name="btn" value="Zle zodpovedané otázky" class="button"/></td>
-                        <td><input type="submit" name="btn" value="Resetuje otázky" class="button"/></td>
-                    </tr>
-                </table>
-            </div></center>
-        </form>
-    </body>
-</html>
+{% block title %}
+    Chemia 3.0
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+    <script type="text/javascript" 
+        src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+    <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({
+            "HTML-CSS" : {
+             availableFonts : ["STIX"],
+             preferredFont : "STIX",
+             webFont : "STIX General",
+             imageFont : null
+             }
+             });
+    </script>
+{% endblock %}
+
+{% block styles %}
+{{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+{% endblock %}
+
+{% block content %}
+    <form action="/otazka" method = "post">
+        <center>
+            <a href="https://chemiaotazky.herokuapp.com/"><img class="image" src="https://chemistry-studio.com/wp-content/uploads/logo_chemistry_1024_RGB.png" alt="logo"/>
+            </a>
+
+            <div class="btn-group" role="group">
+                <button type="submit" name="btn" value="Tabuľka najlepších" class="btn btn-primary btn-lg">Tabuľka najlepších</button>
+                <button type="submit" name="btn" value="Zmena skúšaných otázok" class="btn btn-primary btn-lg">Zmena skúšaných otázok</button>
+                <button type="submit" name="btn" value="O projekte" class="btn btn-primary btn-lg">O projekte</button>
+            </div>
+
+            <br><br>
+
+            <p>{{ typotazok }}</p>
+             
+             <table>
+                <tr>
+                   <td></td>
+                   <td>{{ otazka }}</td>
+                </tr>
+                
+                {% if moznosti %}
+                    {% for x in range(8) %}
+                        <tr>
+                            {% if list1[x] == 1 %}
+                                <td><input type="checkbox" name="{{ list2[x] }}" value="{{ list2[x] }}" class="checkbox" checked/></td>
+                            {% else %}
+                                <td><input type="checkbox" class="checkbox-lg" name="{{ list2[x] }}" value="{{ list2[x] }}" class="checkbox"/></td>
+                            {% endif %}
+                            
+                            {% if list3[x] == 0 %}
+                                <td>{{ list4[x] }}</td>
+                            {% elif list3[x] == 1 %}
+                                <td>{{ list4[x] }}</td>
+                            {% else %}
+                                <td>{{ list4[x] }}</td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                {% endif %}
+            </table> 
+              
+            <br>
+            <p>{{ control }}</p>
+            <p>{{ odp }}</p>
+            <p>{{ my_points }} otáz{{ sklonovanie }} máš správne</p>
+             
+            <br>
+
+            <div role="group">
+                <button type="submit" name="btn" value="Nová otázka" class="btn btn-primary btn-lg">Nová otázka</button>
+                
+                {% if control_button %}
+                    <button type="submit" name="btn" value="Kontrola" class="btn btn-primary btn-lg">Kontrola</button>
+                {% endif %}
+                
+                <button type="submit" name="btn" value="Zle zodpovedané otázky" class="btn btn-primary btn-lg">Zle zodpovedané otázky</button>
+                <button type="submit" name="btn" value="Resetuje otázky" class="btn btn-primary btn-lg">Resetuje otázky</button>
+            </div>
+        </center>
+    </form>
+{% endblock %}
