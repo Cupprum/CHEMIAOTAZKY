@@ -6,8 +6,6 @@ from bson.objectid import ObjectId
 import random
 import os
 import operator
-from mongo_admin import (
-    insert_all_func, insert_list_of_categories, insert_categories)
 
 
 app = Flask(__name__)
@@ -26,10 +24,6 @@ else:
 qtable = db.table_questions
 utable = db.table_users
 ltable = db.table_lists
-
-insert_all_func()
-insert_list_of_categories()
-insert_categories()
 
 
 class table_obj:
