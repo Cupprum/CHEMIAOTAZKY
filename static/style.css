@@ -2,6 +2,10 @@ html, body {
     background-color:#CACACA;
 }
 
+.checkbox-lg {
+    width: 20px;
+    height: 20px;}
+
 ul#horizontal_list li {
   display: inline;
 }
