@@ -37,7 +37,7 @@
             <a href="https://chemiaotazky.herokuapp.com/"><img class="image" src="https://chemistry-studio.com/wp-content/uploads/logo_chemistry_1024_RGB.png" alt="logo"/>
             </a>
 
-            <div class="btn-group" role="group">
+            <div role="group" class="btn-group col-xs-12 col-md-8">
                 <button type="submit" name="btn" value="Tabuľka najlepších" class="btn btn-primary btn-lg">Tabuľka najlepších</button>
                 <button type="submit" name="btn" value="Zmena skúšaných otázok" class="btn btn-primary btn-lg">Zmena skúšaných otázok</button>
                 <button type="submit" name="btn" value="O projekte" class="btn btn-primary btn-lg">O projekte</button>
@@ -49,7 +49,7 @@
 
             <p>{{ typotazok }}</p>
              
-            <p>{{ otazka }}</p>
+            <h3>{{ otazka }}</h3>
             
             <ul class="list-group">  
                 {% if moznosti %}
@@ -68,7 +68,7 @@
                                 <input type="checkbox" class="checkbox-lg" name="{{ list2[x] }}" value="{{ list2[x] }}"/>
                             {% endif %}
                             
-                            {{ list4[x] }}
+                            <p>{{ list4[x] }}</p>
                         </li>
                     {% endfor %}
                 {% endif %}

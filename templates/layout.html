@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block scripts %}
-{{ super() }}
+    {{ super() }}
     <script type="text/javascript" 
         src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
     </script>
@@ -22,7 +22,7 @@
 {% endblock %}
 
 {% block styles %}
-{{ super() }}
+    {{ super() }}
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 {% endblock %}
 
