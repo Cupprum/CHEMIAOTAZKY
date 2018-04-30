@@ -43,12 +43,11 @@
             </div>
 
             <br>
+
+            <h3>{{ typotazok }}</h3>
         </center>
 
-        <div style="width: 90%; margin-left: 5%">
-
-            <p>{{ typotazok }}</p>
-             
+        <div style="width: 90%; margin-left: 5%"> 
             <h4>{{ otazka }}</h4>
             
             <div class="panel panel-default">
@@ -63,7 +62,7 @@
                                 <tr>
                             {% endif %}
 
-                                    <th class="col-xs-1">
+                                    <th>
                                         {% if list1[x] == 1 %}
                                             <input type="checkbox" class="checkbox-lg" name="{{ list2[x] }}" value="{{ list2[x] }}" checked/>
                                         {% else %}
@@ -83,7 +82,6 @@
             <br>
 
             <center>
-                <p>{{ control }}</p>
                 <p>{{ odp }}</p>
                 <p>{{ my_points }} otáz{{ sklonovanie }} máš správne</p>
             </center>

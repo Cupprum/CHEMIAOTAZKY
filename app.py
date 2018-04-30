@@ -192,6 +192,7 @@ def questions():
         respond = make_response(render_template('otazka.html',
                                                 moznosti=True,
                                                 control_button=True,
+                                                typotazok=user['group'],
                                                 otazka=question['ot'],
                                                 my_points=my_points,
                                                 sklonovanie=ending,
