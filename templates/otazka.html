@@ -37,12 +37,12 @@
             <a href="https://chemiaotazky.herokuapp.com/"><img class="image" src="https://chemistry-studio.com/wp-content/uploads/logo_chemistry_1024_RGB.png" alt="logo"/>
             </a>
 
-            <div role="group">
+            <div class="btn-group special" role="group">
                 <button type="submit" name="btn" value="Tabuľka najlepších" class="btn btn-primary">Tabuľka najlepších</button>
                 <button type="submit" name="btn" value="Zmena skúšaných otázok" class="btn btn-primary">Zmena skúšaných otázok</button>
-                <button type="submit" name="btn" value="O projekte" class="btn btn-primary">O projekte</button>
             </div>
-            <br><br>
+
+            <br>
         </center>
 
         <div style="width: 90%; margin-left: 5%">
@@ -50,50 +50,62 @@
             <p>{{ typotazok }}</p>
              
             <h3>{{ otazka }}</h3>
-            
-            <ul class="list-group">  
+              
+            <table class="table">
                 {% if moznosti %}
                     {% for x in range(8) %}
                         {% if list3[x] == 0 %}
-                                <li class="list-group-item list-group-item-danger">
-                            {% elif list3[x] == 1 %}
-                                <li class="list-group-item list-group-item-success">
-                            {% else %}
-                                <li class="list-group-item">
-                            {% endif %}
+                            <tr class="danger">
+                        {% elif list3[x] == 1 %}
+                            <tr class="success">
+                        {% else %}
+                            <tr>
+                        {% endif %}
 
-                            {% if list1[x] == 1 %}
-                                <input type="checkbox" class="checkbox-lg" name="{{ list2[x] }}" value="{{ list2[x] }}" checked/>
-                            {% else %}
-                                <input type="checkbox" class="checkbox-lg" name="{{ list2[x] }}" value="{{ list2[x] }}"/>
-                            {% endif %}
-                            
-                            <p style="display: inline-block">{{ list4[x] }}</p>
-                        </li>
+                                <th>
+                                    {% if list1[x] == 1 %}
+                                        <input type="checkbox" class="checkbox-lg" name="{{ list2[x] }}" value="{{ list2[x] }}" checked/>
+                                    {% else %}
+                                        <input type="checkbox" class="checkbox-lg" name="{{ list2[x] }}" value="{{ list2[x] }}"/>
+                                    {% endif %}        
+                                </th>
+                                
+                                <th>
+                                    <p style="display: inline-block">{{ list4[x] }}</p>               
+                                </th>
+                            </tr>
                     {% endfor %}
                 {% endif %}
-            </ul> 
-              
+            </table>
             <br>
-            <p>{{ control }}</p>
-            <p>{{ odp }}</p>
-            <p>{{ my_points }} otáz{{ sklonovanie }} máš správne</p>
+
+            <center>
+                <p>{{ control }}</p>
+                <p>{{ odp }}</p>
+                <p>{{ my_points }} otáz{{ sklonovanie }} máš správne</p>
+            </center>
              
             <br>
         </div>
 
-        <center>
-            <div role="group">
-                <button type="submit" name="btn" value="Nová otázka" class="btn btn-primary">Nová otázka</button>
-                
-                {% if control_button %}
-                    <button type="submit" name="btn" value="Kontrola" class="btn btn-primary">Kontrola</button>
-                {% endif %}
-                
-                <button type="submit" name="btn" value="Zle zodpovedané otázky" class="btn btn-primary">Zle zodpovedané</button>
-                <button type="submit" name="btn" value="Resetuje otázky" class="btn btn-primary">Resetuje otázky</button>
-            </div>
-        </center>
+        <div role="group" class="btn-group special">
+            {% if control_button %}
+                <button type="submit" name="btn" value="Kontrola" class="btn btn-primary">Kontrola</button>
+            {% endif %}
+        </div>
+
+        <br>
+
+        <div role="group" class="btn-group special">
+            <button type="submit" name="btn" value="Nová otázka" class="btn btn-primary">Nová otázka</button>
+            <button type="submit" name="btn" value="Zle zodpovedané otázky" class="btn btn-primary">Zle zodpovedané otázky</button>
+        </div>
+
+        <br>
+        
+        <div class="btn-group special">
+            <button type="submit" name="btn" value="Resetuje otázky" class="btn btn-primary">Resetuje otázky</button>
+        </div>
         <br>
     </form>
 {% endblock %}

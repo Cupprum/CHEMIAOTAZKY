@@ -17,3 +17,11 @@ ul#horizontal_list li {
     margin-top: 2%;
     margin-bottom: 2%;
 }
+
+.btn-group.special {
+	display: flex;
+}
+
+.special .btn {
+	flex: 1
+}
