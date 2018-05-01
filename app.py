@@ -341,7 +341,7 @@ def table():
             utable.find_one_and_update(user_par, {"$set": {
                 "my_chosen_name": name}})
 
-            respond = make_response(redirect(url_for('home')))
+            respond = make_response(redirect(url_for('table')))
             return respond
 
         elif request.form['btn'] == 'Tabuľka najlepších':
