@@ -70,7 +70,9 @@ def make_session_permanent():
 def home():
     if request.method == 'GET':
         user_id = session.get('nameID')
-        if user_id is None:
+        user = utable.find_one({"_id": ObjectId(user_id)})
+
+        if user is None:
             user = {"my_chosen_name": "",
                     "correct_answers": [],
                     "wrong_answers": [],
