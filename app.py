@@ -450,11 +450,20 @@ def wrong_answered():
         user_par = {"_id": ObjectId(user_id)}
         user = utable.find_one(user_par)
 
-        utable.find_one_and_update(
-            user_par, {"$set": {"desired": int(request.form['btn'])}})
+        if request.form['btn'] == 'Tabuľka najlepších':
+            respond = make_response(redirect(url_for('table')))
+            return respond
 
-        respond = make_response(redirect(url_for('questions')))
-        return respond
+        elif request.form['btn'] == 'Zmena skúšaných otázok':
+            respond = make_response(redirect(url_for('changequestions')))
+            return respond
+
+        else:
+            utable.find_one_and_update(
+                user_par, {"$set": {"desired": int(request.form['btn'])}})
+
+            respond = make_response(redirect(url_for('questions')))
+            return respond
 
 
 if __name__ == '__main__':
