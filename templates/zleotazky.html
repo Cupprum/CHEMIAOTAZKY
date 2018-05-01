@@ -1,47 +1,54 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="content-type" content="text/html; charset=utf-8">
-        <meta name="viewport" content="width=device-width">
-        <title>Chemia 2.1</title>
-        <script type="text/javascript" 
-              src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>     
-        <script type="text/x-mathjax-config">
-                MathJax.Hub.Config({
-                "HTML-CSS" : {
-                 availableFonts : ["STIX"],
-                 preferredFont : "STIX",
-                 webFont : "STIX General",
-                 imageFont : null
-                 }
-                 });</script>    
-        <link href='//fonts.googleapis.com/css?family=Didact Gothic' rel='stylesheet'>
-        <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
-    </head>
+{% extends "bootstrap/base.html" %}
 
-    <body class="body"><center><div>
-        <form action="/wrong_answered" method = "post">
-        
-            <a href="https://chemiaotazky.herokuapp.com/"><img class="image" src="https://chemistry-studio.com/wp-content/uploads/logo_chemistry_1024_RGB.png" alt="logo"/></a>
-            <table class="menu_table">
-                <tr style="background-color: #8ED3D6;">
-                  <td><input type="submit" style="border: none;background-color: #8ED3D6;" name="btn" value="O projekte" class="menu"/></td>
-                  <td><input type="submit" style="border: none;background-color: #8ED3D6;" name="btn" value="Tabuľka najlepších" class="menu"/></td>
-                  <td><input type="submit" style="border: none;background-color: #8ED3D6;" name="btn" value="Zmena skúšaných otázok" class="menu"/></td>
-                </tr> 
-            </table>
-            
-            <h1>{{ control }}</h1>
-            <h1>{{ bdy }}</h1>
-            <h1>{{ sklonovanie }}</h1> 
+{% block title %}
+    Chemia 3.0
+{% endblock %}
 
-            {% for lst in dic.values() %}
-                    {% for num in lst %}
-                        <input type="submit" name="btn" value='{{ num }}' class="button" style="width: 110px;" />
-                    {% endfor %}
-                    <br><br>
-            {% endfor %}
-            </table>
-        </form>
-    </div></center></body>
-</html>
+{% block scripts %}
+    {{ super() }}
+    <script type="text/javascript" 
+        src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+    <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({
+            "HTML-CSS" : {
+             availableFonts : ["STIX"],
+             preferredFont : "STIX",
+             webFont : "STIX General",
+             imageFont : null
+             }
+             });
+    </script>
+{% endblock %}
+
+{% block styles %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+{% endblock %}
+
+{% block content %}
+    <form action="/wrong_answered" method = "post">
+    
+        <center>
+            <a href="https://chemiaotazky.herokuapp.com/"><img class="image" src="https://chemistry-studio.com/wp-content/uploads/logo_chemistry_1024_RGB.png"/></a>
+
+            <div class="btn-group special" role="group">
+                <button type="submit" name="btn" value="Tabuľka najlepších" class="btn btn-primary">Tabuľka najlepších</button>
+                <button type="submit" name="btn" value="Zmena skúšaných otázok" class="btn btn-primary">Zmena skúšaných otázok</button>
+            </div>
+
+            <br><br>
+        </center>
+
+        {% for lst in dic.values() %}
+            <div class="btn-group special" role="group">
+                {% for num in lst %}
+                    <button type="submit" name="btn" value='{{ num }}' class="btn btn-primary">{{ num }}</button>
+                {% endfor %}
+            </div>
+
+            <br>
+        {% endfor %}
+        </table>
+    </form>
+{% endblock %}

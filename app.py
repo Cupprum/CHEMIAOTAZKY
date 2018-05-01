@@ -262,7 +262,7 @@ def questions():
                     utable.find_one_and_update(user_par, {"$pull": {
                         "wrong_answers": user['lat_q_num']}})
 
-            else:
+            elif user['lat_q_num'] not in user['wrong_answers']:
                 utable.find_one_and_update(user_par, {"$push": {
                     "wrong_answers": user['lat_q_num']}})
 
@@ -400,7 +400,7 @@ def changequestions():
                     utable.find_one_and_update(
                         user_par, {"$set": {"group": x}})
 
-                    respond = make_response(redirect(url_for('home')))
+                    respond = make_response(redirect(url_for('questions')))
                     return respond
 
         elif request.form['btn'] == 'Tabuľka najlepších':
