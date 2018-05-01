@@ -28,27 +28,28 @@
 
 {% block content %}
     <form action="/wrong_answered" method = "post">
-    
-        <center>
-            <a href="https://chemiaotazky.herokuapp.com/"><img class="image" src="https://chemistry-studio.com/wp-content/uploads/logo_chemistry_1024_RGB.png"/></a>
+        <div class="container">
+            <center>
+                <a href="https://chemiaotazky.herokuapp.com/"><img class="image" src="https://chemistry-studio.com/wp-content/uploads/logo_chemistry_1024_RGB.png"/></a>
 
-            <div class="btn-group special" role="group">
-                <button type="submit" name="btn" value="Tabuľka najlepších" class="btn btn-primary">Tabuľka najlepších</button>
-                <button type="submit" name="btn" value="Zmena skúšaných otázok" class="btn btn-primary">Zmena skúšaných otázok</button>
-            </div>
+                <div class="btn-group special" role="group">
+                    <button type="submit" name="btn" value="Tabuľka najlepších" class="btn btn-primary">Tabuľka najlepších</button>
+                    <button type="submit" name="btn" value="Zmena skúšaných otázok" class="btn btn-primary">Zmena skúšaných otázok</button>
+                </div>
 
-            <br><br>
-        </center>
+                <br><br>
+            </center>
 
-        {% for lst in dic.values() %}
-            <div class="btn-group special" role="group">
-                {% for num in lst %}
-                    <button type="submit" name="btn" value='{{ num }}' class="btn btn-primary">{{ num }}</button>
-                {% endfor %}
-            </div>
+            {% for lst in dic.values() %}
+                <div class="btn-group special" role="group">
+                    {% for num in lst %}
+                        <button type="submit" name="btn" value='{{ num }}' class="btn btn-primary">{{ num }}</button>
+                    {% endfor %}
+                </div>
 
-            <br>
-        {% endfor %}
-        </table>
+                <br>
+            {% endfor %}
+            </table>
+        </div>
     </form>
 {% endblock %}

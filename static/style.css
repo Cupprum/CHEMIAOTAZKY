@@ -12,7 +12,7 @@ ul#horizontal_list li {
 }
 
 .image {
-    width: 40%;
+    width: 70%;
     display: block;
     margin-top: 2%;
     margin-bottom: 2%;
@@ -24,4 +24,8 @@ ul#horizontal_list li {
 
 .special .btn {
 	flex: 1
+}
+
+.container{
+    max-width:600px;
 }

@@ -28,46 +28,47 @@
 
 {% block content %}
 <form action="/table" method = "post">
+    <div class="container">
+        <center>
+            <a href="https://chemiaotazky.herokuapp.com/"><img class="image" src="https://chemistry-studio.com/wp-content/uploads/logo_chemistry_1024_RGB.png" alt="logo"/></a>
 
-    <center>
-        <a href="https://chemiaotazky.herokuapp.com/"><img class="image" src="https://chemistry-studio.com/wp-content/uploads/logo_chemistry_1024_RGB.png" alt="logo"/></a>
+            <div class="btn-group special" role="group">
+                <button type="submit" name="btn" value="Tabuľka najlepších" class="btn btn-primary">Tabuľka najlepších</button>
+                <button type="submit" name="btn" value="Zmena skúšaných otázok" class="btn btn-primary">Zmena skúšaných otázok</button>
+            </div>
 
-        <div class="btn-group special" role="group">
-            <button type="submit" name="btn" value="Tabuľka najlepších" class="btn btn-primary">Tabuľka najlepších</button>
-            <button type="submit" name="btn" value="Zmena skúšaných otázok" class="btn btn-primary">Zmena skúšaných otázok</button>
-        </div>
-
+            <br>
+        
+            <div>
+                <div style="display: inline-block;">
+                    <input type="text" name="vloztemeno" class="form-control" placeholder="Tvoje meno.."/>
+                </div>
+                <div style="display: inline-block;">
+                    <button type="submit" name="btn" value="Pridať meno" class="btn btn-primary">Pridať meno</button>
+                </div>
+            </div>
+        </center>
+        
         <br>
-    
-        <div>
-            <div style="display: inline-block;">
-                <input type="text" name="vloztemeno" class="form-control" placeholder="Tvoje meno.."/>
-            </div>
-            <div style="display: inline-block;">
-                <button type="submit" name="btn" value="Pridať meno" class="btn btn-primary">Pridať meno</button>
-            </div>
-        </div>
-    </center>
-    
-    <br>
-  
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col"><p class="text-left">#</p></th>
-                <th scope="col"><p class="text-center">Meno</p></th>
-                <th scope="col"><p class="text-center">Počet bodov</p></th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for x in range(0, 5) %}
+      
+        <table class="table">
+            <thead>
                 <tr>
-                    <th scope="row">{{ list1[x] }}</th>
-                    <td><p class="text-center">{{ list2[x] }}</p></td>
-                    <td><p class="text-center">{{ list3[x] }}</p></td> 
+                    <th scope="col"><p class="text-left">#</p></th>
+                    <th scope="col"><p class="text-center">Meno</p></th>
+                    <th scope="col"><p class="text-center">Počet bodov</p></th>
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                {% for x in range(0, 5) %}
+                    <tr>
+                        <th scope="row">{{ list1[x] }}</th>
+                        <td><p class="text-center">{{ list2[x] }}</p></td>
+                        <td><p class="text-center">{{ list3[x] }}</p></td> 
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </form>
 {% endblock %}

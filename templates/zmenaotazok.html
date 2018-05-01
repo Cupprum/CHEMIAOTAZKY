@@ -28,66 +28,69 @@
 
 {% block content %}
 <form action="/changequestions" method = "post">
-    <center>
-        <a href="https://chemiaotazky.herokuapp.com/"><img class="image" src="https://chemistry-studio.com/wp-content/uploads/logo_chemistry_1024_RGB.png" alt="logo"/></a>
+    <div class="container">
+        <center>
+            <a href="https://chemiaotazky.herokuapp.com/"><img class="image" src="https://chemistry-studio.com/wp-content/uploads/logo_chemistry_1024_RGB.png" alt="logo"/></a>
 
-        <div class="btn-group special" role="group">
-            <button type="submit" name="btn" value="Tabuľka najlepších" class="btn btn-primary">Tabuľka najlepších</button>
-            <button type="submit" name="btn" value="Zmena skúšaných otázok" class="btn btn-primary">Zmena skúšaných otázok</button>
-        </div>
-
-        <br><br>
-
-        <div class="input-group">
-            <input type="text" name="najmensiaotazka" class="form-control" placeholder="Od.."/>
-            <span class="input-group-addon">-</span>
-            <input type="text" name="najvacsiaotazka" class="form-control" placeholder="Do.."/>
-        </div>
-
-        <div role="group" class="btn-group special" style="margin-top: 5px">
-            <button type="submit" name="btn" value="Pridať rozmedzie otázok" class="btn btn-primary">Pridať rozmedzie otázok</button>
-        </div>
-
-        <br>
-
-        <div class="input-group input-group-lg">
-            <input type="text" name="cislootazky" class="form-control" placeholder="Číslo.."/>
-            <div class="input-group-btn">
-                <button type="submit" name="btn" value="Prejsť na otázku" class="btn btn-primary">Prejsť na otázku</button>
-            </div>
-        </div>
-
-    <br>
-
-    <ul class="list-group">
-        <li class="list-group-item">
             <div class="btn-group special" role="group">
-                <button type="submit" name="btn" value="Atóm" class="btn btn-primary">Atóm</button>
-                <button type="submit" name="btn" value="Sústava látok" class="btn btn-primary">Sústava látok</button>
-                <button type="submit" name="btn" value="Látky" class="btn btn-primary">Látky</button>
+                <button type="submit" name="btn" value="Tabuľka najlepších" class="btn btn-primary">Tabuľka najlepších</button>
+                <button type="submit" name="btn" value="Zmena skúšaných otázok" class="btn btn-primary">Zmena skúšaných otázok</button>
             </div>
-        </li>
-        <li class="list-group-item">
-            <div class="btn-group special" role="group">
-                <button type="submit" name="btn" value="Periodická sústava prvkov" class="btn btn-primary">PSP</button>
-                <button type="submit" name="btn" value="Chemická väzba" class="btn btn-primary">Chemická väzba</button>
-                <button type="submit" name="btn" value="Názvoslovie" class="btn btn-primary">Názvoslovie</button>
+
+            <br><br>
+
+            <div class="input-group">
+                <input type="text" name="najmensiaotazka" class="form-control" placeholder="Od.."/>
+                <span class="input-group-addon">-</span>
+                <input type="text" name="najvacsiaotazka" class="form-control" placeholder="Do.."/>
             </div>
-        </li>
-        <li class="list-group-item">
-            <div class="btn-group special" role="group">
-                <button type="submit" name="btn" value="Chemické veličiny" class="btn btn-primary">Veličiny</button>
-                <button type="submit" name="btn" value="Kyseliny a zásady" class="btn btn-primary">Kys. a zás.</button>
-                <button type="submit" name="btn" value="Chemické reakcie" class="btn btn-primary">Reakcie</button>    
+
+            <div role="group" class="btn-group special" style="margin-top: 5px">
+                <button type="submit" name="btn" value="Pridať rozmedzie otázok" class="btn btn-primary">Pridať rozmedzie otázok</button>
             </div>
-        </li>
-        <li class="list-group-item">
-            <div class="btn-group special" role="group">
-                <button type="submit" name="btn" value="Chemická rovnováha" class="btn btn-primary">Rovnováha</button>
-                <button type="submit" name="btn" value="Komplexné zlúčeniny" class="btn btn-primary">Komplex. zlúč.</button>
-                <button type="submit" name="btn" value="Príklady" class="btn btn-primary">Príklady</button>            
+
+            <br>
+
+            <div class="input-group input-group-lg">
+                <input type="text" name="cislootazky" class="form-control" placeholder="Číslo.."/>
+                <div class="input-group-btn">
+                    <button type="submit" name="btn" value="Prejsť na otázku" class="btn btn-primary">Prejsť na otázku</button>
+                </div>
             </div>
-        </li>
-    </ul>
+
+            <br>
+
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <div class="btn-group special" role="group">
+                        <button type="submit" name="btn" value="Atóm" class="btn btn-primary">Atóm</button>
+                        <button type="submit" name="btn" value="Sústava látok" class="btn btn-primary">Sústava látok</button>
+                        <button type="submit" name="btn" value="Látky" class="btn btn-primary">Látky</button>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="btn-group special" role="group">
+                        <button type="submit" name="btn" value="Periodická sústava prvkov" class="btn btn-primary">PSP</button>
+                        <button type="submit" name="btn" value="Chemická väzba" class="btn btn-primary">Chemická väzba</button>
+                        <button type="submit" name="btn" value="Názvoslovie" class="btn btn-primary">Názvoslovie</button>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="btn-group special" role="group">
+                        <button type="submit" name="btn" value="Chemické veličiny" class="btn btn-primary">Veličiny</button>
+                        <button type="submit" name="btn" value="Kyseliny a zásady" class="btn btn-primary">Kys. a zás.</button>
+                        <button type="submit" name="btn" value="Chemické reakcie" class="btn btn-primary">Reakcie</button>    
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="btn-group special" role="group">
+                        <button type="submit" name="btn" value="Chemická rovnováha" class="btn btn-primary">Rovnováha</button>
+                        <button type="submit" name="btn" value="Komplexné zlúčeniny" class="btn btn-primary">Komplex. zlúč.</button>
+                        <button type="submit" name="btn" value="Príklady" class="btn btn-primary">Príklady</button>            
+                    </div>
+                </li>
+            </ul>
+        </center>
+    </div>
 </form>
 {% endblock %}

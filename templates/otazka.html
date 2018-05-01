@@ -33,80 +33,82 @@
 
 {% block content %}
     <form action="/otazka" method = "post">
-        <center>
-            <a href="https://chemiaotazky.herokuapp.com/"><img class="image" src="https://chemistry-studio.com/wp-content/uploads/logo_chemistry_1024_RGB.png" alt="logo"/>
-            </a>
-
-            <div class="btn-group special" role="group">
-                <button type="submit" name="btn" value="Tabuľka najlepších" class="btn btn-primary">Tabuľka najlepších</button>
-                <button type="submit" name="btn" value="Zmena skúšaných otázok" class="btn btn-primary">Zmena skúšaných otázok</button>
-            </div>
-
-            <br>
-
-            <h3>{{ typotazok }}</h3>
-        </center>
-
-        <div style="width: 90%; margin-left: 5%"> 
-            <h4>{{ otazka }}</h4>
-            
-            <div class="panel panel-default">
-                <table class="table">
-                    {% if moznosti %}
-                        {% for x in range(8) %}
-                            {% if list3[x] == 0 %}
-                                <tr class="danger">
-                            {% elif list3[x] == 1 %}
-                                <tr class="success">
-                            {% else %}
-                                <tr>
-                            {% endif %}
-
-                                    <th>
-                                        {% if list1[x] == 1 %}
-                                            <input type="checkbox" class="checkbox-lg" name="{{ list2[x] }}" value="{{ list2[x] }}" checked/>
-                                        {% else %}
-                                            <input type="checkbox" class="checkbox-lg" name="{{ list2[x] }}" value="{{ list2[x] }}"/>
-                                        {% endif %}        
-                                    </th>
-                                    
-                                    <th>
-                                        <p>{{ list4[x] }}</p>               
-                                    </th>
-                                </tr>
-                        {% endfor %}
-                    {% endif %}
-                </table>
-            </div>
-
-            <br>
-
+        <div class="container">
             <center>
-                <p>{{ odp }}</p>
-                <p>{{ my_points }} otáz{{ sklonovanie }} máš správne</p>
+                <a href="https://chemiaotazky.herokuapp.com/"><img class="image" src="https://chemistry-studio.com/wp-content/uploads/logo_chemistry_1024_RGB.png" alt="logo"/>
+                </a>
+
+                <div class="btn-group special" role="group">
+                    <button type="submit" name="btn" value="Tabuľka najlepších" class="btn btn-primary">Tabuľka najlepších</button>
+                    <button type="submit" name="btn" value="Zmena skúšaných otázok" class="btn btn-primary">Zmena skúšaných otázok</button>
+                </div>
+
+                <br>
+
+                <h3>{{ typotazok }}</h3>
             </center>
-             
+
+            <div style="width: 90%; margin-left: 5%"> 
+                <h4>{{ otazka }}</h4>
+                
+                <div class="panel panel-default">
+                    <table class="table">
+                        {% if moznosti %}
+                            {% for x in range(8) %}
+                                {% if list3[x] == 0 %}
+                                    <tr class="danger">
+                                {% elif list3[x] == 1 %}
+                                    <tr class="success">
+                                {% else %}
+                                    <tr>
+                                {% endif %}
+
+                                        <th>
+                                            {% if list1[x] == 1 %}
+                                                <input type="checkbox" class="checkbox-lg" name="{{ list2[x] }}" value="{{ list2[x] }}" checked/>
+                                            {% else %}
+                                                <input type="checkbox" class="checkbox-lg" name="{{ list2[x] }}" value="{{ list2[x] }}"/>
+                                            {% endif %}        
+                                        </th>
+                                        
+                                        <th>
+                                            <p>{{ list4[x] }}</p>               
+                                        </th>
+                                    </tr>
+                            {% endfor %}
+                        {% endif %}
+                    </table>
+                </div>
+
+                <br>
+
+                <center>
+                    <p>{{ odp }}</p>
+                    <p>{{ my_points }} otáz{{ sklonovanie }} máš správne</p>
+                </center>
+                 
+                <br>
+            </div>
+
+            <div role="group" class="btn-group special">
+                {% if control_button %}
+                    <button type="submit" name="btn" value="Kontrola" class="btn btn-primary">Kontrola</button>
+                {% endif %}
+            </div>
+
+            <br>
+
+            <div role="group" class="btn-group special">
+                <button type="submit" name="btn" value="Nová otázka" class="btn btn-primary">Nová otázka</button>
+                <button type="submit" name="btn" value="Zle zodpovedané otázky" class="btn btn-primary">Zle zodpovedané otázky</button>
+            </div>
+
+            <br>
+            
+            <div class="btn-group special">
+                <button type="submit" name="btn" value="Resetuje otázky" class="btn btn-primary">Resetuje otázky</button>
+            </div>
             <br>
         </div>
-
-        <div role="group" class="btn-group special">
-            {% if control_button %}
-                <button type="submit" name="btn" value="Kontrola" class="btn btn-primary">Kontrola</button>
-            {% endif %}
-        </div>
-
-        <br>
-
-        <div role="group" class="btn-group special">
-            <button type="submit" name="btn" value="Nová otázka" class="btn btn-primary">Nová otázka</button>
-            <button type="submit" name="btn" value="Zle zodpovedané otázky" class="btn btn-primary">Zle zodpovedané otázky</button>
-        </div>
-
-        <br>
-        
-        <div class="btn-group special">
-            <button type="submit" name="btn" value="Resetuje otázky" class="btn btn-primary">Resetuje otázky</button>
-        </div>
-        <br>
     </form>
 {% endblock %}
