@@ -445,6 +445,18 @@ def wrong_answered():
                                                 dic=dic_wrong))
         return respond
 
+    elif request.method == 'POST':
+        user_id = session.get('nameID')
+        user_par = {"_id": ObjectId(user_id)}
+        user = utable.find_one(user_par)
+
+        utable.find_one_and_update(
+            user_par, {"$set": {"desired": int(request.form['btn'])}})
+
+        respond = make_response(redirect(url_for('questions')))
+        return respond
+
+
 if __name__ == '__main__':
     app.jinja_env.auto_reload = True
     app.config['TEMPLATES_AUTO_RELOAD'] = True
