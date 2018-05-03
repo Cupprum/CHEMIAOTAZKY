@@ -51,35 +51,33 @@
             <div style="width: 90%; margin-left: 5%"> 
                 <h4>{{ otazka }}</h4>
                 
-                <div class="panel panel-default">
                     <table class="table">
-                        {% if moznosti %}
-                            {% for x in range(8) %}
-                                {% if list3[x] == 0 %}
-                                    <tr class="danger">
-                                {% elif list3[x] == 1 %}
-                                    <tr class="success">
-                                {% else %}
-                                    <tr>
-                                {% endif %}
+                            {% if moznosti %}
+                                {% for x in range(8) %}
+                                    {% if list3[x] == 0 %}
+                                        <tr class="danger">
+                                    {% elif list3[x] == 1 %}
+                                        <tr class="success">
+                                    {% else %}
+                                        <tr>
+                                    {% endif %}
 
-                                        <th>
-                                            {% if list1[x] == 1 %}
-                                                <input type="checkbox" class="checkbox-lg" name="{{ list2[x] }}" value="{{ list2[x] }}" checked/>
-                                            {% else %}
-                                                <input type="checkbox" class="checkbox-lg" name="{{ list2[x] }}" value="{{ list2[x] }}"/>
-                                            {% endif %}        
-                                        </th>
-                                        
-                                        <th>
-                                            <p>{{ list4[x] }}</p>               
-                                        </th>
-                                    </tr>
-                            {% endfor %}
-                        {% endif %}
+                                            <th>
+                                                {% if list1[x] == 1 %}
+                                                    <input type="checkbox" class="checkbox-lg" name="{{ list2[x] }}" value="{{ list2[x] }}" checked/>
+                                                {% else %}
+                                                    <input type="checkbox" class="checkbox-lg" name="{{ list2[x] }}" value="{{ list2[x] }}"/>
+                                                {% endif %}        
+                                            </th>
+                                            
+                                            <th>
+                                                <p>{{ list4[x] }}</p>               
+                                            </th>
+                                        </tr>
+                                {% endfor %}
+                            {% endif %}
                     </table>
-                </div>
-
+                
                 <br>
 
                 <center>
