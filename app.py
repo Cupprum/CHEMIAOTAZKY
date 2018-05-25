@@ -86,6 +86,7 @@ def home():
 
             new_user_id = utable.insert_one(user).inserted_id
             session['nameID'] = str(new_user_id)
+            session['admin'] = False
 
         else:
             user = utable.find_one({"_id": ObjectId(user_id)})
@@ -193,8 +194,12 @@ def questions():
 
         str_odp = ""
 
-        if session['admin'] is True:
-            str_odp = question['od']
+        try:
+            if session['admin'] is True:
+                str_odp = question['od']
+
+        except KeyError:
+            session['admin'] = False
 
         respond = make_response(render_template('otazka.html',
                                                 moznosti=True,
