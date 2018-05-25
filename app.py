@@ -191,6 +191,11 @@ def questions():
                  question['mg'],
                  question['mh']]
 
+        str_odp = ""
+
+        if session['admin'] is True:
+            str_odp = question['od']
+
         respond = make_response(render_template('otazka.html',
                                                 moznosti=True,
                                                 control_button=True,
@@ -198,7 +203,7 @@ def questions():
                                                 otazka=question['ot'],
                                                 my_points=my_points,
                                                 sklonovanie=ending,
-                                                odp=question['od'],
+                                                odp=str_odp,
                                                 list1=list1,
                                                 list2=list2,
                                                 list3=list3,
@@ -272,12 +277,17 @@ def questions():
             my_points = user["points"]
             ending = what_ending(my_points)
 
+            str_odp = ""
+
+            if session['admin'] is True:
+                str_odp = question['od']
+
             respond = make_response(render_template('otazka.html',
                                                     moznosti=True,
                                                     otazka=question['ot'],
                                                     my_points=my_points,
                                                     sklonovanie=ending,
-                                                    odp=question['od'],
+                                                    odp=str_odp,
                                                     list1=list1,
                                                     list2=list2,
                                                     list3=list3,
@@ -479,10 +489,14 @@ def login():
             possible_password = request.form['password']
 
             if possible_password == app.secret_key:
+                session['admin'] = True
+
                 respond = make_response(redirect(url_for('home')))
                 return respond
 
             else:
+                session['admin'] = False
+
                 str_yell = 'YOU SHALL NOT PASS'
 
                 respond = make_response(render_template('login.html',
