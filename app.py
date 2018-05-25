@@ -468,6 +468,28 @@ def wrong_answered():
             return respond
 
 
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'GET':
+        respond = make_response(render_template('login.html'))
+        return respond
+
+    elif request.method == 'POST':
+        if request.form['btn'] == 'Potvrdit heslo':
+            possible_password = request.form['password']
+
+            if possible_password == app.secret_key:
+                respond = make_response(redirect(url_for('home')))
+                return respond
+
+            else:
+                str_yell = 'YOU SHALL NOT PASS'
+
+                respond = make_response(render_template('login.html',
+                                                        yell=str_yell))
+                return respond
+
+
 if __name__ == '__main__':
     app.jinja_env.auto_reload = True
     app.config['TEMPLATES_AUTO_RELOAD'] = True
