@@ -30,9 +30,19 @@
     <form action="/login" method = "post">
         <div class="container">
             <center>
+                <a href="https://chemiaotazky.herokuapp.com/"><img class="image" src="https://chemistry-studio.com/wp-content/uploads/logo_chemistry_1024_RGB.png"/></a>
+
+                <div class="btn-group special" role="group">
+                    <button type="submit" name="btn" value="Tabuľka najlepších" class="btn btn-primary">Tabuľka najlepších</button>
+                    <button type="submit" name="btn" value="Zmena skúšaných otázok" class="btn btn-primary">Zmena skúšaných otázok</button>
+                </div>
+
+                <br><br>
+
                 <h1>{{ yell }}</h1>
-                <div class="input-group" style="margin-top: 25%">
-                    <input type="text" name="password" class="form-control" placeholder="Heslo"/>
+
+                <div class="input-group">
+                    <input type="password" name="password" class="form-control" placeholder="Heslo"/>
                     <div class="input-group-btn">
                         <button type="submit" name="btn" value="Potvrdit heslo" class="btn btn-primary">Potvrdit heslo</button>
                     </div>

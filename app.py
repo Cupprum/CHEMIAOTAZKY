@@ -503,6 +503,14 @@ def login():
                                                         yell=str_yell))
                 return respond
 
+        elif request.form['btn'] == 'Tabuľka najlepších':
+            respond = make_response(redirect(url_for('table')))
+            return respond
+
+        elif request.form['btn'] == 'Zmena skúšaných otázok':
+            respond = make_response(redirect(url_for('changequestions')))
+            return respond
+
 
 if __name__ == '__main__':
     app.jinja_env.auto_reload = True
