@@ -61,11 +61,6 @@ def reset():
     utable.find_one_and_replace(old_user, user)
 
 
-@app.before_request
-def make_session_permanent():
-    session.permanent = True
-
-
 @app.route('/', methods=['GET', 'POST'])
 def home():
     if request.method == 'GET':
@@ -477,9 +472,9 @@ def login():
         return respond
 
     elif request.method == 'POST':
-        if request.form['btn'] == 'Potvrdit heslo':
-            possible_pass = request.form['password']
+        if request.form['btn'] == 'login':
             possible_name = request.form['name']
+            possible_pass = request.form['password']
 
             if possible_pass == app.secret_key and possible_name == 'admin':
                 session['admin'] = True
@@ -490,11 +485,13 @@ def login():
             else:
                 session['admin'] = False
 
-                str_yell = 'YOU SHALL NOT PASS'
+                user_par = {"my_name": request.form['name']}
+                user = utable.find_one(user_par)
+                print(user['my_password'], request.form['password'])
 
-                respond = make_response(render_template('login.html',
-                                                        yell=str_yell))
-                return respond
+                if user['my_password'] == request.form['password']:
+                    respond = make_response(redirect(url_for('home')))
+                    return respond
 
         elif request.form['btn'] == 'Tabuľka najlepších':
             respond = make_response(redirect(url_for('table')))
@@ -554,6 +551,7 @@ def register():
         elif request.form['btn'] == 'Zmena skúšaných otázok':
             respond = make_response(redirect(url_for('changequestions')))
             return respond
+
 
 if __name__ == '__main__':
     app.jinja_env.auto_reload = True
