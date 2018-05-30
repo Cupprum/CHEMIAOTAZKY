@@ -64,14 +64,15 @@ def reset():
 @app.route('/', methods=['GET', 'POST'])
 def home():
     if request.method == 'GET':
-        user_id = session.get('nameID')
-        user = utable.find_one({"_id": ObjectId(user_id)})
+        user_id = session.get('loged')
+        print(user_id)
 
-        if user is not None:
-            user = utable.find_one({"_id": ObjectId(user_id)})
+        if user_id is not None:
+            user = utable.find_one({"my_name": user_id})
 
         else:
-            respond = make_response(redirect(url_for('register')))
+            respond = make_response(redirect(url_for('login')))
+            return respond
 
         my_points = user["points"]
         ending = what_ending(my_points)
@@ -108,8 +109,8 @@ def home():
 @app.route('/otazka', methods=['GET', 'POST'])
 def questions():
     if request.method == 'GET':
-        user_id = session.get('nameID')
-        user_par = {"_id": ObjectId(user_id)}
+        user_id = session.get('loged')
+        user_par = {"my_name": user_id}
         user = utable.find_one(user_par)
 
         if user['group'] != "":
@@ -490,6 +491,7 @@ def login():
                 print(user['my_password'], request.form['password'])
 
                 if user['my_password'] == request.form['password']:
+                    session['loged'] = request.form['name']
                     respond = make_response(redirect(url_for('home')))
                     return respond
 
