@@ -47,7 +47,7 @@ def reset():
     user_par = {"_id": ObjectId(user_id)}
     old_user = utable.find_one(user_par)
 
-    user = {"my_chosen_name": "",
+    user = {"my_name": "",
             "correct_answers": [],
             "wrong_answers": [],
             "points": 0,
@@ -72,24 +72,11 @@ def home():
         user_id = session.get('nameID')
         user = utable.find_one({"_id": ObjectId(user_id)})
 
-        if user is None:
-            user = {"my_chosen_name": "",
-                    "correct_answers": [],
-                    "wrong_answers": [],
-                    "points": 0,
-                    "lat_q_num": None,
-                    "lat_q_ans": None,
-                    "group": "",
-                    "small": 0,
-                    "high": 1500,
-                    "desired": None}
-
-            new_user_id = utable.insert_one(user).inserted_id
-            session['nameID'] = str(new_user_id)
-            session['admin'] = False
+        if user is not None:
+            user = utable.find_one({"_id": ObjectId(user_id)})
 
         else:
-            user = utable.find_one({"_id": ObjectId(user_id)})
+            respond = make_response(redirect(url_for('register')))
 
         my_points = user["points"]
         ending = what_ending(my_points)
@@ -325,11 +312,11 @@ def questions():
 @app.route('/table', methods=['GET', 'POST'])
 def table():
     if request.method == 'GET':
-        all_people = utable.find({"my_chosen_name": {"$ne": ""}})
+        all_people = utable.find({"my_name": {"$ne": ""}})
 
         dic_people = {}
         for x in all_people:
-            dic_people.update({x['my_chosen_name']: x['points']})
+            dic_people.update({x['my_name']: x['points']})
 
         sorted_people = sorted(dic_people.items(),
                                key=operator.itemgetter(1),
@@ -356,7 +343,7 @@ def table():
 
             name = request.form['vloztemeno']
             utable.find_one_and_update(user_par, {"$set": {
-                "my_chosen_name": name}})
+                "my_name": name}})
 
             respond = make_response(redirect(url_for('table')))
             return respond
@@ -491,9 +478,10 @@ def login():
 
     elif request.method == 'POST':
         if request.form['btn'] == 'Potvrdit heslo':
-            possible_password = request.form['password']
+            possible_pass = request.form['password']
+            possible_name = request.form['name']
 
-            if possible_password == app.secret_key:
+            if possible_pass == app.secret_key and possible_name == 'admin':
                 session['admin'] = True
 
                 respond = make_response(redirect(url_for('home')))
@@ -516,6 +504,56 @@ def login():
             respond = make_response(redirect(url_for('changequestions')))
             return respond
 
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if request.method == 'GET':
+        respond = make_response(render_template('register.html'))
+        return respond
+
+    elif request.method == 'POST':
+        print(1)
+        if request.form['btn'] == 'Zaregistrovat':
+            print(2)
+            potential_name = request.form['name']
+            potential_mail = request.form['mail']
+            potential_password = request.form['password']
+
+            if len(potential_name) > 0 \
+               and len(potential_mail) > 0 \
+               and len(potential_password) > 0:
+
+                user = {"my_name": potential_name,
+                        "my_mail": potential_mail,
+                        "my_password": potential_password,
+                        "correct_answers": [],
+                        "wrong_answers": [],
+                        "points": 0,
+                        "lat_q_num": None,
+                        "lat_q_ans": None,
+                        "group": "",
+                        "small": 0,
+                        "high": 1500,
+                        "desired": None}
+
+                new_user_id = utable.insert_one(user).inserted_id
+                session['nameID'] = str(new_user_id)
+                session['admin'] = False
+
+                respond = make_response(redirect(url_for('home')))
+                return respond
+
+            respond = make_response(render_template('register.html',
+                                                    yell='Nieco si zadal zle'))
+            return respond
+
+        elif request.form['btn'] == 'Tabuľka najlepších':
+            respond = make_response(redirect(url_for('table')))
+            return respond
+
+        elif request.form['btn'] == 'Zmena skúšaných otázok':
+            respond = make_response(redirect(url_for('changequestions')))
+            return respond
 
 if __name__ == '__main__':
     app.jinja_env.auto_reload = True

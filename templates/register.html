@@ -27,7 +27,7 @@
 {% endblock %}
 
 {% block content %}
-    <form action="/login" method = "post">
+    <form action="/register" method = "post">
         <div class="container">
             <center>
                 <a href="https://chemiaotazky.herokuapp.com/"><img class="image" src="https://chemistry-studio.com/wp-content/uploads/logo_chemistry_1024_RGB.png"/></a>
@@ -45,10 +45,14 @@
 
                 <br>
 
+                <input type="text" name="mail" class="form-control" placeholder="Mail"/>
+
+                <br>
+
                 <div class="input-group">
                     <input type="password" name="password" class="form-control" placeholder="Heslo"/>
                     <div class="input-group-btn">
-                        <button type="submit" name="btn" value="Potvrdit heslo" class="btn btn-primary">Potvrdit</button>
+                        <button type="submit" name="btn" value="Zaregistrovat" class="btn btn-primary">Zaregistrovat</button>
                     </div>
                 </div>
             </center>
