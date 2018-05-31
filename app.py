@@ -113,6 +113,13 @@ def questions():
         user_par = {"my_name": user_id}
         user = utable.find_one(user_par)
 
+        if user_id is not None:
+            user = utable.find_one({"my_name": user_id})
+
+        else:
+            respond = make_response(redirect(url_for('login')))
+            return respond
+
         if user['group'] != "":
             help_var = ltable.find_one({"name_of_list": user['group']})
             list_q_from_cat = help_var['lst']
@@ -356,8 +363,15 @@ def table():
 @app.route('/changequestions', methods=['GET', 'POST'])
 def changequestions():
     if request.method == 'GET':
-        respond = make_response(render_template('zmenaotazok.html'))
-        return respond
+        user_id = session.get('loged')
+
+        if user_id is not None:
+            respond = make_response(render_template('zmenaotazok.html'))
+            return respond
+
+        else:
+            respond = make_response(redirect(url_for('login')))
+            return respond
 
     elif request.method == 'POST':
         help_var = ltable.find_one({"name_of_list": 'list_of_categories'})
@@ -488,12 +502,22 @@ def login():
 
                 user_par = {"my_name": request.form['name']}
                 user = utable.find_one(user_par)
-                print(user['my_password'], request.form['password'])
 
-                if user['my_password'] == request.form['password']:
-                    session['loged'] = request.form['name']
-                    respond = make_response(redirect(url_for('home')))
+                try:
+                    if user['my_password'] == request.form['password']:
+                        session['loged'] = request.form['name']
+                        respond = make_response(redirect(url_for('home')))
+                        return respond
+
+                except TypeError:
+                    yell_msg = 'Zle zadane prihlasovacie udaje'
+                    respond = make_response(render_template('login.html',
+                                                            yell=yell_msg))
                     return respond
+
+        elif request.form['btn'] == 'Registracia':
+            respond = make_response(redirect(url_for('register')))
+            return respond
 
         elif request.form['btn'] == 'Tabuľka najlepších':
             respond = make_response(redirect(url_for('table')))
