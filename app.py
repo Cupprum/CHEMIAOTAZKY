@@ -378,8 +378,8 @@ def changequestions():
         list_of_categories = help_var['lst']
 
         if request.form['btn'] == 'Pridať rozmedzie otázok':
-            user_id = session.get('nameID')
-            user_par = {"_id": ObjectId(user_id)}
+            user_id = session.get('loged')
+            user_par = {"my_name": user_id}
 
             smallest = int(request.form['najmensiaotazka'])
             highest = int(request.form['najvacsiaotazka'])
@@ -390,12 +390,15 @@ def changequestions():
             utable.find_one_and_update(
                 user_par, {"$set": {"high": highest}})
 
+            utable.find_one_and_update(
+                user_par, {"$set": {"group": ""}})
+
             respond = make_response(redirect(url_for('home')))
             return respond
 
         elif request.form['btn'] == 'Prejsť na otázku':
-            user_id = session.get('nameID')
-            user_par = {"_id": ObjectId(user_id)}
+            user_id = session.get('loged')
+            user_par = {"my_name": user_id}
 
             dreamed_question = int(request.form['cislootazky'])
 
@@ -408,8 +411,8 @@ def changequestions():
         elif request.form['btn'] in list_of_categories:
             for x in list_of_categories:
                 if request.form['btn'] == x:
-                    user_id = session.get('nameID')
-                    user_par = {"_id": ObjectId(user_id)}
+                    user_id = session.get('loged')
+                    user_par = {"my_name": user_id}
 
                     utable.find_one_and_update(
                         user_par, {"$set": {"group": x}})
@@ -429,9 +432,17 @@ def changequestions():
 @app.route('/wrong_answered', methods=['GET', 'POST'])
 def wrong_answered():
     if request.method == 'GET':
-        user_id = session.get('nameID')
-        user_par = {"_id": ObjectId(user_id)}
+        user_id = session.get('loged')
+        user_par = {"my_name": user_id}
         user = utable.find_one(user_par)
+
+        if user_id is not None:
+            user = utable.find_one({"my_name": user_id})
+
+        else:
+            respond = make_response(redirect(url_for('login')))
+            return respond
+
         wrong_answers = user['wrong_answers']
 
         dic_wrong = {}
@@ -461,8 +472,8 @@ def wrong_answered():
 
     elif request.method == 'POST':
         user_id = session.get('nameID')
-        user_par = {"_id": ObjectId(user_id)}
-        user = utable.find_one(user_par)
+        user_id = session.get('loged')
+        user_par = {"my_name": user_id}
 
         if request.form['btn'] == 'Tabuľka najlepších':
             respond = make_response(redirect(url_for('table')))
@@ -535,9 +546,7 @@ def register():
         return respond
 
     elif request.method == 'POST':
-        print(1)
         if request.form['btn'] == 'Zaregistrovat':
-            print(2)
             potential_name = request.form['name']
             potential_mail = request.form['mail']
             potential_password = request.form['password']
