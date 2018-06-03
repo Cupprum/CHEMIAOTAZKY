@@ -65,7 +65,6 @@ def reset():
 def home():
     if request.method == 'GET':
         user_id = session.get('loged')
-        print(user_id)
 
         if user_id is not None:
             user = utable.find_one({"my_name": user_id})
@@ -143,6 +142,17 @@ def questions():
                     break
 
         else:
+            list_possible = list(range(user["small"], user["high"] + 1))
+            list_correct = user["correct_answers"]
+
+            if set(list_possible).issubset(list_correct):
+                utable.find_one_and_update(
+                    user_par, {"$set": {"small": 0}})
+                utable.find_one_and_update(
+                    user_par, {"$set": {"high": 1500}})
+
+                user = utable.find_one(user_par)
+
             while True:
                 num_of_q = random.randint(user["small"], user["high"])
                 if num_of_q not in user["correct_answers"]:
@@ -154,7 +164,6 @@ def questions():
             utable.find_one_and_update(
                 user_par, {"$set": {"desired": None}})
 
-        print(num_of_q)
         question = qtable.find_one({"possition": num_of_q})
 
         utable.find_one_and_update(
@@ -464,8 +473,6 @@ def wrong_answered():
         for x in will_delete:
             dic_wrong.pop(x)
 
-        print(dic_wrong)
-
         respond = make_response(render_template('zleotazky.html',
                                                 dic=dic_wrong))
         return respond
@@ -494,6 +501,12 @@ def wrong_answered():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'GET':
+        user_id = session.get('loged')
+
+        if user_id is not None:
+            respond = make_response(redirect(url_for('home')))
+            return respond
+
         respond = make_response(render_template('login.html'))
         return respond
 
@@ -504,6 +517,7 @@ def login():
 
             if possible_pass == app.secret_key and possible_name == 'admin':
                 session['admin'] = True
+                session['loged'] = request.form['name']
 
                 respond = make_response(redirect(url_for('home')))
                 return respond
@@ -542,6 +556,12 @@ def login():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'GET':
+        user_id = session.get('loged')
+
+        if user_id is not None:
+            respond = make_response(redirect(url_for('home')))
+            return respond
+
         respond = make_response(render_template('register.html'))
         return respond
 
