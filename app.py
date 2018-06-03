@@ -1,15 +1,23 @@
 from flask import (
     Flask, request, render_template, make_response, session, url_for, redirect)
 from flask_bootstrap import Bootstrap
+from flask_mail import Mail, Message
 from pymongo import MongoClient
 from bson.objectid import ObjectId
 import random
 import os
 import operator
-import pprint
 
 
 app = Flask(__name__)
+
+app.config.update(
+    MAIL_SERVER='www.google.com/gmail',
+    MAIL_PORT=465,
+    MAIL_USERNAME='branisa6@google.com',
+    MAIL_PASSWORD='MP14759631478965')
+mail = Mail(app)
+
 Bootstrap(app)
 app.secret_key = os.environ["SESSION_KEY"]
 
@@ -47,8 +55,6 @@ def reset():
     user_id = session.get('loged')
     old_user = utable.find_one({"my_name": user_id})
 
-    pprint.pprint(old_user)
-
     user = {"my_name": old_user['my_name'],
             "my_mail": old_user['my_mail'],
             "my_password": old_user['my_password'],
@@ -69,9 +75,22 @@ def reset():
 def home():
     if request.method == 'GET':
         user_id = session.get('loged')
+        user_par = {"my_name": user_id}
 
         if user_id is not None:
-            user = utable.find_one({"my_name": user_id})
+            user = utable.find_one(user_par)
+            print(f"dlzka {len(user)}")
+            try:
+                if len(user) != 13:
+                    session['loged'] = None
+
+                    utable.remove(user_par)
+
+                    respond = make_response(redirect(url_for('register')))
+                    return respond
+            except TypeError:
+                respond = make_response(redirect(url_for('register')))
+                return respond
 
         else:
             respond = make_response(redirect(url_for('login')))
@@ -393,12 +412,18 @@ def changequestions():
             user_id = session.get('loged')
             user_par = {"my_name": user_id}
 
-            help_list1 = ["group", "small, high"]
+            user = utable.find_one(user_par)
+            print(f"1 {user}")
+
+            help_list1 = ["group", "small", "high"]
             help_list2 = ["", 0, 1500]
 
             for x in range(2):
                 utable.find_one_and_update(user_par, {"$set": {
                     help_list1[x]: help_list2[x]}})
+
+            user = utable.find_one(user_par)
+            print(f"2 {user}")
 
             respond = make_response(redirect(url_for('home')))
             return respond
@@ -608,6 +633,11 @@ def register():
                 new_user_id = utable.insert_one(user).inserted_id
                 session['nameID'] = str(new_user_id)
                 session['admin'] = False
+
+                msg = Message("Hello",
+                              sender="branisa6@gmail.com",
+                              recipients=["branisa.samuel@windowslive.com"])
+                mail.send(msg)
 
                 respond = make_response(redirect(url_for('home')))
                 return respond
