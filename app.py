@@ -6,6 +6,7 @@ from bson.objectid import ObjectId
 import random
 import os
 import operator
+import pprint
 
 
 app = Flask(__name__)
@@ -43,11 +44,14 @@ def what_ending(my_points):
 
 
 def reset():
-    user_id = session.get('nameID')
-    user_par = {"_id": ObjectId(user_id)}
-    old_user = utable.find_one(user_par)
+    user_id = session.get('loged')
+    old_user = utable.find_one({"my_name": user_id})
 
-    user = {"my_name": "",
+    pprint.pprint(old_user)
+
+    user = {"my_name": old_user['my_name'],
+            "my_mail": old_user['my_mail'],
+            "my_password": old_user['my_password'],
             "correct_answers": [],
             "wrong_answers": [],
             "points": 0,
@@ -144,7 +148,6 @@ def questions():
         else:
             list_possible = list(range(user["small"], user["high"] + 1))
             list_correct = user["correct_answers"]
-
             if set(list_possible).issubset(list_correct):
                 utable.find_one_and_update(
                     user_par, {"$set": {"small": 0}})
@@ -386,7 +389,21 @@ def changequestions():
         help_var = ltable.find_one({"name_of_list": 'list_of_categories'})
         list_of_categories = help_var['lst']
 
-        if request.form['btn'] == 'Pridať rozmedzie otázok':
+        if request.form['btn'] == 'Resetovanie vyberania otazok':
+            user_id = session.get('loged')
+            user_par = {"my_name": user_id}
+
+            help_list1 = ["group", "small, high"]
+            help_list2 = ["", 0, 1500]
+
+            for x in range(2):
+                utable.find_one_and_update(user_par, {"$set": {
+                    help_list1[x]: help_list2[x]}})
+
+            respond = make_response(redirect(url_for('home')))
+            return respond
+
+        elif request.form['btn'] == 'Pridať rozmedzie otázok':
             user_id = session.get('loged')
             user_par = {"my_name": user_id}
 
