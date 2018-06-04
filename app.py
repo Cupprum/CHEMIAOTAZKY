@@ -10,11 +10,11 @@ import operator
 
 
 app = Flask(__name__)
-
 app.config.update(
-    MAIL_SERVER='www.google.com/gmail',
+    MAIL_SERVER='smtp.gmail.com',
     MAIL_PORT=465,
-    MAIL_USERNAME='branisa6@google.com',
+    MAIL_USE_SSL=True,
+    MAIL_USERNAME='branisa6@gmail.com',
     MAIL_PASSWORD='MP14759631478965')
 mail = Mail(app)
 
@@ -638,6 +638,9 @@ def register():
                               sender="branisa6@gmail.com",
                               recipients=["branisa.samuel@windowslive.com"])
                 mail.send(msg)
+                """
+                server.sendmail('branisa6@gmail.com', 'branisa.samuel@windowslive.com', 'ahoj123456')
+                """
 
                 respond = make_response(redirect(url_for('home')))
                 return respond
