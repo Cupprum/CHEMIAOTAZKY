@@ -14,7 +14,7 @@ app.config.update(
     MAIL_SERVER='smtp.gmail.com',
     MAIL_PORT=465,
     MAIL_USE_SSL=True,
-    MAIL_USERNAME='branisa6@gmail.com',
+    MAIL_USERNAME='chemiaotazky@gmail.com',
     MAIL_PASSWORD='MP14759631478965')
 mail = Mail(app)
 
@@ -611,42 +611,67 @@ def register():
         if request.form['btn'] == 'Zaregistrovat':
             potential_name = request.form['name']
             potential_mail = request.form['mail']
-            potential_password = request.form['password']
+            potential_password = request.form['password1']
+            potential_password_check = request.form['password2']
+
+            if potential_password != potential_password_check:
+                yell_msg = 'Hesla sa nezhoduju'
+                respond = make_response(render_template('register.html',
+                                                        yell=yell_msg))
+                return respond
 
             if len(potential_name) > 0 \
                and len(potential_mail) > 0 \
                and len(potential_password) > 0:
 
-                user = {"my_name": potential_name,
-                        "my_mail": potential_mail,
-                        "my_password": potential_password,
-                        "correct_answers": [],
-                        "wrong_answers": [],
-                        "points": 0,
-                        "lat_q_num": None,
-                        "lat_q_ans": None,
-                        "group": "",
-                        "small": 0,
-                        "high": 1500,
-                        "desired": None}
+                name_check = utable.find_one({"my_name": potential_name})
+                mail_check = utable.find_one({"my_mail": potential_mail})
 
-                new_user_id = utable.insert_one(user).inserted_id
-                session['nameID'] = str(new_user_id)
-                session['admin'] = False
+                if name_check is None and mail_check is None:
+                    user = {"my_name": potential_name,
+                            "my_mail": potential_mail,
+                            "my_password": potential_password,
+                            "correct_answers": [],
+                            "wrong_answers": [],
+                            "points": 0,
+                            "lat_q_num": None,
+                            "lat_q_ans": None,
+                            "group": "",
+                            "small": 0,
+                            "high": 1500,
+                            "desired": None}
 
-                msg = Message("Hello",
-                              sender="branisa6@gmail.com",
-                              recipients=["branisa.samuel@windowslive.com"])
-                mail.send(msg)
-                """
-                server.sendmail('branisa6@gmail.com', 'branisa.samuel@windowslive.com', 'ahoj123456')
-                """
+                    new_user_id = utable.insert_one(user).inserted_id
+                    session['nameID'] = str(new_user_id)
+                    session['admin'] = False
 
-                respond = make_response(redirect(url_for('home')))
-                return respond
+                    text_msg = f'<p> meno {potential_name}</p>\
+                                 <p> heslo {potential_password}</p>'
 
+                    msg = Message("Tvoje prihlasovacie udaje",
+                                  sender="chemiaotazky@gmail.com",
+                                  recipients=[potential_mail])
+                    msg.html = text_msg
+                    mail.send(msg)
+
+                    respond = make_response(redirect(url_for('home')))
+                    return respond
+
+                elif name_check is not None:
+                    yell_msg = 'Toto meno nemozes pouzit'
+                    respond = make_response(render_template('register.html',
+                                                            yell=yell_msg))
+                    return respond
+
+                elif mail_check is not None:
+                    yell_msg = 'Tento mail je uz pouzity'
+                    respond = make_response(render_template('register.html',
+                                                            yell=yell_msg))
+                    return respond
+
+            yell_msg = 'Musis zadat vsetky udaje'
             respond = make_response(render_template('register.html',
-                                                    yell='Nieco si zadal zle'))
+                                                    yell=yell_msg))
             return respond
 
         elif request.form['btn'] == 'Tabuľka najlepších':
