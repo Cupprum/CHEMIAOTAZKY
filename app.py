@@ -3,10 +3,10 @@ from flask import (
 from flask_bootstrap import Bootstrap
 from flask_mail import Mail, Message
 from pymongo import MongoClient
-from bson.objectid import ObjectId
 import random
 import os
 import operator
+import uuid
 
 
 app = Flask(__name__)
@@ -77,9 +77,10 @@ def home():
         user_id = session.get('loged')
         user_par = {"my_name": user_id}
 
+        print(user_id)
+
         if user_id is not None:
             user = utable.find_one(user_par)
-            print(f"dlzka {len(user)}")
             try:
                 if len(user) != 13:
                     session['loged'] = None
@@ -237,8 +238,9 @@ def questions():
         return respond
 
     elif request.method == 'POST':
-        user_id = session.get('nameID')
-        user = utable.find_one({"_id": ObjectId(user_id)})
+        user_id = session.get('loged')
+        user_par = {"my_name": user_id}
+        user = utable.find_one(user_par)
 
         if request.form['btn'] == 'Kontrola':
             question = qtable.find_one({"possition": user['lat_q_num']})
@@ -283,8 +285,6 @@ def questions():
                     list1.append(0)
                 else:
                     list1.append(1)
-
-            user_par = {"_id": ObjectId(user_id)}
 
             if list3.count(1) == 8:
                 utable.find_one_and_update(user_par, {"$inc": {"points": 1}})
@@ -371,18 +371,7 @@ def table():
         return respond
 
     elif request.method == 'POST':
-        if request.form['btn'] == 'Pridať meno':
-            user_id = session.get('nameID')
-            user_par = {"_id": ObjectId(user_id)}
-
-            name = request.form['vloztemeno']
-            utable.find_one_and_update(user_par, {"$set": {
-                "my_name": name}})
-
-            respond = make_response(redirect(url_for('table')))
-            return respond
-
-        elif request.form['btn'] == 'Tabuľka najlepších':
+        if request.form['btn'] == 'Tabuľka najlepších':
             respond = make_response(redirect(url_for('table')))
             return respond
 
@@ -520,7 +509,6 @@ def wrong_answered():
         return respond
 
     elif request.method == 'POST':
-        user_id = session.get('nameID')
         user_id = session.get('loged')
         user_par = {"my_name": user_id}
 
@@ -641,20 +629,31 @@ def register():
                             "high": 1500,
                             "desired": None}
 
-                    new_user_id = utable.insert_one(user).inserted_id
-                    session['nameID'] = str(new_user_id)
-                    session['admin'] = False
+                    activation_code = str(uuid.uuid4())
 
                     text_msg = f'<p> meno {potential_name}</p>\
-                                 <p> heslo {potential_password}</p>'
+                                 <p> heslo {potential_password}</p>\
+                                 <p> aktivacny kod {activation_code}</p>'
+                    try:
+                        msg = Message("Tvoje prihlasovacie udaje",
+                                      sender="chemiaotazky@gmail.com",
+                                      recipients=[potential_mail])
+                        msg.html = text_msg
+                        mail.send(msg)
 
-                    msg = Message("Tvoje prihlasovacie udaje",
-                                  sender="chemiaotazky@gmail.com",
-                                  recipients=[potential_mail])
-                    msg.html = text_msg
-                    mail.send(msg)
+                    except Exception as e:
+                        yell_msg = 'Neplatny mail'
+                        respond = make_response(
+                            render_template('register.html',
+                                            yell=yell_msg))
+                        return respond
 
-                    respond = make_response(redirect(url_for('home')))
+                    utable.insert_one(user)
+                    session['loged'] = potential_name
+                    session['admin'] = False
+                    session['activate'] = activation_code
+
+                    respond = make_response(redirect(url_for('activate')))
                     return respond
 
                 elif name_check is not None:
@@ -681,6 +680,39 @@ def register():
         elif request.form['btn'] == 'Zmena skúšaných otázok':
             respond = make_response(redirect(url_for('changequestions')))
             return respond
+
+
+@app.route('/activate', methods=['GET', 'POST'])
+def activate():
+    if request.method == 'GET':
+        activation_code = session.get('activate')
+
+        if activation_code is not None:
+            yell_msg = 'Zadajte aktivacny kod ktory vam bol zaslany na mail'
+            respond = make_response(render_template('activate.html',
+                                                    yell=yell_msg))
+            return respond
+
+        else:
+            respond = make_response(redirect(url_for('home')))
+            return respond
+
+    if request.method == 'POST':
+        if request.form['btn'] == 'approve':
+            activation_code_real = session.get('activate')
+            activation_code_my = request.form['activation_code']
+
+            if activation_code_my == activation_code_real:
+                session['activate'] = None
+
+                respond = make_response(redirect(url_for('home')))
+                return respond
+
+            else:
+                yell_msg = 'Neplatny kod'
+                respond = make_response(render_template('activate.html',
+                                                        yell=yell_msg))
+                return respond
 
 
 if __name__ == '__main__':

@@ -1,0 +1,54 @@
+{% extends "bootstrap/base.html" %}
+
+{% block title %}
+    Chemia 3.0
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    <script type="text/javascript" 
+        src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+    <script type="text/x-mathjax-config">
+            MathJax.Hub.Config({
+            "HTML-CSS" : {
+             availableFonts : ["STIX"],
+             preferredFont : "STIX",
+             webFont : "STIX General",
+             imageFont : null
+             }
+             });
+    </script>
+{% endblock %}
+
+{% block styles %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+{% endblock %}
+
+{% block content %}
+    <form action="/activate" method = "post">
+        <div class="container">
+            <center>
+                <a href="https://chemiaotazky.herokuapp.com/"><img class="image" src="https://chemistry-studio.com/wp-content/uploads/logo_chemistry_1024_RGB.png"/></a>
+
+                <div class="btn-group special" role="group">
+                    <button type="submit" name="btn" value="Tabuľka najlepších" class="btn btn-primary">Tabuľka najlepších</button>
+                    <button type="submit" name="btn" value="Zmena skúšaných otázok" class="btn btn-primary">Zmena skúšaných otázok</button>
+                </div>
+
+                <br>
+
+                <p>{{ yell }}</p>
+                
+                <div class="input-group">
+                    <input type="text" name="activation_code" class="form-control" placeholder="Aktivacny kod"/>
+                    <div class="input-group-btn">
+                        <button type="submit" name="btn" value="approve" class="btn btn-primary">Potvrdit</button>
+                    </div>
+                </div>
+            </center>
+        </div>
+        <br>
+    </form>
+{% endblock %}
