@@ -574,6 +574,9 @@ def login():
             respond = make_response(redirect(url_for('register')))
             return respond
 
+        elif request.form['btn'] == 'Zabudnute heslo':
+            respond = make_response(redirect(url_for('forgotten_password')))
+
         elif request.form['btn'] == 'Tabuľka najlepších':
             respond = make_response(redirect(url_for('table')))
             return respond
@@ -713,6 +716,27 @@ def activate():
                 respond = make_response(render_template('activate.html',
                                                         yell=yell_msg))
                 return respond
+
+        elif request.form['btn'] == 'Tabuľka najlepších':
+            respond = make_response(redirect(url_for('table')))
+            return respond
+
+        elif request.form['btn'] == 'Zmena skúšaných otázok':
+            respond = make_response(redirect(url_for('changequestions')))
+            return respond
+
+
+@app.route('/forgotten_password', methods=['GET', 'POST'])
+def forgotten_password():
+    if request.method == 'GET':
+        yell_msg = 'Zadaj svoj email'
+        respond = make_response(render_template('forgotten.html',
+                                                yell=yell_msg))
+        return respond
+
+    if request.method == 'POST':
+        respond = make_response(redirect(url_for('home')))
+        return respond
 
 
 if __name__ == '__main__':

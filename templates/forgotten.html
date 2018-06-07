@@ -27,7 +27,7 @@
 {% endblock %}
 
 {% block content %}
-    <form action="/login" method = "post">
+    <form action="/forgotten_password" method = "post">
         <div class="container">
             <center>
                 <a href="https://chemiaotazky.herokuapp.com/"><img class="image" src="https://chemistry-studio.com/wp-content/uploads/logo_chemistry_1024_RGB.png"/></a>
@@ -37,23 +37,15 @@
                     <button type="submit" name="btn" value="Zmena skúšaných otázok" class="btn btn-primary">Zmena skúšaných otázok</button>
                 </div>
 
-                <h1>{{ yell }}</h1>
-
-                <input type="text" name="name" class="form-control" placeholder="Meno"/>
-
                 <br>
 
+                <p>{{ yell }}</p>
+                
                 <div class="input-group">
-                    <input type="password" name="password" class="form-control" placeholder="Heslo"/>
+                    <input type="text" name="mail" class="form-control" placeholder="Tvoj email"/>
                     <div class="input-group-btn">
-                        <button type="submit" name="btn" value="login" class="btn btn-primary">Potvrdit</button>
+                        <button type="submit" name="btn" value="approve" class="btn btn-primary">Poslat heslo</button>
                     </div>
-                </div>
-
-                <br>
-                <div class="btn-group special" role="group">
-                    <button type="submit" name="btn" value="Registracia" class="btn btn-primary">Registracia</button>    
-                    <button type="submit" name="btn" value="Zabudnute heslo" class="btn btn-primary">Zabudnute heslo</button>
                 </div>
             </center>
         </div>
