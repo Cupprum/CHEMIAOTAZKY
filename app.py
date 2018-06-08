@@ -7,6 +7,7 @@ import random
 import os
 import operator
 import uuid
+import time
 
 
 app = Flask(__name__)
@@ -76,8 +77,6 @@ def home():
     if request.method == 'GET':
         user_id = session.get('loged')
         user_par = {"my_name": user_id}
-
-        print(user_id)
 
         if user_id is not None:
             user = utable.find_one(user_par)
@@ -576,6 +575,7 @@ def login():
 
         elif request.form['btn'] == 'Zabudnute heslo':
             respond = make_response(redirect(url_for('forgotten_password')))
+            return respond
 
         elif request.form['btn'] == 'Tabuľka najlepších':
             respond = make_response(redirect(url_for('table')))
@@ -729,14 +729,43 @@ def activate():
 @app.route('/forgotten_password', methods=['GET', 'POST'])
 def forgotten_password():
     if request.method == 'GET':
+        already_done = session.get('forgotten')
+        print(already_done)
+
         yell_msg = 'Zadaj svoj email'
         respond = make_response(render_template('forgotten.html',
                                                 yell=yell_msg))
         return respond
 
     if request.method == 'POST':
-        respond = make_response(redirect(url_for('home')))
-        return respond
+        if request.form['btn'] == 'approve':
+            entered_mail = request.form['mail']
+
+            try:
+                user_par = {"my_mail": entered_mail}
+                user = utable.find_one(user_par)
+
+                text_msg = f'<p> meno {user["my_name"]}</p>\
+                             <p> heslo {user["my_password"]}</p>'
+
+                msg = Message("Tvoje prihlasovacie udaje",
+                              sender="chemiaotazky@gmail.com",
+                              recipients=[entered_mail])
+
+                msg.html = text_msg
+                mail.send(msg)
+
+            except Exception as e:
+                yell_msg = 'Neplatny mail'
+                respond = make_response(
+                    render_template('forgotten.html',
+                                    yell=yell_msg))
+                return respond
+
+            yell_msg = 'Prihlasovacie udaje boli poslane na zadany mail'
+            respond = make_response(render_template('forgotten.html',
+                                                    yell=yell_msg))
+            return respond
 
 
 if __name__ == '__main__':
