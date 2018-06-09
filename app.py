@@ -7,7 +7,7 @@ import random
 import os
 import operator
 import uuid
-import time
+from uuid import getnode as get_mac
 
 
 app = Flask(__name__)
@@ -75,6 +75,7 @@ def reset():
 @app.route('/', methods=['GET', 'POST'])
 def home():
     if request.method == 'GET':
+        print(hex(get_mac()))
         user_id = session.get('loged')
         user_par = {"my_name": user_id}
 
