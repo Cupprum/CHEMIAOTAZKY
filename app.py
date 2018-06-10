@@ -6,6 +6,7 @@ from pymongo import MongoClient
 import random
 import os
 import operator
+import time
 import uuid
 from uuid import getnode as get_mac
 
@@ -75,14 +76,13 @@ def reset():
 @app.route('/', methods=['GET', 'POST'])
 def home():
     if request.method == 'GET':
-        print(hex(get_mac()))
         user_id = session.get('loged')
         user_par = {"my_name": user_id}
 
         if user_id is not None:
             user = utable.find_one(user_par)
             try:
-                if len(user) != 13:
+                if len(user) != 14:
                     session['loged'] = None
 
                     utable.remove(user_par)
@@ -620,6 +620,12 @@ def register():
                 mail_check = utable.find_one({"my_mail": potential_mail})
 
                 if name_check is None and mail_check is None:
+
+                    actual_mac = hex(get_mac())
+                    actual_time = time.time()
+
+                    mac_adresses = {actual_mac: actual_time}
+
                     user = {"my_name": potential_name,
                             "my_mail": potential_mail,
                             "my_password": potential_password,
@@ -631,7 +637,8 @@ def register():
                             "group": "",
                             "small": 0,
                             "high": 1500,
-                            "desired": None}
+                            "desired": None,
+                            "mac": mac_adresses}
 
                     activation_code = str(uuid.uuid4())
 
@@ -653,9 +660,8 @@ def register():
                         return respond
 
                     utable.insert_one(user)
-                    session['loged'] = potential_name
                     session['admin'] = False
-                    session['activate'] = activation_code
+                    session['activate'] = [activation_code, potential_name]
 
                     respond = make_response(redirect(url_for('activate')))
                     return respond
@@ -689,7 +695,8 @@ def register():
 @app.route('/activate', methods=['GET', 'POST'])
 def activate():
     if request.method == 'GET':
-        activation_code = session.get('activate')
+        activation_code = session.get('activate')[0]
+        potential_name = session.get('activate')[1]
 
         if activation_code is not None:
             yell_msg = 'Zadajte aktivacny kod ktory vam bol zaslany na mail'
@@ -703,10 +710,13 @@ def activate():
 
     if request.method == 'POST':
         if request.form['btn'] == 'approve':
-            activation_code_real = session.get('activate')
             activation_code_my = request.form['activation_code']
 
+            activation_code_real = session.get('activate')[0]
+            potential_name = session.get('activate')[1]
+
             if activation_code_my == activation_code_real:
+                session['loged'] = potential_name
                 session['activate'] = None
 
                 respond = make_response(redirect(url_for('home')))
