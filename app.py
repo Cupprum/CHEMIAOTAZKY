@@ -143,6 +143,11 @@ def questions():
             respond = make_response(redirect(url_for('login')))
             return respond
 
+        if user is None:
+            session['loged'] = None
+            respond = make_response(redirect(url_for('login')))
+            return respond
+
         if user['group'] != "":
             help_var = ltable.find_one({"name_of_list": user['group']})
             list_q_from_cat = help_var['lst']
@@ -223,6 +228,18 @@ def questions():
         except KeyError:
             session['admin'] = False
 
+        actual_mac = hex(get_mac())
+        actual_time = time.time()
+
+        # mozno to nebude treba az tak komplikovane, zistim ked to skusim online
+        if actual_mac in user['mac']:
+            utable.find_one_and_update(user_par, {"$set": {
+                f'mac.{actual_mac}': actual_time}})
+
+        else:
+            utable.find_one_and_update(user_par, {"$set": {
+                f'mac.{actual_mac}': actual_time}})
+
         respond = make_response(render_template('otazka.html',
                                                 moznosti=True,
                                                 control_button=True,
@@ -241,6 +258,11 @@ def questions():
         user_id = session.get('loged')
         user_par = {"my_name": user_id}
         user = utable.find_one(user_par)
+
+        if user is None or user_id is None:
+            session['loged'] = None
+            respond = make_response(redirect(url_for('login')))
+            return respond
 
         if request.form['btn'] == 'Kontrola':
             question = qtable.find_one({"possition": user['lat_q_num']})
