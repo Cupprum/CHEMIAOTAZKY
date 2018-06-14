@@ -1,17 +1,20 @@
 from flask import (
-    Flask, request, render_template, make_response, session, url_for, redirect)
+    Flask, request, render_template, make_response,
+    session, url_for, redirect, jsonify)
 from flask_bootstrap import Bootstrap
 from flask_mail import Mail, Message
 from pymongo import MongoClient
 import random
 import os
-import operator
 import time
+import operator
 import uuid
 from uuid import getnode as get_mac
+import paypalrestsdk
 
 
 app = Flask(__name__)
+
 app.config.update(
     MAIL_SERVER='smtp.gmail.com',
     MAIL_PORT=465,
@@ -19,6 +22,11 @@ app.config.update(
     MAIL_USERNAME='chemiaotazky@gmail.com',
     MAIL_PASSWORD='MP14759631478965')
 mail = Mail(app)
+
+paypalrestsdk.configure({
+    "mode": "sandbox",
+    "client_id": "ATEq1XVImz9J9X93C0RQzADQT17lqxO0K7FUZbq1pCC2LjkUUcrgvZtgK7jmKQj_-WsxyBczuQQ9IduV",
+    "client_secret": "ECAIqVBgaKf2s08bU6JUjL8DDC-6LgWKVLfPp4oirtS7haBTmGYzPBvD9u3gDVQSCc8oNmtbjT2ZNXLv"})
 
 Bootstrap(app)
 app.secret_key = os.environ["SESSION_KEY"]
@@ -799,6 +807,58 @@ def forgotten_password():
             respond = make_response(render_template('forgotten.html',
                                                     yell=yell_msg))
             return respond
+
+
+@app.route('/subscription', methods=['GET', 'POST'])
+def subscription():
+    if request.method == 'GET':
+        respond = make_response(render_template('subscription.html'))
+        return respond
+
+
+@app.route('/payment', methods=['POST'])
+def payment():
+
+    payment = paypalrestsdk.Payment({
+        "intent": "sale",
+        "payer": {
+            "payment_method": "paypal"},
+        "redirect_urls": {
+            "return_url": "http://localhost:3000/payment/execute",
+            "cancel_url": "http://localhost:3000/"},
+        "transactions": [{
+            "item_list": {
+                "items": [{
+                    "name": "Poplatok za registraciu",
+                    "sku": "item",
+                    "price": "5.00",
+                    "currency": "EUR",
+                    "quantity": 1}]},
+            "amount": {
+                "total": "5.00",
+                "currency": "EUR"},
+            "description": "This is the payment transaction description."}]})
+
+    if payment.create():
+        print('successful')
+    else:
+        print(payment.error)
+
+    return jsonify({'paymentID': payment.id})
+
+
+@app.route('/execute', methods=['POST'])
+def execute():
+    success = False
+    payment = paypalrestsdk.Payment.find(request.form['paymentID'])
+
+    if payment.execute({'payer_id': request.form['payerID']}):
+        print('executed')
+        success = True
+    else:
+        print(payment.error)
+
+    return jsonify({'success': success})
 
 
 if __name__ == '__main__':
