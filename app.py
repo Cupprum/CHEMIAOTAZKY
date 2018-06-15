@@ -631,6 +631,11 @@ def register():
 
     elif request.method == 'POST':
         if request.form['btn'] == 'Zaregistrovat':
+            already_payed = session.get('payed')
+
+            if already_payed is True:
+                print('Zaplatil')
+
             potential_name = request.form['name']
             potential_mail = request.form['mail']
             potential_password = request.form['password1']
@@ -809,13 +814,6 @@ def forgotten_password():
             return respond
 
 
-@app.route('/subscription', methods=['GET', 'POST'])
-def subscription():
-    if request.method == 'GET':
-        respond = make_response(render_template('subscription.html'))
-        return respond
-
-
 @app.route('/payment', methods=['POST'])
 def payment():
 
@@ -855,6 +853,7 @@ def execute():
     if payment.execute({'payer_id': request.form['payerID']}):
         print('executed')
         success = True
+        session['payed'] = True
     else:
         print(payment.error)
 
