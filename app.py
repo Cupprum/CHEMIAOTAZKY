@@ -23,11 +23,6 @@ app.config.update(
     MAIL_PASSWORD='MP14759631478965')
 mail = Mail(app)
 
-paypalrestsdk.configure({
-    "mode": "sandbox",
-    "client_id": "ATEq1XVImz9J9X93C0RQzADQT17lqxO0K7FUZbq1pCC2LjkUUcrgvZtgK7jmKQj_-WsxyBczuQQ9IduV",
-    "client_secret": "ECAIqVBgaKf2s08bU6JUjL8DDC-6LgWKVLfPp4oirtS7haBTmGYzPBvD9u3gDVQSCc8oNmtbjT2ZNXLv"})
-
 Bootstrap(app)
 app.secret_key = os.environ["SESSION_KEY"]
 
@@ -36,9 +31,16 @@ client = MongoClient(mongodb_uri)
 
 if mongodb_uri == "mongodb://localhost:27017/":
     db = client.chemia
+    environment = 'sandbox'
 
 else:
     db = client.heroku_847wntjv
+    environment = 'live'
+
+paypalrestsdk.configure({
+    "mode": environment,
+    "client_id": os.environ["PAYPAL_ID"],
+    "client_secret": os.environ["PAYPAL_SECRET"]})
 
 qtable = db.table_questions
 utable = db.table_users
@@ -630,16 +632,19 @@ def register():
             str_create = 'http://127.0.0.1:5000/payment'
             str_execute = 'http://127.0.0.1:5000/execute'
             str_after = 'http://127.0.0.1:5000/register'
+            str_env = 'sandbox'
 
         else:
             str_create = 'https://chemiaotazky.herokuapp.com/payment'
             str_execute = 'https://chemiaotazky.herokuapp.com/execute'
             str_after = 'https://chemiaotazky.herokuapp.com/register'
+            str_env = 'production'
 
         respond = make_response(render_template('register.html',
                                                 create=str_create,
                                                 execute=str_execute,
-                                                after=str_after))
+                                                after=str_after,
+                                                env=str_env))
         return respond
 
     elif request.method == 'POST':
