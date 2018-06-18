@@ -626,7 +626,20 @@ def register():
             respond = make_response(redirect(url_for('home')))
             return respond
 
-        respond = make_response(render_template('register.html'))
+        if '127.0.0.1' in request.url:
+            str_create = 'http://127.0.0.1:5000/payment'
+            str_execute = 'http://127.0.0.1:5000/execute'
+            str_after = 'http://127.0.0.1:5000/register'
+
+        else:
+            str_create = 'https://chemiaotazky.herokuapp.com/payment'
+            str_execute = 'https://chemiaotazky.herokuapp.com/execute'
+            str_after = 'https://chemiaotazky.herokuapp.com/register'
+
+        respond = make_response(render_template('register.html',
+                                                create=str_create,
+                                                execute=str_execute,
+                                                after=str_after))
         return respond
 
     elif request.method == 'POST':

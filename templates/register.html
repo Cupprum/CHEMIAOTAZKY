@@ -65,8 +65,8 @@
                 <script src="https://www.paypalobjects.com/api/checkout.js"></script>
 
                 <script>
-                    var CREATE_PAYMENT_URL  = 'http://127.0.0.1:5000/payment';
-                    var EXECUTE_PAYMENT_URL = 'http://127.0.0.1:5000/execute';
+                    var CREATE_PAYMENT_URL  = '{{ create }}';
+                    var EXECUTE_PAYMENT_URL = '{{ execute }}';
 
                     paypal.Button.render({
 
@@ -86,7 +86,7 @@
                                 payerID:   data.payerID
                             }).then(function(res) {
 
-                                window.location.href = 'http://127.0.0.1:5000/register';
+                                window.location.href = '{{ after }}';
                             });
                         }
 
