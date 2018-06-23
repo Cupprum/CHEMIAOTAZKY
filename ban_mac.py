@@ -5,7 +5,7 @@ dic = {'0xac220bc6287a': 1529357571.7602956,
 '''
 
 
-def testing():
+def test():
     dic = {'0xac220bc6287a': 1,
            '0xac220bc6287b': 5,
            '0xac220bc6287c': 9}
@@ -17,7 +17,9 @@ def testing():
         list_mac.append(mac)
         list_time.append(time)
 
-    myvar = 4
+    myvar = 4.1
+
+    counter = 0
 
     for x in range(len(list_time) - 1):
         basic = list_time[x]
@@ -30,7 +32,9 @@ def testing():
                   advanced + myvar)
             if basic > advanced - myvar and basic < advanced + myvar:
                 print("hacker")
+                counter += 1
     print('-' * 20)
+    assert counter > 0
 
 
-testing()
+test()
