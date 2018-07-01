@@ -1,86 +1,17 @@
+from CHEMIAOTAZKY import app
 from flask import (
-    Flask, request, render_template, make_response,
+    request, render_template, make_response,
     session, url_for, redirect, jsonify)
-from flask_bootstrap import Bootstrap
-from flask_mail import Mail, Message
-from pymongo import MongoClient
+from flask_mail import Message
 import random
-import os
 import time
 import operator
 import uuid
 from uuid import getnode as get_mac
 import paypalrestsdk
 
-
-app = Flask(__name__)
-
-app.config.update(
-    MAIL_SERVER='smtp.gmail.com',
-    MAIL_PORT=465,
-    MAIL_USE_SSL=True,
-    MAIL_USERNAME='chemiaotazky@gmail.com',
-    MAIL_PASSWORD='MP14759631478965')
-mail = Mail(app)
-
-Bootstrap(app)
-app.secret_key = os.environ["SESSION_KEY"]
-
-mongodb_uri = os.environ["MONGODB_URI"]
-client = MongoClient(mongodb_uri)
-
-if mongodb_uri == "mongodb://localhost:27017/":
-    db = client.chemia
-    environment = 'sandbox'
-
-else:
-    db = client.heroku_847wntjv
-    environment = 'live'
-
-paypalrestsdk.configure({
-    "mode": environment,
-    "client_id": os.environ["PAYPAL_ID"],
-    "client_secret": os.environ["PAYPAL_SECRET"]})
-
-qtable = db.table_questions
-utable = db.table_users
-ltable = db.table_lists
-
-
-class table_obj:
-    def __init__(self, name, points):
-        self.name = name
-        self.points = points
-
-
-def what_ending(my_points):
-    if my_points == 0 or my_points >= 5:
-        ending = "ok"
-    elif my_points == 1:
-        ending = "ku"
-    elif my_points > 0 and my_points < 5:
-        ending = "ky"
-    return ending
-
-
-def reset():
-    user_id = session.get('loged')
-    old_user = utable.find_one({"my_name": user_id})
-
-    user = {"my_name": old_user['my_name'],
-            "my_mail": old_user['my_mail'],
-            "my_password": old_user['my_password'],
-            "correct_answers": [],
-            "wrong_answers": [],
-            "points": 0,
-            "lat_q_num": None,
-            "lat_q_ans": None,
-            "group": "",
-            "small": 0,
-            "high": 1500,
-            "desired": None}
-
-    utable.find_one_and_replace(old_user, user)
+from CHEMIAOTAZKY.__init__ import *
+from CHEMIAOTAZKY.functions import *
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -876,9 +807,3 @@ def execute():
         print(payment.error)
 
     return jsonify({'success': success})
-
-
-if __name__ == '__main__':
-    app.jinja_env.auto_reload = True
-    app.config['TEMPLATES_AUTO_RELOAD'] = True
-    app.run(debug=True, use_reloader=True)
